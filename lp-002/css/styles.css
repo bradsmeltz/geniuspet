@@ -1504,6 +1504,28 @@ button {
     background: var(--color-white);
 }
 
+.value-anchor {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 2px solid #F59E0B;
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.value-anchor-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #92400E;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.value-anchor-text strong {
+    font-weight: 800;
+    color: #78350F;
+}
+
 .included-list {
     display: flex;
     flex-direction: column;
