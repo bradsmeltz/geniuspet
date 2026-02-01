@@ -1591,9 +1591,9 @@ button {
 }
 
 .bar-track {
-    height: 10px;
+    height: 12px;
     background: #E5E7EB;
-    border-radius: 5px;
+    border-radius: 6px;
     overflow: hidden;
     position: relative;
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
@@ -1604,10 +1604,11 @@ button {
     left: 0;
     top: 0;
     height: 100%;
-    width: 42%;
+    width: 0%;
     background: #D74242;
-    border-radius: 5px 0 0 5px;
+    border-radius: 6px;
     z-index: 1;
+    transition: width 0.8s ease-out;
 }
 
 .bar-improved {
@@ -1615,19 +1616,100 @@ button {
     left: 0;
     top: 0;
     height: 100%;
-    width: 96%;
-    background: linear-gradient(90deg, #D74242 0%, #D74242 43.75%, #2E7D9A 43.75%, #2E7D9A 100%);
-    border-radius: 5px;
-    animation: barGrow 1.2s ease-out 0.5s forwards;
+    width: 0%;
+    background: #2E7D9A;
+    border-radius: 6px;
+    z-index: 2;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s;
     box-shadow: 0 2px 4px rgba(46, 125, 154, 0.3);
 }
 
-@keyframes barGrow {
+/* Scroll-triggered animation states */
+.score-improvement.animate .bar-current {
+    width: 42%;
+}
+
+.score-improvement.animate .bar-improved {
+    width: 96%;
+}
+
+.score-improvement.animate .score-num-large {
+    animation: countPop 0.6s ease-out forwards;
+}
+
+.score-improvement.animate .score-after .score-num-large {
+    animation: countPop 0.6s ease-out 1.2s forwards;
+    opacity: 0;
+}
+
+.score-improvement .score-after .score-num-large {
+    opacity: 0;
+}
+
+.score-improvement.animate .score-risk-tag.safe {
+    animation: tagFadeIn 0.4s ease-out 1.6s forwards;
+    opacity: 0;
+}
+
+.score-improvement .score-risk-tag.safe {
+    opacity: 0;
+}
+
+.score-improvement.animate .arrow-line {
+    animation: arrowSlide 0.6s ease-out 0.4s forwards;
+}
+
+.score-improvement.animate .arrow-head {
+    animation: arrowFadeIn 0.3s ease-out 1s forwards;
+    opacity: 0;
+}
+
+.score-improvement .arrow-head {
+    opacity: 0;
+}
+
+@keyframes countPop {
     0% {
-        width: 42%;
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
     }
     100% {
-        width: 96%;
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tagFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes arrowSlide {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 30px;
+    }
+}
+
+@keyframes arrowFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -1823,8 +1905,129 @@ button {
 }
 
 /* ========================================
-   Trust Banner
+   Trust Banner - New Design
    ======================================== */
+.trust-banner-new {
+    padding: 32px 0;
+    background: #F8F9FA;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.trust-stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.trust-stat {
+    text-align: center;
+}
+
+.trust-stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: 800;
+    color: #2E7D9A;
+    line-height: 1.1;
+}
+
+.trust-stat-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6B7280;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ========================================
+   CTA Testimonials Grid - New Design
+   ======================================== */
+.cta-testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.cta-testimonial-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E5E7EB;
+}
+
+.testimonial-card-stars {
+    color: #D4A76A;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.cta-testimonial-card .cta-testimonial-text {
+    font-size: 14px;
+    font-style: italic;
+    color: #374151;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+.testimonial-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.testimonial-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2E7D9A 0%, #3A9DBF 100%);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial-card-author {
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card-author .author-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.testimonial-card-author .author-location {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+@media (max-width: 600px) {
+    .cta-testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trust-stats-grid {
+        gap: 24px;
+    }
+
+    .trust-stat-number {
+        font-size: 28px;
+    }
+}
+
+/* Legacy trust banner (keep for backwards compatibility) */
 .trust-banner {
     padding: 40px 0;
     background: linear-gradient(135deg, #2D2D2D 0%, #4A4A4A 100%);

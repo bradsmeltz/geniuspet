@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
     initCTAButtons();
     animateScoreCircle();
+    initScoreTransformationAnimation();
 });
 
 /**
@@ -196,3 +197,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+/**
+ * Score Transformation Animation - Triggered on scroll
+ */
+function initScoreTransformationAnimation() {
+    const scoreImprovement = document.querySelector('.score-improvement');
+    if (!scoreImprovement) return;
+
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add animate class to trigger all CSS animations
+                entry.target.classList.add('animate');
+
+                // Animate the "after" score number counting up
+                const afterScore = entry.target.querySelector('.score-after .score-num-large');
+                if (afterScore) {
+                    animateNumber(afterScore, 0, 96, 1500, 1200);
+                }
+
+                // Animate the "before" score number
+                const beforeScore = entry.target.querySelector('.score-before .score-num-large');
+                if (beforeScore) {
+                    animateNumber(beforeScore, 0, 42, 800, 0);
+                }
+
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    observer.observe(scoreImprovement);
+}
+
+/**
+ * Animate a number from start to end
+ */
+function animateNumber(element, start, end, duration, delay) {
+    setTimeout(() => {
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Easing function
+            const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+            const currentValue = Math.round(start + (end - start) * easeOutCubic);
+
+            element.textContent = currentValue;
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        requestAnimationFrame(update);
+    }, delay);
+}
