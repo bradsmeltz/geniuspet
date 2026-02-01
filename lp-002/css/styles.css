@@ -449,63 +449,119 @@ button {
 }
 
 /* ========================================
-   Product Explainer Transition
+   How It Works Bridge Section
    ======================================== */
-.product-explainer {
-    padding: 40px 0;
-    background: linear-gradient(180deg, #FFFFFF 0%, #FBF8F4 100%);
-}
-
-.explainer-card {
+.how-it-works-bridge {
+    padding: 48px 0 40px;
     background: #FFFFFF;
-    border-radius: 20px;
-    padding: 32px 28px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-    border: 1px solid #F0EBE5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     text-align: center;
-    position: relative;
-    overflow: hidden;
 }
 
-.explainer-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #D74242 0%, #E85858 50%, #D74242 100%);
+.bridge-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #2E8A7B;
+    margin-bottom: 12px;
 }
 
-.explainer-image {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 20px;
+.bridge-headline {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1F2937;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.bridge-description {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #4B5563;
+    max-width: 440px;
+    margin: 0 auto 32px;
+}
+
+.bridge-description strong {
+    color: #D74242;
+    font-weight: 700;
+}
+
+.bridge-product {
+    margin-bottom: 36px;
+}
+
+.bridge-product-image {
+    width: 180px;
+    height: auto;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.12));
+}
+
+.bridge-steps {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-.explainer-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.bridge-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
-.explainer-text {
-    font-size: 18px;
-    line-height: 1.7;
-    color: #4B5563;
-    max-width: 420px;
+.bridge-step-number {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #2E8A7B 0%, #247A6C 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bridge-step-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    max-width: 100px;
+    line-height: 1.4;
     margin: 0;
 }
 
-.explainer-text strong {
-    color: #D74242;
-    font-weight: 700;
+.bridge-step-arrow {
+    display: flex;
+    align-items: center;
+    padding-bottom: 28px;
+}
+
+@media (max-width: 480px) {
+    .bridge-steps {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .bridge-step {
+        flex-direction: row;
+        gap: 14px;
+    }
+
+    .bridge-step-text {
+        max-width: none;
+        text-align: left;
+    }
+
+    .bridge-step-arrow {
+        transform: rotate(90deg);
+        padding-bottom: 0;
+    }
 }
 
 /* ========================================
