@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="h0CRF164MXEMGKZw3FI3kyER4FEfU05KM8xvwmNr">
+
+
+        <style>
+            html {
+                background-color: oklch(1 0 0);
+            }
+        </style>
+
+        <title>Pet Safety Assessment - GeniusPet</title>
+
+        <link rel="icon" href="images/favicon.ico" sizes="any">
+        <link rel="stylesheet" href="css/fonts.css">
+        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C9DHD2R2TT"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-C9DHD2R2TT');
+        </script>
+
+        <!-- Cometly Pixel -->
+        <script id="cometly-pixel" src="https://t.cometlytrack.com/e?uid=96a649-3377699795000000-471d61-s"></script>
+        <script>
+        (function() {
+            const cometlyScript = document.getElementById('cometly-pixel');
+
+            if (!cometlyScript) return;
+
+            function captureCometlyData() {
+                if (typeof window.cometToken !== 'function') {
+                    console.warn('Cometly: cometToken function not available');
+                    return;
+                }
+
+                try {
+                    const token = window.cometToken();
+
+                    if (!token) {
+                        console.warn('Cometly: No token returned');
+                        return;
+                    }
+
+                    const fingerprintPromise = typeof window.cometFingerprint === 'function'
+                        ? window.cometFingerprint()
+                        : Promise.resolve(null);
+
+                    fingerprintPromise.then(function(fingerprint) {
+                        window.GENIUSPET_COMETLY = {
+                            token: token,
+                            fingerprint: fingerprint,
+                        };
+
+                        const payload = { token: token };
+                        if (fingerprint) {
+                            payload.fingerprint = fingerprint;
+                        }
+
+                        localStorage.setItem('cometly_last_token', token);
+                        if (fingerprint) {
+                            localStorage.setItem('cometly_last_fingerprint', fingerprint);
+                        }
+                        localStorage.setItem('cometly_last_update', new Date().toISOString());
+                    }).catch(function(error) {
+                        console.error('Cometly: Error getting fingerprint', error);
+                    });
+                } catch (error) {
+                    console.error('Cometly: Error processing token', error);
+                }
+            }
+
+            if (typeof window.cometToken === 'function') {
+                setTimeout(captureCometlyData, 100);
+            } else {
+                cometlyScript.addEventListener('load', function() {
+                    setTimeout(captureCometlyData, 100);
+                });
+            }
+        })();
+
+        (function() {
+            const STORAGE_KEY = 'cometly_view_content_fired';
+
+            if (localStorage.getItem(STORAGE_KEY)) {
+                console.log('Cometly: view_content already fired in this session');
+                return;
+            }
+
+            function fireViewContent() {
+                if (typeof window.comet === 'function') {
+                    window.comet('view_content');
+                    localStorage.setItem(STORAGE_KEY, 'true');
+                    console.log('Cometly: view_content event fired');
+                } else {
+                    console.warn('Cometly: comet function not available for view_content');
+                }
+            }
+
+            const cometlyScript = document.getElementById('cometly-pixel');
+            if (cometlyScript && typeof window.comet === 'function') {
+                setTimeout(fireViewContent, 200);
+            } else if (cometlyScript) {
+                cometlyScript.addEventListener('load', function() {
+                    setTimeout(fireViewContent, 200);
+                });
+            }
+        })();
+        </script>
+
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body class="font-sans antialiased">
+        <div id="app">
+            <!-- Header -->
+            <header class="quiz-header">
+                <img src="images/home2-logo.svg" alt="GeniusPet Logo" class="quiz-logo">
+            </header>
+
+            <!-- Quiz Container -->
+            <div class="quiz-container">
+                <!-- Welcome Screen -->
+                <div id="screen-welcome" class="quiz-screen active">
+                    <div class="quiz-card">
+                        <div class="badge-container">
+                            <span class="badge">60-SECOND PET SAFETY ASSESSMENT</span>
+                        </div>
+
+                        <h1 class="quiz-headline">
+                            If Your Pet Went Missing Tonight,<br>
+                            <span class="headline-highlight">Could a Stranger Bring Them Home?</span>
+                        </h1>
+
+                        <p class="quiz-subheadline">
+                            Take this 60-second vet-designed assessment to uncover hidden safety blind spots and get a personalized protection plan for your pet.
+                        </p>
+
+                        <div class="hero-image-container">
+                            <img src="images/attach-pet-tag.png" alt="Pet with GeniusTag" class="hero-image">
+                        </div>
+
+                        <button type="button" class="btn-primary btn-cta" onclick="startQuiz()">
+                            Take the Free Assessment <span class="arrow">→</span>
+                        </button>
+
+                        <div class="trust-badges">
+                            <span class="trust-item"><span class="checkmark">✓</span> Takes 60 seconds</span>
+                            <span class="trust-item"><span class="checkmark">✓</span> 100% free</span>
+                            <span class="trust-item"><span class="checkmark">✓</span> Vet-approved</span>
+                        </div>
+
+                        <div class="social-proof">
+                            <div class="avatar-stack">
+                                <img src="images/dog1.jpg" alt="Pet parent" class="avatar">
+                                <img src="images/cat1.jpg" alt="Pet parent" class="avatar">
+                                <img src="images/dog2.jpg" alt="Pet parent" class="avatar">
+                                <img src="images/cat2.jpg" alt="Pet parent" class="avatar">
+                            </div>
+                            <span class="social-proof-text"><strong>76,000+</strong> pet parents have taken this assessment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 1: Pet Type -->
+                <div id="screen-q1" class="quiz-screen">
+                    <div class="quiz-card">
+                        <div class="progress-header">
+                            <span class="progress-label">Pet Safety Assessment</span>
+                            <span class="progress-count">1 of 5</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%"></div>
+                        </div>
+
+                        <h2 class="question-title">What type of pet do you have?</h2>
+                        <p class="question-subtitle">Select the one that best applies.</p>
+
+                        <div class="options-grid options-2x2">
+                            <button type="button" class="option-card option-with-image" onclick="selectOption(1, 'dog')">
+                                <img src="images/dog1.jpg" alt="Dog" class="option-image">
+                                <span class="option-label">Dog</span>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-image" onclick="selectOption(1, 'cat')">
+                                <img src="images/cat1.jpg" alt="Cat" class="option-image">
+                                <span class="option-label">Cat</span>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-image" onclick="selectOption(1, 'both')">
+                                <img src="images/dog2.jpg" alt="Both" class="option-image">
+                                <span class="option-label">Both</span>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-image" onclick="selectOption(1, 'other')">
+                                <img src="images/cat2.jpg" alt="Other" class="option-image">
+                                <span class="option-label">Other</span>
+                                <span class="option-radio"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2: Identification -->
+                <div id="screen-q2" class="quiz-screen">
+                    <div class="quiz-card">
+                        <div class="progress-header">
+                            <span class="progress-label">Pet Safety Assessment</span>
+                            <span class="progress-count">2 of 5</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%"></div>
+                        </div>
+
+                        <h2 class="question-title">What identification does your pet currently wear?</h2>
+                        <p class="question-subtitle">Choose the option that best describes your pet's current setup.</p>
+
+                        <div class="options-list">
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(2, 'microchip')">
+                                <span class="option-emoji">💉</span>
+                                <div class="option-text">
+                                    <span class="option-label">Microchip only</span>
+                                    <span class="option-description">Implanted at the vet, requires scanner to read</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(2, 'engraved')">
+                                <span class="option-emoji">🏷️</span>
+                                <div class="option-text">
+                                    <span class="option-label">Engraved tag on collar</span>
+                                    <span class="option-description">Name and phone number stamped on metal</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(2, 'both')">
+                                <span class="option-emoji">✅</span>
+                                <div class="option-text">
+                                    <span class="option-label">Microchip + engraved tag</span>
+                                    <span class="option-description">Both methods combined</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(2, 'none')">
+                                <span class="option-emoji">❌</span>
+                                <div class="option-text">
+                                    <span class="option-label">No ID at all</span>
+                                    <span class="option-description">Haven't gotten around to it yet</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3: Medical Conditions -->
+                <div id="screen-q3" class="quiz-screen">
+                    <div class="quiz-card">
+                        <div class="progress-header">
+                            <span class="progress-label">Pet Safety Assessment</span>
+                            <span class="progress-count">3 of 5</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+
+                        <h2 class="question-title">Does your pet have any medical conditions a rescuer should know about?</h2>
+                        <p class="question-subtitle">Think about allergies, medications, anxiety triggers, or dietary restrictions.</p>
+
+                        <div class="options-list">
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(3, 'multiple')">
+                                <span class="option-emoji">🏥</span>
+                                <div class="option-text">
+                                    <span class="option-label">Yes, multiple conditions</span>
+                                    <span class="option-description">Medications, allergies, chronic conditions</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(3, 'few')">
+                                <span class="option-emoji">💊</span>
+                                <div class="option-text">
+                                    <span class="option-label">Yes, one or two things</span>
+                                    <span class="option-description">A food allergy, one medication, or anxiety</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(3, 'unsure')">
+                                <span class="option-emoji">🤔</span>
+                                <div class="option-text">
+                                    <span class="option-label">I'm not sure</span>
+                                    <span class="option-description">There might be things a stranger should know</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(3, 'healthy')">
+                                <span class="option-emoji">👍</span>
+                                <div class="option-text">
+                                    <span class="option-label">No, healthy with no special needs</span>
+                                    <span class="option-description">Standard diet, no medications</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4: Biggest Fear -->
+                <div id="screen-q4" class="quiz-screen">
+                    <div class="quiz-card">
+                        <div class="progress-header">
+                            <span class="progress-label">Pet Safety Assessment</span>
+                            <span class="progress-count">4 of 5</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+
+                        <h2 class="question-title">What's your biggest fear about your pet going missing?</h2>
+                        <p class="question-subtitle">Be honest, this helps us personalize your safety plan.</p>
+
+                        <div class="options-list">
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(4, 'medication')">
+                                <span class="option-emoji">💔</span>
+                                <div class="option-text">
+                                    <span class="option-label">They won't get their medication</span>
+                                    <span class="option-description">Missing a dose could be dangerous or life-threatening</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(4, 'contact')">
+                                <span class="option-emoji">📱</span>
+                                <div class="option-text">
+                                    <span class="option-label">Nobody will know how to reach me</span>
+                                    <span class="option-description">A finder won't be able to identify or contact me</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(4, 'shelter')">
+                                <span class="option-emoji">🏠</span>
+                                <div class="option-text">
+                                    <span class="option-label">They'll end up in a shelter</span>
+                                    <span class="option-description">The thought of them scared and alone keeps me up</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(4, 'never')">
+                                <span class="option-emoji">😢</span>
+                                <div class="option-text">
+                                    <span class="option-label">I'll never see them again</span>
+                                    <span class="option-description">My worst nightmare. Not knowing what happened</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5: Smart Tag Interest -->
+                <div id="screen-q5" class="quiz-screen">
+                    <div class="quiz-card">
+                        <div class="progress-header">
+                            <span class="progress-label">Pet Safety Assessment</span>
+                            <span class="progress-count">5 of 5</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+
+                        <h2 class="question-title">If there was a smart tag that let anyone with a phone instantly ID your pet and contact you, would you want one?</h2>
+                        <p class="question-subtitle">Last question, then we'll calculate your pet's safety score.</p>
+
+                        <div class="options-list">
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(5, 'absolutely')">
+                                <span class="option-emoji">🙌</span>
+                                <div class="option-text">
+                                    <span class="option-label">Absolutely, that's exactly what I need</span>
+                                    <span class="option-description">I want instant identification and contact</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(5, 'interested')">
+                                <span class="option-emoji">🤔</span>
+                                <div class="option-text">
+                                    <span class="option-label">Interested, tell me more</span>
+                                    <span class="option-description">I'd want to see how it works first</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                            <button type="button" class="option-card option-with-emoji" onclick="selectOption(5, 'depends')">
+                                <span class="option-emoji">⚖️</span>
+                                <div class="option-text">
+                                    <span class="option-label">Depends on cost and ease of use</span>
+                                    <span class="option-description">I don't want something complicated or expensive</span>
+                                </div>
+                                <span class="option-radio"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading/Calculating Screen -->
+                <div id="screen-loading" class="quiz-screen">
+                    <div class="quiz-card loading-card">
+                        <h2 class="loading-title">Calculating Your Pet's Safety Score</h2>
+                        <p class="loading-subtitle">Analyzing your answers against veterinary safety benchmarks...</p>
+
+                        <div class="score-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="score-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="score-progress" cx="50" cy="50" r="45" id="score-circle"></circle>
+                            </svg>
+                            <span class="score-value" id="score-value">0%</span>
+                        </div>
+
+                        <div class="loading-checklist">
+                            <div class="checklist-item" id="check-1">
+                                <span class="check-icon pending">○</span>
+                                <span class="check-text">Evaluating current ID coverage</span>
+                            </div>
+                            <div class="checklist-item" id="check-2">
+                                <span class="check-icon pending">○</span>
+                                <span class="check-text">Assessing medical risk factors</span>
+                            </div>
+                            <div class="checklist-item" id="check-3">
+                                <span class="check-icon pending">○</span>
+                                <span class="check-text">Checking instant-contact readiness</span>
+                            </div>
+                            <div class="checklist-item" id="check-4">
+                                <span class="check-icon pending">○</span>
+                                <span class="check-text">Generating personalized safety plan</span>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-box">
+                            <p class="testimonial-text">"I thought my microchip was enough. This assessment opened my eyes to the gaps I didn't know existed."</p>
+                            <p class="testimonial-author">Rachel M., Dog Mom, Miami FL</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="screen-results" class="quiz-screen">
+                    <div class="quiz-card results-card">
+                        <div class="results-header">
+                            <h2 class="results-title">Your Pet Safety Score</h2>
+                            <div class="results-score">
+                                <span class="big-score" id="final-score">42</span>
+                                <span class="score-label">out of 100</span>
+                            </div>
+                            <p class="results-risk" id="risk-level">High Risk</p>
+                        </div>
+
+                        <div class="results-gaps">
+                            <h3>Safety Gaps Identified:</h3>
+                            <ul class="gaps-list" id="gaps-list">
+                                <li>No instant contact method for finders</li>
+                                <li>Medical info not accessible in emergencies</li>
+                                <li>Relies on scanner-dependent technology</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-box">
+                            <h3>Recommended Solution</h3>
+                            <p>Based on your assessment, <strong>GeniusTag</strong> would address all your safety gaps with:</p>
+                            <ul class="solution-features">
+                                <li><span class="check">✓</span> Instant smartphone scanning (no app needed)</li>
+                                <li><span class="check">✓</span> Real-time owner notifications</li>
+                                <li><span class="check">✓</span> Medical info display for rescuers</li>
+                                <li><span class="check">✓</span> GPS location sharing</li>
+                            </ul>
+                        </div>
+
+                        <a href="https://geniuspet.com/products/geniustag" class="btn-primary btn-cta">
+                            Get GeniusTag - 50% Off Today <span class="arrow">→</span>
+                        </a>
+
+                        <p class="guarantee">30-Day Money-Back Guarantee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
