@@ -1506,6 +1506,15 @@ button {
         gap: 16px;
     }
 
+    .stats-grid-three {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .stats-grid-three .stat-item {
+        text-align: center;
+    }
+
     .product-features {
         grid-template-columns: 1fr;
     }
