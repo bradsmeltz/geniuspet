@@ -1723,31 +1723,82 @@ button {
     border-top: 1px solid rgba(46, 125, 154, 0.2);
 }
 
-/* CTA Testimonial Highlight */
-.cta-testimonial-highlight {
-    background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);
-    border-left: 4px solid #2E7D9A;
-    border-radius: 0 12px 12px 0;
-    padding: 16px 20px;
-    margin-bottom: 16px;
-    text-align: left;
-}
-
-.highlight-quote {
-    font-size: 15px;
-    font-weight: 600;
-    font-style: italic;
-    line-height: 1.5;
-    color: #374151;
-    margin: 0 0 8px 0;
-}
-
-.highlight-author {
+/* CTA Whisper Testimonial - subtle social proof */
+.cta-whisper-testimonial {
     font-size: 13px;
-    font-weight: 600;
-    color: #2E7D9A;
+    font-style: italic;
+    color: #6B7280;
+    margin: 0 0 12px 0;
+    text-align: center;
 }
 
+.cta-whisper-testimonial span {
+    font-style: normal;
+    color: #9CA3AF;
+}
+
+/* CTA Offer Pill - single line, subtle */
+.cta-offer-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 20px;
+    padding: 6px 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #92400E;
+}
+
+.offer-fire {
+    font-size: 12px;
+}
+
+.offer-text {
+    font-weight: 500;
+}
+
+.offer-text s {
+    color: #9CA3AF;
+    font-weight: 400;
+}
+
+.offer-text strong {
+    color: #B45309;
+}
+
+.offer-divider {
+    color: #D1D5DB;
+}
+
+.offer-scarcity {
+    font-weight: 500;
+    color: #B45309;
+}
+
+/* Hero CTA - the star of the show */
+.cta-button.hero-cta {
+    padding: 18px 32px;
+    font-size: 18px;
+    box-shadow: 0 4px 14px rgba(180, 83, 83, 0.4);
+    transition: all 0.2s ease;
+}
+
+.cta-button.hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(180, 83, 83, 0.5);
+}
+
+/* CTA Microcopy - trust beneath button */
+.cta-microcopy {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin: 12px 0 0 0;
+    text-align: center;
+}
+
+/* Legacy styles - keep for other urgency banners */
 /* Urgency Banner */
 .urgency-banner {
     background: linear-gradient(90deg, #FEF3C7 0%, #FDE68A 100%);
