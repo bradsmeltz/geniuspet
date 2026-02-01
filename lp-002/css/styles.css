@@ -395,6 +395,60 @@ button {
 }
 
 /* ========================================
+   Diagnosis Bridge
+   ======================================== */
+.diagnosis-bridge {
+    padding: 32px 0;
+    background: linear-gradient(180deg, #F0FDF9 0%, #FFFFFF 100%);
+}
+
+.diagnosis-card {
+    background: #FFFFFF;
+    border: 2px solid #2E8A7B;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(46, 138, 123, 0.12);
+}
+
+.diagnosis-icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #2E8A7B 0%, #236B5E 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.diagnosis-content {
+    flex: 1;
+}
+
+.diagnosis-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1F2937;
+    margin: 0 0 8px 0;
+}
+
+.diagnosis-text strong {
+    color: #DC2626;
+    font-weight: 700;
+}
+
+.diagnosis-solution {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2E8A7B;
+    margin: 0;
+}
+
+/* ========================================
    Risk Section
    ======================================== */
 .risk-section {
