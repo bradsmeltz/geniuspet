@@ -137,6 +137,11 @@ button {
     justify-content: center;
 }
 
+.logo-img {
+    height: 32px;
+    width: auto;
+}
+
 .logo-icon {
     width: 24px;
     height: 24px;
@@ -871,12 +876,10 @@ button {
     margin-bottom: 16px;
 }
 
-.footer-logo .logo-genius {
-    color: var(--color-red);
-}
-
-.footer-logo .logo-pet {
-    color: var(--neutral-400);
+.footer-logo-img {
+    height: 24px;
+    width: auto;
+    filter: brightness(0) invert(1);
 }
 
 .footer-description {
