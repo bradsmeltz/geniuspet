@@ -454,21 +454,19 @@ button {
     background: linear-gradient(90deg, #D74242 0%, #E85858 50%, #D74242 100%);
 }
 
-.explainer-icon {
-    width: 72px;
-    height: 72px;
-    background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
-    border-radius: 16px;
+.explainer-image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    border: 2px solid #FFE0E0;
 }
 
-.explainer-icon svg {
-    width: 40px;
-    height: 40px;
+.explainer-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .explainer-text {
