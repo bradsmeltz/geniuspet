@@ -2352,6 +2352,61 @@ button {
     margin-bottom: 24px;
 }
 
+/* Streamlined CTA Headline - Single Line */
+.cta-headline-slim {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 20px;
+    color: var(--color-black);
+}
+
+/* Urgency Pill - Minimal, Pale */
+.urgency-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFDF7;
+    border: 1px solid #F5E6C8;
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.urgency-pill-text {
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.urgency-pill-text s {
+    color: #9CA3AF;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.urgency-pill-divider {
+    color: #D1D5DB;
+}
+
+.urgency-pill-scarcity {
+    font-weight: 500;
+    color: #92400E;
+}
+
+/* Inline Microcopy with Guarantee Whisper */
+.cta-microcopy-inline {
+    font-size: 13px;
+    color: #6B7280;
+    margin-top: 14px;
+    text-align: center;
+}
+
+.guarantee-whisper {
+    color: #2E7D9A;
+    font-style: italic;
+}
+
 .cta-trust-box {
     display: inline-flex;
     align-items: center;
