@@ -1601,10 +1601,46 @@ button {
 
 .bar-fill {
     height: 100%;
-    width: 96%;
+    width: 0%;
     background: linear-gradient(90deg, #D74242 0%, #D74242 44%, #2E7D9A 44%, #2E7D9A 100%);
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(46, 125, 154, 0.3);
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scroll-triggered animation states */
+.score-improvement.animate .bar-fill {
+    width: 96%;
+}
+
+.score-improvement .score-after .score-num-large {
+    opacity: 0;
+}
+
+.score-improvement.animate .score-after .score-num-large {
+    opacity: 1;
+}
+
+.score-improvement .score-risk-tag.safe {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    transition-delay: 1.4s;
+}
+
+.score-improvement.animate .score-risk-tag.safe {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.score-improvement .arrow-head {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    transition-delay: 0.6s;
+}
+
+.score-improvement.animate .arrow-head {
+    opacity: 1;
 }
 
 @keyframes countPop {
