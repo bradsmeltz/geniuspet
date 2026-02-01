@@ -242,9 +242,22 @@ button {
     margin-top: 4px;
 }
 
+.risk-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+}
+
 .score-title {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
     line-height: 1.3;
     margin-bottom: 12px;
 }
@@ -252,8 +265,13 @@ button {
 .score-description {
     font-size: 14px;
     line-height: 1.6;
-    opacity: 0.9;
+    opacity: 0.95;
     margin-bottom: 12px;
+}
+
+.score-description strong {
+    font-weight: 700;
+    color: #FFFFFF;
 }
 
 .score-risk-level {
