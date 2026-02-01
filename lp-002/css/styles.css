@@ -624,6 +624,8 @@ button {
     object-position: top;
     display: block;
     border-radius: 36px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .iphone-home-indicator {
