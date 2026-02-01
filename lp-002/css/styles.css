@@ -555,7 +555,13 @@ button {
     background: #F5F0EB;
     border-radius: 36px;
     overflow: hidden;
-    max-height: 620px;
+}
+
+.pet-profile-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 36px;
 }
 
 .iphone-home-indicator {
