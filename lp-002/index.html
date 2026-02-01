@@ -36,34 +36,70 @@
                 <p class="score-description">While you've taken some steps, your pet still lacks instant smartphone identification and a direct communication channel between you and a rescuer.</p>
                 <p class="score-risk-level">IS THIS RISKY?</p>
 
-                <div class="score-comparison">
-                    <div class="comparison-item current">
-                        <span class="comparison-label">CURRENT SCORE</span>
-                        <span class="comparison-value">42</span>
+                <div class="score-transformation">
+                    <div class="transform-card transform-before">
+                        <span class="transform-label">Now</span>
+                        <span class="transform-score">42</span>
                     </div>
-                    <div class="comparison-arrow">→</div>
-                    <div class="comparison-item improved">
-                        <span class="comparison-label">WITH GENIUSTAG</span>
-                        <span class="comparison-value">96</span>
+                    <div class="transform-arrow">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M6 16h20M20 10l6 6-6 6" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="transform-card transform-after">
+                        <span class="transform-label">With GeniusTag</span>
+                        <span class="transform-score">96</span>
                     </div>
                 </div>
 
-                <div class="score-metrics">
-                    <div class="metric">
-                        <span class="metric-label">INSTANT ID</span>
-                        <span class="metric-value partial">Partial</span>
+                <div class="protection-gaps">
+                    <div class="gap-item">
+                        <div class="gap-icon gap-warning">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <circle cx="8" cy="8" r="6" stroke="#FFD166" stroke-width="2"/>
+                                <path d="M8 5v3M8 10v1" stroke="#FFD166" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="gap-content">
+                            <span class="gap-label">Instant ID</span>
+                            <span class="gap-status warning">Partial</span>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-label">CONTACT SPEED</span>
-                        <span class="metric-value limited">Limited</span>
+                    <div class="gap-item">
+                        <div class="gap-icon gap-warning">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <circle cx="8" cy="8" r="6" stroke="#FFD166" stroke-width="2"/>
+                                <path d="M8 5v3M8 10v1" stroke="#FFD166" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="gap-content">
+                            <span class="gap-label">Contact Speed</span>
+                            <span class="gap-status warning">Limited</span>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-label">MEDICAL INFO</span>
-                        <span class="metric-value at-risk">At Risk</span>
+                    <div class="gap-item">
+                        <div class="gap-icon gap-danger">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <circle cx="8" cy="8" r="6" stroke="#FF6B6B" stroke-width="2"/>
+                                <path d="M6 6l4 4M10 6l-4 4" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="gap-content">
+                            <span class="gap-label">Medical Info</span>
+                            <span class="gap-status danger">At Risk</span>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-label">RESCUE NETWORK</span>
-                        <span class="metric-value none">None</span>
+                    <div class="gap-item">
+                        <div class="gap-icon gap-none">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <circle cx="8" cy="8" r="6" stroke="#6EE7B7" stroke-width="2"/>
+                                <path d="M6 6l4 4M10 6l-4 4" stroke="#6EE7B7" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="gap-content">
+                            <span class="gap-label">Rescue Network</span>
+                            <span class="gap-status none">None</span>
+                        </div>
                     </div>
                 </div>
             </div>

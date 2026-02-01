@@ -265,77 +265,105 @@ button {
     margin-bottom: 24px;
 }
 
-.score-comparison {
+/* Score Transformation Cards */
+.score-transformation {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.comparison-item {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 12px 20px;
-    min-width: 110px;
-}
-
-.comparison-item.improved {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.comparison-label {
-    display: block;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0.8;
-    margin-bottom: 4px;
-}
-
-.comparison-value {
-    font-size: 32px;
-    font-weight: 700;
-}
-
-.comparison-arrow {
-    font-size: 24px;
-    opacity: 0.6;
-}
-
-.score-metrics {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+    margin-bottom: 28px;
 }
 
-.metric {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 12px;
-    text-align: left;
+.transform-card {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 20px 28px;
+    text-align: center;
+    min-width: 120px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.metric-label {
+.transform-card.transform-after {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.transform-label {
     display: block;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    opacity: 0.7;
-    margin-bottom: 4px;
+    opacity: 0.85;
+    margin-bottom: 8px;
 }
 
-.metric-value {
-    font-size: 14px;
+.transform-score {
+    display: block;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.transform-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+}
+
+/* Protection Gaps Grid */
+.protection-gaps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.gap-item {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gap-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.gap-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.gap-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    opacity: 0.75;
+    margin-bottom: 2px;
+}
+
+.gap-status {
+    display: block;
+    font-size: 15px;
     font-weight: 600;
 }
 
-.metric-value.partial { color: #FFD166; }
-.metric-value.limited { color: #FFD166; }
-.metric-value.at-risk { color: #FF6B6B; }
-.metric-value.none { color: #2E8A7B; }
+.gap-status.warning { color: #FFD166; }
+.gap-status.danger { color: #FF6B6B; }
+.gap-status.none { color: #6EE7B7; }
 
 /* ========================================
    Risk Section
