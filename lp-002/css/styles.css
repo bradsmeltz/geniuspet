@@ -1014,7 +1014,7 @@ button {
     flex-shrink: 0;
     width: 150px;
     height: 150px;
-    background: var(--bg-beige-stroke);
+    background: transparent;
     border-radius: 12px;
     display: flex;
     align-items: center;
