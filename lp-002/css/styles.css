@@ -555,11 +555,15 @@ button {
     background: #F5F0EB;
     border-radius: 36px;
     overflow: hidden;
+    min-height: 580px;
 }
 
 .pet-profile-image {
     width: 100%;
     height: auto;
+    min-height: 580px;
+    object-fit: cover;
+    object-position: top;
     display: block;
     border-radius: 36px;
 }
