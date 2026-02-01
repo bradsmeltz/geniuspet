@@ -495,7 +495,7 @@ button {
     margin-bottom: 32px;
 }
 
-/* iPhone Mockup */
+/* iPhone Mockup - Pixel Perfect */
 .iphone-mockup {
     display: flex;
     justify-content: center;
@@ -503,25 +503,23 @@ button {
 }
 
 .iphone-frame {
-    width: 300px;
-    background: #1A1A1A;
-    border-radius: 44px;
-    padding: 12px;
+    width: 320px;
+    background: #000000;
+    border-radius: 48px;
+    padding: 14px;
     box-shadow:
-        0 30px 60px -15px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-        inset 0 0 2px 1px rgba(255, 255, 255, 0.05);
+        0 40px 80px -20px rgba(0, 0, 0, 0.35),
+        inset 0 0 0 2px #2A2A2A;
     position: relative;
 }
 
-.iphone-notch {
-    width: 100px;
-    height: 28px;
-    background: #1A1A1A;
-    border-radius: 0 0 18px 18px;
-    margin: 0 auto;
+.iphone-dynamic-island {
+    width: 90px;
+    height: 26px;
+    background: #000000;
+    border-radius: 20px;
     position: absolute;
-    top: 12px;
+    top: 22px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -529,9 +527,9 @@ button {
 
 .iphone-screen {
     background: #FFFFFF;
-    border-radius: 32px;
+    border-radius: 36px;
     overflow: hidden;
-    max-height: 580px;
+    max-height: 620px;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -542,302 +540,312 @@ button {
 }
 
 .iphone-home-indicator {
-    width: 120px;
-    height: 4px;
-    background: #1A1A1A;
-    border-radius: 2px;
-    margin: 8px auto 0;
+    width: 134px;
+    height: 5px;
+    background: #000000;
+    border-radius: 3px;
+    margin: 10px auto 0;
 }
 
-/* App Header */
-.app-header {
+/* GeniusTag App Header */
+.gt-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 40px 16px 12px;
+    padding: 48px 20px 14px;
     background: #FFFFFF;
-    border-bottom: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F3F4F6;
 }
 
-.app-header-left,
-.app-header-right {
+.gt-header-menu {
     width: 24px;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
-.app-logo {
+.gt-header-logo {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
-.app-logo-text {
-    font-size: 14px;
-    color: #6B7280;
+.gt-logo-text {
+    font-size: 15px;
+    color: #9CA3AF;
     letter-spacing: 0.02em;
 }
 
-.app-logo-text strong {
-    color: #2B2B2B;
+.gt-logo-bold {
+    color: #1F2937;
     font-weight: 700;
 }
 
-/* App Navigation */
-.app-nav {
+.gt-header-user {
+    width: 24px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
+    justify-content: flex-end;
+}
+
+/* GeniusTag Navigation */
+.gt-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
     background: #FFFFFF;
 }
 
-.nav-title {
-    font-size: 18px;
+.gt-nav-title {
+    font-size: 20px;
     font-weight: 600;
-    color: #2B2B2B;
+    color: #1F2937;
 }
 
-/* Pet Profile Card */
-.pet-profile-card {
-    background: #FBF8F4;
-    border-radius: 16px;
-    padding: 24px 20px;
-    margin: 0 12px 12px;
+/* GeniusTag Profile Card */
+.gt-profile-card {
+    background: #FAF7F5;
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin: 8px 16px 16px;
     text-align: center;
 }
 
-.pet-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto 16px;
+.gt-photo-wrapper {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 18px;
     position: relative;
-    overflow: visible;
 }
 
-.pet-photo img {
+.gt-photo {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #FFFFFF;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 4px solid #FFFFFF;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-.photo-edit-icon {
+.gt-photo-edit {
     position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 24px;
-    height: 24px;
+    bottom: 2px;
+    right: 2px;
+    width: 28px;
+    height: 28px;
     background: #FFFFFF;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.pet-greeting {
-    font-size: 18px;
+.gt-greeting {
+    font-size: 20px;
     font-weight: 500;
-    color: #2B2B2B;
-    margin-bottom: 8px;
+    color: #1F2937;
+    margin-bottom: 10px;
 }
 
-.pet-greeting strong {
+.gt-greeting strong {
     font-weight: 700;
 }
 
-.pet-message {
-    font-size: 13px;
-    line-height: 1.5;
+.gt-message {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #6B7280;
+    margin-bottom: 20px;
+}
+
+.gt-contact-btn {
+    width: 100%;
+    background: #E53935;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 16px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* GeniusTag Sections */
+.gt-section {
+    background: #FFFFFF;
+    border: 1px solid #F3F4F6;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin: 0 16px 14px;
+}
+
+.gt-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     color: #6B7280;
     margin-bottom: 16px;
 }
 
-.contact-btn {
-    width: 100%;
-    background: #D74242;
-    color: white;
-    border: none;
-    border-radius: 28px;
-    padding: 14px 24px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-/* Profile Blocks */
-.profile-block {
-    background: #FFFFFF;
-    border: 1px solid #F0F0F0;
-    border-radius: 12px;
-    padding: 16px;
-    margin: 0 12px 12px;
-}
-
-.block-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: #6B7280;
-    margin-bottom: 14px;
-}
-
-.info-rows {
+.gt-info-list {
     display: flex;
     flex-direction: column;
 }
 
-.info-row {
+.gt-info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #F5F5F5;
+    padding: 14px 0;
+    border-bottom: 1px solid #F3F4F6;
 }
 
-.info-row:last-child {
+.gt-info-row:last-child {
     border-bottom: none;
+    padding-bottom: 0;
 }
 
-.info-label {
-    font-size: 14px;
-    color: #4B5563;
+.gt-info-row:first-child {
+    padding-top: 0;
 }
 
-.info-value {
-    font-size: 14px;
+.gt-info-label {
+    font-size: 15px;
+    color: #374151;
+}
+
+.gt-info-value {
+    font-size: 15px;
     font-weight: 600;
-    color: #2B2B2B;
+    color: #1F2937;
 }
 
-.info-badge {
+.gt-badge {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 14px;
+    gap: 8px;
+    font-size: 15px;
     font-weight: 500;
 }
 
-.info-badge.yes {
-    color: #2B2B2B;
+.gt-badge-yes {
+    color: #1F2937;
 }
 
-.info-badge.no {
+.gt-badge-no {
     color: #9CA3AF;
 }
 
-.info-badge svg {
+.gt-badge svg {
     flex-shrink: 0;
 }
 
-/* Accordion Items */
-.accordion-items {
+/* GeniusTag Accordion */
+.gt-accordion-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 0 12px 12px;
+    gap: 10px;
+    padding: 0 16px 16px;
 }
 
-.accordion-item {
+.gt-accordion-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
+    gap: 14px;
+    padding: 16px 18px;
     background: #F9FAFB;
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     color: #4B5563;
 }
 
-.accordion-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
+.gt-accordion-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
-.accordion-icon.allergies {
+.gt-icon-allergies {
     background: #FEF3C7;
 }
 
-.accordion-icon.medical {
+.gt-icon-medical {
     background: #FEE2E2;
 }
 
-.accordion-icon.prescription {
+.gt-icon-prescription {
     background: #DBEAFE;
 }
 
-.accordion-icon.food {
+.gt-icon-food {
     background: #D1FAE5;
 }
 
-.accordion-chevron {
+.gt-accordion-chevron {
     margin-left: auto;
 }
 
-/* App Footer */
-.app-footer {
+/* GeniusTag Footer */
+.gt-footer {
     background: #F9FAFB;
-    padding: 24px 16px 20px;
+    padding: 28px 20px 24px;
     text-align: center;
 }
 
-.app-footer-logo {
+.gt-footer-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 14px;
 }
 
-.app-footer-logo span {
-    font-size: 13px;
-    color: #6B7280;
+.gt-footer-logo span {
+    font-size: 14px;
+    color: #9CA3AF;
 }
 
-.app-footer-logo strong {
-    color: #2B2B2B;
+.gt-footer-logo strong {
+    color: #1F2937;
 }
 
-.app-footer-links {
+.gt-footer-links {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 16px;
+    gap: 24px;
+    margin-bottom: 18px;
 }
 
-.app-footer-links span {
-    font-size: 12px;
+.gt-footer-links span {
+    font-size: 13px;
     color: #4B5563;
 }
 
-.app-footer-copy {
-    font-size: 11px;
+.gt-footer-copy {
+    font-size: 12px;
     color: #9CA3AF;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-.app-footer-legal {
+.gt-footer-legal {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 20px;
 }
 
-.app-footer-legal span {
-    font-size: 11px;
+.gt-footer-legal span {
+    font-size: 12px;
     color: #6B7280;
 }
 
