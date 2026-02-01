@@ -267,29 +267,41 @@ button {
 
 /* Protection Gaps Grid */
 .protection-gaps {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
 }
 
 .gap-item {
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
-    padding: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    padding: 16px 18px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .gap-icon {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
+}
+
+.gap-icon.gap-warning {
+    background: #FEF3C7;
+}
+
+.gap-icon.gap-danger {
+    background: #FEE2E2;
+}
+
+.gap-icon.gap-none {
+    background: #FEE2E2;
 }
 
 .gap-content {
@@ -299,22 +311,36 @@ button {
 
 .gap-label {
     display: block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    opacity: 0.75;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
     margin-bottom: 2px;
 }
 
 .gap-status {
-    display: block;
-    font-size: 15px;
+    display: inline-block;
+    font-size: 12px;
     font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
-.gap-status.warning { color: #FFD166; }
-.gap-status.danger { color: #FF6B6B; }
-.gap-status.none { color: #6EE7B7; }
+.gap-status.warning {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.gap-status.danger {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.gap-status.none {
+    background: #FEE2E2;
+    color: #DC2626;
+}
 
 /* ========================================
    Risk Section
@@ -455,8 +481,8 @@ button {
 }
 
 .explainer-image {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -901,8 +927,8 @@ button {
 
 .product-image {
     flex-shrink: 0;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background: var(--bg-beige-stroke);
     border-radius: 12px;
     display: flex;
