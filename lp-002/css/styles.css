@@ -475,23 +475,62 @@ button {
    Product Explainer Transition
    ======================================== */
 .product-explainer {
-    padding: 32px 0;
+    padding: 40px 0;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FBF8F4 100%);
+}
+
+.explainer-card {
     background: #FFFFFF;
-    border-bottom: 1px solid #F0F0F0;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #F0EBE5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.explainer-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #D74242 0%, #E85858 50%, #D74242 100%);
+}
+
+.explainer-icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 2px solid #FFE0E0;
+}
+
+.explainer-icon svg {
+    width: 40px;
+    height: 40px;
 }
 
 .explainer-text {
     font-size: 18px;
-    line-height: 1.6;
+    line-height: 1.7;
     color: #4B5563;
-    text-align: center;
-    max-width: 480px;
-    margin: 0 auto;
+    max-width: 420px;
+    margin: 0;
 }
 
 .explainer-text strong {
-    color: #2B2B2B;
-    font-weight: 600;
+    color: #D74242;
+    font-weight: 700;
 }
 
 /* ========================================
