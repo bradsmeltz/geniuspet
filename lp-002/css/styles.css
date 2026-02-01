@@ -178,11 +178,77 @@ button {
 }
 
 .score-card {
-    background: linear-gradient(180deg, #D74242 0%, #B93535 100%);
+    background: linear-gradient(180deg, #C9605E 0%, #A85250 100%);
     border-radius: 20px;
     padding: 32px 24px;
     text-align: center;
     color: var(--color-white);
+}
+
+/* Compact Score Card Layout */
+.score-card.score-card-compact {
+    padding: 24px 20px;
+}
+
+.score-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.score-circle-small {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.score-circle-small .score-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.score-circle-small .score-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.score-circle-small .score-number {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.score-header-text {
+    text-align: left;
+}
+
+.score-header-text .risk-badge {
+    margin-bottom: 4px;
+}
+
+.score-header-label {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.score-card-compact .score-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.score-card-compact .score-description {
+    font-size: 14px;
+    margin-bottom: 16px;
 }
 
 .score-label {
@@ -416,6 +482,40 @@ button {
     color: var(--color-black);
     margin-bottom: 24px;
     text-align: center;
+}
+
+/* Slim Contrast Title */
+.contrast-title-slim {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Risk Summary List - Standalone bullets */
+.risk-summary-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.risk-summary-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #7F1D1D;
+}
+
+.risk-summary-list li svg {
+    flex-shrink: 0;
 }
 
 .contrast-grid {
