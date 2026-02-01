@@ -556,13 +556,6 @@ button {
     border-radius: 36px;
     overflow: hidden;
     max-height: 620px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.iphone-screen::-webkit-scrollbar {
-    display: none;
 }
 
 .iphone-home-indicator {
