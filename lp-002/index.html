@@ -422,62 +422,37 @@
                     </div>
                 </div>
 
-                <!-- Score Transformation - Visual Impact -->
-                <div class="score-transformation">
-                    <div class="transformation-container">
-                        <!-- Before State -->
-                        <div class="transform-state state-before">
-                            <div class="state-glow danger-glow"></div>
-                            <div class="score-ring danger-ring">
-                                <svg viewBox="0 0 120 120" class="ring-svg">
-                                    <circle cx="60" cy="60" r="54" class="ring-bg"/>
-                                    <circle cx="60" cy="60" r="54" class="ring-progress danger-progress"/>
-                                </svg>
-                                <div class="score-center">
-                                    <span class="score-value" data-target="42">0</span>
-                                </div>
-                            </div>
-                            <span class="state-label">Today</span>
-                            <span class="state-status danger-status">
-                                <span class="status-dot danger-dot"></span>
-                                Vulnerable
-                            </span>
+                <!-- Score Improvement Preview -->
+                <div class="score-improvement">
+                    <div class="score-improvement-header">
+                        <span class="improvement-label">Your Safety Score Transformation</span>
+                    </div>
+                    <div class="score-improvement-visual">
+                        <div class="score-before">
+                            <span class="score-label-explicit">Your Score Today</span>
+                            <span class="score-num-large">42</span>
+                            <span class="score-risk-tag danger">High Risk</span>
                         </div>
-
-                        <!-- Animated Arrow -->
-                        <div class="transform-arrow">
-                            <div class="arrow-trail"></div>
-                            <div class="arrow-icon">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                    <path d="M6 16h20M18 8l8 8-8 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <div class="score-arrow-animated">
+                            <div class="arrow-line"></div>
+                            <div class="arrow-head">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12h14M13 5l7 7-7 7" stroke="#2E7D9A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div>
                         </div>
-
-                        <!-- After State -->
-                        <div class="transform-state state-after">
-                            <div class="state-glow success-glow"></div>
-                            <div class="score-ring success-ring">
-                                <svg viewBox="0 0 120 120" class="ring-svg">
-                                    <circle cx="60" cy="60" r="54" class="ring-bg"/>
-                                    <circle cx="60" cy="60" r="54" class="ring-progress success-progress"/>
-                                </svg>
-                                <div class="score-center">
-                                    <span class="score-value" data-target="96">0</span>
-                                </div>
-                            </div>
-                            <span class="state-label">With GeniusTag</span>
-                            <span class="state-status success-status">
-                                <span class="status-dot success-dot"></span>
-                                Protected
-                            </span>
+                        <div class="score-after">
+                            <span class="score-label-explicit">With GeniusTag</span>
+                            <span class="score-num-large">96</span>
+                            <span class="score-risk-tag safe">Protected</span>
                         </div>
                     </div>
-
-                    <div class="transformation-message">
-                        <span class="message-icon">✓</span>
-                        <span class="message-text">Closes every gap. Instantly.</span>
+                    <div class="score-improvement-bar">
+                        <div class="bar-track">
+                            <div class="bar-fill"></div>
+                        </div>
                     </div>
+                    <p class="score-improvement-message">Closes every gap. Instantly.</p>
                 </div>
 
                 <p class="cta-whisper-testimonial">"Got my dog back in 30 minutes — worth every penny." <span>— Rachel K., CA</span></p>
