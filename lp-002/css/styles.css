@@ -489,10 +489,12 @@ button {
 
 .bridge-product {
     margin-bottom: 36px;
+    display: flex;
+    justify-content: center;
 }
 
 .bridge-product-image {
-    width: 180px;
+    width: 280px;
     height: auto;
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.12));
 }
