@@ -34,24 +34,6 @@
                 </div>
                 <h1 class="score-title">Your Pet Has Significant Safety Gaps</h1>
                 <p class="score-description">While you've taken some steps, your pet still lacks instant smartphone identification and a direct communication channel between you and a rescuer.</p>
-                <p class="score-risk-level">IS THIS RISKY?</p>
-
-                <div class="score-transformation">
-                    <div class="transform-card transform-before">
-                        <span class="transform-label">Now</span>
-                        <span class="transform-score">42</span>
-                    </div>
-                    <div class="transform-arrow">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <path d="M6 16h20M20 10l6 6-6 6" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="transform-card transform-after">
-                        <span class="transform-label">With GeniusTag</span>
-                        <span class="transform-score">96</span>
-                    </div>
-                </div>
-
                 <div class="protection-gaps">
                     <div class="gap-item">
                         <div class="gap-icon gap-warning">
@@ -218,7 +200,21 @@
     <!-- Product Explainer Transition -->
     <section class="product-explainer">
         <div class="container">
-            <p class="explainer-text">GeniusTag is a <strong>smart pet ID tag</strong> with a scannable QR code that instantly displays your pet's complete digital profile on any smartphone.</p>
+            <div class="explainer-card">
+                <div class="explainer-icon">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <rect x="8" y="8" width="32" height="32" rx="6" stroke="#D74242" stroke-width="2.5" fill="none"/>
+                        <rect x="14" y="14" width="8" height="8" rx="1" fill="#D74242"/>
+                        <rect x="26" y="14" width="8" height="8" rx="1" fill="#D74242"/>
+                        <rect x="14" y="26" width="8" height="8" rx="1" fill="#D74242"/>
+                        <rect x="26" y="26" width="4" height="4" rx="1" fill="#D74242"/>
+                        <rect x="30" y="30" width="4" height="4" rx="1" fill="#D74242"/>
+                        <rect x="26" y="30" width="4" height="4" rx="1" fill="#D74242"/>
+                        <rect x="30" y="26" width="4" height="4" rx="1" fill="#D74242"/>
+                    </svg>
+                </div>
+                <p class="explainer-text">GeniusTag is a <strong>smart pet ID tag</strong> with a scannable QR code that instantly displays your pet's complete digital profile on any smartphone.</p>
+            </div>
         </div>
     </section>
 
@@ -423,6 +419,35 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Score Improvement Preview -->
+                <div class="score-improvement">
+                    <div class="score-improvement-header">
+                        <span class="improvement-label">Your Safety Score Improvement</span>
+                    </div>
+                    <div class="score-improvement-visual">
+                        <div class="score-before">
+                            <span class="score-num">42</span>
+                            <span class="score-status">Current</span>
+                        </div>
+                        <div class="score-arrow">
+                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                <path d="M0 12h32M26 6l6 6-6 6" stroke="#2E8A7B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="score-after">
+                            <span class="score-num">96</span>
+                            <span class="score-status">With GeniusTag</span>
+                        </div>
+                    </div>
+                    <div class="score-improvement-bar">
+                        <div class="bar-track">
+                            <div class="bar-current"></div>
+                            <div class="bar-improved"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <button class="cta-button primary">Protect My Cat Now. Claim Free Tag →</button>
                 <p class="guarantee-note">30-day money-back guarantee • Ships in 2-3 business days • Setup takes 3 minutes</p>
             </div>
