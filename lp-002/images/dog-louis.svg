@@ -1,0 +1,44 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="#F5E6D3"/>
+
+  <!-- Dog face - golden retriever style -->
+  <ellipse cx="60" cy="65" rx="35" ry="32" fill="#C4956A"/>
+
+  <!-- Lighter muzzle area -->
+  <ellipse cx="60" cy="75" rx="22" ry="18" fill="#E8C9A0"/>
+
+  <!-- Ears -->
+  <ellipse cx="28" cy="50" rx="14" ry="22" fill="#A67B4A"/>
+  <ellipse cx="92" cy="50" rx="14" ry="22" fill="#A67B4A"/>
+
+  <!-- Inner ear -->
+  <ellipse cx="28" cy="52" rx="8" ry="14" fill="#C4956A"/>
+  <ellipse cx="92" cy="52" rx="8" ry="14" fill="#C4956A"/>
+
+  <!-- Forehead/top of head -->
+  <ellipse cx="60" cy="45" rx="28" ry="22" fill="#C4956A"/>
+
+  <!-- Eyes -->
+  <ellipse cx="45" cy="55" rx="7" ry="8" fill="white"/>
+  <ellipse cx="75" cy="55" rx="7" ry="8" fill="white"/>
+  <circle cx="46" cy="56" r="5" fill="#3D2914"/>
+  <circle cx="76" cy="56" r="5" fill="#3D2914"/>
+  <circle cx="47" cy="54" r="2" fill="white"/>
+  <circle cx="77" cy="54" r="2" fill="white"/>
+
+  <!-- Nose -->
+  <ellipse cx="60" cy="72" rx="8" ry="6" fill="#3D2914"/>
+  <ellipse cx="60" cy="70" rx="3" ry="2" fill="#5C4023" opacity="0.5"/>
+
+  <!-- Mouth -->
+  <path d="M52 80 Q60 88 68 80" stroke="#3D2914" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Tongue -->
+  <ellipse cx="60" cy="88" rx="8" ry="10" fill="#E57373"/>
+  <path d="M60 82 L60 95" stroke="#D32F2F" stroke-width="1" opacity="0.3"/>
+
+  <!-- Eyebrows/fur detail -->
+  <path d="M38 48 Q45 44 52 48" stroke="#A67B4A" stroke-width="2" fill="none"/>
+  <path d="M68 48 Q75 44 82 48" stroke="#A67B4A" stroke-width="2" fill="none"/>
+</svg>
