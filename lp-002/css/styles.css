@@ -295,81 +295,102 @@ button {
     margin-bottom: 24px;
 }
 
-/* Protection Gaps Grid */
-.protection-gaps {
+/* Diagnostic Cards */
+.diagnostic-cards {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 8px;
+    gap: 10px;
+    margin-top: 12px;
 }
 
-.gap-item {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 14px;
-    padding: 16px 18px;
+.diagnostic-card {
+    border-radius: 12px;
+    padding: 14px 16px;
     display: flex;
-    align-items: center;
-    gap: 14px;
+    align-items: flex-start;
+    gap: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 }
 
-.gap-icon {
+.diagnostic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.diagnostic-card.warning {
+    background: #FEF9E7;
+    border: 1px solid #F6E3A1;
+}
+
+.diagnostic-card.danger {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+}
+
+.diagnostic-icon {
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.gap-icon.gap-warning {
-    background: #FEF3C7;
+.diagnostic-card.warning .diagnostic-icon {
+    background: #FDE68A;
+    color: #92400E;
 }
 
-.gap-icon.gap-danger {
-    background: #FEE2E2;
+.diagnostic-card.danger .diagnostic-icon {
+    background: #FECACA;
+    color: #B91C1C;
 }
 
-.gap-icon.gap-none {
-    background: #FEE2E2;
-}
-
-.gap-content {
+.diagnostic-content {
     flex: 1;
     min-width: 0;
 }
 
-.gap-label {
-    display: block;
+.diagnostic-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    gap: 8px;
+}
+
+.diagnostic-label {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: #1F2937;
-    margin-bottom: 2px;
 }
 
-.gap-status {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
+.diagnostic-status {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
 }
 
-.gap-status.warning {
-    background: #FEF3C7;
-    color: #B45309;
+.diagnostic-status.warning {
+    background: #FDE68A;
+    color: #92400E;
 }
 
-.gap-status.danger {
-    background: #FEE2E2;
-    color: #DC2626;
+.diagnostic-status.danger {
+    background: #FECACA;
+    color: #B91C1C;
 }
 
-.gap-status.none {
-    background: #FEE2E2;
-    color: #DC2626;
+.diagnostic-problem {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #4B5563;
+    margin: 0;
 }
 
 /* ========================================
