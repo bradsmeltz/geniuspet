@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Create a secure, shareable profile with your pet's info, routines, and care details — all in one place.">
-  <title>GeniusTag — Your Pet's Digital Profile</title>
+  <title>GeniusTag — Modern Pet Parenting</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/global.css">
@@ -13,7 +13,7 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="header">
+  <header class="header header--transparent">
     <div class="container header__inner">
       <a href="index.html">
         <img src="assets/images/logo.svg" alt="GeniusTag" class="header__logo">
@@ -21,126 +21,228 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero section">
-    <div class="container">
-      <div class="hero__grid">
-        <div class="hero__content">
-          <h1 class="hero__title">Your Pet's Digital Profile — Accessible Anywhere</h1>
-          <p class="hero__subtitle">Create a secure, shareable profile with your pet's info, routines, and care details — all in one place.</p>
-          <p class="hero__microcopy">Includes a physical GeniusTag that links directly to your pet's profile</p>
-          <div class="hero__cta">
-            <a href="profile-builder.html" class="btn btn-primary btn--full">Activate Your Pet's Profile</a>
+  <!-- Hero Section - Full Bleed with Floating UI -->
+  <section class="hero-modern">
+    <div class="hero-modern__background">
+      <img src="assets/images/hero-lifestyle.jpg" alt="Modern pet parent walking dog in the city" class="hero-modern__image">
+      <div class="hero-modern__overlay"></div>
+    </div>
+
+    <div class="hero-modern__content">
+      <h1 class="hero-modern__title">Modern pet parenting.</h1>
+      <p class="hero-modern__subtitle">Your pet's digital profile — accessible anywhere, anytime.</p>
+      <a href="profile-builder.html" class="btn btn-primary btn-lg">Activate Your Pet's Profile</a>
+    </div>
+
+    <!-- Floating UI Mockup -->
+    <div class="floating-ui">
+      <div class="floating-ui__card">
+        <div class="floating-ui__header">
+          <div class="floating-ui__nav">
+            <span class="floating-ui__menu">☰</span>
+            <div class="floating-ui__logo">
+              <svg width="20" height="20" viewBox="0 0 60 60" fill="#DD5A52">
+                <ellipse cx="21" cy="15" rx="5" ry="6"/>
+                <ellipse cx="39" cy="15" rx="5" ry="6"/>
+                <ellipse cx="15" cy="30" rx="4" ry="5"/>
+                <ellipse cx="45" cy="30" rx="4" ry="5"/>
+                <ellipse cx="30" cy="42" rx="12" ry="10"/>
+              </svg>
+              <span>GENIUS<strong>TAG</strong></span>
+            </div>
+            <span class="floating-ui__profile-icon">👤</span>
           </div>
         </div>
-        <div class="hero__image">
-          <img src="assets/images/hero-dog.jpg" alt="Happy golden retriever in a calm outdoor setting">
+
+        <div class="floating-ui__body">
+          <div class="floating-ui__back">
+            <span>‹</span>
+            <span class="floating-ui__page-title">Pet Profile</span>
+          </div>
+
+          <div class="floating-ui__pet-photo">
+            <div class="floating-ui__avatar">
+              <img src="assets/images/hero-dog.jpg" alt="Louis the dog">
+            </div>
+            <span class="floating-ui__edit-icon">✏️</span>
+          </div>
+
+          <h2 class="floating-ui__pet-name">Hey, my name is Louis!</h2>
+          <p class="floating-ui__pet-message">My parents are worried. Please, contact them now. Click the button to tell them you found me.</p>
+
+          <button class="floating-ui__cta">Contact my parents</button>
+
+          <div class="floating-ui__section">
+            <div class="floating-ui__section-header">
+              <span class="floating-ui__section-icon">🐾</span>
+              <span class="floating-ui__section-title">ABOUT ME</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Breed</span>
+              <span class="floating-ui__info-value">Golden Retriever</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Sex</span>
+              <span class="floating-ui__info-value">Male</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Age</span>
+              <span class="floating-ui__info-value">3 years</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Weight</span>
+              <span class="floating-ui__info-value">65 lbs</span>
+            </div>
+          </div>
+
+          <div class="floating-ui__section">
+            <div class="floating-ui__section-header">
+              <span class="floating-ui__section-icon">📋</span>
+              <span class="floating-ui__section-title">ADDITIONAL INFO</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Kid-friendly</span>
+              <span class="floating-ui__info-value floating-ui__info-value--yes">Yes ✓</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Okay with Other Pets</span>
+              <span class="floating-ui__info-value floating-ui__info-value--yes">Yes ✓</span>
+            </div>
+            <div class="floating-ui__info-row">
+              <span>Neutered</span>
+              <span class="floating-ui__info-value floating-ui__info-value--yes">Yes ✓</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Value Props -->
-  <section class="value-props section">
+  <section class="value-props-modern section">
     <div class="container">
-      <ul class="value-props__list">
-        <li class="value-prop">
-          <span class="value-prop__bullet"></span>
-          <span class="value-prop__text">All your pet's info in one organized place</span>
-        </li>
-        <li class="value-prop">
-          <span class="value-prop__bullet"></span>
-          <span class="value-prop__text">Access from any device, share with caregivers</span>
-        </li>
-        <li class="value-prop">
-          <span class="value-prop__bullet"></span>
-          <span class="value-prop__text">Physical tag connects anyone to your pet's profile</span>
-        </li>
-        <li class="value-prop">
-          <span class="value-prop__bullet"></span>
-          <span class="value-prop__text">Update anytime — set it up once</span>
-        </li>
-      </ul>
-    </div>
-  </section>
+      <h2 class="value-props-modern__title">Everything in one place</h2>
+      <div class="value-props-modern__grid">
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 class="value-card__title">Complete Pet Profile</h3>
+          <p class="value-card__text">All your pet's info in one organized place — accessible from any device.</p>
+        </div>
 
-  <!-- Product Preview -->
-  <section class="product-preview section">
-    <div class="container">
-      <h2 class="product-preview__title">How It Works</h2>
-      <div class="product-preview__visual">
-        <!-- Tag Flow Visualization -->
-        <div class="tag-flow">
-          <div class="tag-flow__step">
-            <svg class="tag-flow__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z"/>
               <path d="M2 17l10 5 10-5"/>
               <path d="M2 12l10 5 10-5"/>
             </svg>
-            <span>GeniusTag</span>
           </div>
-          <span class="tag-flow__arrow">→</span>
-          <div class="tag-flow__step">
-            <svg class="tag-flow__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-              <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-              <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
-              <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
-              <rect x="7" y="7" width="10" height="10" rx="1"/>
-            </svg>
-            <span>Scan</span>
-          </div>
-          <span class="tag-flow__arrow">→</span>
-          <div class="tag-flow__step">
-            <svg class="tag-flow__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span>Profile</span>
-          </div>
+          <h3 class="value-card__title">Physical GeniusTag</h3>
+          <p class="value-card__text">Scannable tag connects anyone to your pet's profile instantly.</p>
         </div>
 
-        <!-- Profile Preview Card -->
-        <div class="preview-card">
-          <div class="preview-card__header">
-            <div class="preview-card__avatar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 60 60" fill="#9B9B9B">
-                <ellipse cx="21" cy="15" rx="5" ry="6" opacity="0.6"/>
-                <ellipse cx="39" cy="15" rx="5" ry="6" opacity="0.6"/>
-                <ellipse cx="15" cy="30" rx="4" ry="5" opacity="0.6"/>
-                <ellipse cx="45" cy="30" rx="4" ry="5" opacity="0.6"/>
-                <ellipse cx="30" cy="42" rx="12" ry="10" opacity="0.6"/>
-              </svg>
-            </div>
-            <div>
-              <div class="preview-card__name">Luna</div>
-              <div class="preview-card__breed">Golden Retriever</div>
-            </div>
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
           </div>
-          <div class="preview-card__info">
-            <div class="preview-card__row">
-              <span class="preview-card__label">Age</span>
-              <span class="preview-card__value">3 years</span>
-            </div>
-            <div class="preview-card__row">
-              <span class="preview-card__label">Weight</span>
-              <span class="preview-card__value">65 lbs</span>
-            </div>
-            <div class="preview-card__row">
-              <span class="preview-card__label">Vet</span>
-              <span class="preview-card__value">Happy Paws Clinic</span>
-            </div>
+          <h3 class="value-card__title">Share with Caregivers</h3>
+          <p class="value-card__text">Vets, sitters, family — everyone gets the info they need.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </div>
+          <h3 class="value-card__title">Update Anytime</h3>
+          <p class="value-card__text">Set it up once, update whenever. Your profile stays current.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works section">
+    <div class="container">
+      <h2 class="how-it-works__title">How it works</h2>
+      <div class="how-it-works__steps">
+        <div class="step">
+          <div class="step__number">1</div>
+          <div class="step__content">
+            <h3 class="step__title">Create your pet's profile</h3>
+            <p class="step__text">Add photos, details, care notes, and emergency contacts.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__number">2</div>
+          <div class="step__content">
+            <h3 class="step__title">Attach the GeniusTag</h3>
+            <p class="step__text">Your physical tag links directly to your pet's digital profile.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__number">3</div>
+          <div class="step__content">
+            <h3 class="step__title">Access anywhere</h3>
+            <p class="step__text">Anyone can scan the tag to see your pet's info and contact you.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Product Showcase -->
+  <section class="product-showcase section">
+    <div class="container">
+      <div class="product-showcase__grid">
+        <div class="product-showcase__image">
+          <img src="assets/images/geniustag-product.jpg" alt="GeniusTag Smart Pet ID Tag">
+        </div>
+        <div class="product-showcase__content">
+          <h2 class="product-showcase__title">The smartest tag for your pet</h2>
+          <p class="product-showcase__text">GeniusTag combines a beautiful physical tag with a powerful digital profile. No batteries, no subscriptions — just scan and connect.</p>
+          <ul class="product-showcase__features">
+            <li>
+              <span class="checkmark">✓</span>
+              Durable, water-resistant design
+            </li>
+            <li>
+              <span class="checkmark">✓</span>
+              Works with any smartphone
+            </li>
+            <li>
+              <span class="checkmark">✓</span>
+              No app download required
+            </li>
+            <li>
+              <span class="checkmark">✓</span>
+              Lifetime profile access
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Final CTA -->
-  <section class="final-cta section">
+  <section class="final-cta-modern section">
     <div class="container text-center">
-      <a href="profile-builder.html" class="btn btn-primary">Activate Your Pet's Profile</a>
-      <p class="final-cta__trust">One-time setup. Update anytime.</p>
+      <h2 class="final-cta-modern__title">Ready to get started?</h2>
+      <p class="final-cta-modern__subtitle">Create your pet's profile today and get a GeniusTag delivered to your door.</p>
+      <a href="profile-builder.html" class="btn btn-primary btn-lg">Activate Your Pet's Profile</a>
+      <p class="final-cta-modern__trust">One-time setup • Update anytime • No subscription</p>
     </div>
   </section>
 
