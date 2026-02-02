@@ -233,7 +233,7 @@ button {
 }
 
 .score-header-label {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     opacity: 0.85;
     margin: 0;
@@ -247,7 +247,7 @@ button {
 }
 
 .score-card-compact .score-description {
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 16px;
 }
 
@@ -436,15 +436,15 @@ button {
 }
 
 .diagnostic-label {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: #1F2937;
 }
 
 .diagnostic-status {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 10px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -461,7 +461,7 @@ button {
 }
 
 .diagnostic-problem {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.4;
     color: #4B5563;
     margin: 0;
@@ -486,7 +486,7 @@ button {
 
 /* Slim Contrast Title */
 .contrast-title-slim {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 600;
     color: var(--color-black);
     margin-bottom: 16px;
@@ -509,7 +509,7 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: #7F1D1D;
 }
@@ -622,7 +622,7 @@ button {
 }
 
 .solution-bridge-eyebrow {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -769,7 +769,7 @@ button {
 }
 
 .solution-description {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
     color: var(--neutral-600);
 }
@@ -824,7 +824,7 @@ button {
 }
 
 .bridge-eyebrow {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -918,7 +918,7 @@ button {
 
 .timeline-label {
     display: block;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -927,7 +927,7 @@ button {
 }
 
 .timeline-text {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: #1F2937;
     margin: 0;
@@ -1339,7 +1339,7 @@ button {
 /* Preview Note */
 .preview-note {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     color: #6B7280;
 }
 
@@ -1352,7 +1352,7 @@ button {
 }
 
 .section-subtitle {
-    font-size: 14px;
+    font-size: 15px;
     text-align: center;
     color: var(--neutral-600);
     margin-top: -16px;
@@ -1370,11 +1370,11 @@ button {
 .product-badge {
     background: var(--color-red);
     color: var(--color-white);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 4px;
     display: inline-block;
     margin-bottom: 20px;
@@ -1425,7 +1425,7 @@ button {
 }
 
 .rating-text {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--neutral-600);
 }
 
@@ -1457,14 +1457,14 @@ button {
 .savings-badge {
     background: var(--color-blue);
     color: var(--color-white);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 4px;
 }
 
 .shipping-note {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--neutral-500);
     margin-bottom: 16px;
 }
@@ -1482,7 +1482,7 @@ button {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--neutral-700);
 }
 
@@ -1513,9 +1513,9 @@ button {
 }
 
 .improvement-label {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #2E7D9A;
     background: rgba(46, 125, 154, 0.1);
@@ -1541,7 +1541,7 @@ button {
 
 .score-label-explicit {
     display: block;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.02em;
     color: #6B7280;
@@ -1584,11 +1584,11 @@ button {
 
 .score-risk-tag {
     display: inline-block;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 12px;
 }
 
@@ -1790,7 +1790,7 @@ button {
 
 .score-improvement-message {
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #246A85;
     margin: 16px 0 0 0;
@@ -1800,7 +1800,7 @@ button {
 
 /* CTA Whisper Testimonial - subtle social proof */
 .cta-whisper-testimonial {
-    font-size: 13px;
+    font-size: 14px;
     font-style: italic;
     color: #6B7280;
     margin: 0 0 12px 0;
@@ -1820,9 +1820,9 @@ button {
     background: #FFFBEB;
     border: 1px solid #FDE68A;
     border-radius: 20px;
-    padding: 6px 14px;
+    padding: 8px 16px;
     margin-bottom: 16px;
-    font-size: 13px;
+    font-size: 14px;
     color: #92400E;
 }
 
@@ -1867,7 +1867,7 @@ button {
 
 /* CTA Microcopy - trust beneath button */
 .cta-microcopy {
-    font-size: 12px;
+    font-size: 14px;
     color: #9CA3AF;
     margin: 12px 0 0 0;
     text-align: center;
@@ -2021,7 +2021,7 @@ button {
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: #2E7D9A;
 }
@@ -2060,7 +2060,7 @@ button {
 
 .trust-stat-label {
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: #6B7280;
     margin-top: 4px;
@@ -2258,13 +2258,13 @@ button {
 
 .included-name {
     flex: 1;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--color-black);
 }
 
 .included-value {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--neutral-400);
     text-decoration: line-through;
 }
@@ -2325,7 +2325,7 @@ button {
 
 .total-note {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     color: #9CA3AF;
     margin-top: 12px;
     padding-top: 12px;
@@ -2369,7 +2369,7 @@ button {
 }
 
 .guarantee-description {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.6;
     color: var(--neutral-600);
 }
@@ -2432,7 +2432,7 @@ button {
 }
 
 .cta-testimonial-author {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #6B7280;
 }
@@ -2469,9 +2469,9 @@ button {
     background: #FFFDF7;
     border: 1px solid #F5E6C8;
     border-radius: 20px;
-    padding: 8px 16px;
+    padding: 10px 18px;
     margin-bottom: 16px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .urgency-pill-text {
@@ -2496,7 +2496,7 @@ button {
 
 /* Inline Microcopy with Guarantee Whisper */
 .cta-microcopy-inline {
-    font-size: 13px;
+    font-size: 14px;
     color: #6B7280;
     margin-top: 14px;
     text-align: center;
@@ -2527,20 +2527,20 @@ button {
 }
 
 .cta-trust-title {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: #246A85;
     margin: 0;
 }
 
 .cta-trust-subtitle {
-    font-size: 12px;
+    font-size: 14px;
     color: #2E7D9A;
     margin: 0;
 }
 
 .cta-note {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--neutral-500);
     margin-top: 12px;
 }
@@ -2577,7 +2577,7 @@ button {
 }
 
 .footer-copyright {
-    font-size: 12px;
+    font-size: 14px;
     text-align: center;
     color: var(--neutral-400);
 }
@@ -2620,19 +2620,19 @@ button {
 }
 
 .sticky-urgency {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     background: #FEF3C7;
     color: #92400E;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 4px;
     border: 1px solid #F59E0B;
 }
 
 .sticky-original {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--neutral-400);
     text-decoration: line-through;
 }
