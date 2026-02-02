@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Activate your pet's digital profile.">
+  <title>Activate Profile — GeniusTag</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html">
+        <img src="assets/images/logo.svg" alt="GeniusTag" class="header__logo">
+      </a>
+      <span class="header__progress">Step 2 of 2</span>
+    </div>
+  </header>
+
+  <!-- Checkout -->
+  <section class="checkout section">
+    <div class="container">
+      <div class="checkout__header">
+        <h1 id="page-title">Activate Your Pet's Profile</h1>
+        <p class="text-muted">Finish setup to access your pet's profile anywhere</p>
+      </div>
+
+      <div class="checkout__grid">
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <h2 class="order-summary__title">Order Summary</h2>
+          <div class="order-summary__product">
+            <p class="order-summary__product-name">Pet Profile Activation + GeniusTag</p>
+            <p class="order-summary__for">For: <span id="pet-name-display">Your Pet</span></p>
+          </div>
+          <div class="order-summary__price">
+            <span>Total</span>
+            <span>$29.99</span>
+          </div>
+          <p class="order-summary__microcopy">Includes physical GeniusTag • One-time setup fee</p>
+        </div>
+
+        <!-- Checkout Form -->
+        <form id="checkout-form" class="checkout-form">
+          <div class="checkout-form__demo-notice">
+            Demo checkout — no actual payment processing
+          </div>
+
+          <!-- Contact Information -->
+          <div class="checkout-form__section">
+            <h3 class="checkout-form__section-title">Contact Information</h3>
+            <div class="form-group">
+              <label for="email" class="form-label form-label--required">Email</label>
+              <input type="email" id="email" class="input-field" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <!-- Shipping Address -->
+          <div class="checkout-form__section">
+            <h3 class="checkout-form__section-title">Shipping Address</h3>
+            <div class="form-group">
+              <label for="full-name" class="form-label form-label--required">Full Name</label>
+              <input type="text" id="full-name" class="input-field" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="address" class="form-label form-label--required">Address</label>
+              <input type="text" id="address" class="input-field" placeholder="123 Main Street" required>
+            </div>
+            <div class="checkout-form__row checkout-form__row--2col">
+              <div class="form-group">
+                <label for="city" class="form-label form-label--required">City</label>
+                <input type="text" id="city" class="input-field" placeholder="City" required>
+              </div>
+              <div class="form-group">
+                <label for="state" class="form-label form-label--required">State</label>
+                <input type="text" id="state" class="input-field" placeholder="State" required>
+              </div>
+            </div>
+            <div class="checkout-form__row checkout-form__row--2col">
+              <div class="form-group">
+                <label for="zip" class="form-label form-label--required">ZIP Code</label>
+                <input type="text" id="zip" class="input-field" placeholder="12345" required>
+              </div>
+              <div class="form-group">
+                <label for="country" class="form-label form-label--required">Country</label>
+                <select id="country" class="input-field" required>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment (Placeholder) -->
+          <div class="checkout-form__section">
+            <h3 class="checkout-form__section-title">Payment</h3>
+            <div class="form-group">
+              <label for="card-number" class="form-label form-label--required">Card Number</label>
+              <input type="text" id="card-number" class="input-field" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="checkout-form__row checkout-form__row--2col">
+              <div class="form-group">
+                <label for="expiry" class="form-label form-label--required">Expiry</label>
+                <input type="text" id="expiry" class="input-field" placeholder="MM/YY" required>
+              </div>
+              <div class="form-group">
+                <label for="cvv" class="form-label form-label--required">CVV</label>
+                <input type="text" id="cvv" class="input-field" placeholder="123" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary btn--full">Activate Profile</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // Get pet name from URL params or LocalStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      let petName = urlParams.get('name');
+
+      if (!petName) {
+        const saved = localStorage.getItem('pif_profile');
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            petName = parsed.petName || 'Your Pet';
+          } catch (e) {
+            petName = 'Your Pet';
+          }
+        } else {
+          petName = 'Your Pet';
+        }
+      }
+
+      // Update page elements with pet name
+      const petNameDisplay = document.getElementById('pet-name-display');
+      const pageTitle = document.getElementById('page-title');
+
+      if (petNameDisplay) {
+        petNameDisplay.textContent = petName;
+      }
+
+      if (pageTitle) {
+        pageTitle.textContent = `Activate ${petName}'s Profile`;
+      }
+
+      // Handle form submission
+      const checkoutForm = document.getElementById('checkout-form');
+      if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Get email for thank you page
+          const emailInput = document.getElementById('email');
+          const email = emailInput ? emailInput.value : '';
+
+          // Navigate to thank you page
+          const params = new URLSearchParams();
+          params.set('name', petName);
+          if (email) params.set('email', email);
+
+          window.location.href = `thank-you.html?${params.toString()}`;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

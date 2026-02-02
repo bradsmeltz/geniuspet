@@ -1,0 +1,53 @@
+:root {
+  /* Beige (Backgrounds, Strokes) */
+  --beige-light: #FAF7F5;
+  --beige-medium: #E8DDD3;
+  --beige-warm: #D4A574;
+
+  /* Neutral (Text) */
+  --neutral-light: #9B9B9B;
+  --neutral-medium: #6B6B6B;
+  --neutral-dark: #3D3D3D;
+  --neutral-black: #1A1A1A;
+
+  /* Red (Buttons, Actions, CTAs) */
+  --red-primary: #DD5A52;
+  --red-medium: #D64842;
+  --red-dark: #C33D37;
+
+  /* Blue (Bullets, Text, Secondary Accents) */
+  --blue-light: #A6D5E8;
+  --blue-primary: #4AA4C8;
+  --blue-medium: #3B8FB5;
+  --blue-dark: #2C6B85;
+
+  /* Success */
+  --green-primary: #4CAF50;
+  --green-light: #E8F5E9;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+
+  /* Borders */
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-full: 50%;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
+
+  /* Layout */
+  --max-width: 1200px;
+  --max-width-narrow: 600px;
+}
