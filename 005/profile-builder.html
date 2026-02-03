@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your pet's digital profile in just a minute.">
+  <title>Create Your Pet's Profile — GeniusPet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            red: {
+              primary: '#D65A52',
+              medium: '#CC5249',
+              dark: '#A3403A',
+            },
+            blue: {
+              lightest: '#E8F4F8',
+              light: '#5FAED4',
+              primary: '#2D96C4',
+              medium: '#3B8FB5',
+              dark: '#2A7A9E',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    .photo-upload__input {
+      display: none;
+    }
+    /* Editable field styling */
+    .editable-field {
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      text-align: inherit;
+      font: inherit;
+      color: inherit;
+    }
+    .editable-field::placeholder {
+      color: #BFBFBF;
+    }
+    .editable-field:focus {
+      background: rgba(45, 150, 196, 0.08);
+      border-radius: 6px;
+    }
+    /* Edit indicator */
+    .edit-indicator {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+    .editable-row:hover .edit-indicator,
+    .editable-row:focus-within .edit-indicator {
+      opacity: 1;
+    }
+    /* Locked section styling */
+    .locked-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .locked-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(245, 240, 235, 0.9) 100%);
+      pointer-events: none;
+    }
+    /* Pulse animation for photo ring */
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    #photo-ring {
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+    /* Completed state styling */
+    .field-complete {
+      background: rgba(76, 175, 80, 0.08) !important;
+      border-color: #4CAF50 !important;
+      border-style: solid !important;
+    }
+    /* Field row complete state */
+    .field-row-complete input,
+    .field-row-complete select {
+      background: rgba(76, 175, 80, 0.08) !important;
+      border-color: #4CAF50 !important;
+      border-style: solid !important;
+    }
+    /* Completion pulse animation */
+    @keyframes complete-pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .field-row-complete {
+      animation: complete-pulse 0.3s ease-out;
+    }
+    /* Section complete celebration */
+    @keyframes section-glow {
+      0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+    }
+    .section-complete {
+      animation: section-glow 0.6s ease-out;
+    }
+    /* Toggle switch bounce animation */
+    @keyframes toggle-bounce {
+      0% { transform: translateX(var(--toggle-x)) scale(1); }
+      40% { transform: translateX(var(--toggle-x)) scale(1.15); }
+      70% { transform: translateX(var(--toggle-x)) scale(0.95); }
+      100% { transform: translateX(var(--toggle-x)) scale(1); }
+    }
+    .toggle-bounce-on {
+      --toggle-x: 1.25rem;
+      animation: toggle-bounce 0.3s ease-out forwards;
+    }
+    .toggle-bounce-off {
+      --toggle-x: 0;
+      animation: toggle-bounce 0.3s ease-out forwards;
+    }
+    /* Toggle flash effect */
+    @keyframes toggle-flash {
+      0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); }
+      50% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+    }
+    .toggle-flash {
+      animation: toggle-flash 0.4s ease-out;
+    }
+    /* Pet name completed state */
+    .name-complete {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.08) 0%, rgba(76, 175, 80, 0.15) 100%) !important;
+      border-color: #4CAF50 !important;
+      border-style: solid !important;
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.15);
+    }
+    @keyframes name-celebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .name-celebrate {
+      animation: name-celebrate 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-sans text-neutral-dark min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-beige-light transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-dark">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </a>
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-6">
+      <div class="w-8"></div>
+    </div>
+  </header>
+
+  <!-- Progress Section -->
+  <div class="bg-gradient-to-b from-white to-beige-light pt-2 pb-6">
+    <div class="max-w-md mx-auto px-6">
+      <!-- Title -->
+      <h1 class="text-xl font-bold text-neutral-black text-center mb-5">Build Your Pet's Profile</h1>
+
+      <!-- Modern Progress Bar -->
+      <div class="relative">
+        <!-- Background Track -->
+        <div class="absolute top-4 left-0 right-0 h-1 bg-beige-medium rounded-full"></div>
+        <!-- Active Track -->
+        <div class="absolute top-4 left-0 w-[16%] h-1 bg-gradient-to-r from-red-primary to-red-medium rounded-full"></div>
+
+        <!-- Steps -->
+        <div class="relative flex justify-between">
+          <!-- Step 1 - Active -->
+          <div class="flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-red-primary to-red-medium text-white flex items-center justify-center shadow-md ring-4 ring-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+              </svg>
+            </div>
+            <span class="mt-2 text-xs font-semibold text-red-primary">Build</span>
+          </div>
+
+          <!-- Step 2 - Upcoming -->
+          <div class="flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-white border-2 border-beige-medium text-neutral-light flex items-center justify-center ring-4 ring-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <span class="mt-2 text-xs font-medium text-neutral-light">Activate</span>
+          </div>
+
+          <!-- Step 3 - Upcoming -->
+          <div class="flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-white border-2 border-beige-medium text-neutral-light flex items-center justify-center ring-4 ring-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <span class="mt-2 text-xs font-medium text-neutral-light">Protected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content - The Actual Pet Profile -->
+  <main class="flex-1 pb-8">
+    <div class="max-w-md mx-auto">
+
+      <!-- Instruction Banner - Subtle & Elegant -->
+      <div class="mx-4 mt-4 bg-white border border-beige-medium rounded-2xl p-4 shadow-sm" id="instruction-banner">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-lightest to-blue-light/30 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-primary">
+              <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <p class="font-semibold text-sm text-neutral-black mb-0.5">Build your pet's profile</p>
+            <p class="text-xs text-neutral-medium leading-relaxed">Add a photo and name below. The more info you add, the better protected they'll be!</p>
+          </div>
+          <button class="text-neutral-light hover:text-neutral-medium transition-colors p-1" id="dismiss-banner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Card with Photo and Name -->
+      <div class="bg-white mx-4 mt-4 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 pt-6 pb-5 text-center">
+          <!-- Photo Upload Area -->
+          <div class="relative inline-block mb-4">
+            <!-- Pulsing ring animation for empty state -->
+            <div class="absolute inset-0 rounded-full border-2 border-blue-primary animate-pulse" id="photo-ring"></div>
+            <label for="pet-photo" class="block cursor-pointer group">
+              <div class="w-28 h-28 rounded-full bg-gradient-to-br from-beige-medium to-beige-warm flex items-center justify-center overflow-hidden border-4 border-white shadow-lg relative transition-transform group-hover:scale-105" id="photo-preview-container">
+                <div class="text-center" id="photo-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto text-white/80 mb-1">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                  <span class="text-[10px] font-semibold text-white/90 block">Add Photo</span>
+                </div>
+                <img src="" alt="Pet photo" id="photo-preview" class="w-full h-full object-cover hidden">
+              </div>
+            </label>
+            <!-- Edit Photo Button (shows after photo is added) -->
+            <div id="photo-edit-btn" class="absolute bottom-1 right-1 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer hover:bg-beige-light transition-colors hidden">
+              <label for="pet-photo" class="cursor-pointer w-full h-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-dark">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                </svg>
+              </label>
+            </div>
+            <input type="file" id="pet-photo" class="photo-upload__input" accept="image/*">
+          </div>
+
+          <!-- Pet Name - Editable with clear input styling -->
+          <div class="mb-3" id="name-container">
+            <label class="text-[10px] uppercase tracking-wider text-blue-primary font-semibold mb-1 block" id="name-label">Tap to enter name *</label>
+            <div class="relative inline-block">
+              <input
+                type="text"
+                id="pet-name"
+                class="text-2xl font-bold text-neutral-black text-center py-3 px-6 bg-blue-light/20 border-2 border-dashed border-blue-primary/40 rounded-xl focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all w-72"
+                placeholder="Your pet's name"
+                autocomplete="off"
+              >
+            </div>
+          </div>
+
+          <!-- Pet Voice Section - Hidden until name is entered -->
+          <div id="pet-voice-section" class="hidden mt-4 pt-4 border-t border-beige-light">
+            <p class="text-xs text-blue-primary font-semibold mb-2 text-center">
+              ✨ Give <span id="pet-name-display">your pet</span> a voice!
+            </p>
+            <p class="text-xs text-neutral-medium mb-3 text-center px-2">
+              Add a fun message that shows their personality. Something quirky like "I love belly rubs!" or "Will trade kisses for treats."
+            </p>
+            <textarea
+              id="pet-voice"
+              class="w-full text-sm text-neutral-dark p-3 rounded-lg bg-beige-lightest border border-dashed border-beige-medium focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all resize-none"
+              rows="2"
+              placeholder="e.g. 'Will steal your socks and your heart.'"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Me Section -->
+      <div class="bg-white mx-4 mt-3 rounded-2xl shadow-sm overflow-hidden" id="about-me-section">
+        <div class="px-5 py-4">
+          <!-- Section Header with Progress -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🐾</span>
+              <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">About Me</span>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-1 rounded-full bg-blue-light/30 text-blue-primary" id="about-me-progress">0 of 4</span>
+          </div>
+
+          <!-- Editable Fields -->
+          <div class="space-y-0">
+            <!-- Breed -->
+            <div class="editable-row flex items-center justify-between py-3 border-b border-beige-light relative group" id="breed-row">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Breed</span>
+                <span class="text-[10px] text-blue-primary font-medium" id="breed-status">Tap to add</span>
+              </div>
+              <div class="flex items-center">
+                <input
+                  type="text"
+                  id="breed"
+                  class="text-sm font-semibold text-right py-1.5 px-3 rounded-md bg-beige-light/50 border border-dashed border-beige-medium text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-solid focus:border-blue-primary outline-none transition-all w-36"
+                  placeholder="e.g. Golden Retriever"
+                  autocomplete="off"
+                >
+                <!-- Pencil icon (default) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-primary ml-2 opacity-50 group-hover:opacity-100 transition-opacity flex-shrink-0 field-icon-edit" id="breed-icon-edit">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                </svg>
+                <!-- Checkmark icon (on complete) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-green-primary ml-2 flex-shrink-0 hidden field-icon-check" id="breed-icon-check">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Sex -->
+            <div class="editable-row flex items-center justify-between py-3 border-b border-beige-light relative group" id="sex-row">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Sex</span>
+                <span class="text-[10px] text-blue-primary font-medium" id="sex-status">Tap to select</span>
+              </div>
+              <div class="flex items-center">
+                <select id="sex" class="text-sm font-semibold text-right py-1.5 px-3 rounded-md bg-beige-light/50 border border-dashed border-beige-medium text-neutral-black focus:bg-white focus:border-solid focus:border-blue-primary outline-none transition-all w-36 appearance-none cursor-pointer">
+                  <option value="" class="text-neutral-light">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <!-- Chevron icon (default) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-primary ml-2 opacity-50 group-hover:opacity-100 transition-opacity flex-shrink-0 field-icon-edit" id="sex-icon-edit">
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+                <!-- Checkmark icon (on complete) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-green-primary ml-2 flex-shrink-0 hidden field-icon-check" id="sex-icon-check">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Age -->
+            <div class="editable-row flex items-center justify-between py-3 border-b border-beige-light relative group" id="age-row">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Age</span>
+                <span class="text-[10px] text-blue-primary font-medium" id="age-status">Tap to add</span>
+              </div>
+              <div class="flex items-center">
+                <input
+                  type="text"
+                  id="age"
+                  class="text-sm font-semibold text-right py-1.5 px-3 rounded-md bg-beige-light/50 border border-dashed border-beige-medium text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-solid focus:border-blue-primary outline-none transition-all w-36"
+                  placeholder="e.g. 2 years"
+                  autocomplete="off"
+                >
+                <!-- Pencil icon (default) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-primary ml-2 opacity-50 group-hover:opacity-100 transition-opacity flex-shrink-0 field-icon-edit" id="age-icon-edit">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                </svg>
+                <!-- Checkmark icon (on complete) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-green-primary ml-2 flex-shrink-0 hidden field-icon-check" id="age-icon-check">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Weight -->
+            <div class="editable-row flex items-center justify-between py-3 relative group" id="weight-row">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Weight</span>
+                <span class="text-[10px] text-blue-primary font-medium" id="weight-status">Tap to add</span>
+              </div>
+              <div class="flex items-center">
+                <input
+                  type="text"
+                  id="weight"
+                  class="text-sm font-semibold text-right py-1.5 px-3 rounded-md bg-beige-light/50 border border-dashed border-beige-medium text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-solid focus:border-blue-primary outline-none transition-all w-36"
+                  placeholder="e.g. 25 lbs"
+                  autocomplete="off"
+                >
+                <!-- Pencil icon (default) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-primary ml-2 opacity-50 group-hover:opacity-100 transition-opacity flex-shrink-0 field-icon-edit" id="weight-icon-edit">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                </svg>
+                <!-- Checkmark icon (on complete) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-green-primary ml-2 flex-shrink-0 hidden field-icon-check" id="weight-icon-check">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Info Section -->
+      <div class="bg-white mx-4 mt-3 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-5 py-4">
+          <!-- Section Header -->
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-lg">📋</span>
+            <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">Additional Info About Me</span>
+          </div>
+
+          <!-- Toggle Fields -->
+          <div class="space-y-0">
+            <!-- Kid-friendly -->
+            <div class="flex items-center justify-between py-3 border-b border-beige-light">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Kid-friendly</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="kid-friendly-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="kid-friendly" class="sr-only peer" data-on-text="Yes, I'm kid-friendly!" data-off-text="Not specified">
+                <div class="w-11 h-6 bg-beige-medium rounded-full peer peer-checked:bg-green-primary transition-colors"></div>
+                <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+              </label>
+            </div>
+
+            <!-- Okay with Other Pets -->
+            <div class="flex items-center justify-between py-3 border-b border-beige-light">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Okay with Other Pets</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="other-pets-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="other-pets" class="sr-only peer" data-on-text="Yes, I love other pets!" data-off-text="Not specified">
+                <div class="w-11 h-6 bg-beige-medium rounded-full peer peer-checked:bg-green-primary transition-colors"></div>
+                <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+              </label>
+            </div>
+
+            <!-- Spayed/Neutered -->
+            <div class="flex items-center justify-between py-3 border-b border-beige-light">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Spayed/Neutered</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="spayed-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="spayed" class="sr-only peer" data-on-text="Yes, I'm fixed" data-off-text="Not specified">
+                <div class="w-11 h-6 bg-beige-medium rounded-full peer peer-checked:bg-green-primary transition-colors"></div>
+                <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+              </label>
+            </div>
+
+            <!-- Rabies Vaccine -->
+            <div class="flex items-center justify-between py-3">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Rabies vaccine</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="rabies-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="rabies" class="sr-only peer" data-on-text="Yes, vaccinated!" data-off-text="Not specified">
+                <div class="w-11 h-6 bg-beige-medium rounded-full peer peer-checked:bg-green-primary transition-colors"></div>
+                <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Care Notes Preview Section - Show value before asking for money -->
+      <div class="bg-white mx-4 mt-3 rounded-2xl shadow-sm overflow-hidden relative">
+        <div class="px-5 py-4">
+          <!-- Section Header -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🏥</span>
+              <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">Care Notes Preview</span>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-1 rounded-full bg-beige-medium text-neutral-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="inline mr-0.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Locked
+            </span>
+          </div>
+
+          <!-- Sample Data Preview (blurred/greyed to show value) -->
+          <div class="space-y-3 relative">
+            <!-- Allergy -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">🥜</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Allergy: Peanuts</p>
+              </div>
+            </div>
+            <!-- Medical Condition -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">💉</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Condition: Diabetes</p>
+              </div>
+            </div>
+            <!-- Medication -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">💊</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Meds: 5mg Rimadyl 2x/day</p>
+              </div>
+            </div>
+            <!-- Vet Contact -->
+            <div class="flex items-start gap-3 py-2">
+              <span class="text-base">🩺</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Vet: Dr. Harris, Oakland Pet Care</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Unlock CTA -->
+          <div class="mt-4 pt-4 border-t border-beige-light text-center">
+            <p class="text-xs text-blue-primary font-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="inline mr-1">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+              </svg>
+              Unlock this section to protect them in emergencies
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movement Banner -->
+      <div class="mx-4 mt-6 bg-gradient-to-r from-blue-lightest to-white rounded-xl p-4 border border-blue-light/30">
+        <p class="text-sm text-blue-dark text-center font-medium">
+          <span class="text-blue-primary">🐾</span> Thousands of pets now have protection that speaks when they can't. <span class="font-semibold">Join the movement.</span>
+        </p>
+      </div>
+
+      <!-- Urgency Badge -->
+      <div class="mx-4 mt-4 text-center">
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-red-primary bg-red-primary/10 px-3 py-1.5 rounded-full">
+          <span class="w-2 h-2 bg-red-primary rounded-full animate-pulse"></span>
+          Only 17 free GeniusTags left today
+        </span>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="mx-4 mt-4 mb-4">
+        <!-- Enhanced GeniusTag Visual - Premium Product Display -->
+        <div class="bg-white rounded-2xl mb-4 border border-beige-medium shadow-sm overflow-hidden">
+          <!-- Tag Hero Image - Large and Prominent -->
+          <div class="bg-gradient-to-br from-blue-lightest via-white to-beige-light py-8 px-4 flex justify-center">
+            <div class="relative">
+              <!-- Larger glow effect behind tags -->
+              <div class="absolute inset-0 bg-blue-primary/20 rounded-full blur-3xl scale-90"></div>
+              <img
+                src="../Product Images/GeniusTag/id-tags.png"
+                alt="GeniusTag Smart Pet ID Tag"
+                class="relative w-48 h-48 object-contain drop-shadow-xl"
+              >
+            </div>
+          </div>
+          <!-- Tag Info -->
+          <div class="px-5 py-4 bg-gradient-to-b from-beige-lightest to-white border-t border-beige-light">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-base font-bold text-neutral-black">Free GeniusTag Included</p>
+              <span class="text-xs font-semibold text-green-primary bg-green-light px-3 py-1 rounded-full">FREE</span>
+            </div>
+            <p class="text-sm text-neutral-medium">This smart tag links directly to your pet's profile. Anyone who finds them can scan it instantly.</p>
+          </div>
+        </div>
+
+        <button type="button" id="activate-cta" class="w-full bg-red-primary text-white font-bold py-4 px-6 rounded-full hover:bg-red-medium transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg" disabled>
+          Finish Setup & Get My Tag
+        </button>
+
+        <!-- What happens next microcopy -->
+        <p class="text-xs text-neutral-medium mt-3 text-center">
+          You'll finalize your order on the next screen. Every profile comes with a GeniusTag.
+        </p>
+
+        <!-- Trust Symbol -->
+        <p class="text-[10px] text-neutral-light mt-4 text-center">
+          🩺 Trusted by over 2,000 vets and pet parents
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-beige-medium py-6">
+    <div class="max-w-md mx-auto px-4 text-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-5 mx-auto mb-3 opacity-60">
+      <div class="flex items-center justify-center gap-4 text-xs text-neutral-medium mb-3">
+        <a href="#" class="hover:text-neutral-dark">About</a>
+        <a href="#" class="hover:text-neutral-dark">Order new tag</a>
+        <a href="#" class="hover:text-neutral-dark">Support</a>
+      </div>
+      <p class="text-xs text-neutral-light">&copy; 2024 GeniusPet. All rights reserved.</p>
+      <div class="flex items-center justify-center gap-4 text-xs text-neutral-light mt-2">
+        <a href="#" class="hover:text-neutral-medium">Terms & conditions</a>
+        <a href="#" class="hover:text-neutral-medium">Privacy policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const petNameInput = document.getElementById('pet-name');
+      const nameLabel = document.getElementById('name-label');
+      const activateBtn = document.getElementById('activate-cta');
+      const photoRing = document.getElementById('photo-ring');
+      const photoEditBtn = document.getElementById('photo-edit-btn');
+      const petVoiceSection = document.getElementById('pet-voice-section');
+      const petNameDisplay = document.getElementById('pet-name-display');
+
+      // Enable/disable CTA based on name input
+      petNameInput.addEventListener('input', function() {
+        const name = this.value.trim();
+        activateBtn.disabled = !name;
+
+        // Update label and styling when name is entered
+        if (name) {
+          nameLabel.textContent = '✓ Pet name';
+          nameLabel.classList.remove('text-blue-primary');
+          nameLabel.classList.add('text-green-primary');
+
+          // Apply enhanced complete styling
+          this.classList.add('name-complete');
+          this.classList.remove('field-complete');
+
+          // Add celebration animation on first entry
+          if (!this.dataset.wasComplete) {
+            this.classList.add('name-celebrate');
+            this.dataset.wasComplete = 'true';
+            setTimeout(() => this.classList.remove('name-celebrate'), 300);
+          }
+
+          // Show pet voice section with animation
+          if (petVoiceSection.classList.contains('hidden')) {
+            petVoiceSection.classList.remove('hidden');
+            petVoiceSection.style.opacity = '0';
+            petVoiceSection.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+              petVoiceSection.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+              petVoiceSection.style.opacity = '1';
+              petVoiceSection.style.transform = 'translateY(0)';
+            }, 50);
+          }
+
+          // Update pet name in the prompt
+          petNameDisplay.textContent = name;
+        } else {
+          nameLabel.textContent = 'Tap to enter name *';
+          nameLabel.classList.add('text-blue-primary');
+          nameLabel.classList.remove('text-green-primary');
+          this.classList.remove('name-complete', 'field-complete');
+          this.dataset.wasComplete = '';
+
+          // Hide pet voice section
+          petVoiceSection.classList.add('hidden');
+          petVoiceSection.style.opacity = '0';
+        }
+      });
+
+      // Handle photo upload
+      const photoInput = document.getElementById('pet-photo');
+      const photoPreview = document.getElementById('photo-preview');
+      const photoPlaceholder = document.getElementById('photo-placeholder');
+
+      photoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            photoPreview.src = e.target.result;
+            photoPreview.classList.remove('hidden');
+            photoPlaceholder.classList.add('hidden');
+
+            // Hide the pulsing ring and show edit button
+            photoRing.classList.add('hidden');
+            photoEditBtn.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Dismiss instruction banner
+      const dismissBanner = document.getElementById('dismiss-banner');
+      const instructionBanner = document.getElementById('instruction-banner');
+      dismissBanner.addEventListener('click', function() {
+        instructionBanner.style.display = 'none';
+      });
+
+      // Auto-hide banner after first interaction
+      petNameInput.addEventListener('focus', function() {
+        setTimeout(() => {
+          instructionBanner.style.opacity = '0';
+          instructionBanner.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            instructionBanner.style.display = 'none';
+          }, 500);
+        }, 2000);
+      }, { once: true });
+
+      // =============================================
+      // ABOUT ME SECTION - Field Completion Tracking
+      // =============================================
+      const aboutMeFields = {
+        breed: {
+          input: document.getElementById('breed'),
+          row: document.getElementById('breed-row'),
+          status: document.getElementById('breed-status'),
+          iconEdit: document.getElementById('breed-icon-edit'),
+          iconCheck: document.getElementById('breed-icon-check'),
+          emptyText: 'Tap to add'
+        },
+        sex: {
+          input: document.getElementById('sex'),
+          row: document.getElementById('sex-row'),
+          status: document.getElementById('sex-status'),
+          iconEdit: document.getElementById('sex-icon-edit'),
+          iconCheck: document.getElementById('sex-icon-check'),
+          emptyText: 'Tap to select'
+        },
+        age: {
+          input: document.getElementById('age'),
+          row: document.getElementById('age-row'),
+          status: document.getElementById('age-status'),
+          iconEdit: document.getElementById('age-icon-edit'),
+          iconCheck: document.getElementById('age-icon-check'),
+          emptyText: 'Tap to add'
+        },
+        weight: {
+          input: document.getElementById('weight'),
+          row: document.getElementById('weight-row'),
+          status: document.getElementById('weight-status'),
+          iconEdit: document.getElementById('weight-icon-edit'),
+          iconCheck: document.getElementById('weight-icon-check'),
+          emptyText: 'Tap to add'
+        }
+      };
+
+      const aboutMeProgress = document.getElementById('about-me-progress');
+      const aboutMeSection = document.getElementById('about-me-section');
+
+      function updateFieldState(fieldKey, value) {
+        const field = aboutMeFields[fieldKey];
+        const hasValue = value && value.trim() !== '';
+
+        if (hasValue) {
+          // Mark as complete
+          field.status.textContent = '✓ Added';
+          field.status.classList.remove('text-blue-primary');
+          field.status.classList.add('text-green-primary');
+          field.row.classList.add('field-row-complete');
+          field.iconEdit.classList.add('hidden');
+          field.iconCheck.classList.remove('hidden');
+        } else {
+          // Mark as incomplete
+          field.status.textContent = field.emptyText;
+          field.status.classList.add('text-blue-primary');
+          field.status.classList.remove('text-green-primary');
+          field.row.classList.remove('field-row-complete');
+          field.iconEdit.classList.remove('hidden');
+          field.iconCheck.classList.add('hidden');
+        }
+
+        updateSectionProgress();
+      }
+
+      function updateSectionProgress() {
+        let completedCount = 0;
+        Object.keys(aboutMeFields).forEach(key => {
+          const value = aboutMeFields[key].input.value;
+          if (value && value.trim() !== '') {
+            completedCount++;
+          }
+        });
+
+        // Update progress badge
+        if (completedCount === 4) {
+          aboutMeProgress.textContent = '✓ Complete!';
+          aboutMeProgress.classList.remove('bg-blue-light/30', 'text-blue-primary');
+          aboutMeProgress.classList.add('bg-green-light', 'text-green-primary');
+          aboutMeSection.classList.add('section-complete');
+        } else {
+          aboutMeProgress.textContent = `${completedCount} of 4`;
+          aboutMeProgress.classList.add('bg-blue-light/30', 'text-blue-primary');
+          aboutMeProgress.classList.remove('bg-green-light', 'text-green-primary');
+          aboutMeSection.classList.remove('section-complete');
+        }
+      }
+
+      // Add event listeners to all About Me fields
+      Object.keys(aboutMeFields).forEach(key => {
+        const field = aboutMeFields[key];
+        const eventType = key === 'sex' ? 'change' : 'input';
+
+        field.input.addEventListener(eventType, function() {
+          updateFieldState(key, this.value);
+        });
+
+        // Also update on blur for better UX
+        field.input.addEventListener('blur', function() {
+          updateFieldState(key, this.value);
+        });
+      });
+
+      // Handle toggle switches with visual confirmation text and animations
+      const toggleIds = ['kid-friendly', 'other-pets', 'spayed', 'rabies'];
+      toggleIds.forEach(id => {
+        const toggle = document.getElementById(id);
+        const status = document.getElementById(`${id}-status`);
+        const onText = toggle.dataset.onText;
+        const offText = toggle.dataset.offText;
+        const toggleThumb = toggle.nextElementSibling.nextElementSibling; // The toggle knob
+        const toggleTrack = toggle.nextElementSibling; // The toggle track
+
+        toggle.addEventListener('change', function() {
+          // Remove any existing animation classes
+          toggleThumb.classList.remove('toggle-bounce-on', 'toggle-bounce-off');
+          toggleTrack.classList.remove('toggle-flash');
+
+          if (this.checked) {
+            status.textContent = onText;
+            status.classList.remove('text-neutral-light');
+            status.classList.add('text-green-primary');
+
+            // Add bounce and flash animation
+            toggleThumb.classList.add('toggle-bounce-on');
+            toggleTrack.classList.add('toggle-flash');
+          } else {
+            status.textContent = offText;
+            status.classList.add('text-neutral-light');
+            status.classList.remove('text-green-primary');
+
+            // Add bounce animation for off state
+            toggleThumb.classList.add('toggle-bounce-off');
+          }
+
+          // Clean up animation classes after animation completes
+          setTimeout(() => {
+            toggleThumb.classList.remove('toggle-bounce-on', 'toggle-bounce-off');
+            toggleTrack.classList.remove('toggle-flash');
+          }, 400);
+        });
+      });
+
+      // Handle CTA click
+      activateBtn.addEventListener('click', function() {
+        if (!this.disabled) {
+          // Collect form data
+          const formData = {
+            name: petNameInput.value.trim(),
+            voice: document.getElementById('pet-voice').value.trim(),
+            breed: document.getElementById('breed').value.trim(),
+            sex: document.getElementById('sex').value,
+            age: document.getElementById('age').value.trim(),
+            weight: document.getElementById('weight').value.trim(),
+            kidFriendly: document.getElementById('kid-friendly').checked,
+            otherPets: document.getElementById('other-pets').checked,
+            spayed: document.getElementById('spayed').checked,
+            rabies: document.getElementById('rabies').checked,
+          };
+
+          // Store in sessionStorage and redirect to checkout
+          sessionStorage.setItem('petProfile', JSON.stringify(formData));
+          window.location.href = 'checkout.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

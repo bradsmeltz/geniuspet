@@ -32,8 +32,10 @@ jobs:
         run: |
           mkdir -p _site/002
           mkdir -p _site/004
+          mkdir -p _site/005
           cp -r ./lp-002/* _site/002/
           cp -r ./lp-004/* _site/004/
+          cp -r ./005/* _site/005/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
