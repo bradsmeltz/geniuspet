@@ -480,8 +480,8 @@
     </section>
 
     <!-- PET PROFILE SHOWCASE - Polaroid Carousel -->
-    <section class="py-10 bg-gradient-to-b from-bg-primary to-white overflow-hidden">
-        <div class="max-w-[1100px] mx-auto px-6 mb-6">
+    <section class="py-8 md:py-10 bg-gradient-to-b from-bg-primary to-white overflow-hidden">
+        <div class="max-w-[1100px] mx-auto px-6 mb-4 md:mb-6">
             <div class="text-center">
                 <p class="text-brand-blue text-sm font-semibold uppercase tracking-wider mb-2">Every Pet Deserves</p>
                 <h2 class="text-2xl md:text-3xl font-bold">A Digital ID Profile</h2>
@@ -491,62 +491,62 @@
         <!-- Polaroid Carousel Container -->
         <div class="relative">
             <!-- Gradient fade edges -->
-            <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute left-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-            <!-- Scrollable carousel -->
-            <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-8 pb-4 hide-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
+            <!-- Scrollable carousel - Large images for mobile -->
+            <div class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 md:px-8 pb-4 hide-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <!-- Polaroid 1 - Poodle -->
-                <div class="flex-shrink-0 snap-center first:ml-8 last:mr-8">
-                    <div class="bg-white p-3 rounded-sm shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
-                        <img src="pif-funnel/assets/images/Poodle.png" alt="Poodle with GeniusPet profile" class="w-48 h-48 object-cover rounded-sm">
+                <div class="flex-shrink-0 snap-center first:ml-4 md:first:ml-8">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="pif-funnel/assets/images/Poodle.png" alt="Poodle with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
                         <div class="pt-3 pb-1 text-center">
-                            <p class="font-medium text-gray-800 text-sm">Bella</p>
-                            <p class="text-xs text-gray-400">Protected since 2024</p>
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Bella</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Polaroid 2 - Labrador -->
                 <div class="flex-shrink-0 snap-center">
-                    <div class="bg-white p-3 rounded-sm shadow-lg transform rotate-[3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
-                        <img src="pif-funnel/assets/images/Labrador.png" alt="Labrador with GeniusPet profile" class="w-48 h-48 object-cover rounded-sm">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="pif-funnel/assets/images/Labrador.png" alt="Labrador with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
                         <div class="pt-3 pb-1 text-center">
-                            <p class="font-medium text-gray-800 text-sm">Max</p>
-                            <p class="text-xs text-gray-400">Protected since 2023</p>
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Max</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2023</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Polaroid 3 - Goldendoodle -->
                 <div class="flex-shrink-0 snap-center">
-                    <div class="bg-white p-3 rounded-sm shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
-                        <img src="pif-funnel/assets/images/Goldendoodle.png" alt="Goldendoodle with GeniusPet profile" class="w-48 h-48 object-cover rounded-sm">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="pif-funnel/assets/images/Goldendoodle.png" alt="Goldendoodle with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
                         <div class="pt-3 pb-1 text-center">
-                            <p class="font-medium text-gray-800 text-sm">Charlie</p>
-                            <p class="text-xs text-gray-400">Protected since 2024</p>
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Charlie</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Polaroid 4 - Golden Retriever -->
                 <div class="flex-shrink-0 snap-center">
-                    <div class="bg-white p-3 rounded-sm shadow-lg transform rotate-[2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
-                        <img src="pif-funnel/assets/images/Golden Retriever.png" alt="Golden Retriever with GeniusPet profile" class="w-48 h-48 object-cover rounded-sm">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="pif-funnel/assets/images/Golden Retriever.png" alt="Golden Retriever with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
                         <div class="pt-3 pb-1 text-center">
-                            <p class="font-medium text-gray-800 text-sm">Cooper</p>
-                            <p class="text-xs text-gray-400">Protected since 2023</p>
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Cooper</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2023</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Polaroid 5 - French Bulldog -->
-                <div class="flex-shrink-0 snap-center last:mr-8">
-                    <div class="bg-white p-3 rounded-sm shadow-lg transform rotate-[-3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
-                        <img src="pif-funnel/assets/images/French Buldog.png" alt="French Bulldog with GeniusPet profile" class="w-48 h-48 object-cover rounded-sm">
+                <div class="flex-shrink-0 snap-center last:mr-4 md:last:mr-8">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="pif-funnel/assets/images/French Buldog.png" alt="French Bulldog with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
                         <div class="pt-3 pb-1 text-center">
-                            <p class="font-medium text-gray-800 text-sm">Luna</p>
-                            <p class="text-xs text-gray-400">Protected since 2024</p>
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Luna</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
                         </div>
                     </div>
                 </div>
@@ -555,7 +555,7 @@
 
         <!-- Scroll hint for mobile -->
         <div class="flex justify-center mt-4 md:hidden">
-            <div class="flex items-center gap-2 text-xs text-gray-400">
+            <div class="flex items-center gap-2 text-sm text-gray-500">
                 <svg class="w-4 h-4 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 5l7 7-7 7M3 12h18"/>
                 </svg>
