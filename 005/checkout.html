@@ -57,16 +57,66 @@
 <body class="bg-beige-light font-sans text-neutral-black min-h-screen">
   <!-- Header -->
   <header class="bg-white shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-center sm:justify-between relative">
-      <a href="index.html" class="sm:static">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-center">
+      <a href="index.html">
         <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
       </a>
-      <span class="text-sm text-neutral-medium font-medium hidden sm:block">Step 2 of 2</span>
     </div>
   </header>
 
+  <!-- Progress Section -->
+  <div class="bg-gradient-to-b from-white to-beige-light pt-2 pb-6">
+    <div class="max-w-md mx-auto px-6">
+      <!-- Title -->
+      <h1 class="text-xl font-bold text-neutral-black text-center mb-5">Activate Your Pet's Profile</h1>
+
+      <!-- Modern Progress Bar -->
+      <div class="relative">
+        <!-- Background Track -->
+        <div class="absolute top-4 left-0 right-0 h-1 bg-beige-medium rounded-full"></div>
+        <!-- Active Track - 50% for step 2 -->
+        <div class="absolute top-4 left-0 w-[50%] h-1 bg-gradient-to-r from-red-primary to-red-medium rounded-full"></div>
+
+        <!-- Steps -->
+        <div class="relative flex justify-between">
+          <!-- Step 1 - Completed -->
+          <div class="flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-red-primary to-red-medium text-white flex items-center justify-center shadow-md ring-4 ring-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="mt-2 text-xs font-medium text-neutral-medium">Build</span>
+          </div>
+
+          <!-- Step 2 - Active -->
+          <div class="flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-red-primary to-red-medium text-white flex items-center justify-center shadow-md ring-4 ring-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <span class="mt-2 text-xs font-semibold text-red-primary">Activate</span>
+          </div>
+
+          <!-- Step 3 - Upcoming -->
+          <div class="flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-white border-2 border-beige-medium text-neutral-light flex items-center justify-center ring-4 ring-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <span class="mt-2 text-xs font-medium text-neutral-light">Protected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Checkout -->
-  <section class="py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+  <section class="py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
       <!-- Header - Emotional -->
       <div class="text-center mb-8">
