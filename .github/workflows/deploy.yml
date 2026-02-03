@@ -31,7 +31,9 @@ jobs:
       - name: Prepare deployment structure
         run: |
           mkdir -p _site/002
+          mkdir -p _site/004
           cp -r ./lp-002/* _site/002/
+          cp -r ./lp-004/* _site/004/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

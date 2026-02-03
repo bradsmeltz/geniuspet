@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeniusPet - Pet Safety Score Results</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-red': '#C94A4A',
+                        'brand-red-dark': '#8B3535',
+                        'brand-red-mid': '#B54242',
+                        'brand-beige': '#E8E0D8',
+                        'brand-beige-light': '#F5F0EB',
+                        'brand-beige-mid': '#EDE8E3',
+                        'brand-tan': '#D4A76A',
+                        'brand-blue': '#2E7D9A',
+                        'brand-blue-dark': '#246A85',
+                        'brand-blue-mid': '#2A6F8A',
+                        'brand-blue-light': '#E8F4F8',
+                    },
+                    fontFamily: {
+                        'gilroy': ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-down': 'bounceDown 2s ease-in-out infinite',
+                        'pulse-cta': 'pulseCTA 2s infinite',
+                        'score-progress': 'scoreProgress 1.5s ease-out forwards',
+                        'tag-glow': 'tagGlow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        bounceDown: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(6px)' },
+                        },
+                        pulseCTA: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(215, 66, 66, 0.4)' },
+                            '50%': { boxShadow: '0 0 0 10px rgba(215, 66, 66, 0)' },
+                        },
+                        scoreProgress: {
+                            from: { strokeDashoffset: '339.292' },
+                            to: { strokeDashoffset: '196.79' },
+                        },
+                        tagGlow: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(46, 125, 154, 0.3)' },
+                            '50%': { boxShadow: '0 0 8px 2px rgba(46, 125, 154, 0.3)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Font Face Definitions */
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('fonts/Gilroy/Regular/font.woff2') format('woff2'),
+                 url('fonts/Gilroy/Regular/font.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('fonts/Gilroy/Medium/font.woff2') format('woff2'),
+                 url('fonts/Gilroy/Medium/font.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('fonts/Gilroy/Semibold/font.woff2') format('woff2'),
+                 url('fonts/Gilroy/Semibold/font.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('fonts/Gilroy/Bold/font.woff2') format('woff2'),
+                 url('fonts/Gilroy/Bold/font.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Score ring animation */
+        .score-ring-progress {
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: 196.79;
+            animation: scoreProgress 1.5s ease-out forwards;
+        }
+
+        /* Animated arrow */
+        .arrow-line {
+            animation: arrowLineGrow 0.8s ease-out 0.3s forwards;
+        }
+        @keyframes arrowLineGrow {
+            0% { width: 0; opacity: 0; }
+            100% { width: 36px; opacity: 1; }
+        }
+        .arrow-head {
+            animation: arrowHeadAppear 0.4s ease-out 0.9s forwards;
+            opacity: 0;
+        }
+        @keyframes arrowHeadAppear {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Score improvement animation states */
+        .score-improvement .bar-fill {
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .score-improvement.animate .bar-fill {
+            width: 96%;
+        }
+        .score-improvement .score-after-num {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+        .score-improvement.animate .score-after-num {
+            opacity: 1;
+        }
+        .score-improvement .safe-tag {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out 1.4s, transform 0.4s ease-out 1.4s;
+        }
+        .score-improvement.animate .safe-tag {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* CTA button ripple effect */
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="font-gilroy text-gray-800 bg-white pb-[70px] antialiased">
+    <!-- Header -->
+    <header class="bg-white py-4 border-b border-brand-beige-mid">
+        <div class="max-w-[600px] mx-auto px-5">
+            <a href="#" class="flex items-center justify-center gap-2">
+                <img src="images/logo.svg" alt="GeniusPet" class="h-7 w-auto">
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section - Pet Safety Score -->
+    <section class="hero-section py-8 bg-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="bg-gradient-to-b from-[#C9605E] to-[#A85250] rounded-[20px] p-6 text-center text-white">
+                <div class="flex items-center justify-center gap-4 mb-5">
+                    <div class="relative w-20 h-20 flex-shrink-0">
+                        <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                            <circle class="fill-none stroke-white/20" cx="60" cy="60" r="54" stroke-width="8" />
+                            <circle class="fill-none stroke-white score-ring-progress" cx="60" cy="60" r="54" stroke-width="8" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <span class="score-number text-[32px] font-extrabold leading-none">42</span>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <div class="inline-block bg-white/20 border-2 border-white/50 text-white text-[13px] font-bold tracking-[0.15em] px-4 py-1.5 rounded-full mb-1">HIGH RISK</div>
+                        <p class="text-sm font-medium opacity-85 uppercase tracking-[0.05em]">Your Pet Safety Score</p>
+                    </div>
+                </div>
+                <h1 class="text-xl font-bold leading-tight mb-2.5">What Happens When Someone Finds Your Pet?</h1>
+                <p class="text-[15px] leading-relaxed opacity-95 mb-4">Trackers ping maps. Tags sit silent. But when a stranger finds your pet, they can't reach you — and <strong class="font-bold text-white">your pet can't get home.</strong></p>
+
+                <!-- Diagnostic Cards -->
+                <div class="flex flex-col gap-2.5 mt-3">
+                    <div class="bg-[#FEF9E7] border border-[#F6E3A1] rounded-xl p-3.5 flex items-start gap-3 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                        <div class="flex-shrink-0 w-11 h-11 bg-[#FDE68A] text-[#92400E] rounded-[10px] flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="10" r="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M15 9h3M15 13h3M6 17h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between mb-1 gap-2">
+                                <span class="text-[15px] font-bold text-gray-900">ID Access</span>
+                                <span class="text-[11px] font-bold bg-[#FDE68A] text-[#92400E] px-2.5 py-1 rounded-[10px] uppercase tracking-[0.05em]">Limited</span>
+                            </div>
+                            <p class="text-sm leading-snug text-gray-600 text-left m-0">Finder can't see full profile or contact you directly.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#FEF9E7] border border-[#F6E3A1] rounded-xl p-3.5 flex items-start gap-3 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                        <div class="flex-shrink-0 w-11 h-11 bg-[#FDE68A] text-[#92400E] rounded-[10px] flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between mb-1 gap-2">
+                                <span class="text-[15px] font-bold text-gray-900">Contact Options</span>
+                                <span class="text-[11px] font-bold bg-[#FDE68A] text-[#92400E] px-2.5 py-1 rounded-[10px] uppercase tracking-[0.05em]">Limited</span>
+                            </div>
+                            <p class="text-sm leading-snug text-gray-600 text-left m-0">No fast way to call, text, or email you immediately.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-3.5 flex items-start gap-3 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                        <div class="flex-shrink-0 w-11 h-11 bg-red-200 text-red-700 rounded-[10px] flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M8.5 14l1.5-2 2 2.5 2-1.5 2 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between mb-1 gap-2">
+                                <span class="text-[15px] font-bold text-gray-900">Medical Alerts</span>
+                                <span class="text-[11px] font-bold bg-red-200 text-red-700 px-2.5 py-1 rounded-[10px] uppercase tracking-[0.05em]">Not Visible</span>
+                            </div>
+                            <p class="text-sm leading-snug text-gray-600 text-left m-0">Allergies, meds, and anxiety triggers unknown to rescuers.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-3.5 flex items-start gap-3 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                        <div class="flex-shrink-0 w-11 h-11 bg-red-200 text-red-700 rounded-[10px] flex items-center justify-center">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between mb-1 gap-2">
+                                <span class="text-[15px] font-bold text-gray-900">Lost Pet Network</span>
+                                <span class="text-[11px] font-bold bg-red-200 text-red-700 px-2.5 py-1 rounded-[10px] uppercase tracking-[0.05em]">Missing</span>
+                            </div>
+                            <p class="text-sm leading-snug text-gray-600 text-left m-0">No system to alert shelters or neighbors if pet goes missing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What This Score Means - Contrast Section -->
+    <section class="py-10 bg-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <h2 class="text-[19px] font-semibold text-gray-800 mb-4 text-center">Right now, if your pet goes missing:</h2>
+            <ul class="flex flex-col gap-3 max-w-[280px] mx-auto">
+                <li class="flex items-center gap-2.5 text-[15px] font-medium text-red-900">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0"><circle cx="8" cy="8" r="8" fill="#FECACA"/><path d="M5 5l6 6M11 5l-6 6" stroke="#B91C1C" stroke-width="2" stroke-linecap="round"/></svg>
+                    Recovery depends on luck
+                </li>
+                <li class="flex items-center gap-2.5 text-[15px] font-medium text-red-900">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0"><circle cx="8" cy="8" r="8" fill="#FECACA"/><path d="M5 5l6 6M11 5l-6 6" stroke="#B91C1C" stroke-width="2" stroke-linecap="round"/></svg>
+                    Finders don't know what to do
+                </li>
+                <li class="flex items-center gap-2.5 text-[15px] font-medium text-red-900">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0"><circle cx="8" cy="8" r="8" fill="#FECACA"/><path d="M5 5l6 6M11 5l-6 6" stroke="#B91C1C" stroke-width="2" stroke-linecap="round"/></svg>
+                    Critical delays cost precious time
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Solution Bridge -->
+    <section class="py-10 pb-12 bg-gradient-to-b from-white to-brand-blue-light">
+        <div class="max-w-[600px] mx-auto px-5 text-center">
+            <p class="text-[13px] font-bold tracking-[0.1em] uppercase text-brand-blue mb-3">The Good News</p>
+            <h3 class="text-[26px] font-bold leading-tight text-gray-900 mb-5">One product fixes all four gaps.<br><span class="text-brand-red font-extrabold">Instantly.</span></h3>
+            <div class="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-full animate-bounce-down shadow-lg shadow-brand-blue/30">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 6v20M8 18l8 8 8-8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- How GeniusTag Closes Every Gap -->
+    <section class="py-10 bg-brand-blue-light">
+        <div class="max-w-[600px] mx-auto px-5">
+            <h2 class="text-[22px] font-semibold text-center mb-6 text-gray-800">How GeniusTag Closes Every Gap</h2>
+            <div class="flex flex-col gap-4">
+                <div class="flex gap-4 items-start">
+                    <div class="flex-shrink-0 mt-0.5">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                            <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-800 mb-1">Instant Smartphone ID</h3>
+                        <p class="text-[15px] leading-relaxed text-gray-600">Any phone can scan the QR/NFC tag. No app needed. Your pet is identifiable in seconds.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div class="flex-shrink-0 mt-0.5">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                            <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-800 mb-1">Instant Owner Alerts</h3>
+                        <p class="text-[15px] leading-relaxed text-gray-600">SMS, email, and phone call—the moment someone scans, plus GPS location of your pet.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div class="flex-shrink-0 mt-0.5">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                            <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-800 mb-1">Full Medical Profile</h3>
+                        <p class="text-[15px] leading-relaxed text-gray-600">Medications, allergies, anxiety triggers, dietary needs: all visible to the rescuer instantly.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div class="flex-shrink-0 mt-0.5">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                            <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-800 mb-1">Lost Pet Alert Network</h3>
+                        <p class="text-[15px] leading-relaxed text-gray-600">One tap generates flyers, notifies shelters, and triggers direct rescue communication.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It Works Section -->
+    <section class="py-10 bg-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <h2 class="text-[22px] font-semibold text-center mb-6 text-gray-800">Why GeniusTag Works When Others Don't</h2>
+            <div class="flex flex-col gap-3.5 max-w-[360px] mx-auto">
+                <div class="flex items-center gap-3.5 bg-brand-beige-light p-3.5 rounded-xl border border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-[15px] font-semibold text-gray-800">No apps or batteries required</span>
+                </div>
+                <div class="flex items-center gap-3.5 bg-brand-beige-light p-3.5 rounded-xl border border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-[15px] font-semibold text-gray-800">Accessible by anyone, anywhere</span>
+                </div>
+                <div class="flex items-center gap-3.5 bg-brand-beige-light p-3.5 rounded-xl border border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-[15px] font-semibold text-gray-800">Designed by pet safety experts</span>
+                </div>
+                <div class="flex items-center gap-3.5 bg-brand-beige-light p-3.5 rounded-xl border border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-[15px] font-semibold text-gray-800">Built to act in real-life emergencies</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Bridge -->
+    <section class="py-12 pt-12 bg-white text-center">
+        <div class="max-w-[600px] mx-auto px-5">
+            <p class="text-[13px] font-bold tracking-[0.1em] uppercase text-brand-blue mb-3">How It Works</p>
+            <h2 class="text-[28px] font-extrabold text-gray-900 mb-4 leading-tight">One Small Tag. Complete Peace of Mind.</h2>
+            <p class="text-[17px] leading-relaxed text-gray-600 max-w-[440px] mx-auto mb-8">GeniusTag is a <strong class="text-[#D74242] font-bold">smart pet ID</strong> with a scannable QR code. When someone finds your pet, they simply scan the tag with any smartphone—no app needed.</p>
+
+            <div class="mb-9 flex justify-center">
+                <img src="images/geniustag-id-tags-new.png" alt="GeniusTag Smart Pet ID" class="w-[280px] h-auto drop-shadow-xl">
+            </div>
+
+            <!-- Timeline Steps -->
+            <div class="flex flex-col max-w-[320px] mx-auto">
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white rounded-full flex items-center justify-center shadow-lg shadow-brand-blue/30 relative z-10">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="17" cy="17" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="w-0.5 flex-1 min-h-[32px] bg-gradient-to-b from-brand-blue to-gray-300 my-1"></div>
+                    </div>
+                    <div class="py-2 pb-7 text-left">
+                        <span class="block text-xs font-bold tracking-[0.08em] uppercase text-brand-blue mb-1">Step 1</span>
+                        <p class="text-base font-semibold text-gray-900 leading-snug m-0">Finder scans the QR code</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white rounded-full flex items-center justify-center shadow-lg shadow-brand-blue/30 relative z-10">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="w-0.5 flex-1 min-h-[32px] bg-gradient-to-b from-brand-blue to-gray-300 my-1"></div>
+                    </div>
+                    <div class="py-2 pb-7 text-left">
+                        <span class="block text-xs font-bold tracking-[0.08em] uppercase text-brand-blue mb-1">Step 2</span>
+                        <p class="text-base font-semibold text-gray-900 leading-snug m-0">Pet's profile appears instantly</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white rounded-full flex items-center justify-center shadow-lg shadow-brand-blue/30 relative z-10">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="py-2 text-left">
+                        <span class="block text-xs font-bold tracking-[0.08em] uppercase text-brand-blue mb-1">Step 3</span>
+                        <p class="text-base font-semibold text-gray-900 leading-snug m-0">You get notified immediately</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pet Profile Preview Section -->
+    <section class="py-12 bg-gradient-to-b from-brand-beige-light to-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <h2 class="text-[22px] font-semibold text-center mb-2 text-gray-800">What the Finder Sees</h2>
+            <p class="text-[15px] text-center text-gray-600 -mt-0 mb-8">Your pet's complete profile appears instantly—no app required</p>
+
+            <!-- iPhone Mockup -->
+            <div class="flex justify-center mb-6">
+                <div class="w-[320px] bg-black rounded-[48px] p-3.5 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.35)] relative" style="box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.35), inset 0 0 0 2px #2A2A2A;">
+                    <div class="w-[90px] h-[26px] bg-black rounded-[20px] absolute top-[22px] left-1/2 -translate-x-1/2 z-10"></div>
+                    <div class="bg-brand-beige-light rounded-[36px] overflow-hidden min-h-[580px]">
+                        <img src="images/pet-profile-screenshot.png" alt="GeniusTag Pet Profile - Louis" class="w-full h-auto min-h-[580px] object-cover object-top block rounded-[36px]">
+                    </div>
+                    <div class="w-[134px] h-[5px] bg-black rounded-[3px] mx-auto mt-2.5"></div>
+                </div>
+            </div>
+
+            <p class="text-center text-sm text-gray-500">No app required · Works on any smartphone · Updates in real-time</p>
+        </div>
+    </section>
+
+    <!-- Upgrade Your Pet's Safety Score -->
+    <section class="product-section py-10 bg-brand-beige-light">
+        <div class="max-w-[600px] mx-auto px-5">
+            <h2 class="text-[22px] font-semibold text-center mb-2 text-gray-800">Upgrade Your Pet's Safety Score</h2>
+            <p class="text-[15px] text-center text-gray-600 -mt-0 mb-6">Fix the issues above and take your score from 42 to 96.</p>
+
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-brand-red">
+                <div class="inline-block bg-brand-red text-white text-[11px] font-semibold tracking-[0.1em] uppercase px-3.5 py-1.5 rounded mb-5">PERSONALIZED FOR YOU</div>
+
+                <div class="flex justify-center mb-6">
+                    <img src="images/geniustag-id-tags-new.png" alt="GeniusTag Smart Pet ID Tags" class="w-60 h-auto drop-shadow-lg">
+                </div>
+
+                <div class="flex flex-col items-center text-center mb-5">
+                    <h3 class="text-[22px] font-bold mb-2.5 text-gray-900">GeniusTag Smart Pet ID</h3>
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <div class="flex gap-0.5">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#D4A76A"><path d="M8 0l2.47 5.01L16 5.82l-4 3.9.94 5.5L8 12.77l-4.94 2.45.94-5.5-4-3.9 5.53-.81z"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#D4A76A"><path d="M8 0l2.47 5.01L16 5.82l-4 3.9.94 5.5L8 12.77l-4.94 2.45.94-5.5-4-3.9 5.53-.81z"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#D4A76A"><path d="M8 0l2.47 5.01L16 5.82l-4 3.9.94 5.5L8 12.77l-4.94 2.45.94-5.5-4-3.9 5.53-.81z"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#D4A76A"><path d="M8 0l2.47 5.01L16 5.82l-4 3.9.94 5.5L8 12.77l-4.94 2.45.94-5.5-4-3.9 5.53-.81z"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#D4A76A"><path d="M8 0l2.47 5.01L16 5.82l-4 3.9.94 5.5L8 12.77l-4.94 2.45.94-5.5-4-3.9 5.53-.81z"/></svg>
+                        </div>
+                        <span class="text-sm text-gray-600">4.9/5 (76,000+ reviews)</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2.5 mb-2 flex-wrap">
+                        <span class="text-sm text-gray-400 line-through">$39<sup class="text-[10px]">95</sup></span>
+                        <span class="text-[28px] font-bold text-brand-blue">$6.99</span>
+                        <span class="bg-brand-blue text-white text-[11px] font-semibold px-2.5 py-1 rounded">SAVE $33</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">Free shipping</p>
+
+                    <div class="grid grid-cols-2 gap-x-6 gap-y-2.5 max-w-[340px] text-left">
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0">
+                                <circle cx="8" cy="8" r="8" fill="#2E7D9A"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Instant smartphone scan</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0">
+                                <circle cx="8" cy="8" r="8" fill="#2E7D9A"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>SMS + email + call alerts</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0">
+                                <circle cx="8" cy="8" r="8" fill="#2E7D9A"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Full medical profile</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0">
+                                <circle cx="8" cy="8" r="8" fill="#2E7D9A"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>GPS location on scan</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0">
+                                <circle cx="8" cy="8" r="8" fill="#2E7D9A"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Lost pet alert network</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="flex-shrink-0">
+                                <circle cx="8" cy="8" r="8" fill="#2E7D9A"/>
+                                <path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>No batteries or app needed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Score Improvement Preview -->
+                <div class="score-improvement bg-gradient-to-br from-brand-blue-light to-[#D9EDF3] border-2 border-brand-blue rounded-[20px] p-7 pb-6 mb-5 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D74242] via-[#D74242] to-brand-blue" style="background: linear-gradient(90deg, #D74242 0%, #D74242 40%, #2E7D9A 60%, #2E7D9A 100%);"></div>
+                    <div class="text-center mb-5">
+                        <span class="text-xs font-bold tracking-[0.1em] uppercase text-brand-blue bg-brand-blue/10 px-3.5 py-1.5 rounded-full inline-block">Your Safety Score Transformation</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-3 mb-5">
+                        <div class="text-center flex-1 max-w-[120px]">
+                            <span class="block text-xs font-semibold tracking-[0.02em] text-gray-500 mb-1.5 uppercase">Your Score Today</span>
+                            <span class="score-before-num block text-[56px] font-extrabold leading-none text-[#D74242] mb-2" style="text-shadow: 0 2px 8px rgba(215, 66, 66, 0.2);">42</span>
+                            <span class="inline-block text-[11px] font-bold tracking-[0.06em] uppercase bg-[#D74242]/15 text-red-700 px-3 py-1 rounded-xl">High Risk</span>
+                        </div>
+                        <div class="flex-shrink-0 w-[60px] h-[60px] flex items-center justify-center relative">
+                            <div class="arrow-line absolute h-[3px] bg-gradient-to-r from-[#D74242] to-brand-blue rounded w-0"></div>
+                            <div class="arrow-head absolute right-2 opacity-0">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12h14M13 5l7 7-7 7" stroke="#2E7D9A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="text-center flex-1 max-w-[120px]">
+                            <span class="block text-xs font-semibold tracking-[0.02em] text-gray-500 mb-1.5 uppercase">With GeniusTag</span>
+                            <span class="score-after-num block text-[56px] font-extrabold leading-none text-brand-blue mb-2" style="text-shadow: 0 2px 8px rgba(46, 125, 154, 0.2);">96</span>
+                            <span class="safe-tag inline-block text-[11px] font-bold tracking-[0.06em] uppercase bg-brand-blue/15 text-[#1E6A85] px-3 py-1 rounded-xl animate-tag-glow">Protected</span>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="h-3 bg-gray-200 rounded-md overflow-hidden relative shadow-inner">
+                            <div class="bar-fill h-full w-0 bg-gradient-to-r from-[#D74242] via-[#D74242] to-brand-blue rounded-md shadow" style="background: linear-gradient(90deg, #D74242 0%, #D74242 44%, #2E7D9A 44%, #2E7D9A 100%);"></div>
+                        </div>
+                    </div>
+                    <p class="text-center text-[15px] font-semibold text-[#246A85] mt-4 pt-4 border-t border-brand-blue/20 m-0">Closes every gap. Instantly.</p>
+                </div>
+
+                <p class="text-sm italic text-gray-500 mb-3 text-center">"Got my dog back in 30 minutes — worth every penny." <span class="not-italic text-gray-400">— Rachel K., CA</span></p>
+                <div class="inline-flex items-center gap-1.5 bg-[#FFFBEB] border border-[#FDE68A] rounded-full px-4 py-2 mb-4 text-sm text-[#92400E]">
+                    <span class="text-xs">🔥</span>
+                    <span class="font-medium">Limited Offer: <s class="text-gray-400 font-normal">$39.95</s> → <strong class="text-[#B45309]">$6.99</strong></span>
+                    <span class="text-gray-300">•</span>
+                    <span class="font-medium text-[#B45309]">Only 37 left this week</span>
+                </div>
+                <button class="cta-button w-full bg-brand-red text-white text-lg font-semibold py-4.5 px-8 rounded-full transition-all hover:bg-brand-red-dark hover:-translate-y-0.5 shadow-lg shadow-brand-red/40 animate-pulse-cta mb-3" style="padding-top: 18px; padding-bottom: 18px;">Fix My Pet's Safety Score →</button>
+                <p class="text-sm text-gray-400 text-center m-0">Ships in 2 days • 30-day guarantee • 3-min setup</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-10 bg-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="bg-brand-beige-light rounded-2xl p-7 text-left">
+                <div class="flex gap-0.5 mb-5">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A76A"><path d="M12 0l3.71 7.51L24 8.73l-6 5.85 1.42 8.27L12 18.94l-7.42 3.91L6 14.58 0 8.73l8.29-1.22z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A76A"><path d="M12 0l3.71 7.51L24 8.73l-6 5.85 1.42 8.27L12 18.94l-7.42 3.91L6 14.58 0 8.73l8.29-1.22z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A76A"><path d="M12 0l3.71 7.51L24 8.73l-6 5.85 1.42 8.27L12 18.94l-7.42 3.91L6 14.58 0 8.73l8.29-1.22z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A76A"><path d="M12 0l3.71 7.51L24 8.73l-6 5.85 1.42 8.27L12 18.94l-7.42 3.91L6 14.58 0 8.73l8.29-1.22z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A76A"><path d="M12 0l3.71 7.51L24 8.73l-6 5.85 1.42 8.27L12 18.94l-7.42 3.91L6 14.58 0 8.73l8.29-1.22z"/></svg>
+                </div>
+                <blockquote class="text-[17px] leading-relaxed text-gray-600 italic mb-6">
+                    "Biscuit bolted during a thunderstorm. 40 minutes later, someone scanned his tag three streets over. They knew he was scared of thunder and had his anxiety meds listed. He was home in under an hour."
+                </blockquote>
+                <div class="flex items-center gap-3.5">
+                    <img src="images/avatar-rachel.svg" alt="Rachel M." class="w-14 h-14 rounded-full object-cover border-2 border-gray-200">
+                    <div class="text-left">
+                        <span class="block text-base font-semibold text-gray-800 mb-0.5">Rachel M.</span>
+                        <span class="block text-sm text-gray-500 mb-1">Dog Mom · Miami, FL</span>
+                        <span class="flex items-center gap-1 text-sm font-medium text-brand-blue">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M5.5 7l1.5 1.5 3-3" stroke="#2E7D9A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Verified Member
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Banner -->
+    <section class="py-8 bg-gray-50 border-y border-gray-200">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="flex justify-center gap-10">
+                <div class="text-center">
+                    <span class="block text-[32px] font-extrabold text-brand-blue leading-tight">250K+</span>
+                    <span class="block text-sm font-medium text-gray-500 mt-1 uppercase tracking-[0.05em]">Tags Shipped</span>
+                </div>
+                <div class="text-center">
+                    <span class="block text-[32px] font-extrabold text-brand-blue leading-tight">4.9</span>
+                    <span class="block text-sm font-medium text-gray-500 mt-1 uppercase tracking-[0.05em]">★ Rating</span>
+                </div>
+                <div class="text-center">
+                    <span class="block text-[32px] font-extrabold text-brand-blue leading-tight">76K+</span>
+                    <span class="block text-sm font-medium text-gray-500 mt-1 uppercase tracking-[0.05em]">Pets Protected</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Everything Included Section -->
+    <section class="py-10 bg-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="bg-gradient-to-br from-brand-beige-light to-brand-beige border-2 border-brand-tan rounded-xl p-4 px-6 mb-6 text-center">
+                <p class="text-lg font-medium text-gray-600 m-0 leading-snug">You get <strong class="font-extrabold text-gray-800">$276 worth</strong> of tools, protection, and peace of mind — for <strong class="font-extrabold text-gray-800">$6.99</strong></p>
+            </div>
+            <h2 class="text-[22px] font-semibold text-center mb-6 text-gray-800">Everything Included With Your GeniusTag</h2>
+
+            <div class="flex flex-col gap-4 mb-6">
+                <div class="flex items-center gap-3 pb-4 border-b border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="flex-1 text-[15px] font-medium text-gray-800">GeniusTag Smart QR + NFC Tag</span>
+                    <span class="text-[15px] text-gray-400 line-through">$59<sup class="text-[10px]">95</sup></span>
+                </div>
+                <div class="flex items-center gap-3 pb-4 border-b border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="flex-1 text-[15px] font-medium text-gray-800">Lifetime Digital Pet Profile</span>
+                    <span class="text-[15px] text-gray-400 line-through">$89<sup class="text-[10px]">00</sup></span>
+                </div>
+                <div class="flex items-center gap-3 pb-4 border-b border-brand-beige-mid">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="flex-1 text-[15px] font-medium text-gray-800">Instant Alert System</span>
+                    <span class="text-[15px] text-gray-400 line-through">$49<sup class="text-[10px]">00</sup></span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
+                        <circle cx="10" cy="10" r="10" fill="#2E7D9A"/>
+                        <path d="M6 10l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="flex-1 text-[15px] font-medium text-gray-800">National Lost Pet Network</span>
+                    <span class="text-[15px] text-gray-400 line-through">$79<sup class="text-[10px]">00</sup></span>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 px-6 mt-2">
+                <div class="flex items-center justify-between py-2 border-b border-dashed border-gray-300 pb-3 mb-1">
+                    <span class="text-[15px] font-medium text-gray-500">Total Value</span>
+                    <span class="text-base font-semibold text-gray-400 line-through">$276.95</span>
+                </div>
+                <div class="flex items-center justify-between py-2">
+                    <span class="text-base font-semibold text-gray-800">You Pay Today</span>
+                    <span class="text-[28px] font-bold text-brand-blue">$6.99</span>
+                </div>
+                <p class="text-center text-sm text-gray-400 mt-3 pt-3 border-t border-gray-200 m-0">Free shipping included</p>
+                <button class="cta-button w-full bg-brand-red text-white text-base font-semibold py-4 px-6 rounded-full transition-all hover:bg-brand-red-dark mt-5 animate-pulse-cta">Fix My Pet's Safety Score →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Money Back Guarantee -->
+    <section class="py-10 bg-brand-beige-light">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="bg-brand-blue-light border-2 border-brand-blue rounded-2xl p-8 text-center">
+                <div class="mb-4">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" class="inline-block">
+                        <circle cx="24" cy="24" r="24" fill="#2E7D9A"/>
+                        <path d="M20 24l4 4 8-8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">30-Day Money-Back Guarantee</h3>
+                <p class="text-[17px] font-semibold leading-relaxed text-brand-blue-dark italic mb-2">If GeniusTag doesn't improve your pet's Safety Score, we'll refund you.</p>
+                <p class="text-[15px] leading-relaxed text-gray-600">No questions asked. Zero risk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Lock Section -->
+    <section class="py-12 bg-gradient-to-b from-brand-beige-light to-white">
+        <div class="max-w-[600px] mx-auto px-5">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Your Choice Right Now</h2>
+            <p class="text-[17px] leading-relaxed text-gray-600 text-center max-w-[480px] mx-auto">You can leave your pet's Safety Score where it is and hope nothing happens — or you can fix the gaps today and know exactly what happens if your pet is found.</p>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-12 bg-white text-center">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div class="bg-white rounded-xl p-5 shadow-md border border-gray-200">
+                    <div class="text-brand-tan text-sm tracking-widest mb-3">★★★★★</div>
+                    <p class="text-sm italic text-gray-700 leading-relaxed mb-4 m-0">"Someone found my dog at a park 2 miles away. I got a text within 30 seconds of them scanning the tag."</p>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-blue to-[#3A9DBF] text-white text-xs font-bold flex items-center justify-center">SM</div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-[13px] font-semibold text-gray-900">Sarah M.</span>
+                            <span class="text-xs text-gray-500">Austin, TX</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-md border border-gray-200">
+                    <div class="text-brand-tan text-sm tracking-widest mb-3">★★★★★</div>
+                    <p class="text-sm italic text-gray-700 leading-relaxed mb-4 m-0">"My cat escaped during a move. A neighbor scanned her tag and I had her back in under an hour."</p>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-blue to-[#3A9DBF] text-white text-xs font-bold flex items-center justify-center">JK</div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-[13px] font-semibold text-gray-900">James K.</span>
+                            <span class="text-xs text-gray-500">Denver, CO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="text-xl font-bold leading-snug mb-5 text-gray-800">Be the pet parent who's ready — before it's too late.</h2>
+
+            <div class="inline-flex items-center gap-2 bg-[#FFFDF7] border border-[#F5E6C8] rounded-full px-4.5 py-2.5 mb-4 text-[15px]">
+                <span class="font-semibold text-gray-900">$6.99 <s class="text-gray-400 font-normal ml-1">$39.95</s></span>
+                <span class="text-gray-300">•</span>
+                <span class="font-medium text-[#92400E]">37 left this week</span>
+            </div>
+
+            <button class="cta-button w-full max-w-md bg-brand-red text-white text-lg font-semibold py-4.5 px-8 rounded-full transition-all hover:bg-brand-red-dark hover:-translate-y-0.5 shadow-lg shadow-brand-red/40 animate-pulse-cta mb-3.5" style="padding-top: 18px; padding-bottom: 18px;">Raise My Pet's Safety Score →</button>
+
+            <p class="text-sm text-gray-500 mt-3.5">Free shipping · 5-min setup · <span class="text-brand-blue italic">🛡 30-day risk-free guarantee</span></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-[#1A1A1A] text-gray-500">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <img src="images/logo.svg" alt="GeniusPet" class="h-6 w-auto brightness-0 invert">
+            </div>
+            <p class="text-sm text-center text-gray-500">© 2026 GeniusPet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="sticky-bottom fixed bottom-0 left-0 right-0 bg-white border-t border-brand-beige-mid py-3 z-[1000] shadow-[0_-4px_20px_rgba(0,0,0,0.1)]" style="transform: translateY(100%); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease;">
+        <div class="max-w-[600px] mx-auto px-5 flex items-center justify-between gap-4">
+            <span class="text-sm text-gray-800 leading-snug flex items-center gap-2 flex-wrap">
+                <span class="text-[11px] font-bold uppercase tracking-[0.05em] bg-[#FEF3C7] text-[#92400E] px-2.5 py-1 rounded border border-[#F59E0B]">37 Left</span>
+                <strong class="text-brand-blue text-lg">$6.99</strong>
+                <span class="text-sm text-gray-400 line-through">$39.95</span>
+            </span>
+            <button class="cta-button bg-brand-red text-white text-sm font-semibold py-3 px-5 rounded-full transition-all hover:bg-brand-red-dark">Fix My Score →</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
