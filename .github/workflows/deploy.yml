@@ -28,10 +28,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare deployment structure
+        run: |
+          mkdir -p _site/002
+          cp -r ./lp-002/* _site/002/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './lp-002'
+          path: './_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
