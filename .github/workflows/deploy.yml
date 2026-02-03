@@ -33,13 +33,9 @@ jobs:
           mkdir -p _site/002
           mkdir -p _site/004
           mkdir -p _site/005
-          mkdir -p _site/pif-funnel
           cp -r ./lp-002/* _site/002/
           cp -r ./lp-004/* _site/004/
           cp -r ./005/* _site/005/
-          cp -r ./pif-funnel/* _site/pif-funnel/
-          cp ./pif-landing.html _site/
-          cp ./index.html _site/ 2>/dev/null || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
