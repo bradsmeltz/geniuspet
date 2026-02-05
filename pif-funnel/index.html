@@ -149,63 +149,63 @@
     </header>
 
     <!-- 1. HERO SECTION -->
-    <section class="pt-4 pb-10 lg:py-16 overflow-hidden bg-white">
+    <section class="pt-4 pb-12 lg:py-16 overflow-hidden bg-gradient-to-b from-[#FDF9F5] via-white to-white">
         <div class="max-w-[1100px] mx-auto px-6">
 
             <!-- Mobile Layout -->
             <div class="lg:hidden">
                 <!-- Headline + Subheadline — ABOVE the image -->
-                <div class="text-center mb-4">
+                <div class="text-center mb-5">
                     <h1 class="text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight mb-2">
                         Your Pet Can't Speak.<br>
                         <span class="text-brand-red">But Their Profile Can.</span>
                     </h1>
-                    <p class="text-[15px] text-gray-600 leading-relaxed">
-                        Their digital ID — always with them. Scannable by anyone, no app needed.
+                    <p class="text-[15px] text-gray-500 leading-relaxed">
+                        Their story, their safety, and your peace of mind — always available, even when you're not.
                     </p>
                 </div>
 
-                <!-- Hero Image with Floating Profile Card — SHORTER -->
-                <div class="relative rounded-2xl overflow-hidden mb-4">
-                    <img src="assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[35vh] min-h-[220px] max-h-[280px] object-cover">
-                    <!-- Dark gradient overlay at bottom for card contrast -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                <!-- Hero Image with Floating Profile Card -->
+                <div class="relative mb-6">
+                    <div class="rounded-2xl overflow-hidden shadow-lg">
+                        <img src="assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[35vh] min-h-[220px] max-h-[280px] object-cover">
+                        <!-- Warm gradient overlay at bottom for card contrast -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent rounded-2xl"></div>
+                    </div>
 
-                    <!-- Floating Profile Card -->
-                    <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow-2xl">
+                    <!-- Floating Profile Card — slightly rotated for "held in hand" feel -->
+                    <div class="absolute -bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow-[0_8px_30px_rgba(0,0,0,0.12)] rotate-[-1deg] transition-transform duration-300 active:rotate-0 active:scale-[1.02]">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
                                 <img src="assets/images/hero-dog.jpg" alt="Pet profile" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div class="flex-1 min-w-0">
                                 <h3 class="font-bold text-sm text-gray-900">Hey, my name is Milo!</h3>
                                 <p class="text-xs text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
-                            <div class="bg-brand-red text-white text-xs font-semibold px-3 py-1.5 rounded-full flex-shrink-0">
+                            <div class="bg-brand-red text-white text-xs font-semibold px-3 py-1.5 rounded-full flex-shrink-0 shadow-sm">
                                 Contact
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- CTA Button -->
-                <a href="profile-builder.html" class="inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3.5 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg shadow-brand-red/30 w-full mb-3">
-                    Start Your Pet's Free Profile
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
+                <!-- CTA Button — generous spacing to breathe -->
+                <div class="mt-2">
+                    <a href="profile-builder.html" class="inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg shadow-brand-red/25 w-full">
+                        Start Your Pet's Free Profile
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
 
-                <!-- Trust Indicators -->
-                <div class="flex flex-wrap items-center justify-center gap-3 text-xs text-gray-500">
-                    <div class="flex items-center gap-1">
-                        <span class="text-brand-red">★★★★★</span>
-                        <span>4.9/5 rating</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <span class="text-gray-400">·</span>
-                        <span>76,000+ pets protected</span>
-                    </div>
+                <!-- Trust Indicators — clean single line -->
+                <div class="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
+                    <span class="text-brand-red text-[11px]">★★★★★</span>
+                    <span>4.9/5 rating</span>
+                    <span>·</span>
+                    <span>76,000+ pets protected</span>
                 </div>
             </div>
 
@@ -217,24 +217,20 @@
                         Your Pet Can't Speak.<br>
                         <span class="text-brand-red">But Their Profile Can.</span>
                     </h1>
-                    <p class="text-lg text-gray-600 leading-relaxed mb-6">
-                        Their digital ID — always with them. Scannable by anyone, no app needed.
+                    <p class="text-lg text-gray-500 leading-relaxed mb-8">
+                        Their story, their safety, and your peace of mind — always available, even when you're not.
                     </p>
-                    <a href="profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/30 hover:shadow-xl hover:shadow-brand-red/40 mb-4">
+                    <a href="profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/25 hover:shadow-xl hover:shadow-brand-red/35 mb-5">
                         Start Your Pet's Free Profile
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
-                    <div class="flex flex-wrap items-center gap-6 text-sm text-gray-500">
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-brand-red">★★★★★</span>
-                            <span>4.9/5 rating</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-gray-400">·</span>
-                            <span>76,000+ pets protected</span>
-                        </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-400">
+                        <span class="text-brand-red">★★★★★</span>
+                        <span>4.9/5 rating</span>
+                        <span>·</span>
+                        <span>76,000+ pets protected</span>
                     </div>
                 </div>
 
@@ -242,14 +238,14 @@
                 <div class="relative">
                     <div class="rounded-2xl overflow-hidden shadow-2xl">
                         <img src="assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[480px] object-cover">
-                        <!-- Dark gradient overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent rounded-2xl"></div>
+                        <!-- Warm gradient overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent rounded-2xl"></div>
                     </div>
 
-                    <!-- Floating Profile Card -->
-                    <div class="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-2xl w-[280px] border border-gray-100">
+                    <!-- Floating Profile Card — slightly angled, interactive -->
+                    <div class="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] w-[280px] border border-gray-100/80 rotate-[-2deg] hover:rotate-0 hover:scale-[1.03] transition-all duration-300 cursor-default">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0">
+                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
                                 <img src="assets/images/hero-dog.jpg" alt="Pet profile" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div>
