@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pet's Digital Profile | GeniusPet</title>
+    <meta name="description" content="Create a secure, shareable digital ID profile with your pet's info, medical details, and care instructions — all in one place.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-red': '#D74242',
+                        'brand-red-dark': '#C43C3C',
+                        'brand-red-light': '#FBECEC',
+                        'brand-blue': '#3995C6',
+                        'brand-blue-light': '#EFF6FA',
+                        'brand-beige': '#ECE0D6',
+                        'brand-black': '#2B2B2B',
+                        'bg-primary': '#FBF8F4',
+                        'bg-beige-stroke': '#F6F1EA',
+                    },
+                    fontFamily: {
+                        'gilroy': ['Gilroy', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Fonts -->
+    <style>
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Regular.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Medium.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Semibold.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Semibold.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Bold.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-LightItalic.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-LightItalic.woff') format('woff');
+            font-weight: 300;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        /* Hide scrollbar for carousel */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glass-card-hover:active {
+            transform: rotate(0deg) translateY(-2px) !important;
+            box-shadow:
+                0 16px 48px rgba(0, 0, 0, 0.14),
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        @media (min-width: 1024px) {
+            .glass-card-hover:hover {
+                transform: rotate(0deg) translateY(-4px) !important;
+                box-shadow:
+                    0 16px 48px rgba(0, 0, 0, 0.14),
+                    0 4px 12px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            }
+        }
+    </style>
+</head>
+<body class="font-gilroy text-brand-black bg-bg-primary antialiased">
+
+    <!-- HEADER -->
+    <header class="py-4">
+        <div class="max-w-[1100px] mx-auto px-4 flex justify-center">
+            <a href="/" class="inline-flex items-center">
+                <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8 w-auto">
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="pt-2 pb-12 lg:py-16 bg-gradient-to-b from-[#FDF9F5] via-white to-white">
+        <div class="max-w-[1100px] mx-auto px-4">
+
+            <!-- Mobile Layout -->
+            <div class="lg:hidden">
+                <!-- Headline + Subheadline -->
+                <div class="text-center mb-6">
+                    <h1 class="text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight mb-3">
+                        Your Pet Can't Speak.<br>
+                        <span class="text-brand-red">But Their Profile Can.</span>
+                    </h1>
+                    <p class="text-[15px] text-gray-500 leading-relaxed max-w-[320px] mx-auto">
+                        More than a tag — it's their digital identity, their safety, and your peace of mind.
+                    </p>
+                </div>
+
+                <!-- Hero Image with Glassmorphism Profile Card -->
+                <div class="relative mb-10">
+                    <div class="rounded-2xl overflow-hidden shadow-lg">
+                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[45vh] min-h-[280px] max-h-[360px] object-cover">
+                    </div>
+
+                    <!-- Glassmorphism Profile Card -->
+                    <div class="glass-card glass-card-hover absolute -bottom-6 left-3 right-3 rounded-2xl p-4 transform rotate-[-1.5deg]">
+                        <!-- Pet Info Row -->
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                                <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-bold text-base text-gray-900">Hey, I'm Milo!</h3>
+                                <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
+                            </div>
+                        </div>
+
+                        <!-- Value Preview - Medical Info -->
+                        <div class="flex items-center gap-4 mb-3 text-xs text-gray-600">
+                            <div class="flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>Allergies on file</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                <span>Vet info saved</span>
+                            </div>
+                        </div>
+
+                        <!-- Contact Button -->
+                        <button class="w-full bg-brand-red text-white py-2.5 rounded-full text-sm font-semibold shadow-sm">
+                            Contact My Parents
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg shadow-brand-red/25 w-full">
+                    Start Your Pet's Free Profile
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+
+                <!-- Trust Indicator -->
+                <p class="text-center text-xs text-gray-400 mt-3">Backed by 76,000+ pet parents · *billed annually</p>
+            </div>
+
+            <!-- Desktop Layout -->
+            <div class="hidden lg:grid grid-cols-2 gap-16 items-center">
+                <!-- Content -->
+                <div class="max-w-xl">
+                    <h1 class="text-[44px] font-bold leading-[1.1] tracking-tight mb-4">
+                        Your Pet Can't Speak.<br>
+                        <span class="text-brand-red">But Their Profile Can.</span>
+                    </h1>
+                    <p class="text-lg text-gray-500 leading-relaxed mb-8">
+                        More than a tag — it's their digital identity, their safety, and your peace of mind.
+                    </p>
+                    <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/25 hover:shadow-xl hover:shadow-brand-red/35 mb-4">
+                        Start Your Pet's Free Profile
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <p class="text-sm text-gray-400">Backed by 76,000+ pet parents · *billed annually</p>
+                </div>
+
+                <!-- Visual -->
+                <div class="relative">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[480px] object-cover">
+                    </div>
+
+                    <!-- Glassmorphism Profile Card - Desktop -->
+                    <div class="glass-card glass-card-hover absolute -bottom-8 -left-8 rounded-2xl p-5 w-[300px] transform rotate-[-2deg]">
+                        <!-- Pet Info Row -->
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                                <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-900">Hey, I'm Milo!</h3>
+                                <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="space-y-2 text-sm mb-4">
+                            <div class="flex justify-between border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Weight</span>
+                                <span class="font-semibold text-gray-800">45 lbs</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Allergies</span>
+                                <span class="font-semibold text-gray-800">Chicken <span class="text-brand-red">!</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Vet</span>
+                                <span class="font-semibold text-gray-800">Dr. Chen</span>
+                            </div>
+                        </div>
+
+                        <!-- Contact Button -->
+                        <button class="w-full bg-brand-red text-white py-2.5 rounded-full text-sm font-semibold">
+                            Contact My Parents
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUE BANNER -->
+    <section class="py-6 bg-bg-beige-stroke/50">
+        <div class="max-w-[800px] mx-auto px-4 text-center">
+            <p class="text-[15px] text-gray-500 italic">
+                "Their story, their safety, and medical info — always available, even when you're not."
+            </p>
+        </div>
+    </section>
+
+    <!-- POLAROID CAROUSEL -->
+    <section class="py-10 md:py-12 bg-white overflow-hidden">
+        <div class="max-w-[1100px] mx-auto px-4 mb-6">
+            <div class="text-center">
+                <p class="text-brand-blue text-sm font-semibold uppercase tracking-wider mb-2">Every Pet Deserves</p>
+                <h2 class="text-2xl md:text-3xl font-bold">A Digital ID Profile</h2>
+            </div>
+        </div>
+
+        <!-- Carousel Container -->
+        <div class="relative">
+            <!-- Gradient fade edges -->
+            <div class="absolute left-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+            <!-- Scrollable carousel -->
+            <div class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 md:px-8 pb-4 hide-scrollbar">
+                <!-- Polaroid 1 - Poodle -->
+                <div class="flex-shrink-0 snap-center first:ml-4 md:first:ml-8">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Poodle.png" alt="Poodle with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Bella</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2 - Labrador -->
+                <div class="flex-shrink-0 snap-center">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Labrador.png" alt="Labrador with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Max</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3 - Goldendoodle -->
+                <div class="flex-shrink-0 snap-center">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Goldendoodle.png" alt="Goldendoodle with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Charlie</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 4 - Golden Retriever -->
+                <div class="flex-shrink-0 snap-center">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Golden Retriever.png" alt="Golden Retriever with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Cooper</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 5 - French Bulldog -->
+                <div class="flex-shrink-0 snap-center last:mr-4 md:last:mr-8">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/French Buldog.png" alt="French Bulldog with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Luna</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll hint for mobile -->
+        <div class="flex justify-center mt-4 md:hidden">
+            <div class="flex items-center gap-2 text-sm text-gray-500">
+                <svg class="w-4 h-4 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 5l7 7-7 7M3 12h18"/>
+                </svg>
+                <span>Swipe to see more</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section class="py-12 bg-bg-primary">
+        <div class="max-w-[650px] mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2">What Makes a Pet Profile So Powerful?</h2>
+            </div>
+
+            <!-- Benefits List - Reordered for value -->
+            <div class="space-y-3">
+                <!-- 1. Digital Identity (NEW emphasis) -->
+                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="16" rx="2"/>
+                            <circle cx="9" cy="10" r="2"/>
+                            <path d="M15 8h2m-2 4h2m-8 4h8"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">It's their digital identity</h3>
+                        <p class="text-sm text-gray-500">Everything that makes them who they are — in one beautiful profile.</p>
+                    </div>
+                </div>
+
+                <!-- 2. Medical/Safety Info -->
+                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Critical info when it matters most</h3>
+                        <p class="text-sm text-gray-500">Allergies, medications, vet contacts — all there in an emergency.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Shareability -->
+                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Share with sitters, family, and vets</h3>
+                        <p class="text-sm text-gray-500">Everyone who cares for them has what they need.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Speaks for Them -->
+                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Speaks for them when they can't</h3>
+                        <p class="text-sm text-gray-500">If they get lost, anyone can scan their tag and contact you instantly.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Always Current -->
+                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Update anytime from your phone</h3>
+                        <p class="text-sm text-gray-500">Unlike microchips or collar tags — your profile stays current.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-16 bg-white text-center">
+        <div class="max-w-[600px] mx-auto px-4">
+            <p class="text-lg text-gray-500 mb-3">Your pet can't ask for help. But this profile can.</p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 leading-tight">Build Their Profile in Under 60 Seconds.</h2>
+            <p class="text-gray-600 mb-6">Protect them now — before you need to.</p>
+            <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/30 w-full sm:w-auto">
+                Start Your Pet's Free Profile
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            <p class="text-sm text-gray-400 mt-4">Free tag included while supplies last · *billed annually</p>
+        </div>
+    </section>
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] md:hidden z-[9999] shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+        <a href="../pif-funnel/profile-builder.html" class="flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white w-full py-3.5 rounded-xl text-base font-semibold transition-all">
+            Start Your Pet's Profile — Free
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Spacer for sticky CTA on mobile -->
+    <div class="h-24 md:hidden"></div>
+
+</body>
+</html>
