@@ -157,36 +157,35 @@
                     <!-- Glassmorphism Profile Card -->
                     <div class="glass-card glass-card-hover absolute -bottom-6 left-3 right-3 rounded-2xl p-4 transform rotate-[-1.5deg]">
                         <!-- Pet Info Row -->
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-200/60">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
                                 <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-base text-gray-900">Hey, I'm Milo!</h3>
-                                <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
+                                <h3 class="font-bold text-base text-gray-900">Milo</h3>
+                                <p class="text-xs text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
                         </div>
 
-                        <!-- Value Preview - Medical Info -->
-                        <div class="flex items-center gap-4 mb-3 text-xs text-gray-600">
-                            <div class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
-                                <span>Allergies on file</span>
+                        <!-- Profile Details Grid -->
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+                            <div>
+                                <p class="text-gray-400 mb-0.5">Allergies</p>
+                                <p class="font-medium text-gray-800">Chicken, Grain</p>
                             </div>
-                            <div class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                </svg>
-                                <span>Vet info saved</span>
+                            <div>
+                                <p class="text-gray-400 mb-0.5">Food</p>
+                                <p class="font-medium text-gray-800">Blue Buffalo</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 mb-0.5">Fave Snacks</p>
+                                <p class="font-medium text-gray-800">Carrots, Peanut Butter</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 mb-0.5">Medication</p>
+                                <p class="font-medium text-gray-800">Apoquel (daily)</p>
                             </div>
                         </div>
-
-                        <!-- Contact Button -->
-                        <button class="w-full bg-brand-red text-white py-2.5 rounded-full text-sm font-semibold shadow-sm">
-                            Contact My Parents
-                        </button>
                     </div>
                 </div>
 
@@ -231,36 +230,35 @@
                     <!-- Glassmorphism Profile Card - Desktop -->
                     <div class="glass-card glass-card-hover absolute -bottom-8 -left-8 rounded-2xl p-5 w-[300px] transform rotate-[-2deg]">
                         <!-- Pet Info Row -->
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                        <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200/60">
+                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
                                 <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg text-gray-900">Hey, I'm Milo!</h3>
-                                <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs</p>
+                                <h3 class="font-bold text-lg text-gray-900">Milo</h3>
+                                <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
                         </div>
 
-                        <!-- Quick Stats -->
-                        <div class="space-y-2 text-sm mb-4">
-                            <div class="flex justify-between border-b border-gray-100 pb-2">
-                                <span class="text-gray-500">Weight</span>
-                                <span class="font-semibold text-gray-800">45 lbs</span>
-                            </div>
-                            <div class="flex justify-between border-b border-gray-100 pb-2">
-                                <span class="text-gray-500">Allergies</span>
-                                <span class="font-semibold text-gray-800">Chicken <span class="text-brand-red">!</span></span>
+                        <!-- Profile Details -->
+                        <div class="space-y-2.5 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Allergies</span>
+                                <span class="font-medium text-gray-800">Chicken, Grain</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-500">Vet</span>
-                                <span class="font-semibold text-gray-800">Dr. Chen</span>
+                                <span class="text-gray-400">Food</span>
+                                <span class="font-medium text-gray-800">Blue Buffalo</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Fave Snacks</span>
+                                <span class="font-medium text-gray-800">Carrots, Peanut Butter</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Medication</span>
+                                <span class="font-medium text-gray-800">Apoquel (daily)</span>
                             </div>
                         </div>
-
-                        <!-- Contact Button -->
-                        <button class="w-full bg-brand-red text-white py-2.5 rounded-full text-sm font-semibold">
-                            Contact My Parents
-                        </button>
                     </div>
                 </div>
             </div>
