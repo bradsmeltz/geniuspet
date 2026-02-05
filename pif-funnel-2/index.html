@@ -148,27 +148,22 @@
                     </p>
                 </div>
 
-                <!-- Hero Image with Glassmorphism Profile Card -->
-                <div class="relative mb-10">
-                    <div class="rounded-2xl overflow-hidden shadow-lg">
-                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[45vh] min-h-[280px] max-h-[360px] object-cover">
-                    </div>
-
-                    <!-- Glassmorphism Profile Card -->
-                    <div class="glass-card glass-card-hover absolute -bottom-6 left-3 right-3 rounded-2xl p-4 transform rotate-[-1.5deg]">
+                <!-- Profile Card - THE HERO (standalone, no overlay) -->
+                <div class="mx-4 mb-5">
+                    <div class="glass-card rounded-2xl p-5 shadow-xl">
                         <!-- Pet Info Row -->
-                        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-200/60">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                        <div class="flex items-center gap-4 mb-4 pb-4 border-b border-gray-200/60">
+                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
                                 <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-base text-gray-900">Milo</h3>
-                                <p class="text-xs text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
+                                <h3 class="font-bold text-lg text-gray-900">Milo</h3>
+                                <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
                         </div>
 
                         <!-- Profile Details Grid -->
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
                             <div>
                                 <p class="text-gray-400 mb-0.5">Allergies</p>
                                 <p class="font-medium text-gray-800">Chicken, Grain</p>
@@ -189,8 +184,13 @@
                     </div>
                 </div>
 
+                <!-- Supporting Lifestyle Photo (separate, below card) -->
+                <div class="mx-4 mb-6">
+                    <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[140px] object-cover rounded-xl shadow-md">
+                </div>
+
                 <!-- CTA Button -->
-                <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg shadow-brand-red/25 w-full">
+                <a href="../pif-funnel/profile-builder.html" class="mx-4 inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg shadow-brand-red/25 w-[calc(100%-2rem)]">
                     Start Your Pet's Free Profile
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -202,46 +202,40 @@
             </div>
 
             <!-- Desktop Layout -->
-            <div class="hidden lg:grid grid-cols-2 gap-16 items-center">
-                <!-- Content -->
-                <div class="max-w-xl">
+            <div class="hidden lg:block">
+                <!-- Headline + Subhead - Centered -->
+                <div class="text-center mb-10">
                     <h1 class="text-[44px] font-bold leading-[1.1] tracking-tight mb-4">
                         Your Pet Can't Speak.<br>
                         <span class="text-brand-red">But Their Profile Can.</span>
                     </h1>
-                    <p class="text-lg text-gray-500 leading-relaxed mb-8">
+                    <p class="text-lg text-gray-500 leading-relaxed max-w-[500px] mx-auto">
                         More than a tag — it's their digital identity, their safety, and your peace of mind.
                     </p>
-                    <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/25 hover:shadow-xl hover:shadow-brand-red/35 mb-4">
-                        Start Your Pet's Free Profile
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <p class="text-sm text-gray-400">Backed by 76,000+ pet parents · *billed annually</p>
                 </div>
 
-                <!-- Visual -->
-                <div class="relative">
-                    <div class="rounded-2xl overflow-hidden shadow-2xl">
-                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[480px] object-cover">
+                <!-- Two-column: Photo + Profile Card (side by side, no overlap) -->
+                <div class="grid grid-cols-2 gap-10 items-center mb-10">
+                    <!-- Lifestyle Photo (left) -->
+                    <div class="rounded-2xl overflow-hidden shadow-xl">
+                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[380px] object-cover">
                     </div>
 
-                    <!-- Glassmorphism Profile Card - Desktop -->
-                    <div class="glass-card glass-card-hover absolute -bottom-8 -left-8 rounded-2xl p-5 w-[300px] transform rotate-[-2deg]">
+                    <!-- Profile Card (right) - standalone -->
+                    <div class="glass-card rounded-2xl p-6 shadow-xl">
                         <!-- Pet Info Row -->
-                        <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-200/60">
-                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                        <div class="flex items-center gap-4 mb-5 pb-4 border-b border-gray-200/60">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
                                 <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg text-gray-900">Milo</h3>
+                                <h3 class="font-bold text-xl text-gray-900">Milo</h3>
                                 <p class="text-sm text-gray-500">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
                         </div>
 
                         <!-- Profile Details -->
-                        <div class="space-y-2.5 text-sm">
+                        <div class="space-y-3 text-sm">
                             <div class="flex justify-between">
                                 <span class="text-gray-400">Allergies</span>
                                 <span class="font-medium text-gray-800">Chicken, Grain</span>
@@ -260,6 +254,17 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- CTA + Trust - Centered -->
+                <div class="text-center">
+                    <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/25 hover:shadow-xl hover:shadow-brand-red/35 mb-4">
+                        Start Your Pet's Free Profile
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <p class="text-sm text-gray-400">Backed by 76,000+ pet parents · *billed annually</p>
                 </div>
             </div>
         </div>
