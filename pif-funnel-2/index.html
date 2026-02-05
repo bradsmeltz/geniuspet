@@ -148,12 +148,12 @@
                     </p>
                 </div>
 
-                <!-- Profile Card - THE HERO (standalone, no overlay) -->
+                <!-- Profile Card - THE HERO (standalone, premium design) -->
                 <div class="mx-4 mb-5">
                     <div class="glass-card rounded-2xl p-5 shadow-xl">
                         <!-- Pet Info Row -->
-                        <div class="flex items-center gap-4 mb-4 pb-4 border-b border-gray-200/60">
-                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                        <div class="flex items-center gap-4 mb-5 pb-4 border-b border-gray-200/60">
+                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-[0_4px_20px_rgba(215,66,66,0.2)]">
                                 <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div class="flex-1 min-w-0">
@@ -162,23 +162,59 @@
                             </div>
                         </div>
 
-                        <!-- Profile Details Grid -->
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-                            <div>
-                                <p class="text-gray-400 mb-0.5">Allergies</p>
-                                <p class="font-medium text-gray-800">Chicken, Grain</p>
+                        <!-- Health Information Section -->
+                        <div class="mb-4">
+                            <div class="flex items-center gap-1.5 mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-red">Health Info</span>
                             </div>
-                            <div>
-                                <p class="text-gray-400 mb-0.5">Food</p>
-                                <p class="font-medium text-gray-800">Blue Buffalo</p>
+                            <div class="bg-gradient-to-br from-brand-red/[0.08] to-brand-red/[0.03] border-l-[3px] border-brand-red rounded-xl p-3 space-y-2.5">
+                                <div class="flex items-center gap-2.5">
+                                    <svg class="w-4 h-4 text-brand-red flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    <span class="text-xs text-gray-500">Allergies</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Chicken, Grain</span>
+                                </div>
+                                <div class="flex items-center gap-2.5">
+                                    <svg class="w-4 h-4 text-brand-red flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                        <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/>
+                                        <path d="m18 15-2-2"/><path d="m15 18-2-2"/>
+                                    </svg>
+                                    <span class="text-xs text-gray-500">Medication</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Apoquel (daily)</span>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-gray-400 mb-0.5">Fave Snacks</p>
-                                <p class="font-medium text-gray-800">Carrots, Peanut Butter</p>
+                        </div>
+
+                        <!-- Care Preferences Section -->
+                        <div>
+                            <div class="flex items-center gap-1.5 mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-500">Care Preferences</span>
                             </div>
-                            <div>
-                                <p class="text-gray-400 mb-0.5">Medication</p>
-                                <p class="font-medium text-gray-800">Apoquel (daily)</p>
+                            <div class="bg-gradient-to-br from-amber-500/[0.08] to-amber-500/[0.03] border-l-[3px] border-amber-500 rounded-xl p-3 space-y-2.5">
+                                <div class="flex items-center gap-2.5">
+                                    <svg class="w-4 h-4 text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2.27 21.7s9.87-3.5 12.73-6.36a4.5 4.5 0 0 0-6.36-6.37C5.77 11.84 2.27 21.7 2.27 21.7z"/>
+                                        <path d="M8.64 14l-2.05-2.04M15.34 15l-2.46-2.46"/>
+                                        <path d="M22 9s-1.33-2-3.5-2C16.86 7 15 9 15 9s1.33 2 3.5 2S22 9 22 9z"/>
+                                        <path d="M15 2s-2 1.33-2 3.5S15 9 15 9s2-1.84 2-3.5C17 3.33 15 2 15 2z"/>
+                                    </svg>
+                                    <span class="text-xs text-gray-500">Food</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Blue Buffalo</span>
+                                </div>
+                                <div class="flex items-center gap-2.5">
+                                    <svg class="w-4 h-4 text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10 2v7.31"/>
+                                        <path d="M14 9.3V1.99"/>
+                                        <path d="M8.5 2h7"/>
+                                        <path d="M14 9.3a6.5 6.5 0 1 1-4 0"/>
+                                        <path d="M5.52 16h12.96"/>
+                                    </svg>
+                                    <span class="text-xs text-gray-500">Snacks</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Carrots, Peanut Butter</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,11 +257,11 @@
                         <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[380px] object-cover">
                     </div>
 
-                    <!-- Profile Card (right) - standalone -->
+                    <!-- Profile Card (right) - premium design -->
                     <div class="glass-card rounded-2xl p-6 shadow-xl">
                         <!-- Pet Info Row -->
-                        <div class="flex items-center gap-4 mb-5 pb-4 border-b border-gray-200/60">
-                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-md">
+                        <div class="flex items-center gap-4 mb-6 pb-5 border-b border-gray-200/60">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 p-0.5 flex-shrink-0 shadow-[0_4px_20px_rgba(215,66,66,0.2)]">
                                 <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
                             </div>
                             <div>
@@ -234,23 +270,59 @@
                             </div>
                         </div>
 
-                        <!-- Profile Details -->
-                        <div class="space-y-3 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Allergies</span>
-                                <span class="font-medium text-gray-800">Chicken, Grain</span>
+                        <!-- Health Information Section -->
+                        <div class="mb-5">
+                            <div class="flex items-center gap-1.5 mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-red">Health Info</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Food</span>
-                                <span class="font-medium text-gray-800">Blue Buffalo</span>
+                            <div class="bg-gradient-to-br from-brand-red/[0.08] to-brand-red/[0.03] border-l-[3px] border-brand-red rounded-xl p-4 space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-brand-red flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    <span class="text-sm text-gray-500">Allergies</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Chicken, Grain</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-brand-red flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                        <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/>
+                                        <path d="m18 15-2-2"/><path d="m15 18-2-2"/>
+                                    </svg>
+                                    <span class="text-sm text-gray-500">Medication</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Apoquel (daily)</span>
+                                </div>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Fave Snacks</span>
-                                <span class="font-medium text-gray-800">Carrots, Peanut Butter</span>
+                        </div>
+
+                        <!-- Care Preferences Section -->
+                        <div>
+                            <div class="flex items-center gap-1.5 mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-500">Care Preferences</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Medication</span>
-                                <span class="font-medium text-gray-800">Apoquel (daily)</span>
+                            <div class="bg-gradient-to-br from-amber-500/[0.08] to-amber-500/[0.03] border-l-[3px] border-amber-500 rounded-xl p-4 space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2.27 21.7s9.87-3.5 12.73-6.36a4.5 4.5 0 0 0-6.36-6.37C5.77 11.84 2.27 21.7 2.27 21.7z"/>
+                                        <path d="M8.64 14l-2.05-2.04M15.34 15l-2.46-2.46"/>
+                                        <path d="M22 9s-1.33-2-3.5-2C16.86 7 15 9 15 9s1.33 2 3.5 2S22 9 22 9z"/>
+                                        <path d="M15 2s-2 1.33-2 3.5S15 9 15 9s2-1.84 2-3.5C17 3.33 15 2 15 2z"/>
+                                    </svg>
+                                    <span class="text-sm text-gray-500">Food</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Blue Buffalo</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10 2v7.31"/>
+                                        <path d="M14 9.3V1.99"/>
+                                        <path d="M8.5 2h7"/>
+                                        <path d="M14 9.3a6.5 6.5 0 1 1-4 0"/>
+                                        <path d="M5.52 16h12.96"/>
+                                    </svg>
+                                    <span class="text-sm text-gray-500">Snacks</span>
+                                    <span class="text-sm font-semibold text-gray-800 ml-auto">Carrots, Peanut Butter</span>
+                                </div>
                             </div>
                         </div>
                     </div>
