@@ -147,83 +147,92 @@
                     </p>
                 </div>
 
-                <!-- iPhone Mockup with Profile Screen -->
-                <div class="flex justify-center mb-6">
-                    <!-- Phone Frame -->
-                    <div class="relative w-[280px] bg-gray-900 rounded-[40px] p-3 shadow-2xl">
-                        <!-- Dynamic Island -->
-                        <div class="absolute top-4 left-1/2 -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-10"></div>
+                <!-- Social Profile Card -->
+                <div class="mx-4 mb-5">
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <!-- Large Hero Photo -->
+                        <div class="relative">
+                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[200px] object-cover">
+                            <!-- Gradient overlay for text readability -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                            <!-- Pet name overlay on photo -->
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-white font-bold text-2xl drop-shadow-lg">Milo</h3>
+                                <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
+                            </div>
+                            <!-- Verified badge -->
+                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1.5 shadow-lg">
+                                <svg class="w-3.5 h-3.5 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="text-[10px] font-semibold text-gray-700">Protected</span>
+                            </div>
+                        </div>
 
-                        <!-- Screen -->
-                        <div class="bg-white rounded-[32px] overflow-hidden">
-                            <!-- App Header -->
-                            <div class="bg-gradient-to-b from-brand-red to-brand-red-dark px-4 pt-10 pb-4">
-                                <div class="flex items-center justify-between text-white/80 text-xs mb-3">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M15 18l-6-6 6-6"/>
-                                    </svg>
-                                    <span class="font-medium">Pet Profile</span>
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-                                    </svg>
+                        <!-- Profile Bio Section -->
+                        <div class="p-4">
+                            <!-- Stats Row (like Instagram) -->
+                            <div class="flex justify-around text-center mb-4 pb-4 border-b border-gray-100">
+                                <div>
+                                    <p class="text-lg font-bold text-gray-900">2</p>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wide">Allergies</p>
                                 </div>
-                                <!-- Pet Avatar & Name -->
-                                <div class="flex flex-col items-center">
-                                    <div class="w-20 h-20 rounded-full border-[3px] border-white p-0.5 shadow-lg mb-2">
-                                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
-                                    </div>
-                                    <h3 class="text-white font-bold text-xl">Milo</h3>
-                                    <p class="text-white/70 text-xs">Australian Shepherd · 3 yrs · 45 lbs</p>
+                                <div>
+                                    <p class="text-lg font-bold text-gray-900">1</p>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wide">Medication</p>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-bold text-brand-red">24/7</p>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wide">Protected</p>
                                 </div>
                             </div>
 
-                            <!-- Profile Content -->
-                            <div class="p-4 space-y-3 bg-gray-50">
-                                <!-- Health Info Section -->
-                                <div class="bg-white rounded-xl p-3 shadow-sm">
-                                    <div class="flex items-center gap-1.5 mb-2">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-red"></div>
-                                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-red">Health Info</span>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between text-xs">
-                                            <span class="text-gray-500">Allergies</span>
-                                            <span class="font-semibold text-gray-800">Chicken, Grain</span>
-                                        </div>
-                                        <div class="flex items-center justify-between text-xs">
-                                            <span class="text-gray-500">Medication</span>
-                                            <span class="font-semibold text-gray-800">Apoquel (daily)</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Quick Info Pills -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="inline-flex items-center gap-1 bg-red-50 text-brand-red text-xs font-medium px-2.5 py-1 rounded-full">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Chicken
+                                </span>
+                                <span class="inline-flex items-center gap-1 bg-red-50 text-brand-red text-xs font-medium px-2.5 py-1 rounded-full">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Grain
+                                </span>
+                                <span class="inline-flex items-center gap-1 bg-blue-50 text-brand-blue text-xs font-medium px-2.5 py-1 rounded-full">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                    </svg>
+                                    Apoquel Daily
+                                </span>
+                            </div>
 
-                                <!-- Care Preferences Section -->
-                                <div class="bg-white rounded-xl p-3 shadow-sm">
-                                    <div class="flex items-center gap-1.5 mb-2">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
-                                        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-500">Care Preferences</span>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between text-xs">
-                                            <span class="text-gray-500">Food</span>
-                                            <span class="font-semibold text-gray-800">Blue Buffalo</span>
-                                        </div>
-                                        <div class="flex items-center justify-between text-xs">
-                                            <span class="text-gray-500">Fave Snacks</span>
-                                            <span class="font-semibold text-gray-800">Carrots, PB</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Bio Text -->
+                            <p class="text-sm text-gray-600 leading-relaxed">
+                                <span class="font-semibold text-gray-900">Loves:</span> Carrots, peanut butter, belly rubs, and chasing squirrels.
+                                <span class="font-semibold text-gray-900">Eats:</span> Blue Buffalo.
+                            </p>
 
-                                <!-- Share Button in App -->
-                                <button class="w-full bg-brand-red text-white text-xs font-semibold py-2.5 rounded-xl">
-                                    Share Profile
+                            <!-- Action Buttons Row -->
+                            <div class="flex gap-2 mt-4">
+                                <button class="flex-1 bg-brand-red text-white text-sm font-semibold py-2.5 rounded-xl flex items-center justify-center gap-1.5">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                        <polyline points="16,6 12,2 8,6"/>
+                                        <line x1="12" y1="2" x2="12" y2="15"/>
+                                    </svg>
+                                    Share
                                 </button>
-                            </div>
-
-                            <!-- Home Indicator -->
-                            <div class="flex justify-center py-2 bg-gray-50">
-                                <div class="w-[100px] h-1 bg-gray-300 rounded-full"></div>
+                                <button class="flex-1 bg-gray-100 text-gray-700 text-sm font-semibold py-2.5 rounded-xl flex items-center justify-center gap-1.5">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                    </svg>
+                                    Contact
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -254,90 +263,98 @@
                     </p>
                 </div>
 
-                <!-- Two-column: Lifestyle Photo + Phone Mockup -->
+                <!-- Two-column: Lifestyle Photo + Social Profile Card -->
                 <div class="grid grid-cols-2 gap-12 items-center mb-10">
                     <!-- Lifestyle Photo (left) -->
                     <div class="rounded-2xl overflow-hidden shadow-xl">
-                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[480px] object-cover">
+                        <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Happy dog outdoors" class="w-full h-[520px] object-cover">
                     </div>
 
-                    <!-- iPhone Mockup (right) -->
-                    <div class="flex justify-center">
-                        <div class="relative w-[300px] bg-gray-900 rounded-[44px] p-3 shadow-2xl">
-                            <!-- Dynamic Island -->
-                            <div class="absolute top-4 left-1/2 -translate-x-1/2 w-[100px] h-[30px] bg-black rounded-full z-10"></div>
+                    <!-- Social Profile Card (right) -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-[380px]">
+                        <!-- Large Hero Photo -->
+                        <div class="relative">
+                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[220px] object-cover">
+                            <!-- Gradient overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                            <!-- Pet name overlay -->
+                            <div class="absolute bottom-4 left-5 right-5">
+                                <h3 class="text-white font-bold text-3xl drop-shadow-lg">Milo</h3>
+                                <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
+                            </div>
+                            <!-- Verified badge -->
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg">
+                                <svg class="w-4 h-4 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="text-xs font-semibold text-gray-700">Protected</span>
+                            </div>
+                        </div>
 
-                            <!-- Screen -->
-                            <div class="bg-white rounded-[36px] overflow-hidden">
-                                <!-- App Header -->
-                                <div class="bg-gradient-to-b from-brand-red to-brand-red-dark px-5 pt-12 pb-5">
-                                    <div class="flex items-center justify-between text-white/80 text-sm mb-4">
-                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M15 18l-6-6 6-6"/>
-                                        </svg>
-                                        <span class="font-medium">Pet Profile</span>
-                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-                                        </svg>
-                                    </div>
-                                    <!-- Pet Avatar & Name -->
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-24 h-24 rounded-full border-[3px] border-white p-0.5 shadow-lg mb-3">
-                                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-full rounded-full object-cover">
-                                        </div>
-                                        <h3 class="text-white font-bold text-2xl">Milo</h3>
-                                        <p class="text-white/70 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
-                                    </div>
+                        <!-- Profile Content -->
+                        <div class="p-5">
+                            <!-- Stats Row -->
+                            <div class="flex justify-around text-center mb-5 pb-5 border-b border-gray-100">
+                                <div>
+                                    <p class="text-xl font-bold text-gray-900">2</p>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wide">Allergies</p>
                                 </div>
-
-                                <!-- Profile Content -->
-                                <div class="p-4 space-y-3 bg-gray-50">
-                                    <!-- Health Info Section -->
-                                    <div class="bg-white rounded-xl p-4 shadow-sm">
-                                        <div class="flex items-center gap-1.5 mb-3">
-                                            <div class="w-2 h-2 rounded-full bg-brand-red"></div>
-                                            <span class="text-[11px] font-bold uppercase tracking-wider text-brand-red">Health Info</span>
-                                        </div>
-                                        <div class="space-y-2.5">
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">Allergies</span>
-                                                <span class="font-semibold text-gray-800">Chicken, Grain</span>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">Medication</span>
-                                                <span class="font-semibold text-gray-800">Apoquel (daily)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Care Preferences Section -->
-                                    <div class="bg-white rounded-xl p-4 shadow-sm">
-                                        <div class="flex items-center gap-1.5 mb-3">
-                                            <div class="w-2 h-2 rounded-full bg-amber-500"></div>
-                                            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-500">Care Preferences</span>
-                                        </div>
-                                        <div class="space-y-2.5">
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">Food</span>
-                                                <span class="font-semibold text-gray-800">Blue Buffalo</span>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">Fave Snacks</span>
-                                                <span class="font-semibold text-gray-800">Carrots, PB</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Share Button -->
-                                    <button class="w-full bg-brand-red text-white text-sm font-semibold py-3 rounded-xl">
-                                        Share Profile
-                                    </button>
+                                <div>
+                                    <p class="text-xl font-bold text-gray-900">1</p>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wide">Medication</p>
                                 </div>
-
-                                <!-- Home Indicator -->
-                                <div class="flex justify-center py-2 bg-gray-50">
-                                    <div class="w-[120px] h-1 bg-gray-300 rounded-full"></div>
+                                <div>
+                                    <p class="text-xl font-bold text-brand-red">24/7</p>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wide">Protected</p>
                                 </div>
+                            </div>
+
+                            <!-- Quick Info Pills -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="inline-flex items-center gap-1.5 bg-red-50 text-brand-red text-sm font-medium px-3 py-1.5 rounded-full">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Chicken
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 bg-red-50 text-brand-red text-sm font-medium px-3 py-1.5 rounded-full">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Grain
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 bg-blue-50 text-brand-blue text-sm font-medium px-3 py-1.5 rounded-full">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                    </svg>
+                                    Apoquel Daily
+                                </span>
+                            </div>
+
+                            <!-- Bio Text -->
+                            <p class="text-sm text-gray-600 leading-relaxed mb-5">
+                                <span class="font-semibold text-gray-900">Loves:</span> Carrots, peanut butter, belly rubs, and chasing squirrels.
+                                <span class="font-semibold text-gray-900">Eats:</span> Blue Buffalo.
+                            </p>
+
+                            <!-- Action Buttons -->
+                            <div class="flex gap-3">
+                                <button class="flex-1 bg-brand-red text-white text-sm font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-brand-red-dark transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                        <polyline points="16,6 12,2 8,6"/>
+                                        <line x1="12" y1="2" x2="12" y2="15"/>
+                                    </svg>
+                                    Share
+                                </button>
+                                <button class="flex-1 bg-gray-100 text-gray-700 text-sm font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                    </svg>
+                                    Contact
+                                </button>
                             </div>
                         </div>
                     </div>
