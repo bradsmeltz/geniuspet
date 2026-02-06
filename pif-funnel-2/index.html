@@ -117,6 +117,35 @@
                     inset 0 1px 0 rgba(255, 255, 255, 0.9);
             }
         }
+
+        /* Subtle pulse animation for Protected badge */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+        }
+        .animate-subtle-pulse {
+            animation: subtle-pulse 3s ease-in-out infinite;
+        }
+
+        /* Benefit card scroll animations */
+        .benefit-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Carousel dot styles */
+        .carousel-dot {
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            width: 1.5rem;
+            border-radius: 9999px;
+        }
     </style>
 </head>
 <body class="font-gilroy text-brand-black bg-bg-primary antialiased">
@@ -156,7 +185,7 @@
 
                 <!-- Social Profile Card -->
                 <div class="mx-4 mb-5">
-                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                    <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden">
                         <!-- Large Hero Photo -->
                         <div class="relative">
                             <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[200px] object-cover">
@@ -168,7 +197,7 @@
                                 <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
                             <!-- Verified badge -->
-                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1.5 shadow-lg">
+                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1.5 shadow-lg animate-subtle-pulse">
                                 <svg class="w-3.5 h-3.5 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
@@ -288,7 +317,7 @@
                     </div>
 
                     <!-- Social Profile Card (right) -->
-                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-[380px]">
+                    <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden max-w-[380px]">
                         <!-- Large Hero Photo -->
                         <div class="relative">
                             <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[220px] object-cover">
@@ -300,7 +329,7 @@
                                 <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
                             </div>
                             <!-- Verified badge -->
-                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg">
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg animate-subtle-pulse">
                                 <svg class="w-4 h-4 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
@@ -419,7 +448,7 @@
             <div class="absolute right-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
             <!-- Scrollable carousel -->
-            <div class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 md:px-8 pb-4 hide-scrollbar">
+            <div id="polaroid-carousel" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 md:px-8 pb-4 hide-scrollbar">
                 <!-- Polaroid 1 - Poodle -->
                 <div class="flex-shrink-0 snap-center first:ml-4 md:first:ml-8">
                     <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
@@ -477,20 +506,37 @@
             </div>
         </div>
 
-        <!-- Scroll hint for mobile -->
-        <div class="flex justify-center mt-4 md:hidden">
-            <div class="flex items-center gap-2 text-sm text-gray-500">
-                <svg class="w-4 h-4 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 5l7 7-7 7M3 12h18"/>
-                </svg>
-                <span>Swipe to see more</span>
-            </div>
+        <!-- Carousel Dots -->
+        <div id="carousel-dots" class="flex justify-center mt-4 gap-2">
+            <button class="carousel-dot w-2 h-2 rounded-full bg-brand-red active" data-index="0" aria-label="Go to slide 1"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="1" aria-label="Go to slide 2"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="2" aria-label="Go to slide 3"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="3" aria-label="Go to slide 4"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="4" aria-label="Go to slide 5"></button>
         </div>
     </section>
 
     <!-- BENEFITS SECTION -->
-    <section class="py-12 bg-bg-primary">
-        <div class="max-w-[650px] mx-auto px-4">
+    <section class="py-12 bg-bg-primary relative overflow-hidden">
+        <!-- Subtle paw watermark -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <svg class="absolute -right-16 top-8 w-64 h-64 text-brand-red opacity-[0.03]" viewBox="0 0 100 100" fill="currentColor">
+                <ellipse cx="50" cy="65" rx="20" ry="18"/>
+                <ellipse cx="25" cy="40" rx="12" ry="10"/>
+                <ellipse cx="75" cy="40" rx="12" ry="10"/>
+                <ellipse cx="20" cy="60" rx="10" ry="8"/>
+                <ellipse cx="80" cy="60" rx="10" ry="8"/>
+            </svg>
+            <svg class="absolute -left-12 bottom-12 w-48 h-48 text-brand-blue opacity-[0.02]" viewBox="0 0 100 100" fill="currentColor">
+                <ellipse cx="50" cy="65" rx="20" ry="18"/>
+                <ellipse cx="25" cy="40" rx="12" ry="10"/>
+                <ellipse cx="75" cy="40" rx="12" ry="10"/>
+                <ellipse cx="20" cy="60" rx="10" ry="8"/>
+                <ellipse cx="80" cy="60" rx="10" ry="8"/>
+            </svg>
+        </div>
+
+        <div class="max-w-[650px] mx-auto px-4 relative">
             <div class="text-center mb-8">
                 <h2 class="text-2xl md:text-3xl font-bold mb-2">What Makes a Pet Profile So Powerful?</h2>
             </div>
@@ -498,7 +544,7 @@
             <!-- Benefits List - Reordered for value -->
             <div class="space-y-3">
                 <!-- 1. Digital Identity (NEW emphasis) -->
-                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
                     <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="4" width="18" height="16" rx="2"/>
@@ -513,7 +559,7 @@
                 </div>
 
                 <!-- 2. Medical/Safety Info -->
-                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
                     <div class="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
@@ -526,7 +572,7 @@
                 </div>
 
                 <!-- 3. Shareability -->
-                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
                     <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -541,7 +587,7 @@
                 </div>
 
                 <!-- 4. Speaks for Them -->
-                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
                     <div class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -554,7 +600,7 @@
                 </div>
 
                 <!-- 5. Always Current -->
-                <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
                     <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
@@ -582,7 +628,13 @@
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
             </a>
-            <p class="text-sm text-gray-400 mt-4">Free tag included while supplies last · *billed annually</p>
+            <!-- Enhanced urgency element -->
+            <div class="mt-5 inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-4 py-2 rounded-full text-sm">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>Free tag included while supplies last</span>
+            </div>
         </div>
     </section>
 
@@ -598,6 +650,69 @@
 
     <!-- Spacer for sticky CTA on mobile -->
     <div class="h-24 md:hidden"></div>
+
+    <!-- JavaScript for interactions -->
+    <script>
+        // Carousel dot navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('polaroid-carousel');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            if (carousel && dots.length) {
+                // Update dots on scroll
+                carousel.addEventListener('scroll', function() {
+                    const scrollLeft = carousel.scrollLeft;
+                    const cardWidth = carousel.firstElementChild?.offsetWidth || 300;
+                    const gap = 16; // gap-4 = 16px
+                    const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
+
+                    dots.forEach((dot, index) => {
+                        if (index === activeIndex) {
+                            dot.classList.add('active', 'bg-brand-red');
+                            dot.classList.remove('bg-gray-300');
+                        } else {
+                            dot.classList.remove('active', 'bg-brand-red');
+                            dot.classList.add('bg-gray-300');
+                        }
+                    });
+                });
+
+                // Click dots to scroll
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', function() {
+                        const cardWidth = carousel.firstElementChild?.offsetWidth || 300;
+                        const gap = 16;
+                        carousel.scrollTo({
+                            left: index * (cardWidth + gap),
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            }
+
+            // Benefit cards scroll animation
+            const benefitCards = document.querySelectorAll('.benefit-card');
+
+            if (benefitCards.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            // Stagger the animation
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 100);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+
+                benefitCards.forEach(card => observer.observe(card));
+            }
+        });
+    </script>
 
 </body>
 </html>
