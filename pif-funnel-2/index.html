@@ -188,9 +188,10 @@
                     <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden">
                         <!-- Large Hero Photo -->
                         <div class="relative">
-                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[200px] object-cover">
-                            <!-- Gradient overlay for text readability -->
+                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[200px] object-cover brightness-105 contrast-105">
+                            <!-- Gradient overlay for text readability + vignette -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                            <div class="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.3)] pointer-events-none"></div>
                             <!-- Pet name overlay on photo -->
                             <div class="absolute bottom-4 left-4 right-4">
                                 <h3 class="text-white font-bold text-2xl drop-shadow-lg">Milo</h3>
@@ -275,6 +276,8 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Caption below card -->
+                    <p class="text-center text-xs text-gray-400 mt-3 italic">This is what someone sees when they scan their tag.</p>
                 </div>
 
                 <!-- CTA Button -->
@@ -317,25 +320,27 @@
                     </div>
 
                     <!-- Social Profile Card (right) -->
-                    <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden max-w-[380px]">
-                        <!-- Large Hero Photo -->
-                        <div class="relative">
-                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[220px] object-cover">
-                            <!-- Gradient overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                            <!-- Pet name overlay -->
-                            <div class="absolute bottom-4 left-5 right-5">
-                                <h3 class="text-white font-bold text-3xl drop-shadow-lg">Milo</h3>
-                                <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
+                    <div class="flex flex-col">
+                        <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden max-w-[380px]">
+                            <!-- Large Hero Photo -->
+                            <div class="relative">
+                                <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[220px] object-cover brightness-105 contrast-105">
+                                <!-- Gradient overlay + vignette -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.3)] pointer-events-none"></div>
+                                <!-- Pet name overlay -->
+                                <div class="absolute bottom-4 left-5 right-5">
+                                    <h3 class="text-white font-bold text-3xl drop-shadow-lg">Milo</h3>
+                                    <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
+                                </div>
+                                <!-- Verified badge -->
+                                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg animate-subtle-pulse">
+                                    <svg class="w-4 h-4 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="text-xs font-semibold text-gray-700">Protected</span>
+                                </div>
                             </div>
-                            <!-- Verified badge -->
-                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg animate-subtle-pulse">
-                                <svg class="w-4 h-4 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span class="text-xs font-semibold text-gray-700">Protected</span>
-                            </div>
-                        </div>
 
                         <!-- Profile Content -->
                         <div class="p-5">
@@ -407,6 +412,9 @@
                             </div>
                         </div>
                     </div>
+                        <!-- Caption below card -->
+                        <p class="text-center text-xs text-gray-400 mt-3 italic">This is what someone sees when they scan their tag.</p>
+                    </div>
                 </div>
 
                 <!-- CTA + Trust - Centered -->
@@ -438,6 +446,7 @@
             <div class="text-center">
                 <p class="text-brand-blue text-sm font-semibold uppercase tracking-wider mb-2">Every Pet Deserves</p>
                 <h2 class="text-2xl md:text-3xl font-bold">A Digital ID Profile</h2>
+                <p class="text-gray-500 mt-2">See Real Pet Profiles Like Yours →</p>
             </div>
         </div>
 
@@ -621,20 +630,21 @@
         <div class="max-w-[600px] mx-auto px-4">
             <p class="text-lg text-gray-500 mb-3">Your pet can't ask for help. But this profile can.</p>
             <h2 class="text-2xl md:text-3xl font-bold mb-2 leading-tight">Build Their Profile in Under 60 Seconds.</h2>
-            <p class="text-gray-600 mb-6">Protect them now — before you need to.</p>
-            <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/30 w-full sm:w-auto">
-                Start Your Pet's Free Profile
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </a>
-            <!-- Enhanced urgency element -->
-            <div class="mt-5 inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-4 py-2 rounded-full text-sm">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Free tag included while supplies last</span>
+            <p class="text-gray-600 mb-4">Protect them now — before you need to.</p>
+            <!-- Urgency badge ABOVE button -->
+            <div class="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                <span>🏷️</span>
+                <span>Free Smart Tag Included Today</span>
             </div>
+            <div>
+                <a href="../pif-funnel/profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/30 w-full sm:w-auto">
+                    Start Your Pet's Free Profile
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="text-xs text-gray-400 mt-4">*billed annually after trial</p>
         </div>
     </section>
 
