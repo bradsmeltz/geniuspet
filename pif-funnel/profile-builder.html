@@ -220,6 +220,7 @@
       user-select: none;
       -webkit-user-drag: none;
       pointer-events: none;
+      transform-origin: top left;
     }
     .crop-overlay-ring {
       position: absolute;
@@ -404,6 +405,7 @@
               <input
                 type="text"
                 inputmode="numeric"
+                pattern="[0-9]*"
                 id="age"
                 class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
                 placeholder="e.g. 3 yrs"
@@ -995,7 +997,11 @@
         startX: 0,
         startY: 0,
         imageWidth: 0,
-        imageHeight: 0
+        imageHeight: 0,
+        // Pinch-to-zoom state
+        isPinching: false,
+        initialPinchDistance: 0,
+        initialPinchScale: 1
       };
 
       function updateCropImageTransform() {
@@ -1015,6 +1021,20 @@
 
         cropState.translateX = Math.max(minX, Math.min(maxX, cropState.translateX));
         cropState.translateY = Math.max(minY, Math.min(maxY, cropState.translateY));
+      }
+
+      // Pinch-to-zoom helper functions
+      function getTouchDistance(touch1, touch2) {
+        const dx = touch2.clientX - touch1.clientX;
+        const dy = touch2.clientY - touch1.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+      }
+
+      function getTouchMidpoint(touch1, touch2) {
+        return {
+          x: (touch1.clientX + touch2.clientX) / 2,
+          y: (touch1.clientY + touch2.clientY) / 2
+        };
       }
 
       function openCropModal(imageDataUrl) {
@@ -1064,30 +1084,91 @@
 
       function startDrag(e) {
         e.preventDefault();
-        cropState.isDragging = true;
-        const point = e.touches ? e.touches[0] : e;
-        cropState.startX = point.clientX - cropState.translateX;
-        cropState.startY = point.clientY - cropState.translateY;
+
+        if (e.touches && e.touches.length >= 2) {
+          // Start pinch gesture
+          cropState.isPinching = true;
+          cropState.isDragging = false;
+          cropState.initialPinchDistance = getTouchDistance(e.touches[0], e.touches[1]);
+          cropState.initialPinchScale = cropState.scale;
+        } else {
+          // Single touch/mouse - start drag
+          cropState.isDragging = true;
+          cropState.isPinching = false;
+          const point = e.touches ? e.touches[0] : e;
+          cropState.startX = point.clientX - cropState.translateX;
+          cropState.startY = point.clientY - cropState.translateY;
+        }
       }
 
       document.addEventListener('mousemove', drag);
       document.addEventListener('touchmove', drag, { passive: false });
 
       function drag(e) {
-        if (!cropState.isDragging) return;
+        if (!cropState.isDragging && !cropState.isPinching) return;
         e.preventDefault();
-        const point = e.touches ? e.touches[0] : e;
-        cropState.translateX = point.clientX - cropState.startX;
-        cropState.translateY = point.clientY - cropState.startY;
-        constrainPosition();
-        updateCropImageTransform();
+
+        if (e.touches && e.touches.length >= 2 && cropState.isPinching) {
+          // Handle pinch zoom
+          const currentDistance = getTouchDistance(e.touches[0], e.touches[1]);
+          const scaleRatio = currentDistance / cropState.initialPinchDistance;
+          let newScale = cropState.initialPinchScale * scaleRatio;
+
+          // Clamp scale to allowed range (1.0 to 3.0)
+          newScale = Math.max(1, Math.min(3, newScale));
+
+          // Get current midpoint in page coordinates
+          const currentMidpoint = getTouchMidpoint(e.touches[0], e.touches[1]);
+
+          // Convert midpoint to local crop area coordinates
+          const rect = cropArea.getBoundingClientRect();
+          const localX = currentMidpoint.x - rect.left;
+          const localY = currentMidpoint.y - rect.top;
+
+          // Calculate the point on the image that should stay fixed (under the pinch center)
+          const oldScale = cropState.scale;
+          const imagePointX = (localX - cropState.translateX) / oldScale;
+          const imagePointY = (localY - cropState.translateY) / oldScale;
+
+          // Update scale
+          cropState.scale = newScale;
+
+          // Adjust translation to keep the pinch center point fixed
+          cropState.translateX = localX - imagePointX * newScale;
+          cropState.translateY = localY - imagePointY * newScale;
+
+          // Constrain position
+          constrainPosition();
+          updateCropImageTransform();
+
+          // Sync zoom slider value
+          zoomSlider.value = Math.round(newScale * 100);
+        } else if (cropState.isDragging && !cropState.isPinching) {
+          // Handle single-finger drag
+          const point = e.touches ? e.touches[0] : e;
+          cropState.translateX = point.clientX - cropState.startX;
+          cropState.translateY = point.clientY - cropState.startY;
+          constrainPosition();
+          updateCropImageTransform();
+        }
       }
 
       document.addEventListener('mouseup', endDrag);
       document.addEventListener('touchend', endDrag);
 
-      function endDrag() {
-        cropState.isDragging = false;
+      function endDrag(e) {
+        // Check if we're transitioning from pinch to single-touch drag
+        if (e.touches && e.touches.length === 1 && cropState.isPinching) {
+          // Transitioned from 2 fingers to 1 - start drag from current position
+          cropState.isPinching = false;
+          cropState.isDragging = true;
+          cropState.startX = e.touches[0].clientX - cropState.translateX;
+          cropState.startY = e.touches[0].clientY - cropState.translateY;
+        } else if (!e.touches || e.touches.length === 0) {
+          // All fingers lifted
+          cropState.isDragging = false;
+          cropState.isPinching = false;
+        }
       }
 
       // Zoom slider
@@ -1135,16 +1216,23 @@
           // cropState.translateX/Y is the pixel offset in the displayed (280px) coordinate space
 
           // To convert from display coordinates to original image coordinates:
-          // - translateX/Y are in "display pixels" where the image is scaled by (coverScale * cropState.scale)
-          // - We need to find what portion of the ORIGINAL image is visible in the crop area
+          // CSS transform "translate(X,Y) scale(S)" applies scale first, then translate
+          // The crop area (0,0 to 280,280) shows the region starting at (-translateX, -translateY)
+          // in the scaled image space
 
-          const totalScale = coverScale * cropState.scale;
+          // The displayed image has base dimensions: imageWidth x imageHeight (already scaled by coverScale)
+          // Then user zoom (cropState.scale) is applied on top
+          // So a point (px, py) in crop area corresponds to:
+          //   scaledImageX = (px - translateX) / cropState.scale
+          //   baseImageX = scaledImageX (since imageWidth already includes coverScale)
+          //   originalImageX = baseImageX / coverScale
 
-          // The visible crop area (280x280) maps to this region in original image pixels:
-          const sx = -cropState.translateX / totalScale;
-          const sy = -cropState.translateY / totalScale;
-          const sWidth = areaSize / totalScale;
-          const sHeight = areaSize / totalScale;
+          // The visible region in the crop area starts at (0,0) and ends at (areaSize, areaSize)
+          // In original image coordinates:
+          const sx = (-cropState.translateX / cropState.scale) / coverScale;
+          const sy = (-cropState.translateY / cropState.scale) / coverScale;
+          const sWidth = (areaSize / cropState.scale) / coverScale;
+          const sHeight = (areaSize / cropState.scale) / coverScale;
 
           // Draw to canvas (circular clip)
           ctx.beginPath();
