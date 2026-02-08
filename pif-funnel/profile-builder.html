@@ -1080,23 +1080,31 @@
       }
 
       // Drag to pan and pinch to zoom
+      // Track active touches for pinch gesture
+      let activeTouches = [];
+
       cropArea.addEventListener('mousedown', startDrag);
       cropArea.addEventListener('touchstart', handleTouchStart, { passive: false });
 
       function handleTouchStart(e) {
         e.preventDefault();
+        e.stopPropagation();
 
-        if (e.touches.length >= 2) {
+        // Store all active touches
+        activeTouches = Array.from(e.touches);
+
+        if (activeTouches.length >= 2) {
           // Start or switch to pinch gesture
           cropState.isPinching = true;
           cropState.isDragging = false;
-          cropState.initialPinchDistance = getTouchDistance(e.touches[0], e.touches[1]);
+          cropState.initialPinchDistance = getTouchDistance(activeTouches[0], activeTouches[1]);
           cropState.initialPinchScale = cropState.scale;
-        } else if (e.touches.length === 1 && !cropState.isPinching) {
-          // Single touch - start drag (only if not already pinching)
+        } else if (activeTouches.length === 1) {
+          // Single touch - start drag
           cropState.isDragging = true;
-          cropState.startX = e.touches[0].clientX - cropState.translateX;
-          cropState.startY = e.touches[0].clientY - cropState.translateY;
+          cropState.isPinching = false;
+          cropState.startX = activeTouches[0].clientX - cropState.translateX;
+          cropState.startY = activeTouches[0].clientY - cropState.translateY;
         }
       }
 
@@ -1111,23 +1119,27 @@
       }
 
       document.addEventListener('mousemove', drag);
-      cropArea.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
 
       function handleTouchMove(e) {
-        e.preventDefault();
+        // Only handle if we have active interaction
+        if (!cropState.isDragging && !cropState.isPinching) return;
 
-        if (e.touches.length >= 2) {
+        e.preventDefault();
+        activeTouches = Array.from(e.touches);
+
+        if (activeTouches.length >= 2) {
           // If we weren't pinching before, start now
           if (!cropState.isPinching) {
             cropState.isPinching = true;
             cropState.isDragging = false;
-            cropState.initialPinchDistance = getTouchDistance(e.touches[0], e.touches[1]);
+            cropState.initialPinchDistance = getTouchDistance(activeTouches[0], activeTouches[1]);
             cropState.initialPinchScale = cropState.scale;
             return;
           }
 
           // Handle pinch zoom
-          const currentDistance = getTouchDistance(e.touches[0], e.touches[1]);
+          const currentDistance = getTouchDistance(activeTouches[0], activeTouches[1]);
           const scaleRatio = currentDistance / cropState.initialPinchDistance;
           let newScale = cropState.initialPinchScale * scaleRatio;
 
@@ -1160,10 +1172,10 @@
 
           // Sync zoom slider value
           zoomSlider.value = Math.round(newScale * 100);
-        } else if (e.touches.length === 1 && cropState.isDragging) {
+        } else if (activeTouches.length === 1 && cropState.isDragging) {
           // Handle single-finger drag
-          cropState.translateX = e.touches[0].clientX - cropState.startX;
-          cropState.translateY = e.touches[0].clientY - cropState.startY;
+          cropState.translateX = activeTouches[0].clientX - cropState.startX;
+          cropState.translateY = activeTouches[0].clientY - cropState.startY;
           constrainPosition();
           updateCropImageTransform();
         }
@@ -1181,18 +1193,20 @@
       }
 
       document.addEventListener('mouseup', endDrag);
-      cropArea.addEventListener('touchend', handleTouchEnd, { passive: false });
+      document.addEventListener('touchend', handleTouchEnd, { passive: false });
+      document.addEventListener('touchcancel', handleTouchEnd, { passive: false });
 
       function handleTouchEnd(e) {
-        e.preventDefault();
+        activeTouches = Array.from(e.touches);
+
         // Check if we're transitioning from pinch to single-touch drag
-        if (e.touches.length === 1 && cropState.isPinching) {
+        if (activeTouches.length === 1 && cropState.isPinching) {
           // Transitioned from 2 fingers to 1 - start drag from current position
           cropState.isPinching = false;
           cropState.isDragging = true;
-          cropState.startX = e.touches[0].clientX - cropState.translateX;
-          cropState.startY = e.touches[0].clientY - cropState.translateY;
-        } else if (e.touches.length === 0) {
+          cropState.startX = activeTouches[0].clientX - cropState.translateX;
+          cropState.startY = activeTouches[0].clientY - cropState.translateY;
+        } else if (activeTouches.length === 0) {
           // All fingers lifted
           cropState.isDragging = false;
           cropState.isPinching = false;
@@ -1246,28 +1260,30 @@
           // coverScale is how much we scaled the original image to fit/cover the crop area
           const coverScale = Math.max(areaSize / img.width, areaSize / img.height);
 
-          // The displayed image size (before user zoom) is img.width * coverScale, img.height * coverScale
-          // cropState.scale is the user's zoom level (1.0 = no zoom, 2.0 = 2x zoom)
-          // cropState.translateX/Y is the pixel offset in the displayed (280px) coordinate space
+          // The CSS transform is: translate(translateX, translateY) scale(cropState.scale)
+          // With transform-origin: top left, this means:
+          // 1. Scale the image by cropState.scale around (0,0)
+          // 2. Then translate by (translateX, translateY)
+          //
+          // The image element has width/height set to imageWidth/imageHeight (which = original * coverScale)
+          // After the CSS scale, the displayed size is imageWidth * cropState.scale
+          //
+          // A point (0,0) in the crop area corresponds to the image point at:
+          //   imageX = -translateX (in the scaled coordinate space)
+          //   To get to base image coords: imageX / cropState.scale
+          //   To get to original image coords: (imageX / cropState.scale) / coverScale
 
-          // To convert from display coordinates to original image coordinates:
-          // CSS transform "translate(X,Y) scale(S)" applies scale first, then translate
-          // The crop area (0,0 to 280,280) shows the region starting at (-translateX, -translateY)
-          // in the scaled image space
+          // The crop area shows the region from (-translateX, -translateY) to (-translateX + areaSize, -translateY + areaSize)
+          // in the CSS-transformed coordinate space
 
-          // The displayed image has base dimensions: imageWidth x imageHeight (already scaled by coverScale)
-          // Then user zoom (cropState.scale) is applied on top
-          // So a point (px, py) in crop area corresponds to:
-          //   scaledImageX = (px - translateX) / cropState.scale
-          //   baseImageX = scaledImageX (since imageWidth already includes coverScale)
-          //   originalImageX = baseImageX / coverScale
+          // Convert to original image coordinates:
+          // The base image (before CSS scale) has dimensions imageWidth x imageHeight
+          // imageWidth = img.width * coverScale, so 1 pixel in base = 1/coverScale pixels in original
 
-          // The visible region in the crop area starts at (0,0) and ends at (areaSize, areaSize)
-          // In original image coordinates:
-          const sx = (-cropState.translateX / cropState.scale) / coverScale;
-          const sy = (-cropState.translateY / cropState.scale) / coverScale;
-          const sWidth = (areaSize / cropState.scale) / coverScale;
-          const sHeight = (areaSize / cropState.scale) / coverScale;
+          const sx = -cropState.translateX / (coverScale * cropState.scale);
+          const sy = -cropState.translateY / (coverScale * cropState.scale);
+          const sWidth = areaSize / (coverScale * cropState.scale);
+          const sHeight = areaSize / (coverScale * cropState.scale);
 
           // Draw to canvas (circular clip)
           ctx.beginPath();
