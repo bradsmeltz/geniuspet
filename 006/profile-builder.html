@@ -258,16 +258,16 @@
                     <path d="M12 5v14M5 12h14"/>
                   </svg>
                 </div>
+                <!-- Edit Photo Button (shows after photo is added, replaces plus badge) -->
+                <div id="photo-edit-btn" class="absolute -bottom-1 -right-1 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer hover:bg-blue-lightest transition-colors hidden border-2 border-green-primary">
+                  <label for="pet-photo" class="cursor-pointer w-full h-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-primary">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    </svg>
+                  </label>
+                </div>
               </div>
             </label>
-            <!-- Edit Photo Button (shows after photo is added, replaces plus badge) -->
-            <div id="photo-edit-btn" class="absolute -bottom-1 -right-1 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer hover:bg-blue-lightest transition-colors hidden border-2 border-green-primary">
-              <label for="pet-photo" class="cursor-pointer w-full h-full flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-primary">
-                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
-                </svg>
-              </label>
-            </div>
             <input type="file" id="pet-photo" class="photo-upload__input" accept="image/*">
           </div>
           <!-- Photo encouragement text -->
@@ -295,7 +295,7 @@
               <input
                 type="text"
                 id="breed"
-                class="w-full text-sm font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
+                class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
                 placeholder="e.g. Golden Retriever"
                 autocomplete="off"
               >
@@ -306,7 +306,7 @@
               <input
                 type="text"
                 id="age"
-                class="w-full text-sm font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
+                class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
                 placeholder="e.g. 3 yrs"
                 autocomplete="off"
               >
@@ -505,7 +505,7 @@
               <!-- Larger glow effect behind tags -->
               <div class="absolute inset-0 bg-blue-primary/20 rounded-full blur-3xl scale-90"></div>
               <img
-                src="Product Images/GeniusTag/id-tags.png"
+                src="assets/images/id-tags.png"
                 alt="GeniusTag Smart Pet ID Tag"
                 class="relative w-48 h-48 object-contain drop-shadow-xl"
               >

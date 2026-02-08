@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Pet's Digital Profile | GeniusPet</title>
+    <title>Your Pet's Care Profile | GeniusPet</title>
     <meta name="description" content="Create a secure, shareable digital ID profile with your pet's info, medical details, and care instructions — all in one place.">
 
     <!-- Tailwind CSS -->
@@ -452,7 +452,7 @@
         <div class="max-w-[1100px] mx-auto px-4 mb-6">
             <div class="text-center">
                 <p class="text-brand-blue text-sm font-semibold uppercase tracking-wider mb-2">Every Pet Deserves</p>
-                <h2 class="text-2xl md:text-3xl font-bold">A Digital ID Profile</h2>
+                <h2 class="text-2xl md:text-3xl font-bold">A Pet Care Profile</h2>
                 <p class="text-gray-500 mt-2">See Real Pet Profiles Like Yours →</p>
             </div>
         </div>
@@ -634,7 +634,7 @@
     </section>
 
     <!-- FINAL CTA -->
-    <section class="py-16 bg-white text-center">
+    <section id="final-cta-section" class="py-16 bg-white text-center">
         <div class="max-w-[600px] mx-auto px-4">
             <p class="text-sm text-gray-500 mb-2">The best time to set this up is before you need it.</p>
             <h2 class="text-2xl md:text-3xl font-bold mb-2 leading-tight">Build Their Profile in Under 60 Seconds.</h2>
@@ -657,7 +657,7 @@
     </section>
 
     <!-- STICKY MOBILE CTA -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] md:hidden z-[9999] shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+    <div id="sticky-mobile-cta" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] md:hidden z-[9999] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] transition-transform duration-300">
         <a href="profile-builder.html" class="flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white w-full py-3.5 rounded-xl text-base font-semibold transition-all">
             Create My Pet's Profile
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -706,6 +706,28 @@
                         });
                     });
                 });
+            }
+
+            // Hide sticky CTA when final CTA section is visible
+            const stickyMobileCta = document.getElementById('sticky-mobile-cta');
+            const finalCtaSection = document.getElementById('final-cta-section');
+
+            if (stickyMobileCta && finalCtaSection) {
+                const stickyObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Final CTA is visible, hide sticky CTA
+                            stickyMobileCta.style.transform = 'translateY(100%)';
+                        } else {
+                            // Final CTA is not visible, show sticky CTA
+                            stickyMobileCta.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, {
+                    threshold: 0.3 // Trigger when 30% of final CTA is visible
+                });
+
+                stickyObserver.observe(finalCtaSection);
             }
 
             // Benefit cards scroll animation
