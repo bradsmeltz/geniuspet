@@ -295,7 +295,12 @@
               <!-- Extra tags line - shows when qty > 1 -->
               <div id="extra-tags-line" class="flex justify-between items-center text-sm pt-2 border-t border-beige-light hidden">
                 <span class="text-neutral-medium">Extra GeniusTags (<span id="extra-tags-count">0</span>)</span>
-                <span class="text-neutral-dark" id="extra-tags-price">$0.00</span>
+                <span class="text-neutral-dark font-medium" id="extra-tags-price">+ $0.00</span>
+              </div>
+              <!-- Order total line - shows when qty > 1 -->
+              <div id="order-total-line" class="flex justify-between items-center text-sm pt-2 mt-2 border-t border-beige-medium hidden">
+                <span class="font-semibold text-neutral-black">Total</span>
+                <span class="text-lg font-bold text-neutral-black" id="order-total-sum">$6.99</span>
               </div>
             </div>
           </div>
@@ -842,7 +847,8 @@
       const extraTagsLine = document.getElementById('extra-tags-line');
       const extraTagsCount = document.getElementById('extra-tags-count');
       const extraTagsPriceEl = document.getElementById('extra-tags-price');
-      const orderTotalEl = document.getElementById('order-total');
+      const orderTotalLine = document.getElementById('order-total-line');
+      const orderTotalSum = document.getElementById('order-total-sum');
 
       // Stepper elements
       const qtyDecrease = document.getElementById('qty-decrease');
@@ -894,19 +900,25 @@
           }
         }
 
-        // Update order summary
+        // Update order summary - show extra tags line and total when qty > 1
         if (extraTagsLine && extraTagsCount && extraTagsPriceEl) {
           if (currentQuantity > 1) {
             extraTagsLine.classList.remove('hidden');
             extraTagsCount.textContent = currentQuantity - 1;
-            extraTagsPriceEl.textContent = `$${pricing.extraPrice.toFixed(2)}`;
+            extraTagsPriceEl.textContent = `+ $${pricing.extraPrice.toFixed(2)}`;
+            // Show total line
+            if (orderTotalLine && orderTotalSum) {
+              orderTotalLine.classList.remove('hidden');
+              orderTotalSum.textContent = `$${orderTotal.toFixed(2)}`;
+            }
           } else {
             extraTagsLine.classList.add('hidden');
+            // Hide total line when only 1 tag (base price is shown)
+            if (orderTotalLine) {
+              orderTotalLine.classList.add('hidden');
+            }
           }
         }
-
-        // Update total
-        if (orderTotalEl) orderTotalEl.textContent = `$${orderTotal.toFixed(2)}`;
 
         // Update decrease button state
         if (qtyDecrease) qtyDecrease.disabled = currentQuantity <= 1;
@@ -932,7 +944,7 @@
       }
 
       // Initialize
-      if (tagQuantityEl && tagLabelEl && orderTotalEl) {
+      if (tagQuantityEl && tagLabelEl) {
         updateUI();
       }
 
