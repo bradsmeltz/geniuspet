@@ -1120,14 +1120,26 @@
         // Load original image and draw cropped portion
         const img = new Image();
         img.onload = function() {
-          // Calculate source coordinates based on crop state
           const areaSize = 280;
+
+          // coverScale is how much we scaled the original image to fit/cover the crop area
           const coverScale = Math.max(areaSize / img.width, areaSize / img.height);
 
-          // Source rectangle (in original image coordinates)
-          const sx = -cropState.translateX / (coverScale * cropState.scale);
-          const sy = -cropState.translateY / (coverScale * cropState.scale);
-          const sSize = areaSize / (coverScale * cropState.scale);
+          // The displayed image size (before user zoom) is img.width * coverScale, img.height * coverScale
+          // cropState.scale is the user's zoom level (1.0 = no zoom, 2.0 = 2x zoom)
+          // cropState.translateX/Y is the pixel offset in the displayed (280px) coordinate space
+
+          // To convert from display coordinates to original image coordinates:
+          // - translateX/Y are in "display pixels" where the image is scaled by (coverScale * cropState.scale)
+          // - We need to find what portion of the ORIGINAL image is visible in the crop area
+
+          const totalScale = coverScale * cropState.scale;
+
+          // The visible crop area (280x280) maps to this region in original image pixels:
+          const sx = -cropState.translateX / totalScale;
+          const sy = -cropState.translateY / totalScale;
+          const sWidth = areaSize / totalScale;
+          const sHeight = areaSize / totalScale;
 
           // Draw to canvas (circular clip)
           ctx.beginPath();
@@ -1135,7 +1147,7 @@
           ctx.closePath();
           ctx.clip();
 
-          ctx.drawImage(img, sx, sy, sSize, sSize, 0, 0, outputSize, outputSize);
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, outputSize, outputSize);
 
           // Get cropped image data
           const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
