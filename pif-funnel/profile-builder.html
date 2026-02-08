@@ -267,6 +267,15 @@
       border: none;
       box-shadow: 0 2px 6px rgba(45, 150, 196, 0.4);
     }
+    /* Prevent iOS zoom on form inputs */
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+    @supports (-webkit-touch-callout: none) {
+      input, textarea, select {
+        font-size: 16px !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-dark min-h-screen flex flex-col">
