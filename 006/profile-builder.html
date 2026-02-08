@@ -1078,37 +1078,53 @@
         photoInput.value = ''; // Reset file input
       }
 
-      // Drag to pan
+      // Drag to pan and pinch to zoom
       cropArea.addEventListener('mousedown', startDrag);
-      cropArea.addEventListener('touchstart', startDrag, { passive: false });
+      cropArea.addEventListener('touchstart', handleTouchStart, { passive: false });
 
-      function startDrag(e) {
+      function handleTouchStart(e) {
         e.preventDefault();
 
-        if (e.touches && e.touches.length >= 2) {
-          // Start pinch gesture
+        if (e.touches.length >= 2) {
+          // Start or switch to pinch gesture
           cropState.isPinching = true;
           cropState.isDragging = false;
           cropState.initialPinchDistance = getTouchDistance(e.touches[0], e.touches[1]);
           cropState.initialPinchScale = cropState.scale;
-        } else {
-          // Single touch/mouse - start drag
+        } else if (e.touches.length === 1 && !cropState.isPinching) {
+          // Single touch - start drag (only if not already pinching)
           cropState.isDragging = true;
-          cropState.isPinching = false;
-          const point = e.touches ? e.touches[0] : e;
-          cropState.startX = point.clientX - cropState.translateX;
-          cropState.startY = point.clientY - cropState.translateY;
+          cropState.startX = e.touches[0].clientX - cropState.translateX;
+          cropState.startY = e.touches[0].clientY - cropState.translateY;
         }
       }
 
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('touchmove', drag, { passive: false });
+      function startDrag(e) {
+        // Mouse only
+        if (e.touches) return;
+        e.preventDefault();
+        cropState.isDragging = true;
+        cropState.isPinching = false;
+        cropState.startX = e.clientX - cropState.translateX;
+        cropState.startY = e.clientY - cropState.translateY;
+      }
 
-      function drag(e) {
-        if (!cropState.isDragging && !cropState.isPinching) return;
+      document.addEventListener('mousemove', drag);
+      cropArea.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+      function handleTouchMove(e) {
         e.preventDefault();
 
-        if (e.touches && e.touches.length >= 2 && cropState.isPinching) {
+        if (e.touches.length >= 2) {
+          // If we weren't pinching before, start now
+          if (!cropState.isPinching) {
+            cropState.isPinching = true;
+            cropState.isDragging = false;
+            cropState.initialPinchDistance = getTouchDistance(e.touches[0], e.touches[1]);
+            cropState.initialPinchScale = cropState.scale;
+            return;
+          }
+
           // Handle pinch zoom
           const currentDistance = getTouchDistance(e.touches[0], e.touches[1]);
           const scaleRatio = currentDistance / cropState.initialPinchDistance;
@@ -1143,32 +1159,50 @@
 
           // Sync zoom slider value
           zoomSlider.value = Math.round(newScale * 100);
-        } else if (cropState.isDragging && !cropState.isPinching) {
+        } else if (e.touches.length === 1 && cropState.isDragging) {
           // Handle single-finger drag
-          const point = e.touches ? e.touches[0] : e;
-          cropState.translateX = point.clientX - cropState.startX;
-          cropState.translateY = point.clientY - cropState.startY;
+          cropState.translateX = e.touches[0].clientX - cropState.startX;
+          cropState.translateY = e.touches[0].clientY - cropState.startY;
           constrainPosition();
           updateCropImageTransform();
         }
       }
 
-      document.addEventListener('mouseup', endDrag);
-      document.addEventListener('touchend', endDrag);
+      function drag(e) {
+        // Mouse only
+        if (e.touches) return;
+        if (!cropState.isDragging) return;
+        e.preventDefault();
+        cropState.translateX = e.clientX - cropState.startX;
+        cropState.translateY = e.clientY - cropState.startY;
+        constrainPosition();
+        updateCropImageTransform();
+      }
 
-      function endDrag(e) {
+      document.addEventListener('mouseup', endDrag);
+      cropArea.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+      function handleTouchEnd(e) {
+        e.preventDefault();
         // Check if we're transitioning from pinch to single-touch drag
-        if (e.touches && e.touches.length === 1 && cropState.isPinching) {
+        if (e.touches.length === 1 && cropState.isPinching) {
           // Transitioned from 2 fingers to 1 - start drag from current position
           cropState.isPinching = false;
           cropState.isDragging = true;
           cropState.startX = e.touches[0].clientX - cropState.translateX;
           cropState.startY = e.touches[0].clientY - cropState.translateY;
-        } else if (!e.touches || e.touches.length === 0) {
+        } else if (e.touches.length === 0) {
           // All fingers lifted
           cropState.isDragging = false;
           cropState.isPinching = false;
         }
+      }
+
+      function endDrag(e) {
+        // Mouse only
+        if (e.touches) return;
+        cropState.isDragging = false;
+        cropState.isPinching = false;
       }
 
       // Zoom slider
