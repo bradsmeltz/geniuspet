@@ -88,6 +88,13 @@
     .tag-container {
       perspective: 1000px;
     }
+
+    /* Prevent iOS zoom on quantity stepper buttons */
+    #qty-decrease,
+    #qty-increase {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
   </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-black min-h-screen">
