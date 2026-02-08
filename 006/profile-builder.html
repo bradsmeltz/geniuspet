@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your pet's Care Profile in just a minute.">
+  <title>Create Your Pet's Profile — GeniusPet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            red: {
+              primary: '#D65A52',
+              medium: '#CC5249',
+              dark: '#A3403A',
+            },
+            blue: {
+              lightest: '#E8F4F8',
+              light: '#5FAED4',
+              primary: '#2D96C4',
+              medium: '#3B8FB5',
+              dark: '#2A7A9E',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    .photo-upload__input {
+      display: none;
+    }
+    /* Editable field styling */
+    .editable-field {
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      text-align: inherit;
+      font: inherit;
+      color: inherit;
+    }
+    .editable-field::placeholder {
+      color: #BFBFBF;
+    }
+    .editable-field:focus {
+      background: rgba(45, 150, 196, 0.08);
+      border-radius: 6px;
+    }
+    /* Edit indicator */
+    .edit-indicator {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+    .editable-row:hover .edit-indicator,
+    .editable-row:focus-within .edit-indicator {
+      opacity: 1;
+    }
+    /* Locked section styling */
+    .locked-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .locked-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(245, 240, 235, 0.9) 100%);
+      pointer-events: none;
+    }
+    /* Pulse animation for photo ring */
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    #photo-ring {
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+    /* Completed state styling */
+    .field-complete {
+      background: rgba(76, 175, 80, 0.08) !important;
+      border-color: #4CAF50 !important;
+      border-style: solid !important;
+    }
+    /* Field row complete state */
+    .field-row-complete input,
+    .field-row-complete select {
+      background: rgba(76, 175, 80, 0.08) !important;
+      border-color: #4CAF50 !important;
+      border-style: solid !important;
+    }
+    /* Completion pulse animation */
+    @keyframes complete-pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .field-row-complete {
+      animation: complete-pulse 0.3s ease-out;
+    }
+    /* Section complete celebration */
+    @keyframes section-glow {
+      0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+    }
+    .section-complete {
+      animation: section-glow 0.6s ease-out;
+    }
+    /* Toggle switch bounce animation */
+    @keyframes toggle-bounce {
+      0% { transform: translateX(var(--toggle-x)) scale(1); }
+      40% { transform: translateX(var(--toggle-x)) scale(1.15); }
+      70% { transform: translateX(var(--toggle-x)) scale(0.95); }
+      100% { transform: translateX(var(--toggle-x)) scale(1); }
+    }
+    .toggle-bounce-on {
+      --toggle-x: 30px;
+      animation: toggle-bounce 0.3s ease-out forwards;
+    }
+    .toggle-bounce-off {
+      --toggle-x: 0;
+      animation: toggle-bounce 0.3s ease-out forwards;
+    }
+    /* Pet name completed state */
+    .name-complete {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.08) 0%, rgba(76, 175, 80, 0.15) 100%) !important;
+      border-color: #4CAF50 !important;
+      border-style: solid !important;
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.15);
+    }
+    @keyframes name-celebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .name-celebrate {
+      animation: name-celebrate 0.3s ease-out;
+    }
+    /* Hero card completed state - reduced visual prominence */
+    .hero-complete {
+      border-color: #4CAF50 !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    }
+    .hero-complete .hero-step-label-complete {
+      background: rgba(76, 175, 80, 0.08) !important;
+      border-color: rgba(76, 175, 80, 0.2) !important;
+    }
+    .hero-complete .hero-step-text-complete {
+      color: #4CAF50 !important;
+    }
+    .hero-complete .hero-step-badge-complete {
+      background: #4CAF50 !important;
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-sans text-neutral-dark min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-beige-light transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-dark">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </a>
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-6">
+      <div class="w-8"></div>
+    </div>
+  </header>
+
+  <!-- Modern Segmented Progress Bar -->
+  <div class="bg-white pt-3 pb-3 border-b border-beige-light">
+    <div class="max-w-md mx-auto px-6">
+      <!-- Progress Bar -->
+      <div class="flex items-center gap-1 mb-2">
+        <!-- Step 1: Complete (Landing) -->
+        <div class="flex-1 h-1.5 rounded-full bg-blue-primary"></div>
+        <!-- Step 2: Current (Profile Builder) -->
+        <div class="flex-1 h-1.5 rounded-full bg-blue-primary"></div>
+        <!-- Step 3: Upcoming (Checkout) -->
+        <div class="flex-1 h-1.5 rounded-full bg-beige-medium"></div>
+      </div>
+      <!-- Label -->
+      <p class="text-xs text-neutral-medium text-center">Step 2 of 3 — Almost there</p>
+    </div>
+  </div>
+
+  <!-- Main Content - The Actual Pet Profile -->
+  <main class="flex-1 pb-8 bg-beige-light">
+    <div class="max-w-md mx-auto">
+
+      <!-- Title Section - Below progress -->
+      <div class="pt-5 pb-3 px-4 text-center">
+        <h1 class="text-xl font-bold text-neutral-black mb-1">Build Your Pet's Profile</h1>
+        <p class="text-sm text-neutral-medium">Just a few quick details to get started</p>
+      </div>
+
+      <!-- Hero Card with Photo and Name - START HERE -->
+      <div class="bg-white mx-4 rounded-2xl shadow-lg overflow-hidden border border-beige-medium relative transition-all duration-500" id="hero-card">
+        <!-- Step indicator - subtle top bar -->
+        <div class="bg-blue-lightest border-b border-blue-light/30 px-4 py-2.5 transition-all duration-500" id="hero-step-label">
+          <p class="text-center text-xs font-medium text-blue-dark flex items-center justify-center gap-2 transition-all duration-500" id="hero-step-text">
+            <span class="w-5 h-5 bg-blue-primary text-white rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-500" id="hero-step-badge">1</span>
+            <span id="hero-step-message">Tell us about your pet</span>
+          </p>
+        </div>
+
+        <div class="px-6 pt-5 pb-5 text-center">
+          <!-- Photo Upload Area - Prominent but optional -->
+          <div class="inline-block mb-3">
+            <label for="pet-photo" class="block cursor-pointer group">
+              <div class="relative">
+                <!-- Pulsing ring - perfectly centered -->
+                <div class="absolute -inset-2 rounded-full bg-blue-primary/15 animate-pulse" id="photo-pulse-ring"></div>
+                <!-- Main photo circle -->
+                <div class="w-28 h-28 rounded-full bg-gradient-to-br from-blue-lightest via-white to-beige-light flex items-center justify-center overflow-hidden border-2 border-blue-primary/40 shadow-lg relative transition-all group-hover:scale-105 group-hover:border-blue-primary group-hover:shadow-xl" id="photo-preview-container">
+                  <div class="text-center" id="photo-placeholder">
+                    <div class="w-11 h-11 rounded-full bg-blue-primary/15 flex items-center justify-center mx-auto mb-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blue-primary">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                      </svg>
+                    </div>
+                    <span class="text-xs font-semibold text-blue-primary block">Add photo</span>
+                  </div>
+                  <img src="" alt="Pet photo" id="photo-preview" class="w-full h-full object-cover hidden">
+                </div>
+                <!-- Plus badge -->
+                <div class="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-primary rounded-full shadow-md flex items-center justify-center border-2 border-white" id="photo-plus-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-white">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                </div>
+              </div>
+            </label>
+            <!-- Edit Photo Button (shows after photo is added, replaces plus badge) -->
+            <div id="photo-edit-btn" class="absolute -bottom-1 -right-1 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer hover:bg-blue-lightest transition-colors hidden border-2 border-green-primary">
+              <label for="pet-photo" class="cursor-pointer w-full h-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-primary">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                </svg>
+              </label>
+            </div>
+            <input type="file" id="pet-photo" class="photo-upload__input" accept="image/*">
+          </div>
+          <!-- Photo encouragement text -->
+          <p class="text-[11px] text-neutral-medium mb-4" id="photo-hint">📸 Helps people recognize your pet instantly</p>
+
+          <!-- Pet Name - Required -->
+          <div class="mb-4" id="name-container">
+            <label class="text-xs uppercase tracking-wider text-blue-primary font-semibold mb-2 block" id="name-label">Name *</label>
+            <div class="relative inline-block">
+              <input
+                type="text"
+                id="pet-name"
+                class="text-2xl font-bold text-neutral-black text-center py-3 px-6 bg-blue-lightest border-2 border-dashed border-blue-light/50 rounded-xl focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all w-72"
+                placeholder="e.g. Milo, Bella, Max..."
+                autocomplete="off"
+              >
+            </div>
+          </div>
+
+          <!-- Breed & Age - Required Fields (side by side) -->
+          <div class="flex gap-3 mb-4">
+            <!-- Breed -->
+            <div class="flex-1">
+              <label for="breed" id="breed-label" class="block text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-1.5">Breed *</label>
+              <input
+                type="text"
+                id="breed"
+                class="w-full text-sm font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
+                placeholder="e.g. Golden Retriever"
+                autocomplete="off"
+              >
+            </div>
+            <!-- Age -->
+            <div class="w-28">
+              <label for="age" id="age-label" class="block text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-1.5">Age *</label>
+              <input
+                type="text"
+                id="age"
+                class="w-full text-sm font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
+                placeholder="e.g. 3 yrs"
+                autocomplete="off"
+              >
+            </div>
+          </div>
+
+          <!-- Pet Voice Section - Hidden until required fields are filled -->
+          <div id="pet-voice-section" class="hidden mt-4 pt-4 border-t border-beige-light">
+            <p class="text-xs text-blue-primary font-semibold mb-2 text-center" id="pet-voice-label">
+              ✨ Give <span id="pet-name-display">your pet</span> a voice!
+            </p>
+            <p class="text-xs text-neutral-medium mb-3 text-center px-2" id="pet-voice-hint">
+              Add a fun message that shows their personality (optional)
+            </p>
+            <textarea
+              id="pet-voice"
+              class="w-full text-sm text-neutral-dark p-3 rounded-lg bg-beige-lightest border-2 border-dashed border-beige-medium focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all resize-none"
+              rows="2"
+              placeholder="e.g. 'Will steal your socks and your heart.'"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Optional Details - Collapsible Accordion (hidden on initial load) -->
+      <div class="mx-4 mt-3 hidden" id="optional-details-wrapper">
+        <!-- Accordion Toggle Button -->
+        <button type="button" id="optional-details-toggle" class="w-full bg-white rounded-xl px-5 py-4 flex items-center justify-between shadow-sm border border-beige-medium/50 hover:bg-beige-lightest transition-colors">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">📋</span>
+            <span class="text-sm font-semibold text-neutral-dark">Add more details</span>
+            <span class="text-xs text-neutral-medium">(optional)</span>
+          </div>
+          <svg id="accordion-arrow" class="w-5 h-5 text-neutral-medium transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+
+        <!-- Accordion Content - Hidden by default -->
+        <div id="optional-details-content" class="hidden overflow-hidden">
+          <!-- Additional Info Section -->
+          <div class="bg-white mt-2 rounded-xl shadow-sm border border-beige-medium/50 overflow-hidden" id="additional-info-section">
+        <div class="px-5 py-4">
+          <!-- Section Header -->
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-lg">📋</span>
+            <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">Additional Info About Me</span>
+          </div>
+
+          <!-- Toggle Fields -->
+          <div class="space-y-0">
+            <!-- Kid-friendly -->
+            <div class="flex items-center justify-between py-3 border-b border-beige-light">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Kid-friendly</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="kid-friendly-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="kid-friendly" class="sr-only peer" data-on-text="Yes, I'm kid-friendly!" data-off-text="Not specified">
+                <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
+                <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
+                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Okay with Other Pets -->
+            <div class="flex items-center justify-between py-3 border-b border-beige-light">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Okay with Other Pets</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="other-pets-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="other-pets" class="sr-only peer" data-on-text="Yes, I love other pets!" data-off-text="Not specified">
+                <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
+                <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
+                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Spayed/Neutered -->
+            <div class="flex items-center justify-between py-3 border-b border-beige-light">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Spayed/Neutered</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="spayed-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="spayed" class="sr-only peer" data-on-text="Yes, I'm fixed" data-off-text="Not specified">
+                <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
+                <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
+                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Rabies Vaccine -->
+            <div class="flex items-center justify-between py-3">
+              <div class="flex flex-col">
+                <span class="text-sm text-neutral-medium">Rabies vaccine</span>
+                <span class="text-[10px] text-neutral-light toggle-status" id="rabies-status">Not specified</span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="rabies" class="sr-only peer" data-on-text="Yes, vaccinated!" data-off-text="Not specified">
+                <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
+                <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
+                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <!-- End of optional-details-content -->
+      </div>
+      <!-- End of Optional Details Accordion -->
+
+      <!-- Care Notes Preview Section - Show value before asking for money (hidden on initial load) -->
+      <div class="bg-white mx-4 mt-3 rounded-2xl shadow-sm overflow-hidden relative hidden" id="care-notes-preview">
+        <div class="px-5 py-4">
+          <!-- Section Header -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🏥</span>
+              <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">Care Notes Preview</span>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-1 rounded-full bg-beige-medium text-neutral-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="inline mr-0.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Locked
+            </span>
+          </div>
+
+          <!-- Sample Data Preview (blurred/greyed to show value) -->
+          <div class="space-y-3 relative">
+            <!-- Allergy -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">🥜</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Allergy: Peanuts</p>
+              </div>
+            </div>
+            <!-- Medical Condition -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">💉</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Condition: Diabetes</p>
+              </div>
+            </div>
+            <!-- Medication -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">💊</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Meds: 5mg Rimadyl 2x/day</p>
+              </div>
+            </div>
+            <!-- Vet Contact -->
+            <div class="flex items-start gap-3 py-2">
+              <span class="text-base">🩺</span>
+              <div class="flex-1 blur-[2px] opacity-60">
+                <p class="text-xs font-semibold text-neutral-dark">Vet: Dr. Harris, Oakland Pet Care</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Unlock CTA -->
+          <div class="mt-4 pt-4 border-t border-beige-light text-center">
+            <p class="text-xs text-blue-primary font-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="inline mr-1">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+              </svg>
+              Unlock this section to protect them in emergencies
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movement Banner (hidden on initial load) -->
+      <div class="mx-4 mt-6 bg-gradient-to-r from-blue-lightest to-white rounded-xl p-4 border border-blue-light/30 hidden" id="movement-banner">
+        <p class="text-sm text-blue-dark text-center font-medium">
+          <span class="text-blue-primary">🐾</span> Thousands of pets now have protection that speaks when they can't. <span class="font-semibold">Join the movement.</span>
+        </p>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="mx-4 mt-4 mb-4">
+        <!-- Enhanced GeniusTag Visual - Premium Product Display (hidden on initial load) -->
+        <div class="bg-white rounded-2xl mb-4 border border-beige-medium shadow-sm overflow-hidden hidden" id="genius-tag-preview">
+          <!-- Tag Hero Image - Large and Prominent -->
+          <div class="bg-gradient-to-br from-blue-lightest via-white to-beige-light py-8 px-4 flex justify-center">
+            <div class="relative">
+              <!-- Larger glow effect behind tags -->
+              <div class="absolute inset-0 bg-blue-primary/20 rounded-full blur-3xl scale-90"></div>
+              <img
+                src="Product Images/GeniusTag/id-tags.png"
+                alt="GeniusTag Smart Pet ID Tag"
+                class="relative w-48 h-48 object-contain drop-shadow-xl"
+              >
+            </div>
+          </div>
+          <!-- Tag Info -->
+          <div class="px-5 py-4 bg-gradient-to-b from-beige-lightest to-white border-t border-beige-light">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-base font-bold text-neutral-black">Free GeniusTag Included</p>
+              <span class="text-xs font-semibold text-green-primary bg-green-light px-3 py-1 rounded-full">FREE</span>
+            </div>
+            <p class="text-sm text-neutral-medium">This smart tag links directly to your pet's profile. Anyone who finds them can scan it instantly.</p>
+          </div>
+        </div>
+
+        <!-- Completion Cue - Hidden until required fields complete -->
+        <p class="text-center text-xs font-semibold text-green-primary mb-2 hidden" id="completion-cue">
+          ✓ You're almost done
+        </p>
+
+        <!-- Emotional Transition Line - Hidden until required fields complete -->
+        <p class="text-center text-sm font-semibold text-neutral-black mb-3 hidden" id="transition-message">
+          <span id="pet-name-cta">Your pet</span>'s profile is ready. Activating it ensures anyone who finds <span id="pet-pronoun">them</span> knows exactly what to do.
+        </p>
+
+        <!-- Urgency Badge - Only shows when profile complete, AFTER emotional handoff -->
+        <div class="text-center mb-3 hidden" id="urgency-badge">
+          <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-medium bg-beige-medium/50 px-3 py-1.5 rounded-full">
+            <span class="w-1.5 h-1.5 bg-neutral-medium rounded-full"></span>
+            Only 17 free GeniusTags left today
+          </span>
+        </div>
+
+        <button type="button" id="activate-cta" class="w-full bg-red-primary text-white font-bold py-4 px-6 rounded-full hover:bg-red-medium transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg" disabled>
+          <span id="cta-text">Protect Your Pet & Get My Tag</span>
+        </button>
+
+        <!-- Pre-CTA nudge - shown when CTA is disabled -->
+        <p class="text-xs text-neutral-medium mt-3 text-center" id="cta-nudge">
+          👆 Enter your pet's name to continue
+        </p>
+
+        <!-- What happens next microcopy - hidden until CTA enabled -->
+        <p class="text-xs text-neutral-medium mt-3 text-center hidden" id="cta-microcopy">
+          You'll finalize your order on the next screen. Every profile comes with a GeniusTag.
+        </p>
+        <!-- Reassurance microcopy - hidden until CTA enabled -->
+        <p class="text-xs text-neutral-medium mt-1 text-center hidden" id="cta-reassurance">
+          ⏱️ Takes less than a minute to complete
+        </p>
+
+        <!-- Trust Symbol -->
+        <p class="text-[10px] text-neutral-light mt-4 text-center">
+          🐾 76,000+ pet parents have already completed their pet's profile
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-beige-medium py-6">
+    <div class="max-w-md mx-auto px-4 text-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-5 mx-auto mb-3 opacity-60">
+      <div class="flex items-center justify-center gap-4 text-xs text-neutral-medium mb-3">
+        <a href="#" class="hover:text-neutral-dark">About</a>
+        <a href="#" class="hover:text-neutral-dark">Order new tag</a>
+        <a href="#" class="hover:text-neutral-dark">Support</a>
+      </div>
+      <p class="text-xs text-neutral-light">&copy; 2024 GeniusPet. All rights reserved.</p>
+      <div class="flex items-center justify-center gap-4 text-xs text-neutral-light mt-2">
+        <a href="#" class="hover:text-neutral-medium">Terms & conditions</a>
+        <a href="#" class="hover:text-neutral-medium">Privacy policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Required field elements
+      const petNameInput = document.getElementById('pet-name');
+      const breedInput = document.getElementById('breed');
+      const ageInput = document.getElementById('age');
+      const nameLabel = document.getElementById('name-label');
+      const activateBtn = document.getElementById('activate-cta');
+      const photoEditBtn = document.getElementById('photo-edit-btn');
+      const petVoiceSection = document.getElementById('pet-voice-section');
+      const petNameDisplay = document.getElementById('pet-name-display');
+
+      // Accordion elements
+      const optionalDetailsToggle = document.getElementById('optional-details-toggle');
+      const optionalDetailsContent = document.getElementById('optional-details-content');
+      const optionalDetailsWrapper = document.getElementById('optional-details-wrapper');
+      const accordionArrow = document.getElementById('accordion-arrow');
+      const transitionMessage = document.getElementById('transition-message');
+      const petNameCta = document.getElementById('pet-name-cta');
+      const ctaText = document.getElementById('cta-text');
+      const urgencyBadge = document.getElementById('urgency-badge');
+      const completionCue = document.getElementById('completion-cue');
+      const ctaNudge = document.getElementById('cta-nudge');
+      const ctaMicrocopy = document.getElementById('cta-microcopy');
+      const ctaReassurance = document.getElementById('cta-reassurance');
+
+      // Below-fold sections (hidden on initial load)
+      const belowFoldSections = [
+        document.getElementById('optional-details-wrapper'),
+        document.getElementById('care-notes-preview'),
+        document.getElementById('movement-banner'),
+        document.getElementById('genius-tag-preview')
+      ];
+
+      let accordionOpen = false;
+      let sectionsRevealed = false;
+
+      // Reveal below-fold sections with animation
+      function revealBelowFoldSections() {
+        if (sectionsRevealed) return;
+        sectionsRevealed = true;
+
+        belowFoldSections.forEach((section, index) => {
+          if (section) {
+            setTimeout(() => {
+              section.classList.remove('hidden');
+              section.style.opacity = '0';
+              section.style.transform = 'translateY(10px)';
+              setTimeout(() => {
+                section.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+              }, 50);
+            }, index * 100); // Stagger the reveal
+          }
+        });
+      }
+
+      // Handle accordion toggle click
+      optionalDetailsToggle.addEventListener('click', function() {
+        accordionOpen = !accordionOpen;
+
+        if (accordionOpen) {
+          // Open accordion
+          optionalDetailsContent.classList.remove('hidden');
+          optionalDetailsContent.style.opacity = '0';
+          optionalDetailsContent.style.transform = 'translateY(-10px)';
+          accordionArrow.style.transform = 'rotate(180deg)';
+          setTimeout(() => {
+            optionalDetailsContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            optionalDetailsContent.style.opacity = '1';
+            optionalDetailsContent.style.transform = 'translateY(0)';
+          }, 50);
+        } else {
+          // Close accordion
+          optionalDetailsContent.style.opacity = '0';
+          optionalDetailsContent.style.transform = 'translateY(-10px)';
+          accordionArrow.style.transform = 'rotate(0deg)';
+          setTimeout(() => {
+            optionalDetailsContent.classList.add('hidden');
+          }, 300);
+        }
+      });
+
+      // Check if all required fields are filled
+      function checkRequiredFields() {
+        const name = petNameInput.value.trim();
+        const breed = breedInput.value.trim();
+        const age = ageInput.value.trim();
+
+        const allFilled = name && breed && age;
+        activateBtn.disabled = !allFilled;
+
+        // Toggle CTA nudge vs microcopy based on completion state
+        if (allFilled) {
+          // Hide nudge, show microcopy when CTA is enabled
+          if (ctaNudge) ctaNudge.classList.add('hidden');
+          if (ctaMicrocopy) ctaMicrocopy.classList.remove('hidden');
+          if (ctaReassurance) ctaReassurance.classList.remove('hidden');
+        } else {
+          // Show nudge, hide microcopy when CTA is disabled
+          if (ctaNudge) ctaNudge.classList.remove('hidden');
+          if (ctaMicrocopy) ctaMicrocopy.classList.add('hidden');
+          if (ctaReassurance) ctaReassurance.classList.add('hidden');
+        }
+
+        // Update pet name in displays
+        if (name) {
+          petNameDisplay.textContent = name;
+          if (petNameCta) petNameCta.textContent = name;
+        }
+
+        // Check hero card completion
+        checkHeroCardCompletion();
+
+        return allFilled;
+      }
+
+      // Handle name input
+      petNameInput.addEventListener('input', function() {
+        const name = this.value.trim();
+
+        // Update label and styling when name is entered
+        if (name) {
+          // Reveal below-fold sections on first interaction
+          revealBelowFoldSections();
+
+          // Micro-reward: Show celebratory message
+          nameLabel.textContent = `✓ ${name}'s profile is started`;
+          nameLabel.classList.remove('text-red-primary');
+          nameLabel.classList.add('text-green-primary');
+
+          // Update CTA text with pet name
+          if (ctaText) {
+            ctaText.textContent = `Protect ${name} & Get My Tag`;
+          }
+
+          // Apply enhanced complete styling
+          this.classList.add('name-complete');
+          this.classList.remove('field-complete');
+
+          // Add celebration animation on first entry
+          if (!this.dataset.wasComplete) {
+            this.classList.add('name-celebrate');
+            this.dataset.wasComplete = 'true';
+            setTimeout(() => this.classList.remove('name-celebrate'), 300);
+          }
+
+          // Show pet voice section with animation
+          if (petVoiceSection.classList.contains('hidden')) {
+            petVoiceSection.classList.remove('hidden');
+            petVoiceSection.style.opacity = '0';
+            petVoiceSection.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+              petVoiceSection.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+              petVoiceSection.style.opacity = '1';
+              petVoiceSection.style.transform = 'translateY(0)';
+            }, 50);
+          }
+        } else {
+          nameLabel.textContent = 'Name *';
+          nameLabel.classList.add('text-blue-primary');
+          nameLabel.classList.remove('text-green-primary');
+          this.classList.remove('name-complete', 'field-complete');
+          this.dataset.wasComplete = '';
+
+          // Reset CTA text
+          if (ctaText) {
+            ctaText.textContent = 'Protect Your Pet & Get My Tag';
+          }
+
+          // Hide pet voice section
+          petVoiceSection.classList.add('hidden');
+          petVoiceSection.style.opacity = '0';
+        }
+
+        // Check all required fields
+        checkRequiredFields();
+      });
+
+      // Handle breed input with green success styling
+      const breedLabel = document.getElementById('breed-label');
+      breedInput.addEventListener('input', function() {
+        const breed = this.value.trim();
+        if (breed) {
+          // Show success state
+          breedLabel.textContent = '✓ Breed';
+          breedLabel.classList.remove('text-neutral-medium');
+          breedLabel.classList.add('text-green-primary');
+          this.classList.add('border-green-primary', 'bg-green-light/30');
+          this.classList.remove('border-beige-medium/50', 'bg-beige-lightest');
+        } else {
+          // Reset to default
+          breedLabel.textContent = 'Breed *';
+          breedLabel.classList.add('text-neutral-medium');
+          breedLabel.classList.remove('text-green-primary');
+          this.classList.remove('border-green-primary', 'bg-green-light/30');
+          this.classList.add('border-beige-medium/50', 'bg-beige-lightest');
+        }
+        checkRequiredFields();
+      });
+
+      // Handle age input with green success styling
+      const ageLabel = document.getElementById('age-label');
+      ageInput.addEventListener('input', function() {
+        const age = this.value.trim();
+        if (age) {
+          // Show success state
+          ageLabel.textContent = '✓ Age';
+          ageLabel.classList.remove('text-neutral-medium');
+          ageLabel.classList.add('text-green-primary');
+          this.classList.add('border-green-primary', 'bg-green-light/30');
+          this.classList.remove('border-beige-medium/50', 'bg-beige-lightest');
+        } else {
+          // Reset to default
+          ageLabel.textContent = 'Age *';
+          ageLabel.classList.add('text-neutral-medium');
+          ageLabel.classList.remove('text-green-primary');
+          this.classList.remove('border-green-primary', 'bg-green-light/30');
+          this.classList.add('border-beige-medium/50', 'bg-beige-lightest');
+        }
+        checkRequiredFields();
+      });
+
+      // Handle pet voice input with green success styling
+      const petVoiceInput = document.getElementById('pet-voice');
+      const petVoiceLabel = document.getElementById('pet-voice-label');
+      const petVoiceHint = document.getElementById('pet-voice-hint');
+      petVoiceInput.addEventListener('input', function() {
+        const voice = this.value.trim();
+        const petName = petNameInput.value.trim() || 'Your pet';
+        if (voice) {
+          // Show success state
+          petVoiceLabel.innerHTML = `✓ <span class="text-green-primary">${petName}'s voice is set!</span>`;
+          petVoiceLabel.classList.remove('text-blue-primary');
+          petVoiceLabel.classList.add('text-green-primary');
+          petVoiceHint.classList.add('hidden');
+          this.classList.add('border-green-primary', 'bg-green-light/30');
+          this.classList.remove('border-dashed', 'border-beige-medium', 'bg-beige-lightest');
+        } else {
+          // Reset to default
+          petVoiceLabel.innerHTML = `✨ Give <span id="pet-name-display">${petName}</span> a voice!`;
+          petVoiceLabel.classList.add('text-blue-primary');
+          petVoiceLabel.classList.remove('text-green-primary');
+          petVoiceHint.classList.remove('hidden');
+          this.classList.remove('border-green-primary', 'bg-green-light/30');
+          this.classList.add('border-dashed', 'border-beige-medium', 'bg-beige-lightest');
+        }
+      });
+
+      // Handle photo upload
+      const photoInput = document.getElementById('pet-photo');
+      const photoPreview = document.getElementById('photo-preview');
+      const photoPlaceholder = document.getElementById('photo-placeholder');
+
+      photoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          // Reveal below-fold sections on photo interaction
+          revealBelowFoldSections();
+
+          // Compress image to fit in sessionStorage
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+              // Create canvas to resize/compress
+              const canvas = document.createElement('canvas');
+              const maxSize = 400; // Max dimension for storage
+              let width = img.width;
+              let height = img.height;
+
+              // Scale down if needed
+              if (width > height && width > maxSize) {
+                height = (height * maxSize) / width;
+                width = maxSize;
+              } else if (height > maxSize) {
+                width = (width * maxSize) / height;
+                height = maxSize;
+              }
+
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+
+              // Get compressed data URL
+              const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
+              // Set the preview
+              photoPreview.src = compressedDataUrl;
+              photoPreview.classList.remove('hidden');
+              photoPlaceholder.classList.add('hidden');
+
+              // Hide the pulsing ring and plus badge
+              const pulsingRing = document.getElementById('photo-pulse-ring');
+              if (pulsingRing) pulsingRing.classList.add('hidden');
+              const plusBadge = document.getElementById('photo-plus-badge');
+              if (plusBadge) plusBadge.classList.add('hidden');
+
+              // Update hint text
+              const photoHint = document.getElementById('photo-hint');
+              if (photoHint) photoHint.innerHTML = '✓ <span class="text-green-primary font-medium">Photo added!</span> Looking great.';
+
+              // Update photo container styling to show success
+              const photoContainer = document.getElementById('photo-preview-container');
+              photoContainer.classList.remove('border-blue-primary/40');
+              photoContainer.classList.add('border-green-primary');
+
+              // Show edit button
+              photoEditBtn.classList.remove('hidden');
+              checkHeroCardCompletion();
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Hide pulsing ring and static ring when photo is added
+      const photoRingStatic = document.getElementById('photo-ring-static');
+
+      // =============================================
+      // HERO CARD COMPLETION - Reduce visual prominence when done
+      // =============================================
+      const heroCard = document.getElementById('hero-card');
+      const heroStepLabel = document.getElementById('hero-step-label');
+      const heroStepText = document.getElementById('hero-step-text');
+      const heroStepBadge = document.getElementById('hero-step-badge');
+      const heroStepMessage = document.getElementById('hero-step-message');
+
+      function checkHeroCardCompletion() {
+        // Check if all required fields (Name + Breed + Age) are filled
+        const name = petNameInput.value.trim();
+        const breed = breedInput.value.trim();
+        const age = ageInput.value.trim();
+        const allRequiredFilled = name && breed && age;
+
+        if (allRequiredFilled) {
+          // All complete - subtle green success state
+          heroCard.classList.remove('border-beige-medium');
+          heroCard.classList.add('hero-complete', 'border-green-primary');
+
+          heroStepLabel.classList.remove('bg-blue-lightest', 'border-blue-light/30');
+          heroStepLabel.classList.add('hero-step-label-complete', 'bg-green-light', 'border-green-primary/20');
+
+          heroStepText.classList.remove('text-blue-dark');
+          heroStepText.classList.add('hero-step-text-complete', 'text-green-primary');
+
+          heroStepBadge.classList.remove('bg-blue-primary');
+          heroStepBadge.classList.add('hero-step-badge-complete', 'bg-green-primary');
+          heroStepBadge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
+
+          heroStepMessage.textContent = 'Looking good!';
+
+          // Show completion cue (leverages completion bias)
+          if (completionCue) {
+            completionCue.classList.remove('hidden');
+            completionCue.style.opacity = '0';
+            setTimeout(() => {
+              completionCue.style.transition = 'opacity 0.3s ease';
+              completionCue.style.opacity = '1';
+            }, 50);
+          }
+
+          // Show transition message before CTA
+          if (transitionMessage) {
+            transitionMessage.classList.remove('hidden');
+            transitionMessage.style.opacity = '0';
+            setTimeout(() => {
+              transitionMessage.style.transition = 'opacity 0.3s ease';
+              transitionMessage.style.opacity = '1';
+            }, 100);
+          }
+
+          // Show urgency badge (only when profile complete)
+          if (urgencyBadge) {
+            urgencyBadge.classList.remove('hidden');
+            urgencyBadge.style.opacity = '0';
+            setTimeout(() => {
+              urgencyBadge.style.transition = 'opacity 0.3s ease';
+              urgencyBadge.style.opacity = '1';
+            }, 150);
+          }
+        } else {
+          // Not complete - soft blue styling
+          heroCard.classList.add('border-beige-medium');
+          heroCard.classList.remove('hero-complete', 'border-green-primary');
+
+          heroStepLabel.classList.add('bg-blue-lightest', 'border-blue-light/30');
+          heroStepLabel.classList.remove('hero-step-label-complete', 'bg-green-primary/10', 'border-green-primary/20');
+
+          heroStepText.classList.add('text-blue-dark');
+          heroStepText.classList.remove('hero-step-text-complete', 'text-green-primary');
+
+          heroStepBadge.classList.add('bg-blue-primary');
+          heroStepBadge.classList.remove('hero-step-badge-complete', 'bg-green-primary');
+          heroStepBadge.textContent = '1';
+
+          heroStepMessage.textContent = 'Tell us about your pet';
+
+          // Hide completion cue
+          if (completionCue) {
+            completionCue.classList.add('hidden');
+          }
+
+          // Hide urgency badge
+          if (urgencyBadge) {
+            urgencyBadge.classList.add('hidden');
+          }
+
+          // Hide transition message
+          if (transitionMessage) {
+            transitionMessage.classList.add('hidden');
+          }
+        }
+      }
+
+      // =============================================
+      // ABOUT ME SECTION - Field Completion Tracking
+      // =============================================
+      const aboutMeFields = {
+        breed: {
+          input: document.getElementById('breed'),
+          row: document.getElementById('breed-row'),
+          status: document.getElementById('breed-status'),
+          iconEdit: document.getElementById('breed-icon-edit'),
+          iconCheck: document.getElementById('breed-icon-check'),
+          emptyText: 'Tap to add'
+        },
+        age: {
+          input: document.getElementById('age'),
+          row: document.getElementById('age-row'),
+          status: document.getElementById('age-status'),
+          iconEdit: document.getElementById('age-icon-edit'),
+          iconCheck: document.getElementById('age-icon-check'),
+          emptyText: 'Tap to add'
+        }
+      };
+
+      const aboutMeProgress = document.getElementById('about-me-progress');
+      // aboutMeSection already declared at top
+
+      function updateFieldState(fieldKey, value) {
+        const field = aboutMeFields[fieldKey];
+        const hasValue = value && value.trim() !== '';
+
+        if (hasValue) {
+          // Mark as complete
+          field.status.textContent = '✓ Added';
+          field.status.classList.remove('text-blue-primary');
+          field.status.classList.add('text-green-primary');
+          field.row.classList.add('field-row-complete');
+          field.iconEdit.classList.add('hidden');
+          field.iconCheck.classList.remove('hidden');
+        } else {
+          // Mark as incomplete
+          field.status.textContent = field.emptyText;
+          field.status.classList.add('text-blue-primary');
+          field.status.classList.remove('text-green-primary');
+          field.row.classList.remove('field-row-complete');
+          field.iconEdit.classList.remove('hidden');
+          field.iconCheck.classList.add('hidden');
+        }
+
+        updateSectionProgress();
+      }
+
+      function updateSectionProgress() {
+        let completedCount = 0;
+        Object.keys(aboutMeFields).forEach(key => {
+          const value = aboutMeFields[key].input.value;
+          if (value && value.trim() !== '') {
+            completedCount++;
+          }
+        });
+
+        // Update progress badge
+        if (completedCount === 3) {
+          aboutMeProgress.textContent = '✓ Complete!';
+          aboutMeProgress.classList.remove('bg-blue-light/30', 'text-blue-primary');
+          aboutMeProgress.classList.add('bg-green-light', 'text-green-primary');
+          aboutMeSection.classList.add('section-complete');
+        } else {
+          aboutMeProgress.textContent = `${completedCount} of 3`;
+          aboutMeProgress.classList.add('bg-blue-light/30', 'text-blue-primary');
+          aboutMeProgress.classList.remove('bg-green-light', 'text-green-primary');
+          aboutMeSection.classList.remove('section-complete');
+        }
+      }
+
+      // Add event listeners to all About Me fields
+      Object.keys(aboutMeFields).forEach(key => {
+        const field = aboutMeFields[key];
+
+        field.input.addEventListener('input', function() {
+          updateFieldState(key, this.value);
+        });
+
+        // Also update on blur for better UX
+        field.input.addEventListener('blur', function() {
+          updateFieldState(key, this.value);
+        });
+      });
+
+      // Handle toggle switches with visual confirmation text and animations
+      const toggleIds = ['kid-friendly', 'other-pets', 'spayed', 'rabies'];
+      toggleIds.forEach(id => {
+        const toggle = document.getElementById(id);
+        const status = document.getElementById(`${id}-status`);
+        const onText = toggle.dataset.onText;
+        const offText = toggle.dataset.offText;
+        const toggleThumb = toggle.nextElementSibling.nextElementSibling; // The toggle knob
+        const toggleTrack = toggle.nextElementSibling; // The toggle track
+        const toggleLabel = toggleThumb.querySelector('.toggle-text'); // The Yes/No text inside knob
+
+        toggle.addEventListener('change', function() {
+          if (this.checked) {
+            status.textContent = onText;
+            status.classList.remove('text-neutral-light');
+            status.classList.add('text-green-primary');
+
+            // Update the label inside the knob
+            if (toggleLabel) {
+              toggleLabel.textContent = 'Yes';
+              toggleLabel.classList.remove('text-red-dark');
+              toggleLabel.classList.add('text-white');
+            }
+          } else {
+            status.textContent = offText;
+            status.classList.add('text-neutral-light');
+            status.classList.remove('text-green-primary');
+
+            // Update the label inside the knob
+            if (toggleLabel) {
+              toggleLabel.textContent = 'No';
+              toggleLabel.classList.add('text-red-dark');
+              toggleLabel.classList.remove('text-white');
+            }
+          }
+        });
+      });
+
+      // Handle CTA click
+      activateBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const name = petNameInput.value.trim();
+        if (!name) {
+          petNameInput.focus();
+          return;
+        }
+
+        try {
+          // Get photo - only if it's a valid data URL (not empty or page URL)
+          let photoData = null;
+          if (photoPreview && photoPreview.src && photoPreview.src.startsWith('data:')) {
+            photoData = photoPreview.src;
+          }
+
+          // Collect form data
+          const formData = {
+            name: name,
+            voice: document.getElementById('pet-voice')?.value?.trim() || '',
+            breed: document.getElementById('breed')?.value?.trim() || '',
+            age: document.getElementById('age')?.value?.trim() || '',
+            kidFriendly: document.getElementById('kid-friendly')?.checked || false,
+            otherPets: document.getElementById('other-pets')?.checked || false,
+            spayed: document.getElementById('spayed')?.checked || false,
+            rabies: document.getElementById('rabies')?.checked || false,
+            photo: photoData,
+          };
+
+          // Store in sessionStorage and redirect to checkout
+          sessionStorage.setItem('petProfile', JSON.stringify(formData));
+          window.location.href = 'checkout.html';
+        } catch (err) {
+          console.error('Error saving profile:', err);
+          // Still try to navigate even if storage fails
+          window.location.href = 'checkout.html?name=' + encodeURIComponent(name);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

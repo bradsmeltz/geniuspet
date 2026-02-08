@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Upgrade to Advanced Protection for instant alerts when your pet is found.">
+  <title>Advanced Protection — GeniusPet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            red: {
+              primary: '#D65A52',
+              medium: '#CC5249',
+              dark: '#A3403A',
+            },
+            blue: {
+              lightest: '#E8F4F8',
+              light: '#5FAED4',
+              primary: '#2D96C4',
+              medium: '#3B8FB5',
+              dark: '#2A7A9E',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    @keyframes upsellPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(45, 150, 196, 0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(45, 150, 196, 0); }
+    }
+    .upsell-pulse { animation: upsellPulse 2s infinite; }
+  </style>
+</head>
+<body class="bg-beige-light font-sans text-neutral-black min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-md mx-auto px-4 py-4 flex items-center justify-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-md mx-auto px-4 py-6">
+
+    <!-- Hero: Emotional Hook -->
+    <div class="bg-blue-lightest rounded-2xl p-5 text-center mb-5">
+      <!-- Pet Photo -->
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg bg-beige-medium">
+        <img id="pet-photo" src="" alt="" class="w-full h-full object-cover hidden">
+        <div id="pet-photo-placeholder" class="w-full h-full flex items-center justify-center">
+          <svg class="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Bell Icon -->
+      <div class="w-10 h-10 bg-blue-primary/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+        <svg class="w-5 h-5 text-blue-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-xl font-bold text-neutral-black mb-2">
+        When someone finds <span class="pet-name">your pet</span>, how fast will you know?
+      </h1>
+      <p class="text-sm text-neutral-medium">
+        With email-only alerts, you might not see it for hours.
+      </p>
+    </div>
+
+    <!-- Outcome Comparison -->
+    <div class="mb-6">
+      <div class="flex items-stretch gap-3">
+        <!-- Basic (muted) -->
+        <div class="flex-1 text-center py-4 bg-white rounded-xl">
+          <p class="text-xs text-neutral-medium uppercase tracking-wider mb-2">Basic</p>
+          <p class="text-3xl font-bold text-neutral-light mb-1">3+ hrs</p>
+          <p class="text-xs text-neutral-medium">before you see it</p>
+        </div>
+        <!-- Divider -->
+        <div class="w-px bg-beige-medium self-stretch"></div>
+        <!-- Advanced (highlighted) -->
+        <div class="flex-1 text-center py-4 bg-blue-lightest rounded-xl border border-blue-light/30">
+          <p class="text-xs text-blue-primary uppercase tracking-wider mb-2 font-semibold">Advanced+</p>
+          <p class="text-3xl font-bold text-blue-primary mb-1">Instant</p>
+          <p class="text-xs text-blue-primary/70">SMS & call alert</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm">
+      <p class="text-xs text-neutral-medium uppercase tracking-wider font-medium mb-4 text-center">
+        When <span class="pet-name">your pet</span> is found
+      </p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-blue-primary/15 rounded-full flex items-center justify-center flex-shrink-0">
+            <span class="text-blue-primary text-xs font-bold">1</span>
+          </div>
+          <p class="text-sm text-neutral-dark">You get an <strong>instant SMS & phone call</strong></p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-blue-primary/15 rounded-full flex items-center justify-center flex-shrink-0">
+            <span class="text-blue-primary text-xs font-bold">2</span>
+          </div>
+          <p class="text-sm text-neutral-dark"><strong>Local neighbors & shelters</strong> are alerted to help</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-blue-primary/15 rounded-full flex items-center justify-center flex-shrink-0">
+            <span class="text-blue-primary text-xs font-bold">3</span>
+          </div>
+          <p class="text-sm text-neutral-dark">You see <strong>exactly where <span class="pet-name">they</span> is</strong> on GPS</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Proof -->
+    <div class="flex items-center justify-center gap-2 mb-5">
+      <svg class="w-4 h-4 text-neutral-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+      </svg>
+      <p class="text-sm text-neutral-medium">Your local community is ready to help find <span class="pet-name">your pet</span></p>
+    </div>
+
+    <!-- Primary CTA -->
+    <button id="yes-cta"
+            class="w-full bg-blue-primary hover:bg-blue-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg upsell-pulse">
+      Yes, I Want Instant Alerts
+    </button>
+
+    <!-- Price Disclosure -->
+    <p class="text-center text-sm text-neutral-medium mt-3">
+      $7.42/mo billed annually ($89/year) · <span class="text-green-primary font-medium">30-day money-back guarantee</span>
+    </p>
+
+    <!-- No Thanks -->
+    <button id="no-thanks" class="w-full mt-4 text-sm text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2">
+      No thanks, I'll stick with email alerts
+    </button>
+
+    <!-- Trust Badge -->
+    <div class="flex items-center justify-center gap-2 mt-6 pt-4 border-t border-beige-medium">
+      <svg class="w-4 h-4 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span class="text-xs text-neutral-medium">30-day money-back guarantee · Cancel anytime</span>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 mt-4">
+    <div class="max-w-md mx-auto px-4 text-center">
+      <p class="text-xs text-neutral-light">&copy; 2025 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // 1. Get data from sessionStorage + URL params
+      let petData = { name: 'your pet', photo: null };
+
+      const sessionData = sessionStorage.getItem('petProfile');
+      if (sessionData) {
+        try {
+          const parsed = JSON.parse(sessionData);
+          if (parsed.name) petData.name = parsed.name;
+          if (parsed.photo) petData.photo = parsed.photo;
+        } catch (e) {}
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlName = urlParams.get('name');
+      const urlEmail = urlParams.get('email');
+
+      if (urlName && petData.name === 'your pet') {
+        petData.name = urlName;
+      }
+
+      // 2. Personalize page content
+      document.querySelectorAll('.pet-name').forEach(function(el) {
+        el.textContent = petData.name;
+      });
+
+      if (petData.photo) {
+        var photoImg = document.getElementById('pet-photo');
+        var photoPlaceholder = document.getElementById('pet-photo-placeholder');
+        if (photoImg && photoPlaceholder) {
+          photoImg.src = petData.photo;
+          photoImg.alt = petData.name;
+          photoImg.classList.remove('hidden');
+          photoPlaceholder.classList.add('hidden');
+        }
+      }
+
+      // 3. Build redirect URL helper
+      function buildParams() {
+        var params = new URLSearchParams();
+        params.set('name', petData.name);
+        if (urlEmail) params.set('email', urlEmail);
+        return params.toString();
+      }
+
+      // 4. YES CTA — purchase annual, redirect to thank-you
+      var yesCta = document.getElementById('yes-cta');
+      if (yesCta) {
+        yesCta.addEventListener('click', function() {
+          this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+          this.classList.add('pointer-events-none');
+
+          sessionStorage.setItem('advancedPurchased', JSON.stringify({ plan: 'annual', price: 89 }));
+
+          setTimeout(function() {
+            window.location.href = 'upsell-two.html?' + buildParams();
+          }, 800);
+        });
+      }
+
+      // 5. NO THANKS — redirect to downsell
+      var noThanks = document.getElementById('no-thanks');
+      if (noThanks) {
+        noThanks.addEventListener('click', function() {
+          window.location.href = 'downsell-one.html?' + buildParams();
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>
