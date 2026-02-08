@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Activate your pet's Care Profile.">
+  <title>Activate Profile — GeniusTag</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Beige (Backgrounds, Strokes)
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            // Neutral (Text)
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            // Red (Buttons, Actions, CTAs)
+            red: {
+              primary: '#D65A52',
+              medium: '#CC5249',
+              dark: '#A3403A',
+            },
+            // Blue (Bullets, Text, Secondary Accents)
+            blue: {
+              lightest: '#E8F4F8',
+              light: '#5FAED4',
+              primary: '#2D96C4',
+              medium: '#3B8FB5',
+              dark: '#2A7A9E',
+            },
+            // Success
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    /* Pet card hover effect */
+    #pet-card {
+      transition: all 0.3s ease;
+    }
+    #pet-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+
+    /* Feature cards subtle hover */
+    .feature-mini:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s ease;
+    }
+
+    /* GeniusTag spin animation */
+    @keyframes tagSpin {
+      0% {
+        transform: rotateY(0deg);
+      }
+      100% {
+        transform: rotateY(360deg);
+      }
+    }
+
+    .tag-spin {
+      animation: tagSpin 1s ease-in-out;
+      transform-style: preserve-3d;
+    }
+
+    .tag-container {
+      perspective: 1000px;
+    }
+
+    /* Prevent iOS zoom on quantity stepper buttons */
+    #qty-decrease,
+    #qty-increase {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-sans text-neutral-black min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-center">
+      <a href="index.html">
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+      </a>
+    </div>
+  </header>
+
+  <!-- Modern Segmented Progress Bar -->
+  <div class="bg-white pt-3 pb-3 border-b border-beige-light">
+    <div class="max-w-md mx-auto px-6">
+      <!-- Progress Bar -->
+      <div class="flex items-center gap-1 mb-2">
+        <!-- Step 1: Complete (Landing) -->
+        <div class="flex-1 h-1.5 rounded-full bg-blue-primary"></div>
+        <!-- Step 2: Complete (Profile Builder) -->
+        <div class="flex-1 h-1.5 rounded-full bg-blue-primary"></div>
+        <!-- Step 3: Current (Checkout) -->
+        <div class="flex-1 h-1.5 rounded-full bg-blue-primary"></div>
+      </div>
+      <!-- Label -->
+      <p class="text-xs text-neutral-medium text-center">Step 3 of 3 — Final step</p>
+    </div>
+  </div>
+
+  <!-- Checkout -->
+  <section class="py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header - Emotional -->
+      <div class="text-center mb-8">
+        <h1 id="page-title" class="text-2xl sm:text-3xl font-bold text-neutral-black mb-1">Finish <span id="pet-name-title">Your Pet</span>'s Profile. Give It a Voice.</h1>
+        <p class="text-neutral-medium text-lg" id="page-subtitle">You started building their identity. Now activate it so others know how to help them when it matters most.</p>
+      </div>
+
+      <!-- Grid: Pet Card + Order Summary + Form -->
+      <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+
+        <!-- Left Column: Pet Card + Order Summary -->
+        <div class="lg:w-80 lg:flex-shrink-0 space-y-6">
+
+          <!-- Pet Profile Card - Clean Style matching funnel -->
+          <div id="pet-card" class="relative overflow-hidden rounded-2xl shadow-lg bg-white border border-beige-medium">
+            <!-- Header with Photo and Core Info - Centered -->
+            <div class="bg-gradient-to-b from-beige-light to-white pt-6 pb-4 px-4 text-center">
+              <!-- Centered Pet Photo -->
+              <div class="relative inline-block mb-4">
+                <div id="pet-photo-container" class="w-28 h-28 rounded-full bg-gradient-to-br from-beige-medium to-beige-warm flex items-center justify-center overflow-hidden border-4 border-white shadow-xl">
+                  <svg id="pet-photo-placeholder" class="w-12 h-12 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                  </svg>
+                  <img id="pet-photo" src="" alt="" class="w-full h-full object-cover hidden">
+                </div>
+                <!-- Checkmark badge -->
+                <div class="absolute -bottom-1 -right-1 w-7 h-7 bg-green-primary rounded-full flex items-center justify-center border-2 border-white shadow">
+                  <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Name - Centered -->
+              <h3 id="pet-card-name" class="font-bold text-neutral-black text-2xl leading-tight mb-2">Your Pet</h3>
+
+              <!-- Breed & Age - Centered -->
+              <div class="flex items-center justify-center gap-3 text-sm text-neutral-medium">
+                <p id="pet-card-breed" class="flex items-center gap-1">
+                  <span>🐕</span>
+                  <span>Breed</span>
+                </p>
+                <span class="text-beige-medium">•</span>
+                <p id="pet-card-age" class="flex items-center gap-1">
+                  <span>🎂</span>
+                  <span>Age</span>
+                </p>
+              </div>
+
+              <!-- Status Badge -->
+              <div class="mt-3">
+                <div id="status-indicator" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beige-warm/20 border border-beige-warm/30">
+                  <div class="w-2 h-2 rounded-full bg-beige-warm animate-pulse"></div>
+                  <span class="text-xs font-semibold text-neutral-dark">Ready to Activate</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- White Card Body -->
+            <div class="p-4 relative">
+
+              <!-- Pet Voice Quote (if entered) -->
+              <div id="pet-voice-container" class="mb-4 hidden">
+                <div class="bg-gradient-to-br from-blue-lightest to-white rounded-xl p-3 border border-blue-light/30">
+                  <p class="text-[10px] text-blue-primary font-semibold mb-1 uppercase tracking-wide flex items-center gap-1 justify-center">
+                    <span>💬</span> <span id="pet-card-name-voice">Your Pet</span>'s Voice
+                  </p>
+                  <p id="pet-voice-quote" class="text-sm text-neutral-dark italic text-center leading-relaxed">"..."</p>
+                </div>
+              </div>
+
+              <!-- Pet Traits Badges -->
+              <div id="pet-traits" class="mb-4 flex flex-wrap gap-1.5 justify-center hidden">
+                <!-- Dynamically populated -->
+              </div>
+
+              <!-- What's Included - Compact -->
+              <div class="bg-beige-light/50 rounded-xl p-3">
+                <p class="text-[10px] font-semibold text-neutral-medium uppercase tracking-wide text-center mb-2">Profile Includes</p>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="text-center">
+                    <div class="w-8 h-8 rounded-full bg-green-light mx-auto flex items-center justify-center mb-1">
+                      <svg class="w-4 h-4 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                      </svg>
+                    </div>
+                    <p class="text-[9px] font-medium text-neutral-dark">24/7 Contact</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-8 h-8 rounded-full bg-blue-lightest mx-auto flex items-center justify-center mb-1">
+                      <svg class="w-4 h-4 text-blue-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                    </div>
+                    <p class="text-[9px] font-medium text-neutral-dark">Medical Info</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-8 h-8 rounded-full bg-red-primary/10 mx-auto flex items-center justify-center mb-1">
+                      <svg class="w-4 h-4 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                      </svg>
+                    </div>
+                    <p class="text-[9px] font-medium text-neutral-dark">Safe Return</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="bg-gradient-to-r from-neutral-black to-neutral-dark px-4 py-2.5 flex items-center justify-center gap-2">
+              <svg class="w-3.5 h-3.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              <span class="text-[11px] text-white/80">Activate to unlock profile</span>
+            </div>
+          </div>
+
+          <!-- Order Summary with Value Stack -->
+          <div class="bg-white rounded-xl p-5 shadow-md">
+            <h2 class="text-lg font-semibold text-neutral-black pb-4 mb-4 border-b border-beige-medium">What You're Getting</h2>
+
+            <!-- Value Stack -->
+            <ul class="space-y-3 mb-5">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-sm text-neutral-dark"><span class="font-semibold" id="bullet-pet-name">Your pet</span>'s activated Care Profile</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-sm text-neutral-dark">Emergency contact & medical info shown instantly</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-sm text-neutral-dark">Free GeniusTag linked to <span id="bullet-pet-name-2">your pet</span>'s profile</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-sm text-neutral-dark">Lifetime access — update anytime</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-sm text-neutral-dark">Works even when you're not there</span>
+              </li>
+            </ul>
+
+            <!-- Order Breakdown - Activation focused -->
+            <div class="mt-4 pt-4 border-t border-beige-medium">
+              <!-- Decision-justifier - makes price feel like a formality -->
+              <p class="text-sm text-neutral-dark mb-3">You've already done the hard part. Activation just makes it work.</p>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-semibold text-neutral-black">One-time activation for <span id="activation-name">your pet</span>'s profile</span>
+                <span class="text-lg font-semibold text-neutral-black" id="order-total">$6.99</span>
+              </div>
+              <div class="text-xs text-neutral-medium space-y-1 mb-3">
+                <p class="flex items-center gap-2">
+                  <span class="text-green-primary">✓</span>
+                  <span><span id="includes-pet-name">Your pet</span>'s Care Profile</span>
+                </p>
+                <p class="flex items-center gap-2">
+                  <span class="text-green-primary">✓</span>
+                  <span>1 GeniusTag shipped free</span>
+                </p>
+              </div>
+              <!-- Extra tags line - shows when qty > 1 -->
+              <div id="extra-tags-line" class="flex justify-between items-center text-sm pt-2 border-t border-beige-light hidden">
+                <span class="text-neutral-medium">Extra GeniusTags (<span id="extra-tags-count">0</span>)</span>
+                <span class="text-neutral-dark font-medium" id="extra-tags-price">+ $0.00</span>
+              </div>
+              <!-- Order total line - shows when qty > 1 -->
+              <div id="order-total-line" class="flex justify-between items-center text-sm pt-2 mt-2 border-t border-beige-medium hidden">
+                <span class="font-semibold text-neutral-black">Total</span>
+                <span class="text-lg font-bold text-neutral-black" id="order-total-sum">$6.99</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- How the Profile Works - Standalone Section -->
+          <div class="bg-white rounded-xl p-5 shadow-md border border-beige-medium/50">
+            <h2 class="text-lg font-semibold text-neutral-black mb-3">How the profile works in real life</h2>
+            <div class="flex gap-4 items-center">
+              <!-- GeniusTag Image -->
+              <div class="flex-shrink-0 tag-container">
+                <img
+                  id="geniustag-image"
+                  src="assets/images/geniustag.png"
+                  alt="GeniusTag - Smart Pet ID Tag"
+                  class="w-20 h-20 object-contain drop-shadow-lg"
+                >
+              </div>
+              <!-- Explanation -->
+              <p class="text-sm text-neutral-medium leading-relaxed">
+                Each profile is linked to a GeniusTag that goes on <span id="explainer-pet-name" class="font-semibold text-neutral-dark">your pet</span>'s collar. When someone scans it, they see the profile instantly.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tag Quantity Selector - Always Visible -->
+          <div class="bg-white rounded-xl p-4 border border-beige-medium/50 shadow-sm">
+            <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center gap-2">
+                <span class="text-lg">🏷️</span>
+                <p class="text-sm font-semibold text-neutral-black">GeniusTags for your pet profiles</p>
+              </div>
+              <p class="text-xs text-green-primary font-medium">1 included free</p>
+            </div>
+            <p class="text-xs text-neutral-medium mb-3 ml-7">One tag is included free. Add extras for backup collars, harnesses, or sitters.</p>
+
+            <!-- Quantity Stepper - Inline -->
+            <div class="flex items-center justify-center gap-5 py-3 bg-beige-light/30 rounded-lg">
+              <button type="button" id="qty-decrease" class="w-11 h-11 rounded-full bg-white border-2 border-beige-medium hover:bg-beige-light flex items-center justify-center text-neutral-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                </svg>
+              </button>
+              <div class="text-center min-w-[60px]">
+                <span class="text-3xl font-bold text-neutral-black" id="tag-quantity">1</span>
+                <p class="text-xs text-neutral-medium" id="tag-label">tag</p>
+              </div>
+              <button type="button" id="qty-increase" class="w-11 h-11 rounded-full bg-blue-primary hover:bg-blue-dark flex items-center justify-center text-white transition-colors shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Dynamic Savings Banner (hidden when qty=1) -->
+            <div id="savings-banner" class="mt-3 p-2 bg-green-light/50 rounded-lg text-center hidden">
+              <p class="text-sm text-green-primary font-medium" id="savings-message">✓ You're saving $1.00!</p>
+            </div>
+
+            <!-- Price hint -->
+            <p class="text-xs text-neutral-medium text-center mt-3">
+              Extra tags: $4.99 each
+            </p>
+          </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="flex-1 space-y-4">
+          <form id="checkout-form">
+            <!-- Demo Notice -->
+            <div class="bg-white/60 backdrop-blur rounded-lg p-2.5 text-center text-xs text-neutral-medium mb-4">
+              Demo checkout — no actual payment processing
+            </div>
+
+            <!-- Preemptive Reassurance - Stops anxiety before it forms -->
+            <p class="text-center text-xs text-neutral-medium mb-4">
+              Secure checkout · One-time setup
+            </p>
+
+            <!-- Step 1: Contact + Shipping Fields - Hidden by default, shown on first CTA click -->
+            <div id="contact-shipping-fields" class="hidden space-y-4 mb-4">
+
+            <!-- Express Checkout - Apple Pay Only -->
+            <div class="mb-4">
+              <button
+                type="button"
+                id="apple-pay-btn"
+                class="w-full bg-neutral-black hover:bg-neutral-dark text-white font-medium py-3.5 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.0425 12.6875C17.0275 10.7625 18.6175 9.8375 18.6925 9.7925C17.6875 8.3425 16.1225 8.1425 15.5775 8.1275C14.2725 7.9925 13.0075 8.9175 12.3425 8.9175C11.6625 8.9175 10.6375 8.1425 9.5325 8.1625C8.1075 8.1825 6.7775 9.0175 6.0425 10.3025C4.5275 12.9225 5.6575 16.7825 7.1075 18.8975C7.8325 19.9325 8.6875 21.0925 9.8075 21.0525C10.8925 21.0075 11.3025 20.3575 12.6025 20.3575C13.8875 20.3575 14.2625 21.0525 15.4075 21.0275C16.5875 21.0075 17.3275 19.9725 18.0225 18.9275C18.8575 17.7325 19.1925 16.5625 19.2075 16.5025C19.1775 16.4925 17.0625 15.6725 17.0425 12.6875Z"/>
+                  <path d="M15.0275 6.5625C15.6175 5.8275 16.0175 4.8275 15.9075 3.8125C15.0575 3.8525 14.0025 4.3925 13.3825 5.1125C12.8325 5.7475 12.3475 6.7875 12.4725 7.7625C13.4275 7.8325 14.4075 7.2825 15.0275 6.5625Z"/>
+                </svg>
+                <span class="font-semibold">Pay</span>
+              </button>
+            </div>
+
+            <!-- Divider -->
+            <div class="flex items-center gap-4 my-5">
+              <div class="flex-1 h-px bg-beige-medium"></div>
+              <span class="text-[11px] text-neutral-medium">or pay with credit card</span>
+              <div class="flex-1 h-px bg-beige-medium"></div>
+            </div>
+
+            <!-- Contact + Shipping Combined Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-beige-medium/50 overflow-hidden mb-4">
+              <!-- Contact Section -->
+              <div class="p-5 border-b border-beige-light">
+                <div class="flex items-center gap-2 mb-4">
+                  <div class="w-6 h-6 rounded-full bg-blue-primary/10 flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-blue-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-sm font-semibold text-neutral-black">Contact</h3>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                  placeholder="your@email.com"
+                  required
+                >
+              </div>
+
+              <!-- Shipping Section -->
+              <div class="p-5">
+                <div class="flex items-center gap-2 mb-4">
+                  <div class="w-6 h-6 rounded-full bg-blue-primary/10 flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-blue-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-sm font-semibold text-neutral-black">Ship To</h3>
+                </div>
+                <p class="text-xs text-neutral-medium mb-3">We need this to send your free GeniusTag</p>
+
+                <div class="space-y-3">
+                  <input
+                    type="text"
+                    id="full-name"
+                    class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                    placeholder="Full name"
+                    required
+                  >
+                  <input
+                    type="text"
+                    id="address"
+                    class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                    placeholder="Street address"
+                    required
+                  >
+                  <div class="grid grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      id="city"
+                      class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                      placeholder="City"
+                      required
+                    >
+                    <input
+                      type="text"
+                      id="state"
+                      class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                      placeholder="State"
+                      required
+                    >
+                  </div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      id="zip"
+                      class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                      placeholder="ZIP code"
+                      required
+                    >
+                    <select
+                      id="country"
+                      class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                      required
+                    >
+                      <option value="US">United States</option>
+                      <option value="CA">Canada</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div><!-- End contact-shipping-fields -->
+
+            <!-- Step 2: Payment Fields - Hidden by default, shown on second CTA click -->
+            <div id="payment-fields" class="hidden space-y-4 mb-4">
+
+            <!-- Payment Card - Distinct Style -->
+            <div class="bg-gradient-to-b from-white to-beige-lightest rounded-xl shadow-sm border border-beige-medium/50 overflow-hidden mb-6">
+              <div class="p-5">
+                <!-- Header with Cards -->
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-green-light flex items-center justify-center">
+                      <svg class="w-3.5 h-3.5 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                      </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold text-neutral-black">Payment</h3>
+                  </div>
+                  <!-- Credit Card Icons -->
+                  <div class="flex items-center gap-1">
+                    <!-- Visa -->
+                    <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                      <rect width="48" height="32" rx="4" fill="#1A1F71"/>
+                      <path d="M19.5 21H17L18.75 11H21.25L19.5 21Z" fill="white"/>
+                      <path d="M28.5 11.25C28 11.05 27.25 10.85 26.25 10.85C23.75 10.85 22 12.15 22 14C22 15.4 23.25 16.15 24.25 16.6C25.25 17.05 25.6 17.35 25.6 17.75C25.6 18.35 24.85 18.65 24.15 18.65C23.15 18.65 22.6 18.5 21.75 18.15L21.4 18L21 20.5C21.65 20.8 22.85 21.05 24.1 21.05C26.75 21.05 28.45 19.75 28.45 17.8C28.45 16.7 27.75 15.85 26.25 15.15C25.35 14.7 24.8 14.4 24.8 13.95C24.8 13.55 25.25 13.1 26.2 13.1C27 13.1 27.6 13.25 28.05 13.45L28.3 13.55L28.5 11.25Z" fill="white"/>
+                      <path d="M32.5 11H30.5C29.85 11 29.35 11.2 29.05 11.85L25.25 21H27.9L28.45 19.45H31.65L31.95 21H34.25L32.5 11ZM29.15 17.5C29.35 16.95 30.25 14.5 30.25 14.5C30.25 14.5 30.5 13.8 30.65 13.35L30.85 14.4C30.85 14.4 31.45 17.05 31.55 17.5H29.15Z" fill="white"/>
+                      <path d="M16.5 11L14 17.75L13.7 16.3C13.2 14.7 11.7 12.95 10 12.05L12.25 21H15L19.25 11H16.5Z" fill="white"/>
+                      <path d="M12.25 11H8.05L8 11.2C11.25 12 13.4 14.15 14.2 16.65L13.35 11.9C13.2 11.25 12.75 11.05 12.25 11Z" fill="#F9A51A"/>
+                    </svg>
+                    <!-- Mastercard -->
+                    <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                      <rect width="48" height="32" rx="4" fill="#F5F5F5"/>
+                      <circle cx="18" cy="16" r="8" fill="#EB001B"/>
+                      <circle cx="30" cy="16" r="8" fill="#F79E1B"/>
+                      <path d="M24 10.5C25.9 12 27.1 14.35 27.1 17C27.1 19.65 25.9 22 24 23.5C22.1 22 20.9 19.65 20.9 17C20.9 14.35 22.1 12 24 10.5Z" fill="#FF5F00"/>
+                    </svg>
+                    <!-- Discover -->
+                    <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                      <rect width="48" height="32" rx="4" fill="#F5F5F5"/>
+                      <rect x="0" y="16" width="48" height="16" rx="0" fill="#F76F1B"/>
+                      <circle cx="30" cy="16" r="7" fill="#F76F1B"/>
+                      <text x="6" y="14" fill="#333" font-size="6" font-weight="bold" font-family="Arial">DISCOVER</text>
+                    </svg>
+                    <!-- Amex -->
+                    <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                      <rect width="48" height="32" rx="4" fill="#006FCF"/>
+                      <path d="M8 16.5L10.5 11H13L16 16.5L13 22H10.5L8 16.5Z" fill="white"/>
+                      <path d="M15 11H18V22H15V11Z" fill="white"/>
+                      <path d="M19 11H25L26 13L27 11H33V22H27L26 20L25 22H19V11ZM21 13V20H24L26 17L28 20H31V13H28L26 16L24 13H21Z" fill="white"/>
+                      <path d="M34 11H40L38 14H40V17H38V22H34V11Z" fill="white"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Card Fields -->
+                <div class="space-y-3">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="card-number"
+                      class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm pr-12"
+                      placeholder="Card number"
+                      required
+                    >
+                    <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                      <svg class="w-5 h-5 text-neutral-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      id="expiry"
+                      class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm"
+                      placeholder="MM / YY"
+                      required
+                    >
+                    <div class="relative">
+                      <input
+                        type="text"
+                        id="cvv"
+                        class="w-full px-4 py-3 bg-white border border-beige-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-primary focus:border-transparent transition-all text-sm pr-10"
+                        placeholder="CVV"
+                        required
+                      >
+                      <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                        <svg class="w-4 h-4 text-neutral-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Security Note -->
+                <div class="flex items-center justify-center gap-1.5 mt-4 pt-4 border-t border-beige-light">
+                  <svg class="w-3.5 h-3.5 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-xs text-neutral-medium">Secured with 256-bit SSL encryption</span>
+                </div>
+              </div>
+            </div>
+
+            </div><!-- End payment-fields -->
+
+            <!-- Scarcity Banner - Directly above CTA to influence decision -->
+            <div class="bg-gradient-to-r from-beige-warm/20 to-beige-warm/10 border border-beige-warm/40 rounded-xl p-3 text-center mb-3">
+              <span class="text-base">🔥</span>
+              <span class="font-semibold text-neutral-black text-sm ml-1">Only 11 Free GeniusTags Left Today</span>
+            </div>
+
+            <!-- Submit Button - Emotional CTA -->
+            <button
+              type="button"
+              id="submit-btn"
+              class="w-full bg-red-primary hover:bg-red-dark text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 text-lg flex items-center justify-center gap-2 shadow-lg shadow-red-primary/25 hover:shadow-xl hover:shadow-red-primary/30 hover:-translate-y-0.5"
+            >
+              <span>🛡️</span>
+              <span id="cta-text">Complete Your Pet's Voice & Protection</span>
+            </button>
+
+            <!-- Trust Copy Below CTA -->
+            <p class="text-center text-sm text-neutral-dark mt-4 font-medium">
+              76,000+ pet parents gave their pets a voice. You're next.
+            </p>
+
+            <!-- Trust Bumper -->
+            <p class="text-center text-xs text-neutral-medium mt-2">
+              One-time setup. No surprises.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-black text-white py-6 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-sm text-neutral-light">&copy; 2024 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // Get pet data from sessionStorage (set by profile-builder.html)
+      let petData = {
+        name: 'Your Pet',
+        voice: '',
+        breed: '',
+        sex: '',
+        age: '',
+        weight: '',
+        kidFriendly: false,
+        otherPets: false,
+        spayed: false,
+        rabies: false,
+        photo: ''
+      };
+
+      // Try to get profile from sessionStorage first (from profile builder)
+      const sessionData = sessionStorage.getItem('petProfile');
+      if (sessionData) {
+        try {
+          const parsed = JSON.parse(sessionData);
+          petData = { ...petData, ...parsed };
+        } catch (e) {
+          console.log('Error parsing session data');
+        }
+      }
+
+      // Fallback to URL params for pet name
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlName = urlParams.get('name');
+      if (urlName) {
+        petData.name = urlName;
+      }
+
+      // Update page title
+      const petNameTitle = document.getElementById('pet-name-title');
+      if (petNameTitle) {
+        petNameTitle.textContent = petData.name;
+      }
+
+      // Update subtitle with pet name
+      const pageSubtitle = document.getElementById('page-subtitle');
+      if (pageSubtitle) {
+        pageSubtitle.textContent = `You started building ${petData.name}'s identity. Now activate it so others know how to help them when it matters most.`;
+      }
+
+      // Update pet card name
+      const petCardName = document.getElementById('pet-card-name');
+      if (petCardName) {
+        petCardName.textContent = petData.name;
+      }
+
+      // Update pet card name in voice section
+      const petCardNameVoice = document.getElementById('pet-card-name-voice');
+      if (petCardNameVoice) {
+        petCardNameVoice.textContent = petData.name;
+      }
+
+      // Update pet name in moral justification
+      const moralPetName = document.getElementById('moral-pet-name');
+      if (moralPetName) {
+        moralPetName.textContent = petData.name;
+      }
+
+      // Update pet name in price transition
+      const pricePetName = document.getElementById('price-pet-name');
+      if (pricePetName) {
+        pricePetName.textContent = petData.name;
+      }
+
+      // Update pet name in activation line item
+      const activationPetName = document.getElementById('activation-pet-name');
+      if (activationPetName) {
+        activationPetName.textContent = petData.name;
+      }
+
+      // Update pet name in emotional bullet
+      const bulletPetName = document.getElementById('bullet-pet-name');
+      if (bulletPetName) {
+        bulletPetName.textContent = petData.name;
+      }
+
+      // Update pet name in "already started" message
+      const startedPetName = document.getElementById('started-pet-name');
+      if (startedPetName) {
+        startedPetName.textContent = petData.name;
+      }
+
+      // Update pet name in GeniusTag explainer
+      const explainerPetName = document.getElementById('explainer-pet-name');
+      if (explainerPetName) {
+        explainerPetName.textContent = petData.name;
+      }
+
+      // Update pet name in quantity selector title
+      const qtyPetName = document.getElementById('qty-pet-name');
+      if (qtyPetName) {
+        qtyPetName.textContent = petData.name;
+      }
+
+      // Update pet name in activation line
+      const activationName = document.getElementById('activation-name');
+      if (activationName) {
+        activationName.textContent = petData.name;
+      }
+
+      // Update pet name in includes list
+      const includesPetName = document.getElementById('includes-pet-name');
+      if (includesPetName) {
+        includesPetName.textContent = petData.name;
+      }
+
+      // Update pet name in bullet point 2 (third bullet - "Free GeniusTag linked to [Name]'s profile")
+      const bulletPetName2 = document.getElementById('bullet-pet-name-2');
+      if (bulletPetName2) {
+        bulletPetName2.textContent = petData.name;
+      }
+
+      // Update pet card breed
+      const petCardBreed = document.getElementById('pet-card-breed');
+      if (petCardBreed) {
+        const breedSpan = petCardBreed.querySelector('span:last-child');
+        if (breedSpan) {
+          breedSpan.textContent = petData.breed || 'Breed';
+        }
+      }
+
+      // Update pet card age
+      const petCardAge = document.getElementById('pet-card-age');
+      if (petCardAge) {
+        const ageSpan = petCardAge.querySelector('span:last-child');
+        if (ageSpan) {
+          ageSpan.textContent = petData.age || 'Age';
+        }
+      }
+
+      // Show pet traits badges
+      const petTraitsContainer = document.getElementById('pet-traits');
+      if (petTraitsContainer) {
+        let traits = [];
+
+        if (petData.kidFriendly) {
+          traits.push({ icon: '👶', text: 'Kid-friendly' });
+        }
+        if (petData.otherPets) {
+          traits.push({ icon: '🐾', text: 'Likes other pets' });
+        }
+        if (petData.spayed) {
+          traits.push({ icon: '✓', text: 'Fixed' });
+        }
+        if (petData.rabies) {
+          traits.push({ icon: '💉', text: 'Vaccinated' });
+        }
+
+        if (traits.length > 0) {
+          petTraitsContainer.classList.remove('hidden');
+          petTraitsContainer.innerHTML = traits.map(trait =>
+            `<span class="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded-full bg-green-light text-green-primary border border-green-primary/20">
+              <span>${trait.icon}</span> ${trait.text}
+            </span>`
+          ).join('');
+        }
+
+        // Update stats
+        const statTraits = document.getElementById('stat-traits');
+        const statMedical = document.getElementById('stat-medical');
+        if (statTraits) {
+          statTraits.textContent = traits.length;
+        }
+        if (statMedical) {
+          let medicalCount = 0;
+          if (petData.spayed) medicalCount++;
+          if (petData.rabies) medicalCount++;
+          statMedical.textContent = medicalCount;
+        }
+      }
+
+      // Show pet voice quote if entered
+      const petVoiceContainer = document.getElementById('pet-voice-container');
+      const petVoiceQuote = document.getElementById('pet-voice-quote');
+      if (petData.voice && petVoiceContainer && petVoiceQuote) {
+        petVoiceContainer.classList.remove('hidden');
+        petVoiceQuote.textContent = `"${petData.voice}"`;
+      }
+
+      // Update pet photo if available
+      if (petData.photo) {
+        const petPhotoImg = document.getElementById('pet-photo');
+        const petPhotoPlaceholder = document.getElementById('pet-photo-placeholder');
+        if (petPhotoImg && petPhotoPlaceholder) {
+          petPhotoImg.src = petData.photo;
+          petPhotoImg.alt = petData.name;
+          petPhotoImg.classList.remove('hidden');
+          petPhotoPlaceholder.classList.add('hidden');
+        }
+      }
+
+      // Update CTA button text - Emotional
+      const ctaText = document.getElementById('cta-text');
+      if (ctaText) {
+        ctaText.textContent = `Complete ${petData.name}'s Voice & Protection`;
+      }
+
+      // =============================================
+      // QUANTITY STEPPER - Simple tag quantity selector
+      // =============================================
+      const extraTagsLine = document.getElementById('extra-tags-line');
+      const extraTagsCount = document.getElementById('extra-tags-count');
+      const extraTagsPriceEl = document.getElementById('extra-tags-price');
+      const orderTotalLine = document.getElementById('order-total-line');
+      const orderTotalSum = document.getElementById('order-total-sum');
+
+      // Stepper elements
+      const qtyDecrease = document.getElementById('qty-decrease');
+      const qtyIncrease = document.getElementById('qty-increase');
+      const tagQuantityEl = document.getElementById('tag-quantity');
+      const tagLabelEl = document.getElementById('tag-label');
+      const savingsBanner = document.getElementById('savings-banner');
+      const savingsMessage = document.getElementById('savings-message');
+
+      const basePrice = 6.99;
+      const regularTagPrice = 5.99;
+      const tier2Price = 4.99; // 2nd tag
+      const bulkTagPrice = 3.99; // 3+ tags
+
+      let currentQuantity = 1;
+
+      // Calculate pricing based on total tags
+      function calculatePricing(totalTags) {
+        if (totalTags === 1) {
+          return { extraPrice: 0, savings: 0, savingsPercent: 0, pricePerExtra: 0 };
+        }
+        if (totalTags === 2) {
+          return { extraPrice: tier2Price, savings: 1.00, savingsPercent: 17, pricePerExtra: tier2Price };
+        }
+        // 3+ tags: first extra at $4.99, rest at $3.99
+        const extraTags = totalTags - 1;
+        const extraPrice = tier2Price + (extraTags - 1) * bulkTagPrice;
+        const fullPrice = extraTags * regularTagPrice;
+        const savings = fullPrice - extraPrice;
+        const savingsPercent = Math.round((savings / fullPrice) * 100);
+        return { extraPrice, savings, savingsPercent, pricePerExtra: bulkTagPrice };
+      }
+
+      function updateUI() {
+        const pricing = calculatePricing(currentQuantity);
+        const orderTotal = basePrice + pricing.extraPrice;
+
+        // Update quantity display
+        if (tagQuantityEl) tagQuantityEl.textContent = currentQuantity;
+        if (tagLabelEl) tagLabelEl.textContent = currentQuantity === 1 ? 'tag' : 'tags';
+
+        // Update savings banner
+        if (savingsBanner && savingsMessage) {
+          if (pricing.savings > 0) {
+            savingsBanner.classList.remove('hidden');
+            savingsMessage.textContent = `✓ You're saving $${pricing.savings.toFixed(2)}!`;
+          } else {
+            savingsBanner.classList.add('hidden');
+          }
+        }
+
+        // Update order summary - show extra tags line and total when qty > 1
+        if (extraTagsLine && extraTagsCount && extraTagsPriceEl) {
+          if (currentQuantity > 1) {
+            extraTagsLine.classList.remove('hidden');
+            extraTagsCount.textContent = currentQuantity - 1;
+            extraTagsPriceEl.textContent = `+ $${pricing.extraPrice.toFixed(2)}`;
+            // Show total line
+            if (orderTotalLine && orderTotalSum) {
+              orderTotalLine.classList.remove('hidden');
+              orderTotalSum.textContent = `$${orderTotal.toFixed(2)}`;
+            }
+          } else {
+            extraTagsLine.classList.add('hidden');
+            // Hide total line when only 1 tag (base price is shown)
+            if (orderTotalLine) {
+              orderTotalLine.classList.add('hidden');
+            }
+          }
+        }
+
+        // Update decrease button state
+        if (qtyDecrease) qtyDecrease.disabled = currentQuantity <= 1;
+      }
+
+      // Quantity controls
+      if (qtyDecrease) {
+        qtyDecrease.addEventListener('click', function() {
+          if (currentQuantity > 1) {
+            currentQuantity--;
+            updateUI();
+          }
+        });
+      }
+
+      if (qtyIncrease) {
+        qtyIncrease.addEventListener('click', function() {
+          if (currentQuantity < 10) {
+            currentQuantity++;
+            updateUI();
+          }
+        });
+      }
+
+      // Initialize
+      if (tagQuantityEl && tagLabelEl) {
+        updateUI();
+      }
+
+      // Progressive disclosure form fields logic (3 steps)
+      const contactShippingFields = document.getElementById('contact-shipping-fields');
+      const paymentFields = document.getElementById('payment-fields');
+      const submitBtn = document.getElementById('submit-btn');
+      // ctaText already declared above at line 795
+      let formStep = 0; // 0 = initial, 1 = contact/shipping shown, 2 = payment shown
+
+      function animateFieldsIn(element) {
+        element.classList.remove('hidden');
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+          element.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 10);
+      }
+
+      if (submitBtn && contactShippingFields && paymentFields) {
+        submitBtn.addEventListener('click', function(e) {
+          if (formStep === 0) {
+            // First click: show contact + shipping fields
+            e.preventDefault();
+            animateFieldsIn(contactShippingFields);
+
+            // Update CTA text for next step
+            if (ctaText) {
+              ctaText.textContent = `Continue to Payment`;
+            }
+            formStep = 1;
+
+            // Scroll to form fields
+            contactShippingFields.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else if (formStep === 1) {
+            // Second click: show payment fields
+            e.preventDefault();
+            animateFieldsIn(paymentFields);
+
+            // Update button to submit mode
+            submitBtn.type = 'submit';
+            if (ctaText) {
+              ctaText.textContent = `Activate ${petData.name}'s Protection`;
+            }
+            formStep = 2;
+
+            // Scroll to payment fields
+            paymentFields.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          // Third click: form submits normally (type="submit")
+        });
+      }
+
+      // GeniusTag spin animation on scroll
+      const geniusTagImage = document.getElementById('geniustag-image');
+      if (geniusTagImage) {
+        let hasSpun = false;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !hasSpun) {
+              geniusTagImage.classList.add('tag-spin');
+              hasSpun = true;
+              // Remove class after animation completes so it can potentially spin again
+              setTimeout(() => {
+                geniusTagImage.classList.remove('tag-spin');
+              }, 1000);
+            }
+          });
+        }, { threshold: 0.5 });
+        observer.observe(geniusTagImage);
+      }
+
+      // Handle form submission
+      const checkoutForm = document.getElementById('checkout-form');
+      if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Get email for thank you page
+          const emailInput = document.getElementById('email');
+          const email = emailInput ? emailInput.value : '';
+
+          // Navigate to thank you page
+          const params = new URLSearchParams();
+          params.set('name', petData.name);
+          if (email) params.set('email', email);
+
+          window.location.href = `upsell-one.html?${params.toString()}`;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

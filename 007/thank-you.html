@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your pet's profile is now active.">
+  <title>Profile Activated — GeniusTag</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html">
+        <img src="assets/images/logo.svg" alt="GeniusTag" class="header__logo">
+      </a>
+    </div>
+  </header>
+
+  <!-- Thank You -->
+  <section class="thank-you section">
+    <div class="container">
+      <div class="thank-you__content">
+        <!-- Success Icon -->
+        <div class="thank-you__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+
+        <h1 class="thank-you__title"><span id="pet-name-display">Your Pet</span>'s Profile is Active</h1>
+
+        <!-- Confirmation -->
+        <div class="thank-you__confirmation">
+          <p class="thank-you__order-number">Order #<span id="order-number">GT00000</span></p>
+          <p class="thank-you__email">Confirmation sent to <span id="email-display">your email</span></p>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps">
+          <h2 class="next-steps__title">What Happens Next</h2>
+          <ul class="next-steps__list">
+            <li class="next-step">
+              <span class="next-step__number">1</span>
+              <span class="next-step__text">Your GeniusTag is on the way</span>
+            </li>
+            <li class="next-step">
+              <span class="next-step__number">2</span>
+              <span class="next-step__text">Ships in 2-3 business days</span>
+            </li>
+            <li class="next-step">
+              <span class="next-step__number">3</span>
+              <span class="next-step__text">You'll receive activation instructions via email</span>
+            </li>
+            <li class="next-step">
+              <span class="next-step__number">4</span>
+              <span class="next-step__text">Your profile can be updated anytime</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // Get data from URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const petName = urlParams.get('name') || 'Your Pet';
+      const email = urlParams.get('email') || 'your email';
+
+      // Generate order number
+      const orderNum = 'GT' + Math.floor(10000 + Math.random() * 90000);
+
+      // Update page elements
+      const petNameDisplay = document.getElementById('pet-name-display');
+      const orderNumberDisplay = document.getElementById('order-number');
+      const emailDisplay = document.getElementById('email-display');
+
+      if (petNameDisplay) {
+        petNameDisplay.textContent = petName;
+      }
+
+      if (orderNumberDisplay) {
+        orderNumberDisplay.textContent = orderNum;
+      }
+
+      if (emailDisplay) {
+        emailDisplay.textContent = email;
+      }
+
+      // Clear profile data from LocalStorage (order complete)
+      localStorage.removeItem('pif_profile');
+    })();
+  </script>
+</body>
+</html>

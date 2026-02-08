@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pet's Care Profile | GeniusPet</title>
+    <meta name="description" content="Create a secure, shareable digital ID profile with your pet's info, medical details, and care instructions — all in one place.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-red': '#D74242',
+                        'brand-red-dark': '#C43C3C',
+                        'brand-red-light': '#FBECEC',
+                        'brand-blue': '#3995C6',
+                        'brand-blue-light': '#EFF6FA',
+                        'brand-beige': '#ECE0D6',
+                        'brand-black': '#2B2B2B',
+                        'bg-primary': '#FBF8F4',
+                        'bg-beige-stroke': '#F6F1EA',
+                    },
+                    fontFamily: {
+                        'gilroy': ['Gilroy', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Fonts -->
+    <style>
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Regular.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Medium.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Semibold.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Semibold.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-Bold.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('../Brand Font/Gilroy-LightItalic.woff2') format('woff2'),
+                 url('../Brand Font/Gilroy-LightItalic.woff') format('woff');
+            font-weight: 300;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        /* Hide scrollbar for carousel */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glass-card-hover:active {
+            transform: rotate(0deg) translateY(-2px) !important;
+            box-shadow:
+                0 16px 48px rgba(0, 0, 0, 0.14),
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        @media (min-width: 1024px) {
+            .glass-card-hover:hover {
+                transform: rotate(0deg) translateY(-4px) !important;
+                box-shadow:
+                    0 16px 48px rgba(0, 0, 0, 0.14),
+                    0 4px 12px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            }
+        }
+
+        /* Subtle pulse animation for Protected badge */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+        }
+        .animate-subtle-pulse {
+            animation: subtle-pulse 3s ease-in-out infinite;
+        }
+
+        /* Benefit card scroll animations */
+        .benefit-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Carousel dot styles */
+        .carousel-dot {
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            width: 1.5rem;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="font-gilroy text-brand-black bg-bg-primary antialiased">
+
+    <!-- HEADER -->
+    <header class="py-4 bg-white">
+        <div class="max-w-[1100px] mx-auto px-4 flex justify-center">
+            <a href="/" class="inline-flex items-center">
+                <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8 w-auto">
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="pt-2 pb-12 lg:py-16 bg-gradient-to-b from-white via-[#F5EDE4] to-white">
+        <div class="max-w-[1100px] mx-auto px-4">
+
+            <!-- Mobile Layout -->
+            <div class="lg:hidden">
+                <!-- Headline + Subheadline -->
+                <div class="text-center mb-6">
+                    <h1 class="text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight mb-3">
+                        Your Pet Can't Speak.<br>
+                        <span class="text-brand-red">But Their Profile Can.</span>
+                    </h1>
+                    <p class="text-[15px] text-gray-600 leading-relaxed max-w-[340px] mx-auto">
+                        If your pet gets lost or needs help, this is how people know what to do.
+                    </p>
+                    <!-- Trust Badge -->
+                    <div class="flex items-center justify-center gap-2 mt-4 text-xs text-gray-500">
+                        <span>Trusted by 76,000+ pet parents</span>
+                        <span class="text-gray-300">·</span>
+                        <span class="text-amber-400">★★★★★</span>
+                        <span class="font-semibold text-gray-600">4.9/5</span>
+                    </div>
+                </div>
+
+                <!-- Social Profile Card -->
+                <div class="mx-4 mb-5">
+                    <!-- Example label -->
+                    <p class="text-center text-xs text-gray-400 uppercase tracking-wider mb-2">Example Pet Profile</p>
+                    <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] hover:-translate-y-1">
+                        <!-- Large Hero Photo -->
+                        <div class="relative">
+                            <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[200px] object-cover brightness-105 contrast-105">
+                            <!-- Gradient overlay for text readability + vignette -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                            <div class="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.3)] pointer-events-none"></div>
+                            <!-- Pet name overlay on photo -->
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-white font-bold text-2xl drop-shadow-lg">Milo</h3>
+                                <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
+                            </div>
+                            <!-- Verified badge -->
+                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1.5 shadow-lg animate-subtle-pulse">
+                                <svg class="w-3.5 h-3.5 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                <span class="text-[10px] font-semibold text-gray-700">Protected</span>
+                            </div>
+                        </div>
+
+                        <!-- Profile Bio Section -->
+                        <div class="p-4">
+                            <!-- Stats Row (like Instagram) -->
+                            <div class="flex justify-around text-center mb-4 pb-4 border-b border-gray-100">
+                                <div>
+                                    <p class="text-lg font-bold text-gray-900">2</p>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wide">Allergies</p>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-bold text-gray-900">1</p>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wide">Medication</p>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-bold text-brand-red">24/7</p>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wide">Protected</p>
+                                </div>
+                            </div>
+
+                            <!-- Quick Info Pills -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="inline-flex items-center gap-1 bg-red-50 text-brand-red text-xs font-medium px-2.5 py-1 rounded-full">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Chicken
+                                </span>
+                                <span class="inline-flex items-center gap-1 bg-red-50 text-brand-red text-xs font-medium px-2.5 py-1 rounded-full">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Grain
+                                </span>
+                                <span class="inline-flex items-center gap-1 bg-blue-50 text-brand-blue text-xs font-medium px-2.5 py-1 rounded-full">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                    </svg>
+                                    Heartgard Monthly
+                                </span>
+                            </div>
+
+                            <!-- Personality Traits -->
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="text-[11px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">🎾 Ball obsessed</span>
+                                <span class="text-[11px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">👋 Friendly</span>
+                                <span class="text-[11px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">😴 Loves naps</span>
+                                <span class="text-[11px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">🥕 Loves carrots</span>
+                            </div>
+
+                            <!-- Pet Parent Quote -->
+                            <p class="text-sm text-gray-600 italic leading-relaxed">"Will steal your heart and your socks. No regrets." 🧦</p>
+
+                            <!-- Emergency Contact Teaser -->
+                            <div class="mt-4 pt-3 border-t border-gray-100">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-semibold text-gray-800">Emergency Contact</p>
+                                        <p class="text-[11px] text-gray-400 blur-[2px] select-none">Sarah M. · (512) 555-0123</p>
+                                    </div>
+                                    <div class="text-[9px] text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded flex-shrink-0">Protected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Caption below card -->
+                    <p class="text-center text-sm text-gray-500 mt-3">Most lost pets are found by strangers. This tells them what to do.</p>
+                </div>
+
+                <!-- Micro-CTA: Quick value props -->
+                <div class="mx-4 mb-4 text-center">
+                    <div class="flex flex-col items-center gap-1.5">
+                        <span class="text-sm text-gray-600">✅ Setup takes under 60 seconds</span>
+                        <span class="text-sm text-gray-600">✅ Vet- and sitter-friendly</span>
+                        <span class="text-sm text-gray-600">✅ No app required</span>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="profile-builder.html" class="mx-4 inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white px-6 py-4 rounded-xl text-base font-semibold transition-all duration-300 shadow-lg shadow-brand-red/25 w-[calc(100%-2rem)]">
+                    Create My Pet's Profile
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+
+                <!-- Urgency Microcopy -->
+                <p class="text-center text-xs text-gray-500 mt-3">1 in 3 pets get lost. This is how they get home.</p>
+            </div>
+
+            <!-- Desktop Layout -->
+            <div class="hidden lg:block">
+                <!-- Headline + Subhead - Centered -->
+                <div class="text-center mb-10">
+                    <h1 class="text-[44px] font-bold leading-[1.1] tracking-tight mb-4">
+                        Your Pet Can't Speak.<br>
+                        <span class="text-brand-red">But Their Profile Can.</span>
+                    </h1>
+                    <p class="text-lg text-gray-500 leading-relaxed max-w-[500px] mx-auto">
+                        More than a tag — it's their digital identity, their safety, and your peace of mind.
+                    </p>
+                    <!-- Trust Badge -->
+                    <div class="flex items-center justify-center gap-2 mt-5 text-sm text-gray-500">
+                        <span>Trusted by 76,000+ pet parents</span>
+                        <span class="text-gray-300">·</span>
+                        <span class="text-amber-400">★★★★★</span>
+                        <span class="font-semibold text-gray-600">4.9/5</span>
+                    </div>
+                </div>
+
+                <!-- Centered Profile Card -->
+                <div class="flex justify-center mb-10">
+                    <div class="flex flex-col items-center">
+                        <!-- Example label -->
+                        <p class="text-center text-xs text-gray-400 uppercase tracking-wider mb-3">Example Pet Profile</p>
+                        <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 overflow-hidden max-w-[380px] transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] hover:-translate-y-1">
+                            <!-- Large Hero Photo -->
+                            <div class="relative">
+                                <img src="../pif-funnel/assets/images/hero-dog.jpg" alt="Milo" class="w-full h-[220px] object-cover brightness-105 contrast-105">
+                                <!-- Gradient overlay + vignette -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.3)] pointer-events-none"></div>
+                                <!-- Pet name overlay -->
+                                <div class="absolute bottom-4 left-5 right-5">
+                                    <h3 class="text-white font-bold text-3xl drop-shadow-lg">Milo</h3>
+                                    <p class="text-white/90 text-sm">Australian Shepherd · 3 yrs · 45 lbs</p>
+                                </div>
+                                <!-- Verified badge -->
+                                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg animate-subtle-pulse">
+                                    <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    </svg>
+                                    <span class="text-xs font-semibold text-gray-700">Protected</span>
+                                </div>
+                            </div>
+
+                        <!-- Profile Content -->
+                        <div class="p-5">
+                            <!-- Stats Row -->
+                            <div class="flex justify-around text-center mb-5 pb-5 border-b border-gray-100">
+                                <div>
+                                    <p class="text-xl font-bold text-gray-900">2</p>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wide">Allergies</p>
+                                </div>
+                                <div>
+                                    <p class="text-xl font-bold text-gray-900">1</p>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wide">Medication</p>
+                                </div>
+                                <div>
+                                    <p class="text-xl font-bold text-brand-red">24/7</p>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wide">Protected</p>
+                                </div>
+                            </div>
+
+                            <!-- Quick Info Pills -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="inline-flex items-center gap-1.5 bg-red-50 text-brand-red text-sm font-medium px-3 py-1.5 rounded-full">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Chicken
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 bg-red-50 text-brand-red text-sm font-medium px-3 py-1.5 rounded-full">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    No Grain
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 bg-blue-50 text-brand-blue text-sm font-medium px-3 py-1.5 rounded-full">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                    </svg>
+                                    Heartgard Monthly
+                                </span>
+                            </div>
+
+                            <!-- Personality Traits -->
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">🎾 Ball obsessed</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">👋 Friendly</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">😴 Loves naps</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">🥕 Loves carrots</span>
+                            </div>
+
+                            <!-- Pet Parent Quote -->
+                            <p class="text-sm text-gray-600 italic leading-relaxed">"Will steal your heart and your socks. No regrets." 🧦</p>
+
+                            <!-- Emergency Contact Teaser -->
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-semibold text-gray-800">Emergency Contact</p>
+                                        <p class="text-xs text-gray-400 blur-[2px] select-none">Sarah M. · (512) 555-0123</p>
+                                    </div>
+                                    <div class="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded flex-shrink-0">Protected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- Caption below card -->
+                        <p class="text-center text-sm text-gray-500 mt-3">Most lost pets are found by strangers. This tells them what to do.</p>
+                    </div>
+                </div>
+
+                <!-- CTA + Trust - Centered -->
+                <div class="text-center">
+                    <a href="profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/25 hover:shadow-xl hover:shadow-brand-red/35 mb-4">
+                        Create My Pet's Profile
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <p class="text-sm text-gray-500">1 in 3 pets get lost. This is how they get home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUE BANNER -->
+    <section class="py-6 bg-bg-beige-stroke/50">
+        <div class="max-w-[800px] mx-auto px-4 text-center">
+            <p class="text-[15px] text-gray-500 italic">
+                "Their story, their safety, and medical info — always available, even when you're not."
+            </p>
+        </div>
+    </section>
+
+    <!-- POLAROID CAROUSEL -->
+    <section class="py-10 md:py-12 bg-white overflow-hidden">
+        <div class="max-w-[1100px] mx-auto px-4 mb-6">
+            <div class="text-center">
+                <p class="text-brand-blue text-sm font-semibold uppercase tracking-wider mb-2">Every Pet Deserves</p>
+                <h2 class="text-2xl md:text-3xl font-bold">A Pet Care Profile</h2>
+                <p class="text-gray-500 mt-2">See Real Pet Profiles Like Yours →</p>
+            </div>
+        </div>
+
+        <!-- Carousel Container -->
+        <div class="relative">
+            <!-- Gradient fade edges -->
+            <div class="absolute left-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+            <!-- Scrollable carousel -->
+            <div id="polaroid-carousel" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 md:px-8 pb-4 hide-scrollbar">
+                <!-- Polaroid 1 - Poodle -->
+                <div class="flex-shrink-0 snap-center first:ml-4 md:first:ml-8">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Poodle.png" alt="Poodle with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Bella</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2 - Labrador -->
+                <div class="flex-shrink-0 snap-center">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Labrador.png" alt="Labrador with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Max</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3 - Goldendoodle -->
+                <div class="flex-shrink-0 snap-center">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Goldendoodle.png" alt="Goldendoodle with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Charlie</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 4 - Golden Retriever -->
+                <div class="flex-shrink-0 snap-center">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[2deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/Golden Retriever.png" alt="Golden Retriever with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Cooper</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 5 - French Bulldog -->
+                <div class="flex-shrink-0 snap-center last:mr-4 md:last:mr-8">
+                    <div class="bg-white p-3 md:p-4 rounded-lg shadow-xl transform rotate-[-3deg] hover:rotate-0 transition-transform duration-300 cursor-pointer">
+                        <img src="../pif-funnel/assets/images/French Buldog.png" alt="French Bulldog with GeniusPet profile" class="w-[75vw] h-[75vw] max-w-[320px] max-h-[320px] md:w-64 md:h-64 object-cover rounded-lg">
+                        <div class="pt-3 pb-1 text-center">
+                            <p class="font-semibold text-gray-800 text-base md:text-sm">Luna</p>
+                            <p class="text-sm md:text-xs text-gray-400">Protected since 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Dots -->
+        <div id="carousel-dots" class="flex justify-center mt-4 gap-2">
+            <button class="carousel-dot w-2 h-2 rounded-full bg-brand-red active" data-index="0" aria-label="Go to slide 1"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="1" aria-label="Go to slide 2"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="2" aria-label="Go to slide 3"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="3" aria-label="Go to slide 4"></button>
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300" data-index="4" aria-label="Go to slide 5"></button>
+        </div>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section class="py-12 bg-bg-primary relative overflow-hidden">
+        <!-- Subtle paw watermark -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <svg class="absolute -right-16 top-8 w-64 h-64 text-brand-red opacity-[0.03]" viewBox="0 0 100 100" fill="currentColor">
+                <ellipse cx="50" cy="65" rx="20" ry="18"/>
+                <ellipse cx="25" cy="40" rx="12" ry="10"/>
+                <ellipse cx="75" cy="40" rx="12" ry="10"/>
+                <ellipse cx="20" cy="60" rx="10" ry="8"/>
+                <ellipse cx="80" cy="60" rx="10" ry="8"/>
+            </svg>
+            <svg class="absolute -left-12 bottom-12 w-48 h-48 text-brand-blue opacity-[0.02]" viewBox="0 0 100 100" fill="currentColor">
+                <ellipse cx="50" cy="65" rx="20" ry="18"/>
+                <ellipse cx="25" cy="40" rx="12" ry="10"/>
+                <ellipse cx="75" cy="40" rx="12" ry="10"/>
+                <ellipse cx="20" cy="60" rx="10" ry="8"/>
+                <ellipse cx="80" cy="60" rx="10" ry="8"/>
+            </svg>
+        </div>
+
+        <div class="max-w-[650px] mx-auto px-4 relative">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2">When Someone Finds Your Pet</h2>
+                <p class="text-gray-500">This is what they'll see — and why it matters.</p>
+            </div>
+
+            <!-- Benefits List - Reordered for value -->
+            <div class="space-y-3">
+                <!-- 1. Digital Identity (NEW emphasis) -->
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="16" rx="2"/>
+                            <circle cx="9" cy="10" r="2"/>
+                            <path d="M15 8h2m-2 4h2m-8 4h8"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">It's their digital identity</h3>
+                        <p class="text-sm text-gray-500">Everything that makes them who they are — in one beautiful profile.</p>
+                    </div>
+                </div>
+
+                <!-- 2. Medical/Safety Info -->
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Critical info when it matters most</h3>
+                        <p class="text-sm text-gray-500">Allergies, medications, vet contacts — all there in an emergency.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Shareability -->
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Share with sitters, family, and vets</h3>
+                        <p class="text-sm text-gray-500">Everyone who cares for them has what they need.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Speaks for Them -->
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Speaks for them when they can't</h3>
+                        <p class="text-sm text-gray-500">If they get lost, anyone can scan their tag and contact you instantly.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Always Current -->
+                <div class="benefit-card flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Update anytime from your phone</h3>
+                        <p class="text-sm text-gray-500">Unlike microchips or collar tags — your profile stays current.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="final-cta-section" class="py-16 bg-white text-center">
+        <div class="max-w-[600px] mx-auto px-4">
+            <p class="text-sm text-gray-500 mb-2">The best time to set this up is before you need it.</p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 leading-tight">Build Their Profile in Under 60 Seconds.</h2>
+            <p class="text-gray-600 mb-2">You can't predict emergencies. You can prepare for them.</p>
+            <p class="text-sm text-gray-500 mb-4">60 seconds now can save hours of panic later.</p>
+            <!-- Urgency badge ABOVE button -->
+            <div class="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                <span>✅</span>
+                <span>Free Smart Tag Included Today</span>
+            </div>
+            <div>
+                <a href="profile-builder.html" class="inline-flex items-center justify-center gap-2.5 bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-xl text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-brand-red/30 w-full sm:w-auto">
+                    Create My Pet's Profile
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- STICKY MOBILE CTA -->
+    <div id="sticky-mobile-cta" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] md:hidden z-[9999] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] transition-transform duration-300">
+        <a href="profile-builder.html" class="flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white w-full py-3.5 rounded-xl text-base font-semibold transition-all">
+            Create My Pet's Profile
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Spacer for sticky CTA on mobile -->
+    <div class="h-20 md:hidden"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-[1100px] mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-6 brightness-0 invert opacity-80">
+                </div>
+                <div class="flex items-center gap-6 text-sm text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-800 text-center text-sm text-gray-500">
+                <p>&copy; 2024 GeniusPet. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactions -->
+    <script>
+        // Carousel dot navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('polaroid-carousel');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            if (carousel && dots.length) {
+                // Update dots on scroll
+                carousel.addEventListener('scroll', function() {
+                    const scrollLeft = carousel.scrollLeft;
+                    const cardWidth = carousel.firstElementChild?.offsetWidth || 300;
+                    const gap = 16; // gap-4 = 16px
+                    const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
+
+                    dots.forEach((dot, index) => {
+                        if (index === activeIndex) {
+                            dot.classList.add('active', 'bg-brand-red');
+                            dot.classList.remove('bg-gray-300');
+                        } else {
+                            dot.classList.remove('active', 'bg-brand-red');
+                            dot.classList.add('bg-gray-300');
+                        }
+                    });
+                });
+
+                // Click dots to scroll
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', function() {
+                        const cardWidth = carousel.firstElementChild?.offsetWidth || 300;
+                        const gap = 16;
+                        carousel.scrollTo({
+                            left: index * (cardWidth + gap),
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            }
+
+            // Hide sticky CTA when final CTA section is visible
+            const stickyMobileCta = document.getElementById('sticky-mobile-cta');
+            const finalCtaSection = document.getElementById('final-cta-section');
+
+            if (stickyMobileCta && finalCtaSection) {
+                const stickyObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Final CTA is visible, hide sticky CTA
+                            stickyMobileCta.style.transform = 'translateY(100%)';
+                        } else {
+                            // Final CTA is not visible, show sticky CTA
+                            stickyMobileCta.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, {
+                    threshold: 0.3 // Trigger when 30% of final CTA is visible
+                });
+
+                stickyObserver.observe(finalCtaSection);
+            }
+
+            // Benefit cards scroll animation
+            const benefitCards = document.querySelectorAll('.benefit-card');
+
+            if (benefitCards.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            // Stagger the animation
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 100);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+
+                benefitCards.forEach(card => observer.observe(card));
+            }
+        });
+    </script>
+
+</body>
+</html>
