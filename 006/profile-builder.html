@@ -178,6 +178,95 @@
     .hero-complete .hero-step-badge-complete {
       background: #4CAF50 !important;
     }
+
+    /* Photo Crop Modal Styles */
+    .crop-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .crop-modal-content {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .crop-area {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 1.5rem auto;
+      border-radius: 50%;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
+      background: #f5f0eb;
+    }
+    .crop-area:active {
+      cursor: grabbing;
+    }
+    .crop-area-image {
+      position: absolute;
+      min-width: 100%;
+      min-height: 100%;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .crop-overlay-ring {
+      position: absolute;
+      inset: 0;
+      border: 3px solid #2D96C4;
+      border-radius: 50%;
+      pointer-events: none;
+      box-shadow: 0 0 0 4px rgba(45, 150, 196, 0.2);
+    }
+    .crop-hint-text {
+      position: absolute;
+      bottom: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 0.75rem;
+      color: #8C8C8C;
+    }
+    /* Zoom slider */
+    .zoom-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #E8E0D8;
+      border-radius: 3px;
+      outline: none;
+    }
+    .zoom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #2D96C4;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(45, 150, 196, 0.4);
+    }
+    .zoom-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #2D96C4;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(45, 150, 196, 0.4);
+    }
   </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-dark min-h-screen flex flex-col">
@@ -583,6 +672,51 @@
     </div>
   </footer>
 
+  <!-- Photo Crop Modal (hidden by default) -->
+  <div id="crop-modal" class="crop-modal-overlay hidden">
+    <div class="crop-modal-content">
+      <!-- Header -->
+      <div class="px-5 py-4 border-b border-beige-medium bg-beige-lightest">
+        <h3 class="text-lg font-bold text-neutral-black text-center">Position Your Pet's Photo</h3>
+        <p class="text-xs text-neutral-medium text-center mt-1">Drag to center their face in the circle</p>
+      </div>
+
+      <!-- Crop Area -->
+      <div class="py-6 px-4 bg-white">
+        <div class="relative flex justify-center">
+          <div id="crop-area" class="crop-area">
+            <img id="crop-image" src="" alt="Crop preview" class="crop-area-image">
+            <div class="crop-overlay-ring"></div>
+          </div>
+          <span class="crop-hint-text">👆 Drag to reposition</span>
+        </div>
+
+        <!-- Zoom Control -->
+        <div class="mt-10 px-4">
+          <div class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-neutral-medium flex-shrink-0">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/>
+            </svg>
+            <input type="range" id="zoom-slider" class="zoom-slider flex-1" min="100" max="300" value="100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-neutral-medium flex-shrink-0">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/><path d="M11 8v6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="px-5 py-4 border-t border-beige-medium bg-beige-lightest flex gap-3">
+        <button type="button" id="crop-cancel" class="flex-1 py-3 px-4 rounded-xl border-2 border-beige-medium text-neutral-dark font-semibold hover:bg-beige-light transition-colors">
+          Cancel
+        </button>
+        <button type="button" id="crop-apply" class="flex-1 py-3 px-4 rounded-xl bg-blue-primary text-white font-semibold hover:bg-blue-dark transition-colors">
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Required field elements
@@ -838,65 +972,219 @@
       const photoPreview = document.getElementById('photo-preview');
       const photoPlaceholder = document.getElementById('photo-placeholder');
 
+      // Crop modal elements
+      const cropModal = document.getElementById('crop-modal');
+      const cropImage = document.getElementById('crop-image');
+      const cropArea = document.getElementById('crop-area');
+      const zoomSlider = document.getElementById('zoom-slider');
+      const cropApplyBtn = document.getElementById('crop-apply');
+      const cropCancelBtn = document.getElementById('crop-cancel');
+
+      // Crop state
+      let originalImageData = null;
+      let cropState = {
+        scale: 1,
+        translateX: 0,
+        translateY: 0,
+        isDragging: false,
+        startX: 0,
+        startY: 0,
+        imageWidth: 0,
+        imageHeight: 0
+      };
+
+      function updateCropImageTransform() {
+        cropImage.style.transform = `translate(${cropState.translateX}px, ${cropState.translateY}px) scale(${cropState.scale})`;
+      }
+
+      function constrainPosition() {
+        const areaSize = 280; // crop area size
+        const scaledWidth = cropState.imageWidth * cropState.scale;
+        const scaledHeight = cropState.imageHeight * cropState.scale;
+
+        // Calculate bounds - image should always cover the circle
+        const minX = areaSize - scaledWidth;
+        const maxX = 0;
+        const minY = areaSize - scaledHeight;
+        const maxY = 0;
+
+        cropState.translateX = Math.max(minX, Math.min(maxX, cropState.translateX));
+        cropState.translateY = Math.max(minY, Math.min(maxY, cropState.translateY));
+      }
+
+      function openCropModal(imageDataUrl) {
+        originalImageData = imageDataUrl;
+
+        // Load image to get dimensions
+        const img = new Image();
+        img.onload = function() {
+          // Calculate initial scale to cover the crop area (280x280)
+          const areaSize = 280;
+          const coverScale = Math.max(areaSize / img.width, areaSize / img.height);
+
+          // Store natural dimensions
+          cropState.imageWidth = img.width * coverScale;
+          cropState.imageHeight = img.height * coverScale;
+
+          // Set initial scale (1 = cover scale)
+          cropState.scale = 1;
+          zoomSlider.value = 100;
+
+          // Center the image
+          cropState.translateX = (areaSize - cropState.imageWidth) / 2;
+          cropState.translateY = (areaSize - cropState.imageHeight) / 2;
+
+          // Apply dimensions and transform
+          cropImage.style.width = cropState.imageWidth + 'px';
+          cropImage.style.height = cropState.imageHeight + 'px';
+          cropImage.src = imageDataUrl;
+          updateCropImageTransform();
+
+          // Show modal
+          cropModal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        };
+        img.src = imageDataUrl;
+      }
+
+      function closeCropModal() {
+        cropModal.classList.add('hidden');
+        document.body.style.overflow = '';
+        photoInput.value = ''; // Reset file input
+      }
+
+      // Drag to pan
+      cropArea.addEventListener('mousedown', startDrag);
+      cropArea.addEventListener('touchstart', startDrag, { passive: false });
+
+      function startDrag(e) {
+        e.preventDefault();
+        cropState.isDragging = true;
+        const point = e.touches ? e.touches[0] : e;
+        cropState.startX = point.clientX - cropState.translateX;
+        cropState.startY = point.clientY - cropState.translateY;
+      }
+
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('touchmove', drag, { passive: false });
+
+      function drag(e) {
+        if (!cropState.isDragging) return;
+        e.preventDefault();
+        const point = e.touches ? e.touches[0] : e;
+        cropState.translateX = point.clientX - cropState.startX;
+        cropState.translateY = point.clientY - cropState.startY;
+        constrainPosition();
+        updateCropImageTransform();
+      }
+
+      document.addEventListener('mouseup', endDrag);
+      document.addEventListener('touchend', endDrag);
+
+      function endDrag() {
+        cropState.isDragging = false;
+      }
+
+      // Zoom slider
+      zoomSlider.addEventListener('input', function() {
+        const newScale = this.value / 100;
+        const oldScale = cropState.scale;
+
+        // Zoom toward center of crop area
+        const areaCenter = 140; // 280 / 2
+        const imageCenterX = cropState.translateX + (cropState.imageWidth * oldScale) / 2;
+        const imageCenterY = cropState.translateY + (cropState.imageHeight * oldScale) / 2;
+
+        cropState.scale = newScale;
+
+        // Adjust position to zoom toward center
+        cropState.translateX = areaCenter - (cropState.imageWidth * newScale) / 2 + (imageCenterX - areaCenter) * (newScale / oldScale - 1) * 0.3;
+        cropState.translateY = areaCenter - (cropState.imageHeight * newScale) / 2 + (imageCenterY - areaCenter) * (newScale / oldScale - 1) * 0.3;
+
+        constrainPosition();
+        updateCropImageTransform();
+      });
+
+      // Cancel button
+      cropCancelBtn.addEventListener('click', closeCropModal);
+
+      // Apply crop
+      cropApplyBtn.addEventListener('click', function() {
+        // Create canvas with cropped result
+        const canvas = document.createElement('canvas');
+        const outputSize = 400; // Output image size
+        canvas.width = outputSize;
+        canvas.height = outputSize;
+        const ctx = canvas.getContext('2d');
+
+        // Load original image and draw cropped portion
+        const img = new Image();
+        img.onload = function() {
+          // Calculate source coordinates based on crop state
+          const areaSize = 280;
+          const coverScale = Math.max(areaSize / img.width, areaSize / img.height);
+
+          // Source rectangle (in original image coordinates)
+          const sx = -cropState.translateX / (coverScale * cropState.scale);
+          const sy = -cropState.translateY / (coverScale * cropState.scale);
+          const sSize = areaSize / (coverScale * cropState.scale);
+
+          // Draw to canvas (circular clip)
+          ctx.beginPath();
+          ctx.arc(outputSize / 2, outputSize / 2, outputSize / 2, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip();
+
+          ctx.drawImage(img, sx, sy, sSize, sSize, 0, 0, outputSize, outputSize);
+
+          // Get cropped image data
+          const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+          // Apply to preview
+          applyPhotoToPreview(croppedDataUrl);
+
+          // Close modal
+          closeCropModal();
+        };
+        img.src = originalImageData;
+      });
+
+      function applyPhotoToPreview(imageDataUrl) {
+        // Reveal below-fold sections on photo interaction
+        revealBelowFoldSections();
+
+        // Set the preview
+        photoPreview.src = imageDataUrl;
+        photoPreview.classList.remove('hidden');
+        photoPlaceholder.classList.add('hidden');
+
+        // Hide the pulsing ring and plus badge
+        const pulsingRing = document.getElementById('photo-pulse-ring');
+        if (pulsingRing) pulsingRing.classList.add('hidden');
+        const plusBadge = document.getElementById('photo-plus-badge');
+        if (plusBadge) plusBadge.classList.add('hidden');
+
+        // Update hint text
+        const photoHint = document.getElementById('photo-hint');
+        if (photoHint) photoHint.innerHTML = '✓ <span class="text-green-primary font-medium">Photo added!</span> Looking great.';
+
+        // Update photo container styling to show success
+        const photoContainer = document.getElementById('photo-preview-container');
+        photoContainer.classList.remove('border-blue-primary/40');
+        photoContainer.classList.add('border-green-primary');
+
+        // Show edit button
+        photoEditBtn.classList.remove('hidden');
+        checkHeroCardCompletion();
+      }
+
       photoInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
-          // Reveal below-fold sections on photo interaction
-          revealBelowFoldSections();
-
-          // Compress image to fit in sessionStorage
           const reader = new FileReader();
           reader.onload = function(e) {
-            const img = new Image();
-            img.onload = function() {
-              // Create canvas to resize/compress
-              const canvas = document.createElement('canvas');
-              const maxSize = 400; // Max dimension for storage
-              let width = img.width;
-              let height = img.height;
-
-              // Scale down if needed
-              if (width > height && width > maxSize) {
-                height = (height * maxSize) / width;
-                width = maxSize;
-              } else if (height > maxSize) {
-                width = (width * maxSize) / height;
-                height = maxSize;
-              }
-
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0, width, height);
-
-              // Get compressed data URL
-              const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-
-              // Set the preview
-              photoPreview.src = compressedDataUrl;
-              photoPreview.classList.remove('hidden');
-              photoPlaceholder.classList.add('hidden');
-
-              // Hide the pulsing ring and plus badge
-              const pulsingRing = document.getElementById('photo-pulse-ring');
-              if (pulsingRing) pulsingRing.classList.add('hidden');
-              const plusBadge = document.getElementById('photo-plus-badge');
-              if (plusBadge) plusBadge.classList.add('hidden');
-
-              // Update hint text
-              const photoHint = document.getElementById('photo-hint');
-              if (photoHint) photoHint.innerHTML = '✓ <span class="text-green-primary font-medium">Photo added!</span> Looking great.';
-
-              // Update photo container styling to show success
-              const photoContainer = document.getElementById('photo-preview-container');
-              photoContainer.classList.remove('border-blue-primary/40');
-              photoContainer.classList.add('border-green-primary');
-
-              // Show edit button
-              photoEditBtn.classList.remove('hidden');
-              checkHeroCardCompletion();
-            };
-            img.src = e.target.result;
+            // Open crop modal with the image
+            openCropModal(e.target.result);
           };
           reader.readAsDataURL(file);
         }
