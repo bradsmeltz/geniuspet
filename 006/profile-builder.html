@@ -271,11 +271,16 @@
     /* Prevent iOS zoom on form inputs */
     input, textarea, select {
       font-size: 16px !important;
+      touch-action: manipulation;
     }
     @supports (-webkit-touch-callout: none) {
       input, textarea, select {
         font-size: 16px !important;
       }
+    }
+    /* Specific fix for pet voice textarea */
+    #pet-voice {
+      font-size: 16px !important;
     }
   </style>
 </head>
