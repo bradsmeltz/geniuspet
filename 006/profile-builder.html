@@ -445,16 +445,8 @@
         </button>
 
         <!-- Accordion Content - Hidden by default -->
-        <div id="optional-details-content" class="hidden overflow-hidden">
-          <!-- Additional Info Section -->
-          <div class="bg-white mt-2 rounded-xl shadow-sm border border-beige-medium/50 overflow-hidden" id="additional-info-section">
-        <div class="px-5 py-4">
-          <!-- Section Header -->
-          <div class="flex items-center gap-2 mb-4">
-            <span class="text-lg">📋</span>
-            <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">Additional Info About Me</span>
-          </div>
-
+        <div id="optional-details-content" class="hidden overflow-hidden bg-white border-x border-b border-beige-medium/50 rounded-b-xl">
+          <div class="px-5 py-4" id="additional-info-section">
           <!-- Toggle Fields -->
           <div class="space-y-0">
             <!-- Kid-friendly -->
@@ -518,7 +510,6 @@
             </div>
           </div>
         </div>
-      </div>
         </div>
         <!-- End of optional-details-content -->
       </div>
@@ -790,7 +781,9 @@
         accordionOpen = !accordionOpen;
 
         if (accordionOpen) {
-          // Open accordion
+          // Open accordion - remove bottom rounding for seamless connection
+          optionalDetailsToggle.classList.remove('rounded-xl');
+          optionalDetailsToggle.classList.add('rounded-t-xl', 'border-b-0');
           optionalDetailsContent.classList.remove('hidden');
           optionalDetailsContent.style.opacity = '0';
           optionalDetailsContent.style.transform = 'translateY(-10px)';
@@ -801,7 +794,9 @@
             optionalDetailsContent.style.transform = 'translateY(0)';
           }, 50);
         } else {
-          // Close accordion
+          // Close accordion - restore full rounding
+          optionalDetailsToggle.classList.add('rounded-xl');
+          optionalDetailsToggle.classList.remove('rounded-t-xl', 'border-b-0');
           optionalDetailsContent.style.opacity = '0';
           optionalDetailsContent.style.transform = 'translateY(-10px)';
           accordionArrow.style.transform = 'rotate(0deg)';
