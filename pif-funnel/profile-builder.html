@@ -94,13 +94,26 @@
       background: linear-gradient(to bottom, transparent 0%, rgba(245, 240, 235, 0.9) 100%);
       pointer-events: none;
     }
-    /* Pulse animation for photo ring */
+    /* Pulse animation for photo ring and field guidance */
     @keyframes pulse-ring {
       0%, 100% { opacity: 0.5; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.08); }
     }
     #photo-pulse-ring {
       animation: pulse-ring 1.5s ease-in-out infinite;
+    }
+    /* Generic field pulse for guiding users */
+    .field-pulse {
+      position: absolute;
+      inset: -4px;
+      border-radius: 16px;
+      background: rgba(45, 150, 196, 0.15);
+      animation: pulse-ring 1.5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .field-pulse.hidden {
+      display: none;
     }
     /* Completed state styling */
     .field-complete {
@@ -381,10 +394,11 @@
           <div class="mb-4" id="name-container">
             <label class="text-xs uppercase tracking-wider text-blue-primary font-semibold mb-2 block" id="name-label">Name *</label>
             <div class="relative inline-block">
+              <div class="field-pulse hidden" id="name-pulse"></div>
               <input
                 type="text"
                 id="pet-name"
-                class="text-2xl font-bold text-neutral-black text-center py-3 px-6 bg-blue-lightest border-2 border-dashed border-blue-light/50 rounded-xl focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all w-72"
+                class="text-2xl font-bold text-neutral-black text-center py-3 px-6 bg-blue-lightest border-2 border-dashed border-blue-light/50 rounded-xl focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all w-72 relative z-10"
                 placeholder="e.g. Milo, Bella, Max..."
                 autocomplete="off"
               >
@@ -394,23 +408,25 @@
           <!-- Breed & Age - Required Fields (side by side) -->
           <div class="flex gap-3 mb-4">
             <!-- Breed -->
-            <div class="flex-1">
-              <label for="breed" id="breed-label" class="block text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-1.5">Breed *</label>
+            <div class="flex-1 relative">
+              <div class="field-pulse hidden" id="breed-pulse"></div>
+              <label for="breed" id="breed-label" class="block text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-1.5 relative z-10">Breed *</label>
               <input
                 type="text"
                 id="breed"
-                class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
+                class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all relative z-10"
                 placeholder="e.g. Golden Retriever"
                 autocomplete="off"
               >
             </div>
             <!-- Age -->
-            <div class="w-28">
-              <label for="age" id="age-label" class="block text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-1.5">Age *</label>
+            <div class="w-28 relative">
+              <div class="field-pulse hidden" id="age-pulse"></div>
+              <label for="age" id="age-label" class="block text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-1.5 relative z-10">Age *</label>
               <input
                 type="tel"
                 id="age"
-                class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all"
+                class="w-full text-base font-medium py-3 px-4 rounded-xl bg-beige-lightest border-2 border-beige-medium/50 text-neutral-black placeholder:text-neutral-light focus:bg-white focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20 outline-none transition-all relative z-10"
                 placeholder="e.g. 3"
                 autocomplete="off"
               >
@@ -760,6 +776,39 @@
       let accordionOpen = false;
       let sectionsRevealed = false;
 
+      // Pulse guidance elements
+      const photoPulse = document.getElementById('photo-pulse-ring');
+      const namePulse = document.getElementById('name-pulse');
+      const breedPulse = document.getElementById('breed-pulse');
+      const agePulse = document.getElementById('age-pulse');
+
+      // Track field completion for pulse progression
+      let photoComplete = false;
+      let nameComplete = false;
+      let breedComplete = false;
+      let ageComplete = false;
+
+      // Update pulse to show on next incomplete field
+      function updatePulseGuidance() {
+        // Hide all pulses first
+        if (photoPulse) photoPulse.classList.add('hidden');
+        if (namePulse) namePulse.classList.add('hidden');
+        if (breedPulse) breedPulse.classList.add('hidden');
+        if (agePulse) agePulse.classList.add('hidden');
+
+        // Show pulse on next incomplete field (in order)
+        if (!photoComplete) {
+          if (photoPulse) photoPulse.classList.remove('hidden');
+        } else if (!nameComplete) {
+          if (namePulse) namePulse.classList.remove('hidden');
+        } else if (!breedComplete) {
+          if (breedPulse) breedPulse.classList.remove('hidden');
+        } else if (!ageComplete) {
+          if (agePulse) agePulse.classList.remove('hidden');
+        }
+        // All complete - no pulse shown
+      }
+
       // Reveal below-fold sections with animation
       function revealBelowFoldSections() {
         if (sectionsRevealed) return;
@@ -875,6 +924,10 @@
             setTimeout(() => this.classList.remove('name-celebrate'), 300);
           }
 
+          // Mark name complete and update pulse
+          nameComplete = true;
+          updatePulseGuidance();
+
           // Show pet voice section with animation
           if (petVoiceSection.classList.contains('hidden')) {
             petVoiceSection.classList.remove('hidden');
@@ -892,6 +945,8 @@
           nameLabel.classList.remove('text-green-primary');
           this.classList.remove('name-complete', 'field-complete');
           this.dataset.wasComplete = '';
+          nameComplete = false;
+          updatePulseGuidance();
 
           // Reset CTA text
           if (ctaText) {
@@ -918,6 +973,7 @@
           breedLabel.classList.add('text-green-primary');
           this.classList.add('border-green-primary', 'bg-green-light/30');
           this.classList.remove('border-beige-medium/50', 'bg-beige-lightest');
+          breedComplete = true;
         } else {
           // Reset to default
           breedLabel.textContent = 'Breed *';
@@ -925,7 +981,9 @@
           breedLabel.classList.remove('text-green-primary');
           this.classList.remove('border-green-primary', 'bg-green-light/30');
           this.classList.add('border-beige-medium/50', 'bg-beige-lightest');
+          breedComplete = false;
         }
+        updatePulseGuidance();
         checkRequiredFields();
       });
 
@@ -940,6 +998,7 @@
           ageLabel.classList.add('text-green-primary');
           this.classList.add('border-green-primary', 'bg-green-light/30');
           this.classList.remove('border-beige-medium/50', 'bg-beige-lightest');
+          ageComplete = true;
         } else {
           // Reset to default
           ageLabel.textContent = 'Age *';
@@ -947,7 +1006,9 @@
           ageLabel.classList.remove('text-green-primary');
           this.classList.remove('border-green-primary', 'bg-green-light/30');
           this.classList.add('border-beige-medium/50', 'bg-beige-lightest');
+          ageComplete = false;
         }
+        updatePulseGuidance();
         checkRequiredFields();
       });
 
@@ -1316,11 +1377,11 @@
         photoPreview.classList.remove('hidden');
         photoPlaceholder.classList.add('hidden');
 
-        // Hide the pulsing ring and plus badge
-        const pulsingRing = document.getElementById('photo-pulse-ring');
-        if (pulsingRing) pulsingRing.classList.add('hidden');
+        // Mark photo as complete and update pulse guidance
+        photoComplete = true;
         const plusBadge = document.getElementById('photo-plus-badge');
         if (plusBadge) plusBadge.classList.add('hidden');
+        updatePulseGuidance();
 
         // Update hint text
         const photoHint = document.getElementById('photo-hint');
