@@ -1,9 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
+  # Manual trigger only - no auto-deploy on push
+  # To deploy: gh workflow run "Deploy to GitHub Pages"
   workflow_dispatch:
 
 permissions:
