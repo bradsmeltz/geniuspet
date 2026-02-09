@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GeniusPet Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Gilroy font loaded via CSS @font-face in styles.css -->
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#D74242',
+            'primary-dark': '#B8433D',
+            dark: '#2B2B2B',
+            gray: '#747474',
+            light: '#FBF8F4',
+            cream: '#F8F2E7',
+            'cream-light': '#FBF8F4',
+            // Product colors (semantic naming)
+            'tag-blue': '#307DA6',
+            'vet-teal': '#378074',
+            'insurance-gold': '#C08A3E',
+            'rx-purple': '#8567A2',
+            // Gradient endpoints (darker variants)
+            'tag-blue-dark': '#265d7a',
+            'vet-teal-dark': '#2a6359',
+            'insurance-gold-dark': '#9a6b2f',
+            'rx-purple-dark': '#6b5485',
+            // Tinted backgrounds
+            'tint-blue': '#EFF6FA',
+            'tint-teal': '#EAF3F2',
+            'tint-cream': '#F8F2E7',
+            'tint-purple': '#F3F0F6',
+            'tint-gold': '#FDF8F0',
+          },
+          fontFamily: {
+            sans: ['Gilroy', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="font-sans bg-light text-dark min-h-screen">
+
+  <!-- App Container - Mobile First (max 428px centered on desktop) -->
+  <div id="app" class="max-w-[428px] mx-auto bg-white min-h-screen relative pb-20">
+
+    <!-- Header -->
+    <header id="header" class="sticky top-0 bg-white z-40 px-4 py-3 border-b border-gray-100">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-7" onerror="this.outerHTML='<span class=\'text-primary font-bold text-lg\'>GENIUS<span class=\'text-dark\'>PET</span></span>'">
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Notifications Bell -->
+          <button class="p-2 rounded-full hover:bg-cream-light transition-colors">
+            <i data-lucide="bell" class="w-5 h-5 text-gray"></i>
+          </button>
+          <!-- User Menu (simplified) -->
+          <button class="p-2 rounded-full hover:bg-cream-light transition-colors">
+            <i data-lucide="user" class="w-5 h-5 text-gray"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hidden elements for backward compatibility -->
+    <div id="pet-switcher" class="hidden">
+      <button id="pet-switcher-btn" class="hidden"></button>
+      <div id="pet-dropdown" class="hidden"></div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="px-4 py-4">
+      <!-- Content loaded by router -->
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav id="bottom-nav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[428px] bg-white border-t border-gray-100 z-50">
+      <div class="flex items-center justify-around py-2">
+        <a href="#/" class="nav-item flex flex-col items-center gap-1 py-2 px-4 text-gray hover:text-primary transition-colors" data-page="dashboard">
+          <i data-lucide="home" class="w-6 h-6"></i>
+          <span class="text-xs font-medium">Home</span>
+        </a>
+        <a href="#/profile" class="nav-item flex flex-col items-center gap-1 py-2 px-4 text-gray hover:text-primary transition-colors" data-page="profile">
+          <i data-lucide="id-card" class="w-6 h-6"></i>
+          <span class="text-xs font-medium">Profile</span>
+        </a>
+        <a href="#/activity" class="nav-item flex flex-col items-center gap-1 py-2 px-4 text-gray hover:text-primary transition-colors" data-page="activity">
+          <i data-lucide="activity" class="w-6 h-6"></i>
+          <span class="text-xs font-medium">Activity</span>
+        </a>
+        <a href="#/settings" class="nav-item flex flex-col items-center gap-1 py-2 px-4 text-gray hover:text-primary transition-colors" data-page="settings">
+          <i data-lucide="settings" class="w-6 h-6"></i>
+          <span class="text-xs font-medium">Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Guided Tour Modal -->
+    <div id="tour-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm" id="tour-backdrop"></div>
+      <div class="relative bg-white rounded-3xl w-full max-w-[360px] p-6 shadow-2xl transform transition-all">
+        <div id="tour-content">
+          <!-- Tour steps loaded by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Lost Pet Modal -->
+    <div id="lost-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm" id="lost-backdrop"></div>
+      <div class="relative bg-white rounded-3xl w-full max-w-[360px] p-6 shadow-2xl">
+        <button id="lost-modal-close" class="absolute top-4 right-4 text-gray hover:text-dark">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="alert-triangle" class="w-8 h-8 text-primary"></i>
+          </div>
+          <h2 class="text-xl font-bold mb-2">Activate Lost Pet Mode?</h2>
+          <p class="text-gray mb-6" id="lost-modal-text">This will alert the GeniusPet community and nearby shelters that Louis is missing.</p>
+          <div class="space-y-3">
+            <button id="activate-lost-mode" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-colors">
+              Yes, Activate Now
+            </button>
+            <button id="cancel-lost-mode" class="w-full bg-gray-100 hover:bg-gray-200 text-dark font-medium py-3 rounded-xl transition-colors">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

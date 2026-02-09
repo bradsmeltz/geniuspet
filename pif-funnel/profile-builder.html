@@ -102,6 +102,9 @@
     #photo-pulse-ring {
       animation: pulse-ring 1.5s ease-in-out infinite;
     }
+    #photo-pulse-ring.hidden {
+      display: none;
+    }
     /* Generic field pulse for guiding users */
     .field-pulse {
       position: absolute;
@@ -393,12 +396,12 @@
           <!-- Pet Name - Required -->
           <div class="mb-4" id="name-container">
             <label class="text-xs uppercase tracking-wider text-blue-primary font-semibold mb-2 block" id="name-label">Name *</label>
-            <div class="relative inline-block">
+            <div class="relative inline-block w-72">
               <div class="field-pulse hidden" id="name-pulse"></div>
               <input
                 type="text"
                 id="pet-name"
-                class="text-2xl font-bold text-neutral-black text-center py-3 px-6 bg-blue-lightest border-2 border-dashed border-blue-light/50 rounded-xl focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all w-72 relative z-10"
+                class="text-2xl font-bold text-neutral-black text-center py-3 px-6 bg-blue-lightest border-2 border-dashed border-blue-light/50 rounded-xl focus:border-solid focus:border-blue-primary focus:bg-white outline-none transition-all w-full relative z-10"
                 placeholder="e.g. Milo, Bella, Max..."
                 autocomplete="off"
               >

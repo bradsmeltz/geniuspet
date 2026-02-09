@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="nMnllOc9CtI3xTg4he8cLIZGD7eUIXzmZ73EiGNm">
+
+    <title>GeniusPet</title>
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://geniuspet.com/assets/css/fonts.css" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <script>
+        window.GENIUSPET_EMBEDDABLE_FLOW_ID = 'flow_e51i35041j660b8g5i8a42436';
+    </script>
+
+    <script>const SAVVY_PRELOAD_IDS=JSON.parse('[\u0022flow_e51i35041j660b8g5i8a42436\u0022]');!function(){window.Savvy||(window.Savvy={});class MP{constructor({id:e,version:t,popup:n},i){log("constructor",{id:e,version:t,popup:n}),this.id=e,this.version=t,this.popup=n,this.elementsMounted=[],this.getMyElements=i,this._loadHTML()}getConfig(){return log("getConfig"),{id:this.id,version:this.version,popup:this.popup}}getKey(){return log("getKey"),getKey(this)}onLoadBundle(){log("onLoadBundle"),this.bundleLoaded=!0,this._HTMLReady()}_loadHTML(){log("_loadHTML");let e=this.getConfig();loadMicroProductData(e).then(({html:e,js:t,context:n})=>{this.html=e,this.waitForBundle=n.wait_for_bundle||!1,this.js=t,this._HTMLReady()})}_HTMLReady(e){log("_HTMLReady",e,this.elements,this.bundleLoaded,this.waitForBundle),this.html&&(this.bundleLoaded||!this.waitForBundle)&&(e?this._mountHTML(e):this.getMyElements().forEach(e=>this._mountHTML(e)))}_mountHTML(element){if(log("_mountHTML() this.elementsMounted, element",this.elementsMounted,element),!this.elementsMounted.includes(element)){this.elementsMounted.push(element),element.el.innerHTML=this.html;try{this.js&&eval(`(${this.js})({ element: element.el })`)}catch(error){console.error(`Error evaluating JS from Renderer: ${error}`)}}}}class Element{constructor(e){this.el=e,this.defineConfig(),this.updateElementId()}setMP(e){this.mp=e}defineConfig(){let e=getUrlParams(),t=window.location.pathname.split("/").pop();this.originalConfig=getOriginalConfigFromElement(this.el);let n=!this.el.getAttribute("id")&&this.originalConfig.override?e.id||e.savvy_id||t||env().startsWith("preview")&&window.location.pathname.split("/")[1]||localStorageGet("temp_savvy_id"):this.originalConfig.id,i=e.savvy_version||e.savvy_flow_version||"prod"!==env()&&e.version||this.originalConfig.version||e.savvy_editing&&"latest"||void 0;this.el.closest("savvy[id*=HLyDMiklDR9R9P6BSxmW]")&&(i=e.savvy_flow_editor_version||void 0);let s=Boolean(e.popup)||this.originalConfig.popup;log("forcedId, forcedVersion, forcedPopup",n,i,s),this.config={...this.originalConfig,id:n,version:i,popup:s}}getConfig(){return this.config}getOriginalConfig(){return this.originalConfig}updateElementId(){this.el.getAttribute("id")===this.config.id&&this.el.getAttribute("id").startsWith("flow-")||this.el.setAttribute("id",`flow-${this.config.id}`)}}class MPs{constructor(){this.mps={},this.elements=[]}elementNeedsRegistering(e){let t=getOriginalConfigFromElement(e);return!this.elements.find(e=>e.config.id===t.id&&(e.config.version===t.version||!e.config.version&&!t.version)&&e.config.popup===t.popup&&e.config.override===t.override&&e.el===t.el)}registerElement(e){if(this.elements.length>1e3)return;log("MPs.registerElement",e);let t=this.getElement(e);t||(t=new Element(e),this.elements.push(t));let n=t.getConfig(),i=this.getMP(n)||this.createMP(n);t.setMP(i),i?._HTMLReady(t),log("Elements:",this.elements),log("MPs:",this.mps)}getElement(e){return this.elements.find(t=>t.el===e)}getMP(e){return this.mps[getKey(e)]}createMP(e){if(log("addMP",e),!e.id&&!this.mps.length)return;let t=getKey(e),n=()=>this.elements.filter(e=>getKey(e.getConfig())===t),i=this.mps[t]||new MP(e,n);return this.mps[t]=i,i}onLoadBundle(e){log("onLoadBundle",e,this.mps),Object.values(this.mps).forEach(e=>e.onLoadBundle())}}function getKey({id:e,version:t,popup:n}){let i=e;return t&&(i+=":"+t),n&&(i+="?"+n),i}function getOriginalConfigFromElement(e){let t=t=>e.getAttribute(t),n=t("id");return{id:n&&n.startsWith("flow-")?n.replace("flow-",""):n,version:t("version"),popup:toBoolean(t("popup-mode")||t("popup")),override:toBoolean(t("allow_id_override_from_url"),!0),el:e}}let toKey=e=>`${e.id}${e.version?`:${e.version}`:""}${e.popup?"|popup":""}`;async function beginSavvy(e){let t=env();log("Env:",t),time("Page Loaded"),time("DOMContentLoaded"),time("Scanning page"),getUrlParams();let n=new MPs;var i=document.createElement("script");i.src=getBundleSrc(),log("bundleScript.src",i.src),i.async="async",i.onload=e=>n.onLoadBundle(e),document.querySelector("head").appendChild(i),onceDOMLoaded(function(e){if(log("DOMContentLoaded"),r(),timeEnd("DOMContentLoaded"),"undefined"==typeof MutationObserver)interval=setInterval(r,250),setTimeout(()=>{clearInterval(interval),timeEnd("Scanning page")},3e4);else{let t=document.querySelector("body"),n=new MutationObserver(r);t?n.observe(t,{childList:!0,attributes:!0,subtree:!0}):console.warn("No BODY found on page - can't watch for &lt;savvy&gt; elements to be added.")}});let s="string"==typeof e?[{id:e}]:Array.isArray(e)&&"string"==typeof e[0]?e.map(e=>({id:e})):"object"!=typeof e||Array.isArray(e)?e||[{}]:[e];function r(){document.querySelectorAll("savvy").forEach(async e=>{let t=n.elementNeedsRegistering(e);t&&n.registerElement(e)})}log("configs",s),s.forEach(e=>{n.createMP(e)})}function loadMicroProductData(e){log("config",e);let{version:t,popup:n}=e;function i(){let e=JSON.parse(localStorageGet("SavvyFormUserData")||"{}");return log("getUserData() allUserData",JSON.stringify(e,null,2)),e}return new Promise((s,r)=>{let o=e.id;if(!o){console.error("No Savvy ID found!");return}let a=i(),l=a[o]||{},d={},u="split_",c=new Set([]);for(let g in l)"current_page_id"===g?d.pageId=l[g]:(c.has(g)||g.startsWith(u))&&(d[g]=encodeURIComponent(l[g]));let h=getUrlParams();for(let v in h)"current_page_id"===v?d.pageId=h[v]:"current_page_key"===v?d.pageKey=h[v]:"current_page_index"===v?d.pageIndex=h[v]:d[v]=h[v];t&&(!isNaN(+t)||"latest"===t)&&(d.version="latest"===t?"latest":+t),n&&(d.popup=!0);let p=Object.entries(d).map(([e,t])=>`${e}=${t}`);log("loadMicroProductData() urlParams",JSON.stringify(h||{},null,2)),log("loadMicroProductData() qsParams",JSON.stringify(d||{},null,2)),log("loadMicroProductData() qsArray",JSON.stringify(p||{},null,2));let f=p.length>0?`?${p.join("&")}`:"";log("`${getRendererBase()}/${id}${qs}`",`${getRendererBase()}/${o}${f}`);let y=/[^a-zA-Z0-9_]/.test(o);y||fetch(`${getRendererBase()}/${o}${f}`,{method:localStorageGet(`SAVVY_FLOW_JSON-${o}`)?"POST":"GET",headers:"ci"===env()?{"Host-Origin":window.location.origin}:{},body:localStorageGet(`SAVVY_FLOW_JSON-${o}`)||null}).then(e=>e.json()).then(e=>{let{html:t,flow:n,userData:r,js:a}=e;log("response { html, flow, userData, js }",{html:t,flow:n,userData:r,js:a}),window.SavvyFlow=window.SavvyFlow||{},window.SavvyFlow[o]=n;let l=i(),d=!n.forget_user_data&&l[o]||{},u={...d,...r||{}};l[o]=u,n.do_not_store_any_data||localStorageSet("SavvyFormUserData",JSON.stringify(l));let c={wait_for_bundle:n.wait_for_bundle||!1};s({html:t,js:a,context:c})})})}function localStorageGet(e){try{return localStorage.getItem(e)}catch(t){return}}function localStorageSet(e,t){try{return localStorage.setItem(e,t)}catch(n){return!1}}function getUrlParams(){let e={},t=window.location.search;if(t){let n=new URLSearchParams(t);for(let[i,s]of n)e[i]=s}return e}function env(){window.location.hostname;let e=getUrlParams().savvy_env||localStorageGet("savvy_env");return e||"production"}function getBundleSrc(){switch(env()){case"dev":return"https://bundle-dev.trysavvy.com/bundle.js";case"staging":return"https://bundle-staging.trysavvy.com/bundle.js";case"side-staging":return"https://bundle-side-staging.trysavvy.com/bundle.js";case"preview":case"production":return"https://bundle.trysavvy.com/bundle.js";default:throw Error("Unknown Environment for Bundle")}}function getRendererBase(){switch(env()){case"dev":return"https://renderer-dev.trysavvy.com";case"staging":return"https://renderer-staging.trysavvy.com";case"side-staging":return"https://renderer-side-staging.trysavvy.com";case"preview":case"production":return"https://renderer.trysavvy.com";default:throw Error("Unknown Environment for Renderer")}}function onceDOMLoaded(e){"complete"===document.readyState||"loaded"===document.readyState||"interactive"===document.readyState?e():document.addEventListener("DOMContentLoaded",e)}function oncePageLoaded(e){"complete"===document.readyState?e():window.addEventListener("load",e)}function toBoolean(e,t){return[void 0,null,""].includes(e)&&void 0!==t?t:"boolean"==typeof e?e:"string"==typeof e&&"true"===e}function log(){(getUrlParams().savvy_debug||localStorageGet("savvy_debug"))&&console.log(...arguments)}function time(){(getUrlParams().savvy_debug||localStorageGet("savvy_debug"))&&console.time(...arguments)}function timeEnd(){(getUrlParams().savvy_debug||localStorageGet("savvy_debug"))&&console.timeEnd(...arguments)}function logGroupCollapsed(e){(getUrlParams().savvy_debug||localStorageGet("savvy_debug"))&&console.groupCollapsed(e)}function logGroupEnd(){(getUrlParams().savvy_debug||localStorageGet("savvy_debug"))&&console.groupEnd()}function removeHashParameters(){let e=window.location.href,t=e.replace(/#.*$/,"");window.history.pushState("","",t)}beginSavvy(window.SAVVY_PRELOAD_IDS)}();</script>
+
+
+    <script id="cometly-pixel" src="https://t.cometlytrack.com/e?uid=96a649-3377699795000000-471d61-s"></script>
+<script>
+(function() {
+    const cometlyScript = document.getElementById('cometly-pixel');
+
+    if (!cometlyScript) return;
+
+    // Function to capture and send Cometly data
+    function captureCometlyData() {
+        if (typeof window.cometToken !== 'function') {
+            console.warn('Cometly: cometToken function not available');
+            return;
+        }
+
+        try {
+            const token = window.cometToken();
+
+            if (!token) {
+                console.warn('Cometly: No token returned');
+                return;
+            }
+
+            // Get fingerprint (returns Promise)
+            const fingerprintPromise = typeof window.cometFingerprint === 'function'
+                ? window.cometFingerprint()
+                : Promise.resolve(null);
+
+            fingerprintPromise.then(function(fingerprint) {
+                // Expose token and fingerprint globally for embeddables
+                // (Savvy proxy strips session cookies, so we need to pass these explicitly)
+                window.GENIUSPET_COMETLY = {
+                    token: token,
+                    fingerprint: fingerprint,
+                };
+
+                // Build payload
+                const payload = { token: token };
+                if (fingerprint) {
+                    payload.fingerprint = fingerprint;
+                }
+
+                // Always send token and fingerprint to backend
+                fetch('/api/tracking/cometly-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update localStorage
+                        localStorage.setItem('cometly_last_token', token);
+                        if (fingerprint) {
+                            localStorage.setItem('cometly_last_fingerprint', fingerprint);
+                        }
+                        localStorage.setItem('cometly_last_update', new Date().toISOString());
+                    }
+                })
+                .catch(error => {
+                    console.error('Cometly: Error storing token/fingerprint', error);
+                });
+            }).catch(function(error) {
+                console.error('Cometly: Error getting fingerprint', error);
+            });
+        } catch (error) {
+            console.error('Cometly: Error processing token', error);
+        }
+    }
+
+    // Check if script already loaded (cached) or wait for load event
+    if (typeof window.cometToken === 'function') {
+        // Script already loaded from cache
+        setTimeout(captureCometlyData, 100);
+    } else {
+        // Wait for script to load
+        cometlyScript.addEventListener('load', function() {
+            setTimeout(captureCometlyData, 100);
+        });
+    }
+})();
+
+// Fire view_content event once per session
+(function() {
+    const STORAGE_KEY = 'cometly_view_content_fired';
+
+    // Check if view_content has already been fired
+    if (localStorage.getItem(STORAGE_KEY)) {
+        console.log('Cometly: view_content already fired in this session');
+        return;
+    }
+
+    // Wait for Cometly to be ready
+    function fireViewContent() {
+        if (typeof window.comet === 'function') {
+            window.comet('view_content');
+            localStorage.setItem(STORAGE_KEY, 'true');
+            console.log('Cometly: view_content event fired');
+        } else {
+            console.warn('Cometly: comet function not available for view_content');
+        }
+    }
+
+    // Check if Cometly script is already loaded
+    const cometlyScript = document.getElementById('cometly-pixel');
+    if (cometlyScript && typeof window.comet === 'function') {
+        // Already loaded, fire immediately
+        setTimeout(fireViewContent, 200);
+    } else if (cometlyScript) {
+        // Wait for script to load
+        cometlyScript.addEventListener('load', function() {
+            setTimeout(fireViewContent, 200);
+        });
+    }
+})();
+</script>
+
+
+    <script>
+        window.GENIUSPET_CONFIG = {
+            spreedlyKey: '12YJ6CAGMX9TXRZQCMX6ZHM5G3',
+            applePayMerchantId: 'merchant.com.geniuspet.c',
+            csrfToken: 'nMnllOc9CtI3xTg4he8cLIZGD7eUIXzmZ73EiGNm',
+            environment: 'production',
+            sentryDsn: 'https://ba69bce42cadf536564d477193f50437@o4510556346056704.ingest.us.sentry.io/4510556352741376',
+        };
+    </script>
+
+    <link rel="modulepreload" as="script" href="https://geniuspet.com/build/assets/embeddables-0-ho86WM.js" />
+    <link rel="modulepreload" as="script" href="https://geniuspet.com/build/assets/index-D-nz-cJY.js" />
+    <link rel="modulepreload" as="script" href="https://geniuspet.com/build/assets/runtime-dom.esm-bundler-CxtNcHfv.js" />
+    <link rel="modulepreload" as="script" href="https://geniuspet.com/build/assets/embeddable-scripts-DtZasD7O.js" />
+    <link rel="modulepreload" as="script" href="https://geniuspet.com/build/assets/EmbeddableFunnel-DZFWmJNk.js" />
+    <link rel="modulepreload" as="script" href="https://geniuspet.com/build/assets/_plugin-vue_export-helper-DlAUqK2U.js" />
+    <script type="module" src="https://geniuspet.com/build/assets/embeddables-0-ho86WM.js" data-navigate-track="reload"></script>
+    <script type="module" src="https://geniuspet.com/build/assets/embeddable-scripts-DtZasD7O.js" data-navigate-track="reload"></script>
+    <script type="module" src="https://geniuspet.com/build/assets/EmbeddableFunnel-DZFWmJNk.js" data-navigate-track="reload"></script>
+
+    <script src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js" crossorigin="anonymous"></script>
+
+    <script src="https://core.spreedly.com/iframe/iframe-v1.min.js"></script>
+    <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3276997,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+</head>
+<body>
+    <div id="app" data-page="{&quot;component&quot;:&quot;EmbeddableFunnel&quot;,&quot;props&quot;:{&quot;errors&quot;:{},&quot;name&quot;:&quot;GeniusPet&quot;,&quot;quote&quot;:{&quot;message&quot;:&quot;It is not the man who has too little, but the man who craves more, that is poor.&quot;,&quot;author&quot;:&quot;Seneca&quot;},&quot;auth&quot;:{&quot;user&quot;:{&quot;id&quot;:3233,&quot;gt_user_id&quot;:&quot;3288&quot;,&quot;first_name&quot;:&quot;Brad&quot;,&quot;last_name&quot;:&quot;smeltz&quot;,&quot;name&quot;:&quot;Brad smeltz&quot;,&quot;email&quot;:&quot;brad@geniustag.com&quot;,&quot;phone_number&quot;:&quot;(610) 751-1213&quot;,&quot;facebook&quot;:null,&quot;instagram&quot;:null,&quot;twitter&quot;:null,&quot;email_verified_at&quot;:&quot;2023-03-08T00:57:51.000000Z&quot;,&quot;phone_verified_at&quot;:null,&quot;billing_address_line_1&quot;:&quot;sasdf&quot;,&quot;billing_address_line_2&quot;:null,&quot;billing_city&quot;:&quot;sdfa&quot;,&quot;billing_state&quot;:&quot;MS&quot;,&quot;billing_zip&quot;:&quot;23432&quot;,&quot;shipping_address_line_1&quot;:&quot;101&quot;,&quot;shipping_address_line_2&quot;:null,&quot;shipping_city&quot;:&quot;mia&quot;,&quot;shipping_state&quot;:&quot;ME&quot;,&quot;shipping_zip&quot;:&quot;23423&quot;,&quot;two_factor_secret&quot;:null,&quot;two_factor_recovery_codes&quot;:null,&quot;two_factor_confirmed_at&quot;:null,&quot;timezone&quot;:&quot;America\/Los_Angeles&quot;,&quot;ga_client_id&quot;:&quot;1734944376.1765913195&quot;,&quot;pre_registration_token&quot;:null,&quot;role&quot;:&quot;admin&quot;,&quot;nmi_token&quot;:null,&quot;spreedly_payment_method_token&quot;:null,&quot;payment_method_last_four&quot;:null,&quot;payment_method_card_type&quot;:null,&quot;payment_method_expires_at&quot;:null,&quot;payment_method_is_mpan&quot;:null,&quot;payment_method_mpan_metadata&quot;:null,&quot;created_at&quot;:&quot;2023-03-08T00:57:51.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-01-26T22:05:56.000000Z&quot;,&quot;deleted_at&quot;:null,&quot;cometly_token&quot;:&quot;130570773139277067199944134482225218773209229134&quot;,&quot;first_touch_url&quot;:null,&quot;utm_source&quot;:null,&quot;affiliate&quot;:null}},&quot;sidebarOpen&quot;:true,&quot;spreedlyEnvironmentKey&quot;:&quot;12YJ6CAGMX9TXRZQCMX6ZHM5G3&quot;,&quot;applePayMerchantId&quot;:&quot;merchant.com.geniuspet.c&quot;,&quot;googlePay&quot;:{&quot;merchantId&quot;:&quot;BCR2DN5T3DNZJWCB&quot;,&quot;merchantName&quot;:&quot;GeniusPet&quot;,&quot;environment&quot;:&quot;PRODUCTION&quot;},&quot;token&quot;:null,&quot;cometly&quot;:{&quot;token&quot;:&quot;130570773139277067199944134482225218773209229134&quot;,&quot;fingerprint&quot;:&quot;cd3f8a17d654da60f27cb8e6363dab84&quot;},&quot;embeddableFlowId&quot;:&quot;flow_e51i35041j660b8g5i8a42436&quot;,&quot;funnelName&quot;:&quot;Meta&quot;},&quot;url&quot;:&quot;\/pet-id-safety&quot;,&quot;version&quot;:&quot;13d9e38448bef90c8f1a5dae7ed189e1&quot;,&quot;clearHistory&quot;:false,&quot;encryptHistory&quot;:false}"></div>
+</body>
+</html>

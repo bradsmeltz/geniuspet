@@ -1,25 +1,27 @@
 :root {
   /* Beige (Backgrounds, Strokes) */
-  --beige-light: #FAF7F5;
-  --beige-medium: #E8DDD3;
+  --beige-lightest: #FAFAFA;
+  --beige-light: #F5F0EB;
+  --beige-medium: #E8E0D8;
   --beige-warm: #D4A574;
 
   /* Neutral (Text) */
-  --neutral-light: #9B9B9B;
-  --neutral-medium: #6B6B6B;
-  --neutral-dark: #3D3D3D;
-  --neutral-black: #1A1A1A;
+  --neutral-light: #BFBFBF;
+  --neutral-medium: #8C8C8C;
+  --neutral-dark: #595959;
+  --neutral-black: #333333;
 
   /* Red (Buttons, Actions, CTAs) */
-  --red-primary: #DD5A52;
-  --red-medium: #D64842;
-  --red-dark: #C33D37;
+  --red-primary: #D65A52;
+  --red-medium: #CC5249;
+  --red-dark: #A3403A;
 
   /* Blue (Bullets, Text, Secondary Accents) */
-  --blue-light: #A6D5E8;
-  --blue-primary: #4AA4C8;
+  --blue-lightest: #E8F4F8;
+  --blue-light: #5FAED4;
+  --blue-primary: #2D96C4;
   --blue-medium: #3B8FB5;
-  --blue-dark: #2C6B85;
+  --blue-dark: #2A7A9E;
 
   /* Success */
   --green-primary: #4CAF50;

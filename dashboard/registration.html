@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Register Your Pet - GeniusPet</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Custom Tailwind Config (matches index.html) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Core brand
+            primary: '#D74242',
+            'primary-dark': '#B8433D',
+            dark: '#2B2B2B',
+            gray: '#747474',
+
+            // Warm beige backgrounds (from Extended Palette)
+            'beige-50': '#fdfcfb',   // Page background
+            'beige-100': '#f9f5f2',  // Card/input backgrounds
+            'beige-200': '#f6f1ec',  // Score ring track, checklist cards
+            'beige-300': '#f2eae4',  // Inactive progress dots/connectors
+
+            // Legacy (keeping for compatibility)
+            light: '#fdfcfb',        // Updated to beige-50
+            cream: '#f2eae4',        // Updated to beige-300
+            'cream-light': '#f9f5f2', // Updated to beige-100
+
+            // Product colors (from Extended Palette)
+            'tag-blue': '#3995c6',          // blue-500
+            'tag-blue-dark': '#286a8d',     // blue-700
+            'vet-teal': '#2e8a7b',          // green-500
+            'vet-teal-dark': '#216257',     // green-700
+            'insurance-gold': '#d49d35',    // yellow-500
+            'insurance-gold-dark': '#8a6632', // yellow-700
+            'rx-purple': '#866ca7',         // purple-500
+            'rx-purple-dark': '#5f4d77',    // purple-700
+
+            // Product tints (from Extended Palette)
+            'tint-blue': '#eff6fa',   // blue-50
+            'tint-teal': '#eaf3f2',   // green-50
+            'tint-gold': '#f9f4ed',   // yellow-50
+            'tint-purple': '#f3f0f6', // purple-50
+            'tint-cream': '#f9f5f2',  // beige-100
+
+            // Product mid-tones for borders/accents
+            'blue-100': '#c2deed',
+            'green-100': '#bed0d6',
+            'yellow-100': '#ecddc6',
+          },
+          fontFamily: {
+            sans: ['Gilroy', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Registration-specific styles -->
+  <style>
+    /* Step transitions */
+    @keyframes stepEnter {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes stepExit {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(-40px); }
+    }
+    @keyframes stepEnterBack {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .step-enter { animation: stepEnter 0.35s ease-out forwards; }
+    .step-exit { animation: stepExit 0.25s ease-in forwards; }
+    .step-enter-back { animation: stepEnterBack 0.35s ease-out forwards; }
+
+    /* Photo upload */
+    .photo-upload {
+      width: 120px;
+      height: 120px;
+      border: 3px dashed #f2eae4; /* beige-300 */
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .photo-upload:hover { border-color: #D74242; }
+    .photo-upload.has-photo {
+      border-style: solid;
+      border-color: #3995c6; /* blue-500 */
+    }
+
+    /* Progress dots */
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      transition: all 0.4s ease;
+    }
+    .progress-dot.active {
+      background: #D74242;
+      box-shadow: 0 0 0 3px rgba(215, 66, 66, 0.15);
+    }
+    .progress-dot.completed {
+      background: #D74242;
+    }
+    .progress-dot.upcoming {
+      background: #f2eae4; /* beige-300 - warm instead of cold gray */
+    }
+    .progress-connector {
+      height: 2px;
+      flex: 1;
+      transition: background-color 0.4s ease;
+    }
+    .progress-connector.bg-gray-200 {
+      background: #f2eae4 !important; /* beige-300 - warm inactive connector */
+    }
+
+    /* Score ring animation */
+    .score-ring-circle {
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Score number animation */
+    @keyframes scoreCount {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .score-count { animation: scoreCount 0.5s ease-out 0.8s forwards; opacity: 0; }
+
+    /* Confetti */
+    @keyframes confettiFall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    /* Pulse for upsell CTA */
+    @keyframes upsellPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(215, 66, 66, 0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(215, 66, 66, 0); }
+    }
+    .upsell-pulse { animation: upsellPulse 2s infinite; }
+
+    /* Score preview bar */
+    .score-preview-bar {
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Bounce in for badges */
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .bounce-in { animation: bounceIn 0.5s ease-out forwards; opacity: 0; }
+
+    /* Input focus ring */
+    .reg-input:focus {
+      border-color: #D74242;
+      box-shadow: 0 0 0 3px rgba(215, 66, 66, 0.1);
+    }
+
+    /* Simulated processing */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinner {
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* Checkmark animation */
+    @keyframes checkDraw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Sticky CTA */
+    #sticky-cta.visible {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="font-sans bg-beige-50 text-dark min-h-screen">
+  <div id="registration-app" class="max-w-[428px] mx-auto bg-beige-50 min-h-screen relative shadow-xl">
+
+    <!-- Fixed Header -->
+    <header class="sticky top-0 z-50 bg-beige-50/95 backdrop-blur-sm border-b border-beige-200 px-5 pt-4 pb-3">
+      <div class="flex items-center justify-between mb-3">
+        <!-- Back button -->
+        <button id="back-btn" onclick="goBack()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-beige-100 transition-colors" style="visibility: hidden;">
+          <i data-lucide="arrow-left" class="w-5 h-5 text-dark"></i>
+        </button>
+        <!-- Step label -->
+        <p id="step-label" class="text-sm font-bold text-dark">Pet Basics</p>
+        <!-- Close -->
+        <button onclick="exitRegistration()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-beige-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5 text-gray"></i>
+        </button>
+      </div>
+      <!-- Progress dots -->
+      <div id="progress-dots" class="flex items-center justify-center gap-0 px-4">
+        <!-- Rendered dynamically by updateProgress() -->
+      </div>
+    </header>
+
+    <!-- Step Container -->
+    <main id="step-container" class="px-5 py-6 pb-12">
+      <!-- Steps rendered here by JS -->
+    </main>
+
+    <!-- Hidden file input for photo -->
+    <input type="file" id="photo-input" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+
+    <!-- Sticky CTA (persistent, outside step container) -->
+    <div id="sticky-cta" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[428px] bg-white/95 backdrop-blur-sm border-t border-beige-200 p-4 shadow-lg transform translate-y-full transition-transform duration-300 z-50">
+      <button onclick="purchaseAdvancedAnnual()"
+              class="w-full bg-tag-blue hover:bg-tag-blue-dark text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
+        Yes, I Want Instant Alerts
+      </button>
+      <p class="text-center text-xs text-gray mt-2">$7.42/mo billed annually · 30-day money-back guarantee</p>
+    </div>
+
+  </div>
+
+<script>
+// ============================================
+// REGISTRATION STATE
+// ============================================
+const RegState = {
+  currentStep: 1,
+  totalSteps: 6,
+  // Track whether downsell was skipped (annual purchased)
+  annualPurchased: false,
+  direction: 'forward',
+  pet: {
+    name: '', breed: '', age: '', weight: '',
+    photo: null, hasPhoto: false,
+    basicComplete: false,
+  },
+  purchases: {
+    advancedProtection: false,
+    advancedPlan: null, // 'annual' or 'quarterly'
+    teleVet: false,
+    insurance: false,
+  },
+};
+
+// Step labels
+function getStepLabel(step) {
+  const name = RegState.pet.name || 'Your Pet';
+  switch(step) {
+    case 1: return 'Pet Basics';
+    case 2: return `Protect ${name}`;
+    case 3: return 'Flexible Plan';
+    case 4: return 'Vet Access';
+    case 5: return 'Insurance';
+    case 6: return 'All Set!';
+    default: return '';
+  }
+}
+
+// The visible steps (excluding downsell if annual purchased)
+function getVisibleSteps() {
+  if (RegState.annualPurchased) {
+    // Skip downsell: 1, 2, 4, 5, 6  (5 visible steps)
+    return [1, 2, 4, 5, 6];
+  }
+  // Full flow: 1, 2, 3, 4, 5, 6  (6 visible steps)
+  return [1, 2, 3, 4, 5, 6];
+}
+
+function getVisibleStepIndex() {
+  const visible = getVisibleSteps();
+  return visible.indexOf(RegState.currentStep);
+}
+
+// ============================================
+// SCORE CALCULATION (simplified for registration)
+// ============================================
+function calculateScore() {
+  let score = 0;
+  const p = RegState.pet;
+  const purchases = RegState.purchases;
+
+  // Profile tier basics
+  if (p.hasPhoto) score += 5;
+  if (p.basicComplete) score += 10;
+  // phoneVerified from existing user — assume true (+5)
+  score += 5;
+
+  // Advanced tier (max 25) — only if purchased
+  if (purchases.advancedProtection) {
+    score += 7 + 10 + 8; // SMS + Network + GPS all auto-enabled
+  }
+
+  // Products
+  if (purchases.teleVet) score += 15;
+  if (purchases.insurance) score += 15;
+
+  return Math.min(score, 100);
+}
+
+function getProtectionTier(score) {
+  if (score >= 95) return { name: 'Diamond', color: 'text-primary', bg: 'bg-primary/10' };
+  if (score >= 80) return { name: 'Platinum', color: 'text-tag-blue', bg: 'bg-tint-blue' };
+  if (score >= 65) return { name: 'Gold', color: 'text-insurance-gold', bg: 'bg-tint-gold' };
+  if (score >= 40) return { name: 'Silver', color: 'text-gray', bg: 'bg-gray-100' };
+  if (score >= 20) return { name: 'Bronze', color: 'text-insurance-gold', bg: 'bg-tint-gold' };
+  return { name: 'Starter', color: 'text-gray', bg: 'bg-gray-100' };
+}
+
+// ============================================
+// STEP RENDERERS
+// ============================================
+
+// STEP 1: Pet Basics (30 seconds — name, breed, age, weight, optional photo)
+function renderStep1() {
+  return `
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-bold text-dark mb-2">Welcome! Let's meet your pet.</h1>
+      <p class="text-sm text-gray">This info activates your GeniusTag.</p>
+    </div>
+
+    <!-- Photo Upload -->
+    <div class="flex justify-center mb-6">
+      <div onclick="document.getElementById('photo-input').click()"
+           class="photo-upload ${RegState.pet.hasPhoto ? 'has-photo' : ''} flex flex-col items-center justify-center bg-beige-100 relative">
+        ${RegState.pet.photo
+          ? `<img src="${RegState.pet.photo}" class="w-full h-full rounded-full object-cover" />`
+          : `<i data-lucide="camera" class="w-8 h-8 text-gray mb-1"></i>
+             <span class="text-xs text-gray">Add photo</span>`
+        }
+      </div>
+    </div>
+
+    <!-- Form Fields -->
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold text-dark mb-1.5">Pet's Name <span class="text-primary">*</span></label>
+        <input type="text" id="pet-name" value="${RegState.pet.name}"
+               oninput="RegState.pet.name = this.value; checkStep1Valid();"
+               placeholder="e.g., Luna"
+               class="reg-input w-full bg-beige-100 border border-beige-300 rounded-xl px-4 py-3.5 text-base text-dark font-medium outline-none transition-all placeholder:text-gray/50" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-dark mb-1.5">Breed <span class="text-primary">*</span></label>
+        <input type="text" id="pet-breed" value="${RegState.pet.breed}"
+               oninput="RegState.pet.breed = this.value; checkStep1Valid();"
+               placeholder="e.g., Golden Retriever"
+               class="reg-input w-full bg-beige-100 border border-beige-300 rounded-xl px-4 py-3.5 text-base text-dark font-medium outline-none transition-all placeholder:text-gray/50" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-sm font-semibold text-dark mb-1.5">Age <span class="text-primary">*</span></label>
+          <select id="pet-age"
+                  onchange="RegState.pet.age = this.value; checkStep1Valid();"
+                  class="reg-input w-full bg-cream-light border border-cream rounded-xl px-4 py-3.5 text-base text-dark font-medium outline-none transition-all appearance-none">
+            <option value="" ${!RegState.pet.age ? 'selected' : ''}>Select</option>
+            <option value="Puppy (< 1 year)" ${RegState.pet.age === 'Puppy (< 1 year)' ? 'selected' : ''}>Puppy (&lt; 1 yr)</option>
+            <option value="1-3 years" ${RegState.pet.age === '1-3 years' ? 'selected' : ''}>1-3 years</option>
+            <option value="4-7 years" ${RegState.pet.age === '4-7 years' ? 'selected' : ''}>4-7 years</option>
+            <option value="8+ years" ${RegState.pet.age === '8+ years' ? 'selected' : ''}>8+ years</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-dark mb-1.5">Weight <span class="text-primary">*</span></label>
+          <div class="relative">
+            <input type="number" id="pet-weight" value="${RegState.pet.weight}"
+                   oninput="RegState.pet.weight = this.value; checkStep1Valid();"
+                   inputmode="numeric" placeholder="lbs"
+                   class="reg-input w-full bg-beige-100 border border-beige-300 rounded-xl px-4 py-3.5 text-base text-dark font-medium outline-none transition-all placeholder:text-gray/50" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray">lbs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Continue Button -->
+    <button id="step1-continue" onclick="completeStep1()"
+            class="w-full mt-8 bg-primary text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition-all opacity-50 pointer-events-none"
+            disabled>
+      Activate ${RegState.pet.name ? RegState.pet.name + "'s" : 'Your'} Tag
+      <i data-lucide="arrow-right" class="w-5 h-5"></i>
+    </button>
+  `;
+}
+
+
+// STEP 2: Advanced Protection — Annual Upsell (CONVERSION-FOCUSED REDESIGN v2)
+// Key changes: Emotional hook → Social proof → Unified timeline → Subtle price
+function renderStep2() {
+  const name = RegState.pet.name || 'Your Pet';
+
+  return `
+    <!-- Emotional Hook (corrected - about being found, not escaping) -->
+    <div class="bg-tint-blue rounded-2xl p-5 text-center mb-5">
+      <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="bell-ring" class="w-6 h-6 text-tag-blue"></i>
+      </div>
+      <h1 class="text-xl font-bold text-dark mb-2">When someone finds ${name}, how fast will you know?</h1>
+      <p class="text-sm text-gray">With email-only alerts, you might not see it for hours.</p>
+    </div>
+
+    <!-- Social Proof (trigger for sticky CTA) -->
+    <div id="social-proof-trigger" class="flex items-center justify-center gap-2 mb-5">
+      <i data-lucide="users" class="w-4 h-4 text-gray"></i>
+      <p class="text-sm text-gray">Your local community is ready to help find ${name}</p>
+    </div>
+
+    <!-- OUTCOME COMPARISON (non-clickable, flat design) -->
+    <div class="mb-6">
+      <div class="flex items-stretch gap-3">
+        <!-- WITHOUT (flat, muted) -->
+        <div class="flex-1 text-center py-4">
+          <p class="text-xs text-gray uppercase tracking-wider mb-2">Basic Feature</p>
+          <p class="text-3xl font-bold text-gray/60 mb-1">3+ hrs</p>
+          <p class="text-xs text-gray">before you see it</p>
+        </div>
+
+        <!-- Divider -->
+        <div class="w-px bg-beige-300 self-stretch"></div>
+
+        <!-- WITH (highlighted but not button-like) -->
+        <div class="flex-1 text-center py-4">
+          <p class="text-xs text-tag-blue uppercase tracking-wider mb-2">With Advanced+</p>
+          <p class="text-3xl font-bold text-tag-blue mb-1">Instant</p>
+          <p class="text-xs text-tag-blue/70">SMS & call alert</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS (simple 3-step) -->
+    <div class="bg-beige-100 rounded-2xl p-4 mb-6">
+      <p class="text-xs text-gray uppercase tracking-wider font-medium mb-4 text-center">When ${name} is found</p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 bg-tag-blue/15 rounded-full flex items-center justify-center flex-shrink-0">
+            <span class="text-tag-blue text-xs font-bold">1</span>
+          </div>
+          <p class="text-sm text-dark">You get an <strong>instant SMS & phone call</strong></p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 bg-tag-blue/15 rounded-full flex items-center justify-center flex-shrink-0">
+            <span class="text-tag-blue text-xs font-bold">2</span>
+          </div>
+          <p class="text-sm text-dark"><strong>Local neighbors & shelters</strong> are alerted to help</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 bg-tag-blue/15 rounded-full flex items-center justify-center flex-shrink-0">
+            <span class="text-tag-blue text-xs font-bold">3</span>
+          </div>
+          <p class="text-sm text-dark">You see <strong>exactly where ${name} is</strong> on GPS</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA + Subtle Price (trigger for hiding sticky CTA) -->
+    <div id="inline-cta-section" class="mb-4">
+      <button onclick="purchaseAdvancedAnnual()" id="advanced-cta"
+              class="w-full bg-tag-blue hover:bg-tag-blue-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg upsell-pulse">
+        Yes, I Want Instant Alerts
+      </button>
+      <p class="text-center text-sm text-gray mt-3">Just $7.42/month billed annually. Cancel anytime. 30-day money-back guarantee.</p>
+    </div>
+
+    <button onclick="skipToDownsell()" class="w-full text-sm text-gray hover:text-dark transition-colors text-center py-2">
+      Maybe later
+    </button>
+  `;
+}
+
+
+// STEP 3: Advanced Protection — Quarterly Downsell ($4.95/mo billed quarterly at $14.85)
+// Only shown if Step 2 was skipped
+function renderStep3() {
+  const name = RegState.pet.name || 'Your Pet';
+
+  return `
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 bg-tint-blue rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="calendar" class="w-7 h-7 text-tag-blue"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-dark mb-2">Not ready for the full year?</h1>
+      <p class="text-sm text-gray">Start with a flexible quarterly plan instead.</p>
+    </div>
+
+    <!-- Simple feature list -->
+    <div class="bg-tint-blue rounded-xl p-4 mb-6">
+      <p class="text-xs font-bold text-tag-blue uppercase tracking-wider mb-3">What you get</p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-tag-blue flex-shrink-0"></i>
+          <p class="text-sm text-dark">SMS & call alerts when ${name} is found</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-tag-blue flex-shrink-0"></i>
+          <p class="text-sm text-dark">Lost Pet Network — alert nearby neighbors</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-tag-blue flex-shrink-0"></i>
+          <p class="text-sm text-dark">GPS location when tag is scanned</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing & CTA -->
+    <div class="bg-beige-100 border-2 border-blue-100 rounded-2xl p-5 text-center mb-3">
+      <p class="text-3xl font-bold text-dark mb-0.5">$4.95<span class="text-lg font-semibold text-gray">/mo</span></p>
+      <p class="text-gray text-xs mb-5">Billed quarterly at $14.85</p>
+      <button onclick="purchaseAdvancedQuarterly()" id="quarterly-cta"
+              class="w-full bg-tag-blue hover:bg-tag-blue-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
+        Start Quarterly Plan
+      </button>
+      <p class="text-gray/50 text-xs mt-3">Cancel anytime</p>
+    </div>
+
+    <button onclick="goToStep(4)" class="w-full mt-2 text-sm text-gray hover:text-dark transition-colors text-center py-2">
+      No thanks
+    </button>
+  `;
+}
+
+
+// STEP 4: TeleVet Upsell ($19.99/mo)
+function renderStep4() {
+  const name = RegState.pet.name || 'Your Pet';
+  const currentScore = calculateScore();
+  const scoreWithTeleVet = Math.min(currentScore + 15, 100);
+
+  return `
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-vet-teal to-vet-teal-dark p-6 text-white text-center mb-6">
+      <div class="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full"></div>
+      <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
+      <div class="relative">
+        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+          <i data-lucide="stethoscope" class="w-7 h-7 text-white"></i>
+        </div>
+        <p class="text-white/70 text-sm mb-1">While you're setting up ${name}'s care plan...</p>
+        <h1 class="text-2xl font-bold">24/7 Vet Access</h1>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <p class="text-sm text-dark mb-3">Talk to a licensed vet anytime, from anywhere. No appointments, no waiting rooms.</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-vet-teal flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Late-night "is this normal?" moments</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-vet-teal flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Behavior questions before they escalate</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-vet-teal flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Quick second opinions before an ER visit</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score preview -->
+    <div class="mb-6">
+      <div class="flex justify-between text-xs text-gray mb-1">
+        <span>Safety Score</span>
+        <span>${currentScore}% <i data-lucide="arrow-right" class="w-3 h-3 inline"></i> <span class="text-vet-teal font-bold">${scoreWithTeleVet}%</span></span>
+      </div>
+      <div class="w-full bg-beige-200 rounded-full h-2.5 overflow-hidden">
+        <div class="h-full rounded-full bg-vet-teal score-preview-bar" style="width: ${currentScore}%" id="score-bar-4"></div>
+      </div>
+    </div>
+
+    <button onclick="purchaseTeleVet()" id="televet-cta"
+            class="w-full bg-vet-teal hover:bg-vet-teal-dark text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition-colors text-lg">
+      Add TeleVet — $19.99/mo
+    </button>
+
+    <button onclick="goToStep(5)" class="w-full mt-3 text-sm text-gray hover:text-dark transition-colors text-center py-2">
+      Skip
+    </button>
+  `;
+}
+
+
+// STEP 5: Insurance Upsell ($29.99/mo)
+function renderStep5() {
+  const name = RegState.pet.name || 'Your Pet';
+  const currentScore = calculateScore();
+  const scoreWithInsurance = Math.min(currentScore + 15, 100);
+
+  return `
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-insurance-gold to-insurance-gold-dark p-6 text-white text-center mb-6">
+      <div class="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full"></div>
+      <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
+      <div class="relative">
+        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+          <i data-lucide="heart-handshake" class="w-7 h-7 text-white"></i>
+        </div>
+        <p class="text-white/70 text-sm mb-1">The unexpected shouldn't come with a $5,000 surprise.</p>
+        <h1 class="text-2xl font-bold">Accident & Illness Coverage</h1>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <p class="text-sm text-dark mb-1 font-medium">Covers accidents, illnesses, and emergencies for ${name}.</p>
+      <p class="text-xs text-gray mb-4">Because peace of mind shouldn't be optional.</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-insurance-gold flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Emergency vet visits</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-insurance-gold flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Surgery & hospitalization</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-insurance-gold flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Diagnostic tests & imaging</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle" class="w-5 h-5 text-insurance-gold flex-shrink-0 mt-0.5"></i>
+          <p class="text-sm text-dark">Prescription medications</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score preview -->
+    <div class="mb-6">
+      <div class="flex justify-between text-xs text-gray mb-1">
+        <span>Safety Score</span>
+        <span>${currentScore}% <i data-lucide="arrow-right" class="w-3 h-3 inline"></i> <span class="text-insurance-gold font-bold">${scoreWithInsurance}%</span></span>
+      </div>
+      <div class="w-full bg-beige-200 rounded-full h-2.5 overflow-hidden">
+        <div class="h-full rounded-full bg-insurance-gold score-preview-bar" style="width: ${currentScore}%" id="score-bar-5"></div>
+      </div>
+    </div>
+
+    <button onclick="purchaseInsurance()" id="insurance-cta"
+            class="w-full bg-insurance-gold hover:bg-insurance-gold-dark text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition-colors text-lg">
+      Add Insurance — $29.99/mo
+    </button>
+
+    <button onclick="goToStep(6)" class="w-full mt-3 text-sm text-gray hover:text-dark transition-colors text-center py-2">
+      Skip
+    </button>
+  `;
+}
+
+
+// STEP 6: Complete / Celebration
+function renderStep6() {
+  const name = RegState.pet.name || 'Your Pet';
+  const finalScore = calculateScore();
+  const tier = getProtectionTier(finalScore);
+  const circumference = 2 * Math.PI * 54;
+  const p = RegState.purchases;
+
+  // Determine ring color based on tier (using extended palette)
+  let ringColor = '#3995c6'; // blue-500
+  if (finalScore >= 95) ringColor = '#D74242'; // primary
+  else if (finalScore >= 80) ringColor = '#3995c6'; // blue-500
+  else if (finalScore >= 65) ringColor = '#d49d35'; // yellow-500
+
+  // Build checklist
+  let protections = [
+    { label: 'Digital Care ID', active: true },
+    { label: 'Email Alerts', active: true },
+  ];
+  if (p.advancedProtection) {
+    protections.push({ label: 'SMS & Call Alerts', active: true });
+    protections.push({ label: 'Lost Pet Network', active: true });
+    protections.push({ label: 'GPS Location', active: true });
+  }
+  if (p.teleVet) protections.push({ label: '24/7 Vet Access', active: true });
+  if (p.insurance) protections.push({ label: 'Insurance Coverage', active: true });
+
+  return `
+    <div class="text-center">
+      <!-- Score Ring -->
+      <div class="relative w-40 h-40 mx-auto mb-4">
+        <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#f6f1ec" stroke-width="8" />
+          <circle class="score-ring-circle" cx="60" cy="60" r="54" fill="none"
+                  stroke="${ringColor}" stroke-width="8" stroke-linecap="round"
+                  stroke-dasharray="${circumference}"
+                  stroke-dashoffset="${circumference}"
+                  id="score-ring-6" />
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <span class="text-4xl font-bold text-dark" id="score-number-6">0%</span>
+          <span class="${tier.color} text-xs font-bold bounce-in" style="animation-delay: 1.5s">${tier.name}</span>
+        </div>
+      </div>
+
+      <h1 class="text-2xl font-bold text-dark mb-2">${name}'s GeniusTag is active!</h1>
+      <p class="text-sm text-gray mb-6">Your pet is now protected by GeniusPet.</p>
+
+      <!-- Protections checklist -->
+      <div class="bg-beige-200 rounded-2xl p-4 mb-6 text-left">
+        <p class="text-xs font-bold text-gray uppercase tracking-wider mb-3">What's protecting ${name}</p>
+        <div class="space-y-2.5">
+          ${protections.map(item => `
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-vet-teal flex-shrink-0"></i>
+              <span class="text-sm text-dark">${item.label}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      ${(!p.advancedProtection && !p.teleVet && !p.insurance) ? `
+        <div class="bg-tint-blue rounded-xl p-3 mb-6 text-left">
+          <p class="text-xs text-tag-blue"><span class="font-semibold">Complete ${name}'s profile to improve your Safety Score.</span> Head to your dashboard to add health info, emergency contacts, and more.</p>
+        </div>
+      ` : `
+        <div class="bg-tint-teal rounded-xl p-3 mb-6 text-left">
+          <p class="text-xs text-vet-teal"><span class="font-semibold">Want an even higher score?</span> Complete ${name}'s health info and emergency contacts on your dashboard.</p>
+        </div>
+      `}
+
+      <button onclick="completeRegistration()"
+              class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition-colors text-lg">
+        Go to ${name}'s Dashboard
+        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+      </button>
+    </div>
+  `;
+}
+
+
+// ============================================
+// STEP NAVIGATION
+// ============================================
+
+function completeStep1() {
+  RegState.pet.basicComplete = true;
+  goToStep(2);
+}
+
+function skipToDownsell() {
+  // User skipped annual — show quarterly downsell
+  goToStep(3);
+}
+
+function goToStep(step) {
+  if (step < 1 || step > RegState.totalSteps) return;
+
+  // Validate current step before moving forward
+  if (step > RegState.currentStep && !validateCurrentStep()) return;
+
+  // Complete basics on leaving step 1
+  if (RegState.currentStep === 1 && step > 1) {
+    RegState.pet.basicComplete = true;
+  }
+
+  RegState.direction = step > RegState.currentStep ? 'forward' : 'back';
+  RegState.currentStep = step;
+  renderCurrentStep();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  if (RegState.currentStep <= 1) return;
+
+  // If we're on step 4 and annual was purchased, go back to step 2 (skip downsell)
+  if (RegState.currentStep === 4 && RegState.annualPurchased) {
+    goToStep(2);
+    return;
+  }
+
+  goToStep(RegState.currentStep - 1);
+}
+
+function renderCurrentStep() {
+  const container = document.getElementById('step-container');
+  const stepRenderers = {
+    1: renderStep1,
+    2: renderStep2,
+    3: renderStep3,
+    4: renderStep4,
+    5: renderStep5,
+    6: renderStep6,
+  };
+
+  const renderer = stepRenderers[RegState.currentStep];
+  if (!renderer) return;
+
+  const animClass = RegState.direction === 'forward' ? 'step-enter' : 'step-enter-back';
+  container.innerHTML = `<div class="${animClass}">${renderer()}</div>`;
+
+  // Re-init icons
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  // Step-specific post-render logic
+  if (RegState.currentStep === 2) {
+    // Set up sticky CTA for Step 2
+    setTimeout(setupStickyCTA, 100);
+  } else {
+    // Hide sticky CTA on all other steps
+    hideStickyCTA();
+  }
+  if (RegState.currentStep === 4) {
+    setTimeout(() => animateScoreBar('score-bar-4', calculateScore() + 15), 500);
+  }
+  if (RegState.currentStep === 5) {
+    setTimeout(() => animateScoreBar('score-bar-5', calculateScore() + 15), 500);
+  }
+  if (RegState.currentStep === 6) {
+    setTimeout(() => animateScoreRing('score-ring-6', calculateScore()), 300);
+    setTimeout(() => animateScoreNumber('score-number-6', calculateScore()), 300);
+    setTimeout(() => launchConfetti(), 200);
+  }
+}
+
+// Sticky CTA setup using IntersectionObserver
+let stickyCTAObservers = [];
+
+function setupStickyCTA() {
+  const socialProof = document.getElementById('social-proof-trigger');
+  const inlineCTA = document.getElementById('inline-cta-section');
+  const stickyCTA = document.getElementById('sticky-cta');
+  const stickyPetName = document.getElementById('sticky-pet-name');
+
+  if (!stickyCTA) return;
+
+  // Update pet name in sticky CTA
+  if (stickyPetName) {
+    stickyPetName.textContent = RegState.pet.name || 'Your Pet';
+  }
+
+  // Clean up previous observers
+  stickyCTAObservers.forEach(obs => obs.disconnect());
+  stickyCTAObservers = [];
+
+  // If not on step 2, hide and don't set up observers
+  if (RegState.currentStep !== 2 || !socialProof) {
+    stickyCTA.classList.remove('visible');
+    return;
+  }
+
+  // Show when social proof scrolls out of view (user scrolled down)
+  const showObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting && RegState.currentStep === 2) {
+        stickyCTA.classList.add('visible');
+      } else {
+        stickyCTA.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0, rootMargin: '-80px 0px 0px 0px' });
+
+  // Hide when inline CTA is visible (user reached bottom)
+  const hideObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        stickyCTA.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  showObserver.observe(socialProof);
+  stickyCTAObservers.push(showObserver);
+
+  if (inlineCTA) {
+    hideObserver.observe(inlineCTA);
+    stickyCTAObservers.push(hideObserver);
+  }
+}
+
+function hideStickyCTA() {
+  const stickyCTA = document.getElementById('sticky-cta');
+  if (stickyCTA) stickyCTA.classList.remove('visible');
+  stickyCTAObservers.forEach(obs => obs.disconnect());
+  stickyCTAObservers = [];
+}
+
+function updateProgress() {
+  const step = RegState.currentStep;
+  const visible = getVisibleSteps();
+  const currentIdx = visible.indexOf(step);
+  const totalDots = visible.length;
+
+  // Build progress dots dynamically
+  const dotsContainer = document.getElementById('progress-dots');
+  if (!dotsContainer) return;
+
+  let html = '';
+  for (let i = 0; i < totalDots; i++) {
+    // Dot
+    let dotClass = 'progress-dot upcoming';
+    if (i < currentIdx) dotClass = 'progress-dot completed';
+    else if (i === currentIdx) dotClass = 'progress-dot active';
+
+    html += `<div class="${dotClass}"></div>`;
+
+    // Connector between dots (not after the last)
+    if (i < totalDots - 1) {
+      const connectorColor = i < currentIdx ? 'bg-primary' : 'bg-gray-200';
+      html += `<div class="progress-connector ${connectorColor}"></div>`;
+    }
+  }
+  dotsContainer.innerHTML = html;
+
+  // Update label
+  const label = document.getElementById('step-label');
+  if (label) label.textContent = getStepLabel(step);
+
+  // Show/hide back button (hide on step 1 and step 6/complete)
+  const backBtn = document.getElementById('back-btn');
+  if (backBtn) {
+    backBtn.style.visibility = (step > 1 && step < 6) ? 'visible' : 'hidden';
+  }
+}
+
+function validateCurrentStep() {
+  if (RegState.currentStep === 1) {
+    const p = RegState.pet;
+    return p.name.trim() && p.breed.trim() && p.age && p.weight;
+  }
+  return true; // all other steps are optional/upsell
+}
+
+function checkStep1Valid() {
+  const btn = document.getElementById('step1-continue');
+  if (!btn) return;
+  const valid = validateCurrentStep();
+  btn.disabled = !valid;
+  btn.classList.toggle('opacity-50', !valid);
+  btn.classList.toggle('pointer-events-none', !valid);
+  btn.classList.toggle('hover:bg-primary-dark', valid);
+
+  // Update CTA text with pet name
+  const name = RegState.pet.name;
+  if (name && btn) {
+    btn.innerHTML = `Activate ${name}'s Tag <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+}
+
+
+// ============================================
+// PURCHASE HANDLERS
+// ============================================
+
+function purchaseAdvancedAnnual() {
+  const btn = document.getElementById('advanced-cta');
+  if (!btn) return;
+
+  // Show processing state
+  btn.innerHTML = '<div class="spinner" style="border-top-color: #3995c6;"></div>';
+  btn.classList.add('pointer-events-none');
+
+  setTimeout(() => {
+    RegState.purchases.advancedProtection = true;
+    RegState.purchases.advancedPlan = 'annual';
+    RegState.annualPurchased = true;
+
+    // Show success
+    btn.innerHTML = '<i data-lucide="check" class="w-6 h-6 text-tag-blue"></i> <span class="text-tag-blue">Activated!</span>';
+    btn.className = 'w-full bg-tint-blue border-2 border-tag-blue/30 font-bold py-4 rounded-xl flex items-center justify-center gap-2';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Skip downsell (step 3), go straight to TeleVet (step 4)
+    setTimeout(() => goToStep(4), 1000);
+  }, 1200);
+}
+
+function purchaseAdvancedQuarterly() {
+  const btn = document.getElementById('quarterly-cta');
+  if (!btn) return;
+
+  btn.innerHTML = '<div class="spinner"></div>';
+  btn.classList.add('pointer-events-none');
+
+  setTimeout(() => {
+    RegState.purchases.advancedProtection = true;
+    RegState.purchases.advancedPlan = 'quarterly';
+
+    // Show success
+    btn.innerHTML = '<i data-lucide="check" class="w-6 h-6"></i> Activated!';
+    btn.className = 'w-full bg-vet-teal text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Go to TeleVet (step 4)
+    setTimeout(() => goToStep(4), 1000);
+  }, 1200);
+}
+
+function purchaseTeleVet() {
+  const btn = document.getElementById('televet-cta');
+  if (!btn) return;
+
+  btn.innerHTML = '<div class="spinner" style="border-top-color: white;"></div>';
+  btn.classList.add('pointer-events-none');
+
+  setTimeout(() => {
+    RegState.purchases.teleVet = true;
+    btn.innerHTML = '<i data-lucide="check" class="w-6 h-6"></i> Added!';
+    btn.className = 'w-full bg-vet-teal text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 opacity-80';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    setTimeout(() => goToStep(5), 1000);
+  }, 1200);
+}
+
+function purchaseInsurance() {
+  const btn = document.getElementById('insurance-cta');
+  if (!btn) return;
+
+  btn.innerHTML = '<div class="spinner" style="border-top-color: white;"></div>';
+  btn.classList.add('pointer-events-none');
+
+  setTimeout(() => {
+    RegState.purchases.insurance = true;
+    btn.innerHTML = '<i data-lucide="check" class="w-6 h-6"></i> Added!';
+    btn.className = 'w-full bg-insurance-gold text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 opacity-80';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    setTimeout(() => goToStep(6), 1000);
+  }, 1200);
+}
+
+// ============================================
+// PHOTO UPLOAD
+// ============================================
+
+function handlePhotoUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    // Resize to save localStorage space
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const size = 200;
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const scale = Math.max(size / img.width, size / img.height);
+      const x = (size - img.width * scale) / 2;
+      const y = (size - img.height * scale) / 2;
+      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+      RegState.pet.photo = canvas.toDataURL('image/jpeg', 0.7);
+      RegState.pet.hasPhoto = true;
+      renderCurrentStep();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+function animateScoreRing(elementId, targetScore) {
+  const circle = document.getElementById(elementId);
+  if (!circle) return;
+  const circumference = 2 * Math.PI * 54;
+  const offset = circumference - (targetScore / 100) * circumference;
+  circle.style.strokeDashoffset = offset;
+}
+
+function animateScoreBar(elementId, targetScore) {
+  const bar = document.getElementById(elementId);
+  if (!bar) return;
+  bar.style.width = Math.min(targetScore, 100) + '%';
+}
+
+function animateScoreNumber(elementId, targetScore) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  let current = 0;
+  const duration = 1500;
+  const increment = targetScore / (duration / 16);
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= targetScore) {
+      current = targetScore;
+      clearInterval(timer);
+    }
+    el.textContent = Math.round(current) + '%';
+  }, 16);
+}
+
+function launchConfetti() {
+  const colors = ['#D74242', '#3995c6', '#2e8a7b', '#d49d35', '#866ca7', '#f6f1ec'];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.top = '-20px';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animation = `confettiFall ${2 + Math.random() * 2}s ease-in ${Math.random() * 0.5}s forwards`;
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (6 + Math.random() * 8) + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
+}
+
+// ============================================
+// LOCALSTORAGE INTEGRATION
+// ============================================
+
+function completeRegistration() {
+  const p = RegState.pet;
+  const purchases = RegState.purchases;
+
+  // Read existing state
+  let existingState = {};
+  try {
+    existingState = JSON.parse(localStorage.getItem('geniuspet_state') || '{}');
+  } catch(e) {}
+
+  // Create new pet object matching dashboard schema
+  // Profile fields (health, contacts, behavior) are empty — dashboard roadmap handles them
+  const newPet = {
+    id: Date.now(),
+    name: p.name,
+    photo: p.photo || `https://via.placeholder.com/200?text=${encodeURIComponent(p.name[0] || 'P')}`,
+    breed: p.breed,
+    age: p.age,
+    sex: 'Unknown',
+    weight: p.weight ? p.weight + ' lbs' : 'Unknown',
+    color: '',
+    microchipId: '',
+    hasPhoto: p.hasPhoto,
+    basicComplete: true,
+    healthInfoComplete: false,
+    behaviorComplete: false,
+    emergencyContacts: [],
+    kidFriendly: null,
+    okayWithPets: null,
+    spayedNeutered: null,
+    rabiesVaccine: null,
+    allergies: '',
+    medicalIssues: '',
+    medications: '',
+    foodPreferences: '',
+    routines: '',
+    environment: '',
+    comfort: '',
+    preferences: '',
+    emailAlertsEnabled: true,
+    smsAlertsEnabled: purchases.advancedProtection,
+    phoneCallAlertsEnabled: purchases.advancedProtection,
+    lostPetNetworkActive: purchases.advancedProtection,
+    gpsEnabled: purchases.advancedProtection,
+    totalScans: 0,
+    lastScan: null,
+    tagRegistered: new Date().toISOString().split('T')[0],
+    tagId: 'GP-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 999999)).padStart(6, '0'),
+  };
+
+  // Build user state
+  const user = existingState.user || {
+    id: 1, name: 'New User', firstName: 'there', email: '', phone: '',
+    memberSince: new Date().toISOString().split('T')[0],
+    plan: 'free', phoneVerified: true,
+    hasTeleVet: false, hasInsurance: false, hasRx: false,
+  };
+
+  if (purchases.advancedProtection) {
+    user.plan = 'advanced';
+    user.advancedPlan = purchases.advancedPlan; // 'annual' or 'quarterly'
+  }
+  if (purchases.teleVet) user.hasTeleVet = true;
+  if (purchases.insurance) user.hasInsurance = true;
+
+  // Build pets array
+  const pets = existingState.pets || [];
+  pets.unshift(newPet);
+
+  // Save to localStorage
+  localStorage.setItem('geniuspet_state', JSON.stringify({
+    user: user,
+    pets: pets,
+    activePetId: newPet.id,
+    tourCompleted: true,
+    currentPage: 'dashboard',
+  }));
+
+  // Also suppress tour
+  localStorage.setItem('geniuspet_tour_completed', 'true');
+
+  // Navigate to dashboard
+  window.location.href = 'index.html#/';
+}
+
+function exitRegistration() {
+  if (RegState.currentStep > 1) {
+    if (confirm('Leave registration? Your progress won\'t be saved.')) {
+      window.location.href = 'index.html#/welcome';
+    }
+  } else {
+    window.location.href = 'index.html#/welcome';
+  }
+}
+
+// ============================================
+// INIT
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+  renderCurrentStep();
+  updateProgress();
+});
+</script>
+
+</body>
+</html>

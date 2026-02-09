@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Lost My Dog for 72 Hours. What I Discovered Could Save Your Best Friend's Life.</title>
+
+    <style>
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-size: 18px;
+            line-height: 1.7;
+            color: #222;
+            background-color: #fff;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: #1a0dab;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* News Article Typography */
+        h1 {
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        h3 {
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: #1a1a1a;
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Urgency Banner */
+        .urgency-banner {
+            background: #b91c1c;
+            color: #fff;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .urgency-banner strong {
+            font-weight: 700;
+        }
+
+        .urgency-timer {
+            display: inline-block;
+            background: rgba(0,0,0,0.2);
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-weight: 700;
+            margin-left: 8px;
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+        /* News Header */
+        .news-header {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+
+        .news-header__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .news-section {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .news-date {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .article-category {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b91c1c;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 1rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .article-meta__author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .article-meta__date {
+            color: #666;
+        }
+
+        .article-meta__reading-time {
+            color: #666;
+        }
+
+        /* Subtitle / Deck */
+        .article-deck {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            color: #444;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Featured Image */
+        .featured-image {
+            margin: 2rem 0;
+        }
+
+        .featured-image img {
+            width: 100%;
+            border-radius: 0;
+        }
+
+        .featured-image__caption {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Article Body */
+        .article-body {
+            padding: 20px 0;
+        }
+
+        .article-body p {
+            font-size: 1.1rem;
+        }
+
+        .article-body ul, .article-body ol {
+            margin: 1.25rem 0 1.25rem 2rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Drop Cap */
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Pull Quote */
+        .pullquote {
+            margin: 2.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 3px solid #1a1a1a;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .pullquote p {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            font-style: italic;
+            color: #1a1a1a;
+            margin-bottom: 0;
+        }
+
+        /* Statistics Box */
+        .stat-box {
+            background: #f7f7f7;
+            border-left: 4px solid #b91c1c;
+            padding: 25px 30px;
+            margin: 2rem 0;
+        }
+
+        .stat-box__title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b91c1c;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .stat-box__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item__number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #b91c1c;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .stat-item__label {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        .comparison-table th {
+            background: #f7f7f7;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .comparison-table .check-yes {
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .comparison-table .check-no {
+            color: #dc2626;
+        }
+
+        /* Inline Image */
+        .inline-image {
+            margin: 2rem 0;
+        }
+
+        .inline-image img {
+            width: 100%;
+        }
+
+        .inline-image__caption {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* CTA Box - Styled like a news promotion */
+        .cta-box {
+            background: #fef2f2;
+            border: 2px solid #b91c1c;
+            padding: 30px;
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .cta-box__eyebrow {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b91c1c;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cta-box__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .cta-box__text {
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .cta-box__button {
+            display: inline-block;
+            background: #b91c1c;
+            color: #fff;
+            padding: 14px 32px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 0;
+            transition: background 0.2s ease;
+        }
+
+        .cta-box__button:hover {
+            background: #991b1b;
+            text-decoration: none;
+        }
+
+        .cta-box__guarantee {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        /* Testimonial - News Style */
+        .testimonial {
+            background: #f7f7f7;
+            padding: 25px 30px;
+            margin: 2rem 0;
+            border-left: 4px solid #1a1a1a;
+        }
+
+        .testimonial__text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .testimonial__author {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .testimonial__author strong {
+            color: #1a1a1a;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            padding: 20px 25px;
+            margin: 2rem 0;
+        }
+
+        .info-box__title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            font-size: 1rem;
+            margin-bottom: 0;
+            color: #78350f;
+        }
+
+        /* Related Articles Footer */
+        .article-footer {
+            border-top: 1px solid #e5e5e5;
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .article-footer__cta {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .article-footer__cta-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .article-footer__cta-text {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .article-footer__cta-button {
+            display: inline-block;
+            background: #b91c1c;
+            color: #fff;
+            padding: 14px 32px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .article-footer__cta-button:hover {
+            background: #991b1b;
+            text-decoration: none;
+        }
+
+        /* Sticky Bottom CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e5e5e5;
+            padding: 12px 20px;
+            display: none;
+            z-index: 99;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sticky-cta.visible {
+            display: block;
+        }
+
+        .sticky-cta__inner {
+            max-width: 680px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .sticky-cta__text {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color: #1a1a1a;
+        }
+
+        .sticky-cta__text strong {
+            color: #b91c1c;
+        }
+
+        .sticky-cta__button {
+            background: #b91c1c;
+            color: #fff;
+            padding: 10px 24px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .sticky-cta__button:hover {
+            background: #991b1b;
+            text-decoration: none;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            background: #f7f7f7;
+            border-top: 1px solid #e5e5e5;
+            padding: 30px 20px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .stat-box__grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .drop-cap::first-letter {
+                font-size: 3.5rem;
+            }
+
+            .sticky-cta__inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .sticky-cta__button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .comparison-table {
+                font-size: 12px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Urgency Banner -->
+    <div class="urgency-banner">
+        <strong>Limited Time Offer:</strong> Get a FREE Smart Pet ID Tag — Just Pay Shipping
+        <span class="urgency-timer" id="timer">07:00:00</span>
+    </div>
+
+    <!-- News Header -->
+    <header class="news-header">
+        <div class="container">
+            <div class="news-header__inner">
+                <span class="news-section">Pet Safety Report</span>
+                <span class="news-date">January 30, 2026</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Article -->
+    <main>
+        <article>
+            <!-- Article Header -->
+            <header class="article-header">
+                <div class="container">
+                    <div class="article-category">Investigative Report</div>
+                    <h1>I Lost My Dog for 72 Hours. What I Discovered Could Save Your Best Friend's Life.</h1>
+                    <p class="article-deck">10 million pets vanish every year. Most never come home. Here's the breakthrough technology that reunites families in hours — not weeks.</p>
+                    <div class="article-meta">
+                        <span class="article-meta__author">By Dr. Rebecca Martinez, DVM</span>
+                        <span class="article-meta__date">Published Jan. 30, 2026</span>
+                        <span class="article-meta__reading-time">8 min read</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Featured Image -->
+            <div class="featured-image">
+                <div class="container">
+                    <img src="Product Images/GeniusTag/Frame 1437254355(1).jpg" alt="Smart Pet ID Tag with QR code technology">
+                    <p class="featured-image__caption">The GeniusTag smart pet ID tag uses QR code technology to instantly notify owners when their lost pet is found. (Photo: GeniusPet)</p>
+                </div>
+            </div>
+
+            <!-- Article Body -->
+            <div class="article-body">
+                <div class="container">
+                    <p class="drop-cap"><strong>Her name was Bella.</strong> A 4-year-old golden retriever with the softest ears and a habit of stealing socks. Three years ago, she slipped out of my backyard during a thunderstorm. The gate latch had rusted without me noticing. By the time I realized she was gone, she had already vanished into the rain.</p>
+
+                    <p>What followed were the longest 72 hours of my life. I drove through neighborhoods at 2 AM. I printed 500 flyers. I called every shelter within 50 miles. I barely slept, barely ate, and couldn't stop the thoughts: <em>Is she hurt? Is she scared? Will I ever see her again?</em></p>
+
+                    <p>Bella came home. A kind stranger found her hiding under a porch two miles away. But during those three days, I discovered something that changed everything about how I approach pet safety.</p>
+
+                    <p>After 15 years as a veterinary behavior specialist, I thought I knew everything about keeping pets safe. I was wrong. And the statistics I uncovered haunted me: <strong>1 in 3 pets will become lost at some point in their lifetime.</strong> That's not a number on a page — it's millions of families experiencing the same terror I felt.</p>
+
+                    <div class="pullquote">
+                        <p>"The moment a pet goes missing, every second counts. The difference between a happy reunion and a permanent separation often comes down to one thing: how quickly you can be notified and take action."</p>
+                    </div>
+
+                    <h2>The Heartbreaking Numbers</h2>
+
+                    <p>When I began researching lost pet statistics, what I discovered was alarming. The scale of this crisis is far greater than most people realize.</p>
+
+                    <div class="stat-box">
+                        <div class="stat-box__title">By The Numbers</div>
+                        <div class="stat-box__grid">
+                            <div class="stat-item">
+                                <div class="stat-item__number">10M</div>
+                                <div class="stat-item__label">Pets go missing every year in the US</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-item__number">1 in 3</div>
+                                <div class="stat-item__label">Pets will become lost in their lifetime</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-item__number">22%</div>
+                                <div class="stat-item__label">Of lost shelter dogs are reunited</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>These numbers haunted me. As someone who has dedicated their career to animal welfare, I couldn't accept that this was just "how things are." There had to be a better way.</p>
+
+                    <h2>Why Traditional Methods Are Failing Our Pets</h2>
+
+                    <p>For decades, we've relied on two main methods to identify lost pets: engraved tags and microchips. Both have their place, but both have critical limitations that leave our pets vulnerable.</p>
+
+                    <p><strong>Engraved tags</strong> wear down over time. The information becomes illegible. And they only work if someone can read them and wants to call you — there's no way to know your pet has been found until a stranger decides to reach out.</p>
+
+                    <p><strong>Microchips</strong> are better, but they require a trip to a vet's office with a specialized scanner. In the crucial first hours when your pet is most likely to be found, this creates a significant barrier. Most good samaritans don't have time to visit a vet — they need a way to help immediately.</p>
+
+                    <div class="testimonial">
+                        <p class="testimonial__text">"I've seen pets with microchips spend weeks in shelters because no one scanned them. The technology exists to identify them — it's just not accessible enough when it matters most."</p>
+                        <p class="testimonial__author">— <strong>Dr. Michael Chen, DVM</strong>, Emergency Veterinarian</p>
+                    </div>
+
+                    <h2>The Breakthrough I Wish I'd Known About Sooner</h2>
+
+                    <p>Six months ago, a colleague introduced me to something that changed my entire perspective on pet safety. It's called <strong>GeniusTag</strong> — and it represents the most significant advancement in lost pet recovery I've seen in my career.</p>
+
+                    <p>Unlike traditional ID tags, GeniusTag uses smart technology that works with any smartphone. When someone finds your pet, they simply scan the unique QR code with their phone's camera. No app download required. No vet visit needed. Just an instant connection.</p>
+
+                    <p><strong>Here's what happens the moment someone scans your pet's tag:</strong></p>
+
+                    <ul>
+                        <li>You receive an <strong>instant SMS and email notification</strong> that your pet has been found</li>
+                        <li>The finder sees your pet's important care information (medications, dietary needs, temperament)</li>
+                        <li>You get the <strong>GPS location</strong> of where your pet was scanned</li>
+                        <li>Direct two-way communication is established — without sharing your personal phone number</li>
+                    </ul>
+
+                    <p>But what truly sets GeniusTag apart is what happens when you mark your pet as missing. With a few taps, you can instantly alert their entire <strong>Nation Alert Network</strong> — including local shelters, humane societies, and thousands of community members in your area.</p>
+
+                    <h2>How It Compares to Traditional Methods</h2>
+
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>GeniusTag</th>
+                                    <th>Microchip</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Instant notification when pet is found</td>
+                                    <td class="check-yes">Yes</td>
+                                    <td class="check-no">No</td>
+                                </tr>
+                                <tr>
+                                    <td>GPS location when scanned</td>
+                                    <td class="check-yes">Yes</td>
+                                    <td class="check-no">No</td>
+                                </tr>
+                                <tr>
+                                    <td>Works with any smartphone</td>
+                                    <td class="check-yes">Yes</td>
+                                    <td class="check-no">No</td>
+                                </tr>
+                                <tr>
+                                    <td>Share medical & care information</td>
+                                    <td class="check-yes">Yes</td>
+                                    <td class="check-no">No</td>
+                                </tr>
+                                <tr>
+                                    <td>Alert local shelters & community</td>
+                                    <td class="check-yes">Yes</td>
+                                    <td class="check-no">No</td>
+                                </tr>
+                                <tr>
+                                    <td>No batteries or charging required</td>
+                                    <td class="check-yes">Yes</td>
+                                    <td class="check-yes">Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>Real Stories From Pet Parents</h2>
+
+                    <div class="testimonial">
+                        <p class="testimonial__text">"Our golden retriever Max got out during a thunderstorm — his biggest fear. Within 2 hours, I got a notification that someone had scanned his tag. They were only 3 blocks away. Without GeniusTag, I don't know if we ever would have found him. He was terrified and hiding under a porch. This little tag saved our family."</p>
+                        <p class="testimonial__author">— <strong>Sarah J.</strong>, Denver, CO</p>
+                    </div>
+
+                    <div class="testimonial">
+                        <p class="testimonial__text">"My indoor cat Mochi slipped out through a screen door I didn't know was broken. I was devastated. But within 24 hours of activating the lost pet alert, a neighbor who had seen the notification on their phone recognized her. Mochi is home safe, and I'll never be without GeniusTag again."</p>
+                        <p class="testimonial__author">— <strong>Amanda L.</strong>, Austin, TX</p>
+                    </div>
+
+                    <h2>The Cost of Waiting</h2>
+
+                    <div class="info-box">
+                        <div class="info-box__title">What You Risk Without Instant Notification</div>
+                        <p><strong>Without instant notifications</strong>, you won't know your pet has been found until a stranger decides to call you — if they can read your worn tag at all. <strong>Without GPS location</strong>, even if someone finds your pet, you have no idea where they are. <strong>Without medical info sharing</strong>, a finder might give your diabetic pet the wrong food. The average cost of searching for a lost pet? <strong>$300-$1,000+</strong> in flyers, gas, and lost work time. The emotional cost? Immeasurable.</p>
+                    </div>
+
+                    <p>Compare this to the alternatives: GPS pet trackers cost $200-400 plus $10-15/month in subscription fees. Microchipping costs $50-100 and requires a scanner to work.</p>
+
+                    <p><strong>GeniusTag is currently available for free — you just pay shipping.</strong></p>
+
+                    <div class="cta-box">
+                        <div class="cta-box__eyebrow">Limited Time Offer</div>
+                        <div class="cta-box__title">Get Your FREE GeniusTag Today</div>
+                        <p class="cta-box__text">Right now, while you're reading this, 1,140 pets will go missing in the next hour alone. Don't let yours be one of them.</p>
+                        <a href="https://geniuspet.com" class="cta-box__button">Claim Your Free Tag Now</a>
+                        <p class="cta-box__guarantee">Free Shipping | 30-Day Money-Back Guarantee | Setup in 4 Minutes</p>
+                    </div>
+
+                    <h2>How It Works</h2>
+
+                    <p>Setup takes less than 4 minutes:</p>
+
+                    <ol>
+                        <li><strong>Attach the Tag:</strong> Clip the durable, waterproof GeniusTag to your pet's collar. It's designed to withstand swimming, digging, and playing in the rain.</li>
+                        <li><strong>Create Your Pet's Profile:</strong> Register with your pet's photo, medical information, and contact details. You control exactly what finders can see.</li>
+                        <li><strong>Get Instant Alerts:</strong> If someone finds your pet and scans the QR code, you're notified immediately with their location.</li>
+                        <li><strong>Mobilize Your Community:</strong> Activate the Nation Alert Network to notify local shelters and community members instantly.</li>
+                    </ol>
+
+                    <h2>Frequently Asked Questions</h2>
+
+                    <h3>How is this different from a microchip?</h3>
+                    <p>Microchips require a special scanner (usually at a vet's office) to read. GeniusTag works instantly with any smartphone — no special equipment needed. We recommend using both for maximum protection.</p>
+
+                    <h3>Is my personal information safe?</h3>
+                    <p>Yes. Your phone number and address are never displayed on the tag. All communication happens through a secure platform.</p>
+
+                    <h3>Does the tag require batteries?</h3>
+                    <p>No. GeniusTag uses passive QR code and NFC technology — it's always ready and will never need charging or battery replacement.</p>
+
+                    <h3>Is there a subscription fee?</h3>
+                    <p>No monthly fees for basic features. The core lost & found functionality works forever with a one-time purchase.</p>
+
+                    <div class="pullquote">
+                        <p>"As a vet, I now recommend GeniusTag to every single pet parent in my practice. Microchips are great, but they're useless if no one can get your pet to a scanner. GeniusTag works the moment your pet is found."</p>
+                    </div>
+
+                    <p><em>Dr. Rebecca Martinez is a veterinary behavior specialist with 15 years of experience. She practices in San Diego, California, where she lives with her golden retriever Bella and two rescue cats.</em></p>
+
+                </div>
+            </div>
+
+            <!-- Article Footer CTA -->
+            <div class="article-footer">
+                <div class="article-footer__cta">
+                    <div class="container">
+                        <div class="article-footer__cta-title">Your Best Friend Is Counting on You</div>
+                        <p class="article-footer__cta-text">Don't wait until it's too late. Get protected today.</p>
+                        <a href="https://geniuspet.com" class="article-footer__cta-button">Get Your FREE GeniusTag</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Pet Safety Report. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p style="margin-top: 10px; color: #999;">This article contains affiliate links. We may receive compensation when you click on links to products.</p>
+        </div>
+    </footer>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta" id="stickyCta">
+        <div class="sticky-cta__inner">
+            <div class="sticky-cta__text">
+                <strong>FREE Smart Pet Tag</strong> — Limited Time Offer
+            </div>
+            <a href="https://geniuspet.com" class="sticky-cta__button">Claim Yours</a>
+        </div>
+    </div>
+
+    <script>
+        // Sticky CTA on scroll
+        const stickyCta = document.getElementById('stickyCta');
+        const articleHeader = document.querySelector('.article-header');
+
+        window.addEventListener('scroll', () => {
+            const headerBottom = articleHeader.offsetTop + articleHeader.offsetHeight;
+            if (window.scrollY > headerBottom + 300) {
+                stickyCta.classList.add('visible');
+            } else {
+                stickyCta.classList.remove('visible');
+            }
+        });
+
+        // Countdown Timer - Starting from 7 hours
+        function initTimer() {
+            // Calculate 7 hours from now
+            const now = new Date();
+            const endTime = new Date(now.getTime() + (7 * 60 * 60 * 1000));
+
+            // Store in localStorage to persist across page loads
+            if (!localStorage.getItem('geniusTagTimerEnd')) {
+                localStorage.setItem('geniusTagTimerEnd', endTime.getTime());
+            }
+
+            updateTimer();
+        }
+
+        function updateTimer() {
+            const timer = document.getElementById('timer');
+            const endTime = parseInt(localStorage.getItem('geniusTagTimerEnd'));
+            const now = new Date().getTime();
+            const timeLeft = endTime - now;
+
+            if (timeLeft <= 0) {
+                // Reset timer when it expires
+                const newEndTime = new Date().getTime() + (7 * 60 * 60 * 1000);
+                localStorage.setItem('geniusTagTimerEnd', newEndTime);
+                updateTimer();
+                return;
+            }
+
+            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            timer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Initialize timer
+        initTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
