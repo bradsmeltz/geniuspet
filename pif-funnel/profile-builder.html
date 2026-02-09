@@ -347,7 +347,7 @@
         <!-- Step indicator - subtle top bar -->
         <div class="bg-blue-lightest border-b border-blue-light/30 px-4 py-2.5 transition-all duration-500" id="hero-step-label">
           <p class="text-center text-xs font-medium text-blue-dark flex items-center justify-center gap-2 transition-all duration-500" id="hero-step-text">
-            <span class="w-5 h-5 bg-blue-primary text-white rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-500" id="hero-step-badge">1</span>
+            <span class="w-5 h-5 bg-blue-primary text-white rounded-full flex items-center justify-center text-xs font-bold transition-all duration-500" id="hero-step-badge">1</span>
             <span id="hero-step-message">Tell us about your pet</span>
           </p>
         </div>
@@ -391,7 +391,7 @@
             <input type="file" id="pet-photo" class="photo-upload__input" accept="image/*">
           </div>
           <!-- Photo encouragement text -->
-          <p class="text-[11px] text-neutral-medium mb-4" id="photo-hint">📸 Helps people recognize your pet instantly</p>
+          <p class="text-xs text-neutral-medium mb-4" id="photo-hint">📸 Helps people recognize your pet instantly</p>
 
           <!-- Pet Name - Required -->
           <div class="mb-4" id="name-container">
@@ -477,13 +477,13 @@
             <div class="flex items-center justify-between py-3 border-b border-beige-light">
               <div class="flex flex-col">
                 <span class="text-sm text-neutral-medium">Kid-friendly</span>
-                <span class="text-[10px] text-neutral-light toggle-status" id="kid-friendly-status">Not specified</span>
+                <span class="text-xs text-neutral-light toggle-status" id="kid-friendly-status">Not specified</span>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="kid-friendly" class="sr-only peer" data-on-text="Yes, I'm kid-friendly!" data-off-text="Not specified">
                 <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
                 <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
-                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                  <span class="toggle-text text-xs font-bold text-red-dark transition-colors">No</span>
                 </div>
               </label>
             </div>
@@ -492,13 +492,13 @@
             <div class="flex items-center justify-between py-3 border-b border-beige-light">
               <div class="flex flex-col">
                 <span class="text-sm text-neutral-medium">Okay with Other Pets</span>
-                <span class="text-[10px] text-neutral-light toggle-status" id="other-pets-status">Not specified</span>
+                <span class="text-xs text-neutral-light toggle-status" id="other-pets-status">Not specified</span>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="other-pets" class="sr-only peer" data-on-text="Yes, I love other pets!" data-off-text="Not specified">
                 <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
                 <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
-                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                  <span class="toggle-text text-xs font-bold text-red-dark transition-colors">No</span>
                 </div>
               </label>
             </div>
@@ -507,13 +507,13 @@
             <div class="flex items-center justify-between py-3 border-b border-beige-light">
               <div class="flex flex-col">
                 <span class="text-sm text-neutral-medium">Spayed/Neutered</span>
-                <span class="text-[10px] text-neutral-light toggle-status" id="spayed-status">Not specified</span>
+                <span class="text-xs text-neutral-light toggle-status" id="spayed-status">Not specified</span>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="spayed" class="sr-only peer" data-on-text="Yes, I'm fixed" data-off-text="Not specified">
                 <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
                 <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
-                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                  <span class="toggle-text text-xs font-bold text-red-dark transition-colors">No</span>
                 </div>
               </label>
             </div>
@@ -522,13 +522,13 @@
             <div class="flex items-center justify-between py-3">
               <div class="flex flex-col">
                 <span class="text-sm text-neutral-medium">Rabies vaccine</span>
-                <span class="text-[10px] text-neutral-light toggle-status" id="rabies-status">Not specified</span>
+                <span class="text-xs text-neutral-light toggle-status" id="rabies-status">Not specified</span>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="rabies" class="sr-only peer" data-on-text="Yes, vaccinated!" data-off-text="Not specified">
                 <div class="w-16 h-8 bg-red-primary/10 rounded-full peer peer-checked:bg-green-primary/20 transition-all duration-300 border border-red-primary/20 peer-checked:border-green-primary/30"></div>
                 <div class="absolute left-0.5 top-0.5 w-[30px] h-7 bg-red-primary/20 rounded-full shadow-md transition-all duration-300 flex items-center justify-center peer-checked:translate-x-[30px] peer-checked:bg-green-primary">
-                  <span class="toggle-text text-[10px] font-bold text-red-dark transition-colors">No</span>
+                  <span class="toggle-text text-xs font-bold text-red-dark transition-colors">No</span>
                 </div>
               </label>
             </div>
@@ -548,7 +548,7 @@
               <span class="text-lg">🏥</span>
               <span class="text-xs font-bold text-neutral-dark uppercase tracking-wide">Care Notes Preview</span>
             </div>
-            <span class="text-[10px] font-semibold px-2 py-1 rounded-full bg-beige-medium text-neutral-medium">
+            <span class="text-xs font-semibold px-2 py-1 rounded-full bg-beige-medium text-neutral-medium">
               <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="inline mr-0.5">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -672,7 +672,7 @@
         </p>
 
         <!-- Trust Symbol -->
-        <p class="text-[10px] text-neutral-light mt-4 text-center">
+        <p class="text-xs text-neutral-light mt-4 text-center">
           🐾 76,000+ pet parents have already completed their pet's profile
         </p>
       </div>

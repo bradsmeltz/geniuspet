@@ -190,7 +190,7 @@
               <!-- Pet Voice Quote (if entered) -->
               <div id="pet-voice-container" class="mb-4 hidden">
                 <div class="bg-gradient-to-br from-blue-lightest to-white rounded-xl p-3 border border-blue-light/30">
-                  <p class="text-[10px] text-blue-primary font-semibold mb-1 uppercase tracking-wide flex items-center gap-1 justify-center">
+                  <p class="text-xs text-blue-primary font-semibold mb-1 uppercase tracking-wide flex items-center gap-1 justify-center">
                     <span>💬</span> <span id="pet-card-name-voice">Your Pet</span>'s Voice
                   </p>
                   <p id="pet-voice-quote" class="text-sm text-neutral-dark italic text-center leading-relaxed">"..."</p>
@@ -204,7 +204,7 @@
 
               <!-- What's Included - Compact -->
               <div class="bg-beige-light/50 rounded-xl p-3">
-                <p class="text-[10px] font-semibold text-neutral-medium uppercase tracking-wide text-center mb-2">Profile Includes</p>
+                <p class="text-xs font-semibold text-neutral-medium uppercase tracking-wide text-center mb-2">Profile Includes</p>
                 <div class="grid grid-cols-3 gap-2">
                   <div class="text-center">
                     <div class="w-8 h-8 rounded-full bg-green-light mx-auto flex items-center justify-center mb-1">
@@ -212,7 +212,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                       </svg>
                     </div>
-                    <p class="text-[9px] font-medium text-neutral-dark">24/7 Contact</p>
+                    <p class="text-xs font-medium text-neutral-dark">24/7 Contact</p>
                   </div>
                   <div class="text-center">
                     <div class="w-8 h-8 rounded-full bg-blue-lightest mx-auto flex items-center justify-center mb-1">
@@ -220,7 +220,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                       </svg>
                     </div>
-                    <p class="text-[9px] font-medium text-neutral-dark">Medical Info</p>
+                    <p class="text-xs font-medium text-neutral-dark">Medical Info</p>
                   </div>
                   <div class="text-center">
                     <div class="w-8 h-8 rounded-full bg-red-primary/10 mx-auto flex items-center justify-center mb-1">
@@ -228,7 +228,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                       </svg>
                     </div>
-                    <p class="text-[9px] font-medium text-neutral-dark">Safe Return</p>
+                    <p class="text-xs font-medium text-neutral-dark">Safe Return</p>
                   </div>
                 </div>
               </div>
@@ -239,7 +239,7 @@
               <svg class="w-3.5 h-3.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
               </svg>
-              <span class="text-[11px] text-white/80">Activate to unlock profile</span>
+              <span class="text-xs text-white/80">Activate to unlock profile</span>
             </div>
           </div>
 
@@ -407,7 +407,7 @@
             <!-- Divider -->
             <div class="flex items-center gap-4 my-5">
               <div class="flex-1 h-px bg-beige-medium"></div>
-              <span class="text-[11px] text-neutral-medium">or pay with credit card</span>
+              <span class="text-xs text-neutral-medium">or pay with credit card</span>
               <div class="flex-1 h-px bg-beige-medium"></div>
             </div>
 
@@ -802,7 +802,7 @@
         if (traits.length > 0) {
           petTraitsContainer.classList.remove('hidden');
           petTraitsContainer.innerHTML = traits.map(trait =>
-            `<span class="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded-full bg-green-light text-green-primary border border-green-primary/20">
+            `<span class="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-green-light text-green-primary border border-green-primary/20">
               <span>${trait.icon}</span> ${trait.text}
             </span>`
           ).join('');
