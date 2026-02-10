@@ -1,0 +1,195 @@
+/* GeniusTag Custom Component Styles */
+
+[x-cloak] {
+    display: none !important;
+}
+
+details[open] summary i {
+    transform: rotate(180deg) !important;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Base Typography */
+@layer base {
+    h2 {
+        @apply text-2xl font-bold text-dim-900 md:text-xxl md:leading-tight;
+    }
+    h6 {
+        @apply font-roboto text-base font-normal text-dark-700 md:text-lg;
+    }
+}
+
+/* Component Styles */
+@layer components {
+    /* Form Labels */
+    .label {
+        @apply mb-1.5 inline-block items-center pl-1 font-roboto text-base font-medium text-dark-600;
+    }
+    .label * {
+        @apply inline-block;
+    }
+
+    /* Inputs */
+    .input {
+        @apply h-14 w-full rounded-xl border border-gold-500 bg-white px-4 py-3.5 text-base font-medium text-dark-700 focus:outline-none;
+    }
+
+    .textarea {
+        @apply h-36 min-h-[56px] w-full resize-y rounded-xl border border-gold-500 bg-white px-4 py-3.5 text-base font-medium text-dark-700 focus:outline-none;
+    }
+
+    .select {
+        @apply relative flex h-14 w-full rounded-xl border border-gold-500 bg-white px-4 text-left text-base font-medium text-dark-700 focus:outline-none;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        background-position: calc(100% - 2rem) center !important;
+        background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+            no-repeat;
+    }
+
+    .options {
+        @apply absolute z-30 mt-0 max-h-44 w-full overflow-y-auto rounded-b-2xl bg-white pb-1.5 pt-2 shadow-select;
+    }
+    .options li {
+        @apply cursor-pointer select-none px-4 py-0.5 text-dark-600 duration-200 hover:bg-secondary-900 hover:text-white;
+    }
+
+    /* Radio & Checkbox */
+    .radio {
+        @apply relative mr-2.5 h-6 w-6 cursor-pointer appearance-none rounded-full border bg-white after:absolute after:left-1/2 after:top-1/2 after:h-3 after:w-3 after:-translate-x-1/2 after:-translate-y-1/2 after:scale-0 after:rounded-full after:bg-secondary-900 after:opacity-0 after:duration-200 checked:after:scale-100 checked:after:opacity-100;
+    }
+
+    .checkbox {
+        @apply relative mr-1.5 h-5 w-5 cursor-pointer appearance-none rounded-sm border border-dark-200 bg-white duration-200 before:absolute before:left-0 before:top-0 before:z-10 before:h-5 before:w-5 before:bg-check-icon before:bg-[length:19px_19px] after:absolute after:left-1/2 after:top-1/2 after:h-full after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:bg-secondary-900 after:opacity-0 after:duration-200 checked:border-secondary-900 checked:after:opacity-100;
+    }
+
+    /* Focus States */
+    .input:focus,
+    .textarea:focus,
+    .select:focus,
+    .checkbox:checked,
+    .radio:checked {
+        @apply border-secondary-900;
+    }
+
+    /* Buttons */
+    .btn {
+        @apply flex items-center justify-center;
+    }
+
+    .btn-sm {
+        @apply rounded-2xl px-8 py-2 text-lg font-semibold md:py-2.5;
+    }
+
+    .btn-md {
+        @apply rounded-xl px-4 py-2.5 text-lg font-medium;
+    }
+
+    .btn-primary {
+        @apply border-2 border-wine-900 bg-wine-900 text-white duration-300;
+    }
+    .btn-primary:hover {
+        @apply border-wine-900/80 bg-wine-900/80;
+    }
+    .btn-primary[disabled] {
+        @apply border-dark-300 bg-dark-300 bg-none text-white;
+    }
+
+    .btn-secondary {
+        @apply bg-gradient-to-b from-danger-400 to-danger-800 text-white shadow-btn-inner;
+    }
+    .btn-secondary:hover {
+        @apply bg-gradient-to-b from-danger-800 to-danger-800;
+    }
+    .btn-secondary[disabled],
+    .btn-secondary[disabled]:hover {
+        @apply cursor-not-allowed bg-danger-400 bg-none text-white;
+    }
+
+    .btn-primary-outline {
+        @apply border border-wine-900 bg-transparent px-8 text-wine-900;
+    }
+    .btn-primary-outline:hover {
+        @apply bg-gold-200;
+    }
+    .btn-primary-outline[disabled] {
+        @apply border-wine-900/50 bg-gray-500/10 text-wine-900/50;
+    }
+
+    .btn-white-outline {
+        @apply px-8 text-white ring-1 ring-inset ring-white;
+    }
+
+    .btn-success-outline {
+        @apply px-8 text-success-primary ring-1 ring-inset ring-success-primary;
+    }
+
+    .btn-danger-outline {
+        @apply px-8 py-2.5 text-danger-500 ring-1 ring-inset ring-danger-500;
+    }
+
+    .btn-gold-outline {
+        @apply px-8 text-gold-900 ring-1 ring-inset ring-gold-900;
+    }
+    .btn-gold-outline:hover {
+        @apply bg-gold-900 text-white duration-200;
+    }
+
+    .btn-dark-outline {
+        @apply px-8 text-dim-900 ring-1 ring-inset ring-dim-900;
+    }
+    .btn-dark-outline:hover {
+        @apply bg-gold-500;
+    }
+
+    .btn-back {
+        @apply absolute left-4 top-3 h-10 w-10 rounded-xl border border-secondary-700 md:hidden;
+    }
+
+    /* Rich Text Content */
+    .rich-title strong {
+        @apply text-gold-900;
+    }
+
+    .rich-text ul {
+        --icon-space: 2em;
+        list-style: none;
+        padding: 0;
+        @apply space-y-4;
+    }
+
+    .rich-text li {
+        @apply flex items-start justify-start text-left;
+    }
+
+    .rich-text li:before {
+        content: '\f058'; /* FontAwesome Unicode */
+        @apply -mt-0.5 mr-4 text-2xl text-gold-900;
+        font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+        font-weight: var(--fa-style, 900);
+    }
+
+    .rich-text h2 {
+        @apply text-3xl font-bold;
+    }
+
+    .rich-text h3 {
+        @apply pt-4 text-3xl font-bold;
+    }
+
+    .rich-text strong {
+        @apply text-gold-900;
+    }
+
+    .rich-text-simple {
+        @apply space-y-2;
+    }
+    .rich-text-simple ul {
+        @apply list-disc py-3 pl-5;
+    }
+}

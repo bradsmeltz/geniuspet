@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Add 24/7 vet access for your pet with TeleVet.">
+  <title>TeleVet — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            teal: {
+              primary: '#2e8a7b',
+              dark: '#216257',
+              tint: '#eaf3f2',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+    .delay-4 { animation-delay: 0.6s; }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-[600px] mx-auto px-5 py-4 flex items-center justify-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="bg-white px-5 pt-4 pb-3">
+    <div class="max-w-[600px] mx-auto">
+      <div class="flex items-center justify-between text-[13px] mb-1.5">
+        <span class="text-neutral-medium">Building your safety plan</span>
+        <span class="font-medium text-neutral-dark">Step 2 of 3</span>
+      </div>
+      <div class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
+        <div class="h-full rounded-full bg-teal-primary transition-all duration-500" style="width: 66%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-[600px] mx-auto px-5 py-8">
+
+    <!-- Score Card -->
+    <div id="progress-card" class="bg-white rounded-2xl shadow-sm border border-beige-medium overflow-hidden mb-6 fade-in">
+      <!-- What you've done (populated by JS) -->
+      <div id="progress-checks" class="px-5 py-3 bg-green-light border-b border-green-primary/15 space-y-1">
+      </div>
+      <!-- Gap + Score bar -->
+      <div class="px-5 py-4">
+        <p class="text-[15px] font-bold text-neutral-black mb-2">No immediate vet access for <span class="pet-name">your pet</span></p>
+        <div class="flex items-center gap-2 mt-2">
+          <div class="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+            <div id="score-bar" class="h-full rounded-full bg-teal-primary transition-all duration-700" style="width: 58%;"></div>
+          </div>
+          <span class="text-[13px] font-bold text-teal-primary whitespace-nowrap"><span id="total-after">81</span>/100 · <span id="projected-status">Good</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="text-center mb-6 fade-in delay-1">
+      <h1 class="text-2xl font-bold text-neutral-black leading-tight mb-3">It's 11pm. <span class="pet-name">Your pet</span> won't stop vomiting. What do you do?</h1>
+    </div>
+
+    <!-- What You Get (3 items — tighter) -->
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-beige-medium mb-6 fade-in delay-2">
+      <p class="text-[15px] font-bold text-neutral-black mb-3">Talk to a licensed vet in minutes:</p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-teal-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">A calm expert tells you exactly what to do</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-teal-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">Know if it's an emergency — before you spend $300</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-teal-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">Catch small worries before they become real problems</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="bg-teal-tint rounded-xl p-5 mb-6 fade-in delay-3">
+      <p class="text-[13px] font-medium text-teal-primary mb-2">8,400+ pet parents use TeleVet every month</p>
+      <p class="text-sm italic text-neutral-dark leading-relaxed mb-2">"Called at 1am when my dog ate an entire bag of chocolate chips. The vet walked me through exactly what to do. <strong>Saved me a $450 emergency visit.</strong>"</p>
+      <span class="text-[13px] font-medium text-neutral-medium">Amanda K. · Nashville, TN</span>
+    </div>
+
+    <!-- CTA Zone -->
+    <div class="fade-in delay-4">
+      <button id="yes-cta"
+              class="w-full bg-teal-primary hover:bg-teal-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-xl">
+        <span id="cta-text">Yes — Boost to 81/100 →</span>
+      </button>
+      <p class="text-center text-[15px] text-neutral-dark mt-3 font-medium">$7.99/mo · Billed bi-annually · Cancel anytime</p>
+    </div>
+
+    <!-- Skip -->
+    <button id="skip" class="w-full mt-5 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
+      <span id="skip-text">Skip — stay at 58/100</span>
+    </button>
+
+    <!-- Trust Badge -->
+    <div class="flex items-center justify-center gap-2 mt-8 pt-5 border-t border-beige-medium">
+      <svg class="w-4 h-4 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span class="text-[13px] text-neutral-medium">Licensed veterinarians · Cancel anytime</span>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 mt-4">
+    <div class="max-w-[600px] mx-auto px-5 text-center">
+      <p class="text-[13px] text-neutral-light">&copy; 2026 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // --- Shared score functions ---
+      function computeScore(products) {
+        var lp = 12, hp = 7, ec = 8;
+        if (products.geniusTag)          { lp += 18; hp += 2; ec += 11; }
+        if (products.advancedProtection) { lp += 4;  ec += 9; }
+        if (products.teleVet)            { hp += 10; }
+        if (products.insurance)          { lp += 5;  hp += 6; ec += 3; }
+        lp = Math.min(lp, 40); hp = Math.min(hp, 30); ec = Math.min(ec, 30);
+        return { lostPet: lp, health: hp, emergency: ec, total: lp + hp + ec };
+      }
+      function getStatusLabel(score) {
+        if (score >= 88) return { label: 'Fully Protected', cls: 'bg-green-100 text-green-700' };
+        if (score >= 78) return { label: 'Good', cls: 'bg-blue-100 text-blue-700' };
+        if (score >= 65) return { label: 'Improving', cls: 'bg-amber-100 text-amber-700' };
+        if (score >= 50) return { label: 'At Risk', cls: 'bg-orange-100 text-orange-700' };
+        return { label: 'High Risk', cls: 'bg-red-100 text-red-700' };
+      }
+
+      // 1. Get pet data
+      var petData = { name: 'your pet' };
+      var sessionData = sessionStorage.getItem('petProfile');
+      if (sessionData) {
+        try {
+          var parsed = JSON.parse(sessionData);
+          if (parsed.name) petData.name = parsed.name;
+        } catch (e) {}
+      }
+      var urlParams = new URLSearchParams(window.location.search);
+      var urlName = urlParams.get('name');
+      var urlEmail = urlParams.get('email');
+      if (urlName && petData.name === 'your pet') petData.name = urlName;
+
+      // 2. Read score state
+      var defaultProducts = { geniusTag: true, advancedProtection: false, teleVet: false, insurance: false };
+      var scoreState = { products: defaultProducts };
+      var stored = sessionStorage.getItem('safetyScore');
+      if (stored) {
+        try { scoreState = JSON.parse(stored); } catch (e) {}
+      }
+      if (!scoreState.products) scoreState.products = defaultProducts;
+
+      var currentScore = computeScore(scoreState.products);
+      var projectedScore = computeScore(Object.assign({}, scoreState.products, { teleVet: true }));
+      var status = getStatusLabel(currentScore.total);
+      var projectedStatus = getStatusLabel(projectedScore.total);
+
+      // 3. Build dynamic progress checkmarks
+      var progressChecks = document.getElementById('progress-checks');
+      var totalAfter = document.getElementById('total-after');
+      var scoreBar = document.getElementById('score-bar');
+      var projectedStatusEl = document.getElementById('projected-status');
+
+      function addCheckLine(text) {
+        var div = document.createElement('div');
+        div.className = 'flex items-center gap-2.5';
+        div.innerHTML = '<svg class="w-5 h-5 text-green-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><p class="text-[13px] text-green-700">' + text + '</p>';
+        progressChecks.appendChild(div);
+      }
+
+      if (scoreState.products.geniusTag) {
+        addCheckLine('<span class="font-bold">GeniusTag</span> — lost pet protection');
+      }
+      if (scoreState.products.advancedProtection) {
+        addCheckLine('<span class="font-bold">Advanced Protection</span> — instant alerts');
+      }
+
+      // Score line + status badge
+      var scoreLine = document.createElement('div');
+      scoreLine.className = 'flex items-center gap-2 mt-0.5 ml-[30px]';
+      scoreLine.innerHTML = '<span class="text-[13px] text-green-700 font-bold">Score: ' + currentScore.total + '/100</span><span id="status-badge" class="text-[13px] font-bold px-2.5 py-0.5 rounded-full ' + status.cls + '">' + status.label + '</span>';
+      progressChecks.appendChild(scoreLine);
+
+      if (totalAfter) totalAfter.textContent = projectedScore.total;
+      if (projectedStatusEl) projectedStatusEl.textContent = projectedStatus.label;
+      if (scoreBar) {
+        scoreBar.style.width = currentScore.total + '%';
+        setTimeout(function() { scoreBar.style.width = projectedScore.total + '%'; }, 600);
+      }
+
+      // 4. Dynamic CTA + Skip text
+      var ctaText = document.getElementById('cta-text');
+      var skipText = document.getElementById('skip-text');
+      if (ctaText) ctaText.textContent = 'Yes \u2014 Boost to ' + projectedScore.total + '/100 \u2192';
+      if (skipText) skipText.textContent = 'Skip \u2014 stay at ' + currentScore.total + '/100';
+
+      // 5. Personalize
+      document.querySelectorAll('.pet-name').forEach(function(el) {
+        el.textContent = petData.name;
+      });
+
+      // 6. URL helper
+      function buildParams() {
+        var params = new URLSearchParams();
+        params.set('name', petData.name);
+        if (urlEmail) params.set('email', urlEmail);
+        return params.toString();
+      }
+
+      // 7. YES CTA
+      var yesCta = document.getElementById('yes-cta');
+      if (yesCta) {
+        yesCta.addEventListener('click', function() {
+          this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+          this.classList.add('pointer-events-none');
+
+          scoreState.products.teleVet = true;
+          sessionStorage.setItem('safetyScore', JSON.stringify(scoreState));
+          sessionStorage.setItem('teleVetPurchased', 'true');
+
+          setTimeout(function() {
+            window.location.href = 'upsell-three.html?' + buildParams();
+          }, 800);
+        });
+      }
+
+      // 8. SKIP
+      var skip = document.getElementById('skip');
+      if (skip) {
+        skip.addEventListener('click', function() {
+          window.location.href = 'upsell-three.html?' + buildParams();
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>

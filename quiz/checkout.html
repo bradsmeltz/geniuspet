@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeniusPet - Complete Your Safety Fix</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="stylesheet" href="css/fonts.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-red': '#C94A4A',
+                        'brand-red-dark': '#8B3535',
+                        'brand-red-mid': '#B54242',
+                        'brand-beige': '#E8E0D8',
+                        'brand-beige-light': '#F5F0EB',
+                        'brand-beige-mid': '#EDE8E3',
+                        'brand-tan': '#D4A76A',
+                        'brand-blue': '#2E7D9A',
+                        'brand-blue-dark': '#246A85',
+                        'brand-blue-mid': '#2A6F8A',
+                        'brand-blue-light': '#E8F4F8',
+                    },
+                    fontFamily: {
+                        'gilroy': ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-cta': 'pulseCTA 2s infinite',
+                    },
+                    keyframes: {
+                        pulseCTA: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(201, 74, 74, 0.4)' },
+                            '50%': { boxShadow: '0 0 0 10px rgba(201, 74, 74, 0)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* CTA button ripple effect */
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Confirmation overlay */
+        .confirmation-overlay {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .confirmation-overlay.visible {
+            opacity: 1;
+        }
+
+        /* Score jump animation */
+        @keyframes scoreJump {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .score-jump {
+            animation: scoreJump 0.8s ease-in-out 0.5s forwards;
+            opacity: 0.5;
+        }
+
+        /* Checkmark draw animation */
+        @keyframes drawCheck {
+            0% { stroke-dashoffset: 50; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .check-path {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: drawCheck 0.6s ease-out 0.3s forwards;
+        }
+
+        /* Prevent iOS zoom on form inputs */
+        input, textarea, select {
+            font-size: 16px !important;
+            touch-action: manipulation;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 3px solid #E8F4F8;
+            border-top-color: #2E7D9A;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-gilroy text-gray-800 bg-white antialiased">
+
+    <!-- Header -->
+    <header class="bg-white py-4 border-b border-brand-beige-mid">
+        <div class="max-w-[600px] mx-auto px-5">
+            <a href="results.html" class="flex items-center justify-center gap-2">
+                <img src="images/home2-logo.svg" alt="GeniusPet" class="h-7 w-auto">
+            </a>
+        </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- COMPACT CONTEXT + FORM                       -->
+    <!-- Score context inline, form starts fast        -->
+    <!-- ============================================ -->
+    <section class="pt-5 pb-6 bg-brand-beige-light/50">
+        <div class="max-w-[600px] mx-auto px-5">
+            <!-- Score context — single tight line -->
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <span class="text-[13px] text-gray-500">Safety Score:</span>
+                <span class="text-[15px] font-extrabold text-gray-400">27</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-brand-blue"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-[15px] font-extrabold text-brand-blue">58</span>
+                <span class="text-[11px] font-semibold text-brand-blue bg-brand-blue/10 px-2 py-0.5 rounded-full">with GeniusTag</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-lg font-bold text-gray-900 leading-tight text-center mb-1">Complete your safety fix.</h1>
+            <p class="text-[13px] text-gray-500 text-center mb-5">GeniusTag · <strong class="text-gray-800">$6.99</strong> <span class="text-gray-400 line-through text-[12px]">$39.95</span> · Free shipping</p>
+
+            <!-- Demo notice -->
+            <div class="bg-white/60 backdrop-blur rounded-lg p-2 text-center text-[11px] text-gray-400 mb-4">
+                Demo checkout — no actual payment processing
+            </div>
+
+            <form id="checkout-form" class="space-y-4">
+
+                <!-- Contact -->
+                <div class="bg-white rounded-xl shadow-sm border border-brand-beige-mid overflow-hidden">
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-sm font-semibold text-gray-900">Contact</h3>
+                        </div>
+                        <input
+                            type="email"
+                            id="email"
+                            class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                            placeholder="your@email.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Shipping -->
+                <div class="bg-white rounded-xl shadow-sm border border-brand-beige-mid overflow-hidden">
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-sm font-semibold text-gray-900">Ship To</h3>
+                        </div>
+                        <p class="text-[12px] text-gray-400 mb-3">We need this to send your GeniusTag</p>
+                        <div class="space-y-3">
+                            <input
+                                type="text"
+                                id="full-name"
+                                class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                placeholder="Full name"
+                                required
+                            >
+                            <input
+                                type="text"
+                                id="address"
+                                class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                placeholder="Street address"
+                                required
+                            >
+                            <div class="grid grid-cols-2 gap-3">
+                                <input
+                                    type="text"
+                                    id="city"
+                                    class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                    placeholder="City"
+                                    required
+                                >
+                                <input
+                                    type="text"
+                                    id="state"
+                                    class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                    placeholder="State"
+                                    required
+                                >
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <input
+                                    type="text"
+                                    id="zip"
+                                    class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                    placeholder="ZIP code"
+                                    required
+                                >
+                                <select
+                                    id="country"
+                                    class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                    required
+                                >
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Express Checkout -->
+                <div class="bg-white rounded-xl shadow-sm border border-brand-beige-mid overflow-hidden">
+                    <div class="p-5">
+                        <p class="text-[12px] font-semibold uppercase tracking-[0.08em] text-gray-400 mb-3">Express checkout</p>
+                        <button type="button" id="apple-pay-btn" class="w-full bg-black text-white font-medium py-3.5 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-900 transition-colors">
+                            <svg class="h-5 w-auto" viewBox="0 0 24 24" fill="white">
+                                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                            </svg>
+                            <span class="text-[17px]">Pay</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 h-px bg-brand-beige"></div>
+                    <span class="text-[12px] text-gray-400 font-medium">or pay with card</span>
+                    <div class="flex-1 h-px bg-brand-beige"></div>
+                </div>
+
+                <!-- Payment -->
+                <div class="bg-white rounded-xl shadow-sm border border-brand-beige-mid overflow-hidden">
+                    <div class="p-5">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-green-50 flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-sm font-semibold text-gray-900">Payment</h3>
+                            </div>
+                            <!-- Credit Card Icons -->
+                            <div class="flex items-center gap-1">
+                                <!-- Visa -->
+                                <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                                    <rect width="48" height="32" rx="4" fill="#1A1F71"/>
+                                    <path d="M19.5 21H17L18.75 11H21.25L19.5 21Z" fill="white"/>
+                                    <path d="M28.5 11.25C28 11.05 27.25 10.85 26.25 10.85C23.75 10.85 22 12.15 22 14C22 15.4 23.25 16.15 24.25 16.6C25.25 17.05 25.6 17.35 25.6 17.75C25.6 18.35 24.85 18.65 24.15 18.65C23.15 18.65 22.6 18.5 21.75 18.15L21.4 18L21 20.5C21.65 20.8 22.85 21.05 24.1 21.05C26.75 21.05 28.45 19.75 28.45 17.8C28.45 16.7 27.75 15.85 26.25 15.15C25.35 14.7 24.8 14.4 24.8 13.95C24.8 13.55 25.25 13.1 26.2 13.1C27 13.1 27.6 13.25 28.05 13.45L28.3 13.55L28.5 11.25Z" fill="white"/>
+                                    <path d="M32.5 11H30.5C29.85 11 29.35 11.2 29.05 11.85L25.25 21H27.9L28.45 19.45H31.65L31.95 21H34.25L32.5 11ZM29.15 17.5C29.35 16.95 30.25 14.5 30.25 14.5C30.25 14.5 30.5 13.8 30.65 13.35L30.85 14.4C30.85 14.4 31.45 17.05 31.55 17.5H29.15Z" fill="white"/>
+                                    <path d="M16.5 11L14 17.75L13.7 16.3C13.2 14.7 11.7 12.95 10 12.05L12.25 21H15L19.25 11H16.5Z" fill="white"/>
+                                    <path d="M12.25 11H8.05L8 11.2C11.25 12 13.4 14.15 14.2 16.65L13.35 11.9C13.2 11.25 12.75 11.05 12.25 11Z" fill="#F9A51A"/>
+                                </svg>
+                                <!-- Mastercard -->
+                                <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                                    <rect width="48" height="32" rx="4" fill="#F5F5F5"/>
+                                    <circle cx="18" cy="16" r="8" fill="#EB001B"/>
+                                    <circle cx="30" cy="16" r="8" fill="#F79E1B"/>
+                                    <path d="M24 10.5C25.9 12 27.1 14.35 27.1 17C27.1 19.65 25.9 22 24 23.5C22.1 22 20.9 19.65 20.9 17C20.9 14.35 22.1 12 24 10.5Z" fill="#FF5F00"/>
+                                </svg>
+                                <!-- Discover -->
+                                <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                                    <rect width="48" height="32" rx="4" fill="#F5F5F5"/>
+                                    <rect x="0" y="16" width="48" height="16" rx="0" fill="#F76F1B"/>
+                                    <circle cx="30" cy="16" r="7" fill="#F76F1B"/>
+                                    <text x="6" y="14" fill="#333" font-size="6" font-weight="bold" font-family="Arial">DISCOVER</text>
+                                </svg>
+                                <!-- Amex -->
+                                <svg class="h-5 w-auto" viewBox="0 0 48 32" fill="none">
+                                    <rect width="48" height="32" rx="4" fill="#006FCF"/>
+                                    <path d="M8 16.5L10.5 11H13L16 16.5L13 22H10.5L8 16.5Z" fill="white"/>
+                                    <path d="M15 11H18V22H15V11Z" fill="white"/>
+                                    <path d="M19 11H25L26 13L27 11H33V22H27L26 20L25 22H19V11ZM21 13V20H24L26 17L28 20H31V13H28L26 16L24 13H21Z" fill="white"/>
+                                    <path d="M34 11H40L38 14H40V17H38V22H34V11Z" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    id="card-number"
+                                    class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm pr-12"
+                                    placeholder="Card number"
+                                    required
+                                >
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                                    <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <input
+                                    type="text"
+                                    id="expiry"
+                                    class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm"
+                                    placeholder="MM / YY"
+                                    required
+                                >
+                                <div class="relative">
+                                    <input
+                                        type="text"
+                                        id="cvv"
+                                        class="w-full px-4 py-3 bg-white border border-brand-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all text-sm pr-10"
+                                        placeholder="CVV"
+                                        required
+                                    >
+                                    <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                                        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SSL badge -->
+                        <div class="flex items-center justify-center gap-1.5 mt-4 pt-3 border-t border-gray-100">
+                            <svg class="w-3.5 h-3.5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-[11px] text-gray-400">Secured with 256-bit SSL encryption</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Micro-reassurance row -->
+                <div class="flex items-center justify-center gap-4 py-2 text-[12px] text-gray-400">
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        Secure
+                    </span>
+                    <span class="text-gray-300">|</span>
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        30-day guarantee
+                    </span>
+                    <span class="text-gray-300">|</span>
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/></svg>
+                        Free shipping
+                    </span>
+                </div>
+
+                <!-- THE CTA BUTTON -->
+                <button type="submit" id="submit-btn"
+                    class="cta-button w-full bg-brand-red text-white text-lg font-bold py-5 px-8 rounded-full transition-all hover:bg-brand-red-dark hover:-translate-y-0.5 shadow-lg shadow-brand-red/40 animate-pulse-cta">
+                    Close My Pet's Safety Gap — $6.99
+                </button>
+
+                <!-- Sub-button reassurance -->
+                <p class="text-[12px] text-gray-400 text-center mt-2">
+                    76,000+ pet parents protected · Ships in 2 days · 3-min setup
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-[#1A1A1A] text-gray-500">
+        <div class="max-w-[600px] mx-auto px-5">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <img src="images/home2-logo.svg" alt="GeniusPet" class="h-6 w-auto brightness-0 invert">
+            </div>
+            <p class="text-sm text-center text-gray-500">&copy; 2026 GeniusPet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- CONFIRMATION OVERLAY (hidden by default)     -->
+    <!-- Shows after form submit with score animation -->
+    <!-- ============================================ -->
+    <div id="confirmation-overlay" class="confirmation-overlay fixed inset-0 z-[9999] bg-white flex items-center justify-center" style="display: none;">
+        <div class="max-w-[400px] mx-auto px-5 text-center">
+            <!-- Animated checkmark -->
+            <div class="w-20 h-20 rounded-full bg-green-50 mx-auto flex items-center justify-center mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path class="check-path" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Safety Gap Closed!</h2>
+
+            <!-- Score animation: 42 → 54 -->
+            <div class="flex items-center justify-center gap-5 mb-5">
+                <div class="text-center">
+                    <span class="block text-[44px] font-extrabold text-gray-300 leading-none" id="confirm-score-before">27</span>
+                    <span class="text-[11px] text-gray-400 uppercase tracking-wide">Before</span>
+                </div>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="flex-shrink-0">
+                    <path d="M5 12h14M13 5l7 7-7 7" stroke="#2E7D9A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="text-center">
+                    <span class="block text-[44px] font-extrabold text-brand-blue leading-none score-jump" id="confirm-score-after">58</span>
+                    <span class="text-[11px] text-brand-blue uppercase tracking-wide font-bold">After</span>
+                </div>
+            </div>
+
+            <p class="text-[15px] text-gray-500 mb-1">Your pet's safety score just improved by <strong class="text-brand-blue">31 points</strong>.</p>
+            <p class="text-[13px] text-gray-400 mb-6">GeniusTag is on its way. Let's keep improving your score.</p>
+
+            <!-- Continue Button -->
+            <button id="continue-btn" class="cta-button w-full bg-brand-blue text-white text-base font-bold py-4 px-8 rounded-full transition-all hover:bg-brand-blue-dark shadow-lg">
+              Continue — See Your Protection Plan →
+            </button>
+            <p class="text-[12px] text-gray-400 mt-3">Step 1 of 3 complete</p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT                                   -->
+    <!-- ============================================ -->
+    <script>
+    (function() {
+        'use strict';
+
+        // Read current score state from sessionStorage
+        var defaultProducts = { geniusTag: false, advancedProtection: false, teleVet: false, insurance: false };
+        var scoreState = { products: defaultProducts };
+        var stored = sessionStorage.getItem('safetyScore');
+        if (stored) {
+            try { scoreState = JSON.parse(stored); } catch (e) {}
+        }
+        if (!scoreState.products) scoreState.products = defaultProducts;
+
+        // CTA ripple effect
+        var ctaButtons = document.querySelectorAll('.cta-button');
+        ctaButtons.forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                var ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                var rect = this.getBoundingClientRect();
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                setTimeout(function() { ripple.remove(); }, 600);
+            });
+        });
+
+        // Animate a number from start to end
+        function animateNumber(element, start, end, duration, delay) {
+            setTimeout(function() {
+                var startTime = performance.now();
+                function update(currentTime) {
+                    var elapsed = currentTime - startTime;
+                    var progress = Math.min(elapsed / duration, 1);
+                    var easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                    var currentValue = Math.round(start + (end - start) * easeOutCubic);
+                    element.textContent = currentValue;
+                    if (progress < 1) requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+            }, delay);
+        }
+
+        // Handle form submission
+        var checkoutForm = document.getElementById('checkout-form');
+        if (checkoutForm) {
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Disable button to prevent double-submit
+                var submitBtn = document.getElementById('submit-btn');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Processing...';
+                    submitBtn.classList.remove('animate-pulse-cta');
+                    submitBtn.style.opacity = '0.7';
+                }
+
+                // Update sessionStorage: mark geniusTag as purchased
+                scoreState.products.geniusTag = true;
+                sessionStorage.setItem('safetyScore', JSON.stringify(scoreState));
+
+                // Track analytics
+                if (typeof gtag === 'function') {
+                    gtag('event', 'purchase', {
+                        currency: 'USD',
+                        value: 6.99,
+                        items: [{ item_name: 'GeniusTag', price: 6.99 }]
+                    });
+                }
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Purchase', { currency: 'USD', value: 6.99 });
+                }
+
+                // Show confirmation overlay after brief processing delay
+                setTimeout(function() {
+                    var overlay = document.getElementById('confirmation-overlay');
+                    if (overlay) {
+                        overlay.style.display = 'flex';
+                        // Trigger fade-in on next frame
+                        requestAnimationFrame(function() {
+                            overlay.classList.add('visible');
+                        });
+
+                        // Animate the "after" score counting up
+                        var afterEl = document.getElementById('confirm-score-after');
+                        if (afterEl) {
+                            animateNumber(afterEl, 27, 58, 1500, 500);
+                        }
+                    }
+
+                    // Continue button redirects to upsell flow
+                    var continueBtn = document.getElementById('continue-btn');
+                    if (continueBtn) {
+                        continueBtn.addEventListener('click', function() {
+                            var email = document.getElementById('email');
+                            var params = new URLSearchParams();
+                            if (email && email.value) params.set('email', email.value);
+                            window.location.href = 'upsell-one.html' + (params.toString() ? '?' + params.toString() : '');
+                        });
+                    }
+                }, 800);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

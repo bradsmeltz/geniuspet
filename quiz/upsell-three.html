@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Does your pet have insurance coverage?">
+  <title>Pet Insurance — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            gold: {
+              primary: '#d49d35',
+              dark: '#8a6632',
+              tint: '#f9f4ed',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    .reveal-section { transition: opacity 0.3s ease; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-[600px] mx-auto px-5 py-4 flex items-center justify-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="bg-white px-5 pt-4 pb-3">
+    <div class="max-w-[600px] mx-auto">
+      <div class="flex items-center justify-between text-[13px] mb-1.5">
+        <span class="text-neutral-medium">Building your safety plan</span>
+        <span class="font-medium text-neutral-dark">Step 3 of 3</span>
+      </div>
+      <div class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
+        <div class="h-full rounded-full bg-gold-primary transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-[600px] mx-auto px-5 py-8">
+
+    <!-- Hero with icon -->
+    <div class="text-center mb-6 fade-in">
+      <div class="w-14 h-14 rounded-full bg-gold-tint flex items-center justify-center mx-auto mb-3">
+        <svg class="w-7 h-7 text-gold-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-neutral-black leading-tight mb-3">The worst time to think about insurance is after the bill.</h1>
+      <p class="text-[15px] text-neutral-medium">One emergency visit averages $800–$4,000. <span class="font-bold text-neutral-dark">77% of pet parents</span> have no coverage.</p>
+    </div>
+
+    <!-- Gateway Question -->
+    <div id="gateway" class="bg-white rounded-2xl shadow-sm border-2 border-gold-primary/30 mb-6 overflow-hidden fade-in delay-1">
+      <div class="bg-gold-tint px-6 py-3 border-b border-gold-primary/10">
+        <p class="text-[15px] font-bold text-neutral-black text-center">Quick question</p>
+      </div>
+      <div class="p-6 text-center">
+        <p class="text-base font-bold text-neutral-black mb-1">Does <span class="pet-name">your pet</span> currently have pet insurance?</p>
+        <p class="text-[13px] text-neutral-medium mb-5">This helps us show you the right next step.</p>
+        <div class="space-y-2.5">
+          <button id="has-insurance-no" class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-3.5 rounded-xl text-[15px] transition-colors">
+            No — Show me options
+          </button>
+          <button id="has-insurance-yes" class="w-full bg-white border-2 border-beige-medium hover:border-neutral-light text-neutral-dark font-bold py-3.5 rounded-xl text-[15px] transition-colors">
+            Yes, I'm already covered
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Already Covered (hidden by default) -->
+    <div id="already-covered" class="hidden reveal-section opacity-0">
+      <div class="bg-green-light rounded-2xl p-6 text-center mb-6 border border-green-primary/20">
+        <svg class="w-10 h-10 text-green-primary mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <p class="text-base font-bold text-neutral-black mb-1">Great — <span class="pet-name">your pet</span> is already covered!</p>
+        <p class="text-[15px] text-neutral-medium">You're ahead of 77% of pet parents.</p>
+      </div>
+      <button id="continue-covered"
+              class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl transition-colors text-xl mb-3">
+        Continue to finish setup
+      </button>
+      <p class="text-center text-[13px] text-neutral-medium">You'll see your final Safety Score summary next.</p>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 mt-4">
+    <div class="max-w-[600px] mx-auto px-5 text-center">
+      <p class="text-[13px] text-neutral-light">&copy; 2026 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // 1. Get pet data
+      var petData = { name: 'your pet' };
+      var sessionData = sessionStorage.getItem('petProfile');
+      if (sessionData) {
+        try {
+          var parsed = JSON.parse(sessionData);
+          if (parsed.name) petData.name = parsed.name;
+        } catch (e) {}
+      }
+      var urlParams = new URLSearchParams(window.location.search);
+      var urlName = urlParams.get('name');
+      var urlEmail = urlParams.get('email');
+      if (urlName && petData.name === 'your pet') petData.name = urlName;
+
+      // 2. Personalize
+      document.querySelectorAll('.pet-name').forEach(function(el) {
+        el.textContent = petData.name;
+      });
+
+      // 3. URL helper
+      function buildParams() {
+        var params = new URLSearchParams();
+        params.set('name', petData.name);
+        if (urlEmail) params.set('email', urlEmail);
+        return params.toString();
+      }
+
+      // 4. Gateway logic
+      var gateway = document.getElementById('gateway');
+      var alreadyCovered = document.getElementById('already-covered');
+
+      // "No" — go to pet details page
+      document.getElementById('has-insurance-no').addEventListener('click', function() {
+        gateway.style.opacity = '0';
+        gateway.style.transition = 'opacity 0.2s ease';
+        setTimeout(function() {
+          window.location.href = 'pet-details.html?' + buildParams();
+        }, 200);
+      });
+
+      // "Yes" — show already covered
+      document.getElementById('has-insurance-yes').addEventListener('click', function() {
+        gateway.style.opacity = '0';
+        gateway.style.transition = 'opacity 0.2s ease';
+        setTimeout(function() {
+          gateway.classList.add('hidden');
+          alreadyCovered.classList.remove('hidden');
+          alreadyCovered.offsetHeight;
+          alreadyCovered.style.opacity = '1';
+        }, 200);
+      });
+
+      // Continue button for already-covered
+      document.getElementById('continue-covered').addEventListener('click', function() {
+        this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+        this.classList.add('pointer-events-none');
+        sessionStorage.setItem('hasExistingInsurance', 'true');
+        setTimeout(function() {
+          window.location.href = 'thank-you.html?' + buildParams();
+        }, 600);
+      });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+@keyframes pulse-shadow{0%,to{box-shadow:0 0 #dc262680}50%{box-shadow:0 0 0 8px #dc262600}}.pulse-shadow-animation{animation:pulse-shadow 2s ease-in-out infinite}
+
+/* ===== Quiz Selection Feedback ===== */
+
+/* Selected option: red border + pulse */
+.quiz-selected {
+  border-color: #B91C1C !important;
+  background-color: #fef7f7 !important;
+  box-shadow: 0 0 0 2px #B91C1C;
+  transform: translateY(-2px);
+  animation: quizSelectPulse 0.4s ease-out;
+}
+
+@keyframes quizSelectPulse {
+  0%  { box-shadow: 0 0 0 2px #B91C1C; }
+  40% { box-shadow: 0 0 0 6px rgba(185,28,28,0.25); }
+  100%{ box-shadow: 0 0 0 2px #B91C1C; }
+}
+
+/* Radio circle fills red with white dot */
+.quiz-selected .quiz-radio {
+  border-color: #B91C1C !important;
+  background-color: #B91C1C !important;
+  transition: all 0.2s ease;
+}
+
+.quiz-selected .quiz-radio::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  animation: radioFillIn 0.25s ease forwards;
+}
+
+@keyframes radioFillIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Lock: dim unselected options, disable all clicks */
+.quiz-options-locked {
+  pointer-events: none;
+}
+
+.quiz-options-locked a:not(.quiz-selected) {
+  opacity: 0.45;
+  transform: translateY(0) !important;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Safety Assessment - GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/quizStore.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+<body>
+<div id="app">
+<div class="flex min-h-screen flex-col bg-white">
+  <!-- Header -->
+  <header class="bg-white border-b-2 border-gray-100 py-4">
+    <div class="flex h-full w-full items-center justify-center">
+      <img src="images/home2-logo.svg" alt="GeniusPet Logo">
+    </div>
+  </header>
+
+  <!-- Progress bar section -->
+  <div class="bg-white px-4 pt-8 pb-2">
+    <div class="mx-auto max-w-2xl">
+      <div class="mb-2 flex items-center justify-between text-sm">
+        <span class="text-gray-600">Pet Safety Assessment</span>
+        <span class="font-medium text-geniuspet-red">5 of 5</span>
+      </div>
+      <div class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
+        <div class="h-full rounded-full bg-geniuspet-red transition-all duration-300 ease-out" style="width: 100%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question content -->
+  <div class="px-4 py-4">
+    <div class="mx-auto max-w-2xl">
+      <h2 class="mb-0 text-xl md:text-2xl font-bold text-gray-900 md:text-3.5xl">What would matter most if someone found your pet?</h2>
+      <p class="mb-6 text-gray-500 text-base">Last question, then we'll calculate your pet's safety score.</p>
+
+      <!-- Options List -->
+      <div id="quiz-options" class="space-y-3">
+        <a href="calculating.html" data-answer="instant-contact" class="group flex w-full items-center gap-4 rounded-xl border-2 bg-white p-4 text-left transition-all duration-300 hover:border-red-700 hover:bg-geniuspet-red-100 hover:-translate-y-1 hover:shadow-lg border-gray-200">
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-2xl bg-gray-100">&#x1F4F2;</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-900 text-base/6 md:text-lg">Being contacted instantly</p>
+            <p class="text-sm/5 text-gray-500">I need to know the moment someone has my pet</p>
+          </div>
+          <div class="quiz-radio flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors border-gray-300 bg-white"></div>
+        </a>
+
+        <a href="calculating.html" data-answer="medical-needs" class="group flex w-full items-center gap-4 rounded-xl border-2 bg-white p-4 text-left transition-all duration-300 hover:border-red-700 hover:bg-geniuspet-red-100 hover:-translate-y-1 hover:shadow-lg border-gray-200">
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-2xl bg-gray-100">&#x1F3E5;</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-900 text-base/6 md:text-lg">Knowing my pet's medical needs</p>
+            <p class="text-sm/5 text-gray-500">A stranger wouldn't know about allergies, meds, or conditions</p>
+          </div>
+          <div class="quiz-radio flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors border-gray-300 bg-white"></div>
+        </a>
+
+        <a href="calculating.html" data-answer="no-shelters" class="group flex w-full items-center gap-4 rounded-xl border-2 bg-white p-4 text-left transition-all duration-300 hover:border-red-700 hover:bg-geniuspet-red-100 hover:-translate-y-1 hover:shadow-lg border-gray-200">
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-2xl bg-gray-100">&#x1F6E1;&#xFE0F;</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-900 text-base/6 md:text-lg">Not relying on shelters or luck</p>
+            <p class="text-sm/5 text-gray-500">I want a direct path home, not the system</p>
+          </div>
+          <div class="quiz-radio flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors border-gray-300 bg-white"></div>
+        </a>
+
+        <a href="calculating.html" data-answer="privacy" class="group flex w-full items-center gap-4 rounded-xl border-2 bg-white p-4 text-left transition-all duration-300 hover:border-red-700 hover:bg-geniuspet-red-100 hover:-translate-y-1 hover:shadow-lg border-gray-200">
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-2xl bg-gray-100">&#x1F512;</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-900 text-base/6 md:text-lg">Keeping my info private until needed</p>
+            <p class="text-sm/5 text-gray-500">I don't want my details public, just accessible in an emergency</p>
+          </div>
+          <div class="quiz-radio flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors border-gray-300 bg-white"></div>
+        </a>
+
+        <a href="calculating.html" data-answer="all-of-the-above" class="group flex w-full items-center gap-4 rounded-xl border-2 bg-white p-4 text-left transition-all duration-300 hover:border-red-700 hover:bg-geniuspet-red-100 hover:-translate-y-1 hover:shadow-lg border-gray-200">
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-2xl bg-gray-100">&#x2705;</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-900 text-base/6 md:text-lg">All of the above</p>
+            <p class="text-sm/5 text-gray-500">Every one of these matters to me</p>
+          </div>
+          <div class="quiz-radio flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors border-gray-300 bg-white"></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+(function() {
+    var selected = false;
+    var container = document.getElementById('quiz-options');
+    document.querySelectorAll('a[data-answer]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (selected) return;
+            selected = true;
+            var answers = JSON.parse(sessionStorage.getItem('quizAnswers') || '{}');
+            answers.topPriority = this.dataset.answer;
+            sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+            this.classList.add('quiz-selected');
+            container.classList.add('quiz-options-locked');
+            var href = this.href;
+            setTimeout(function() { window.location.href = href; }, 500);
+        });
+    });
+})();
+</script>
+</body>
+</html>

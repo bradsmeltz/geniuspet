@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tell us about your pet to get a personalized insurance quote.">
+  <title>Pet Details — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            gold: {
+              primary: '#d49d35',
+              dark: '#8a6632',
+              tint: '#f9f4ed',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    #breed-results { max-height: 200px; overflow-y: auto; }
+    #breed-results::-webkit-scrollbar { width: 4px; }
+    #breed-results::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 4px; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-[600px] mx-auto px-5 py-4 flex items-center justify-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="bg-white px-5 pt-4 pb-3">
+    <div class="max-w-[600px] mx-auto">
+      <div class="flex items-center justify-between text-[13px] mb-1.5">
+        <span class="text-neutral-medium">Building your safety plan</span>
+        <span class="font-medium text-neutral-dark">Step 3 of 3</span>
+      </div>
+      <div class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
+        <div class="h-full rounded-full bg-gold-primary transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-[600px] mx-auto px-5 py-8">
+
+    <!-- Hero -->
+    <div class="text-center mb-6 fade-in">
+      <h1 class="text-2xl font-bold text-neutral-black leading-tight mb-3">Tell us about <span class="pet-name">your pet</span></h1>
+      <p class="text-[15px] text-neutral-medium">We'll build a custom insurance plan based on breed and age.</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl p-5 shadow-sm border-2 border-gold-primary/30 mb-6 fade-in delay-1">
+
+      <div class="space-y-4">
+        <!-- Breed Search -->
+        <div class="relative">
+          <label for="breed-input" class="block text-[13px] font-medium text-neutral-dark mb-1">Breed</label>
+          <input type="text" id="breed-input" placeholder="Start typing your pet's breed..."
+                 autocomplete="off"
+                 class="w-full border border-beige-medium rounded-lg px-3 py-2.5 text-[15px] text-neutral-black placeholder:text-neutral-light focus:outline-none focus:border-gold-primary focus:ring-1 focus:ring-gold-primary/30">
+          <div id="breed-results" class="absolute z-10 left-0 right-0 top-full mt-1 bg-white border border-beige-medium rounded-lg shadow-lg hidden"></div>
+        </div>
+
+        <!-- Age Input -->
+        <div>
+          <label for="age-input" class="block text-[13px] font-medium text-neutral-dark mb-1">Age (years)</label>
+          <input type="number" id="age-input" placeholder="e.g. 3" min="0" max="25" step="1"
+                 class="w-full border border-beige-medium rounded-lg px-3 py-2.5 text-[15px] text-neutral-black placeholder:text-neutral-light focus:outline-none focus:border-gold-primary focus:ring-1 focus:ring-gold-primary/30">
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="fade-in delay-2">
+      <button id="see-plans-cta" disabled
+              class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-xl disabled:opacity-40 disabled:cursor-not-allowed">
+        See My Insurance Plans
+      </button>
+
+      <p class="text-center text-[13px] text-neutral-medium mt-3">Plans are customized to your pet's breed and age for the most accurate quote.</p>
+
+      <!-- Skip -->
+      <button id="skip" class="w-full mt-5 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
+        Skip insurance for now
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 mt-4">
+    <div class="max-w-[600px] mx-auto px-5 text-center">
+      <p class="text-[13px] text-neutral-light">&copy; 2026 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // --- Breed database ---
+      var breeds = [
+        'Affenpinscher','Afghan Hound','Airedale Terrier','Akita','Alaskan Malamute',
+        'American Bulldog','American Cocker Spaniel','American Eskimo Dog','American Pit Bull Terrier',
+        'American Staffordshire Terrier','Australian Cattle Dog','Australian Shepherd',
+        'Basenji','Basset Hound','Beagle','Belgian Malinois','Bernese Mountain Dog',
+        'Bichon Frise','Bloodhound','Border Collie','Border Terrier','Boston Terrier',
+        'Boxer','Brittany','Brussels Griffon','Bull Terrier','Bulldog','Bullmastiff',
+        'Cairn Terrier','Cane Corso','Cavalier King Charles Spaniel','Chesapeake Bay Retriever',
+        'Chihuahua','Chinese Crested','Chinese Shar-Pei','Chow Chow','Cocker Spaniel',
+        'Collie','Corgi','Dachshund','Dalmatian','Doberman Pinscher',
+        'English Bulldog','English Cocker Spaniel','English Setter','English Springer Spaniel',
+        'French Bulldog','German Shepherd','German Shorthaired Pointer','Giant Schnauzer',
+        'Golden Retriever','Goldendoodle','Great Dane','Great Pyrenees','Greyhound',
+        'Havanese','Husky','Irish Setter','Irish Wolfhound','Italian Greyhound',
+        'Jack Russell Terrier','Japanese Chin','Keeshond','Kerry Blue Terrier',
+        'Labradoodle','Labrador Retriever','Lhasa Apso','Maltese','Maltipoo',
+        'Mastiff','Miniature Pinscher','Miniature Schnauzer',
+        'Newfoundland','Norfolk Terrier','Norwegian Elkhound',
+        'Old English Sheepdog','Papillon','Pekingese','Pembroke Welsh Corgi',
+        'Pomeranian','Poodle','Poodle (Miniature)','Poodle (Standard)','Poodle (Toy)',
+        'Portuguese Water Dog','Pug','Rat Terrier','Rhodesian Ridgeback','Rottweiler',
+        'Saint Bernard','Samoyed','Schnauzer','Scottish Terrier','Shetland Sheepdog',
+        'Shiba Inu','Shih Tzu','Siberian Husky','Soft Coated Wheaten Terrier',
+        'Staffordshire Bull Terrier','Vizsla','Weimaraner','Welsh Terrier',
+        'West Highland White Terrier','Whippet','Wire Fox Terrier',
+        'Yorkshire Terrier',
+        'Mixed Breed (Small)','Mixed Breed (Medium)','Mixed Breed (Large)',
+        'Abyssinian (Cat)','American Shorthair (Cat)','Bengal (Cat)','Birman (Cat)',
+        'British Shorthair (Cat)','Burmese (Cat)','Devon Rex (Cat)',
+        'Domestic Longhair (Cat)','Domestic Shorthair (Cat)','Domestic Medium Hair (Cat)',
+        'Exotic Shorthair (Cat)','Himalayan (Cat)','Maine Coon (Cat)',
+        'Manx (Cat)','Norwegian Forest Cat','Oriental Shorthair (Cat)',
+        'Persian (Cat)','Ragdoll (Cat)','Russian Blue (Cat)',
+        'Scottish Fold (Cat)','Siamese (Cat)','Siberian (Cat)',
+        'Sphynx (Cat)','Tonkinese (Cat)','Turkish Angora (Cat)',
+        'Mixed Breed Cat'
+      ];
+
+      // 1. Get pet data
+      var petData = { name: 'your pet' };
+      var sessionData = sessionStorage.getItem('petProfile');
+      if (sessionData) {
+        try {
+          var parsed = JSON.parse(sessionData);
+          if (parsed.name) petData.name = parsed.name;
+        } catch (e) {}
+      }
+      var urlParams = new URLSearchParams(window.location.search);
+      var urlName = urlParams.get('name');
+      var urlEmail = urlParams.get('email');
+      if (urlName && petData.name === 'your pet') petData.name = urlName;
+
+      // 2. Personalize
+      document.querySelectorAll('.pet-name').forEach(function(el) {
+        el.textContent = petData.name;
+      });
+
+      // 3. URL helper
+      function buildParams(extra) {
+        var params = new URLSearchParams();
+        params.set('name', petData.name);
+        if (urlEmail) params.set('email', urlEmail);
+        if (extra) {
+          Object.keys(extra).forEach(function(k) { params.set(k, extra[k]); });
+        }
+        return params.toString();
+      }
+
+      // 4. Form elements
+      var breedInput = document.getElementById('breed-input');
+      var breedResults = document.getElementById('breed-results');
+      var ageInput = document.getElementById('age-input');
+      var seePlansCta = document.getElementById('see-plans-cta');
+      var selectedBreed = '';
+
+      // 5. Breed autocomplete
+      breedInput.addEventListener('input', function() {
+        var query = this.value.trim().toLowerCase();
+        selectedBreed = '';
+        if (query.length < 2) {
+          breedResults.classList.add('hidden');
+          breedResults.innerHTML = '';
+          checkFormComplete();
+          return;
+        }
+        var matches = breeds.filter(function(b) {
+          return b.toLowerCase().indexOf(query) !== -1;
+        }).slice(0, 8);
+
+        if (matches.length === 0) {
+          breedResults.classList.add('hidden');
+          breedResults.innerHTML = '';
+          return;
+        }
+
+        breedResults.innerHTML = matches.map(function(b) {
+          return '<div class="px-3 py-2 text-[15px] text-neutral-dark hover:bg-gold-tint cursor-pointer border-b border-beige-lightest last:border-0" data-breed="' + b + '">' + b + '</div>';
+        }).join('');
+        breedResults.classList.remove('hidden');
+      });
+
+      breedResults.addEventListener('click', function(e) {
+        var item = e.target.closest('[data-breed]');
+        if (!item) return;
+        selectedBreed = item.getAttribute('data-breed');
+        breedInput.value = selectedBreed;
+        breedResults.classList.add('hidden');
+        breedResults.innerHTML = '';
+        checkFormComplete();
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!breedInput.contains(e.target) && !breedResults.contains(e.target)) {
+          breedResults.classList.add('hidden');
+        }
+      });
+
+      ageInput.addEventListener('input', function() {
+        checkFormComplete();
+      });
+
+      function checkFormComplete() {
+        var age = parseInt(ageInput.value, 10);
+        if (selectedBreed && !isNaN(age) && age >= 0 && age <= 25) {
+          seePlansCta.disabled = false;
+        } else {
+          seePlansCta.disabled = true;
+        }
+      }
+
+      // 6. CTA — store details and go to insurance plan page
+      seePlansCta.addEventListener('click', function() {
+        if (this.disabled) return;
+        this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+        this.classList.add('pointer-events-none');
+
+        var age = parseInt(ageInput.value, 10);
+        sessionStorage.setItem('petInsuranceDetails', JSON.stringify({
+          breed: selectedBreed,
+          age: age
+        }));
+
+        setTimeout(function() {
+          window.location.href = 'insurance-plan.html?' + buildParams({ breed: selectedBreed, age: age });
+        }, 600);
+      });
+
+      // 7. Skip
+      var skip = document.getElementById('skip');
+      if (skip) {
+        skip.addEventListener('click', function() {
+          window.location.href = 'thank-you.html?' + buildParams();
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>

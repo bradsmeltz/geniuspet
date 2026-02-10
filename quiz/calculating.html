@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Safety Assessment - GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/quizStore.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+<body>
+<div id="app">
+<div class="flex min-h-screen flex-col bg-white">
+  <header class="bg-white border-b-2 border-gray-100 py-4">
+    <div class="flex h-full w-full items-center justify-center">
+      <img src="images/home2-logo.svg" alt="GeniusPet Logo">
+    </div>
+  </header>
+
+  <div class="flex flex-1 flex-col items-center justify-center px-4 py-12">
+    <h2 class="mb-2 text-center text-xl font-bold text-gray-900 md:text-3xl">Calculating Your Pet's Safety Score</h2>
+    <p class="mb-8 text-center text-gray-500">Analyzing your answers against veterinary safety benchmarks...</p>
+
+    <!-- Circular progress -->
+    <div class="relative mb-8">
+      <svg class="h-32 w-32" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="54" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+        <circle id="progress-ring" cx="60" cy="60" r="54" fill="none" stroke="#dd1b19" stroke-width="8" stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="339.292" transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 0.1s ease;"/>
+      </svg>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span id="progress-text" class="text-3xl font-bold text-gray-900">0%</span>
+      </div>
+    </div>
+
+    <!-- Checklist items -->
+    <div class="w-full max-w-sm space-y-3">
+      <div class="checklist-item flex items-center gap-3 rounded-lg bg-gray-50 px-4 py-3 opacity-0" style="transition: opacity 0.5s ease;">
+        <svg class="h-5 w-5 flex-shrink-0 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <span class="text-sm font-medium text-gray-700">Evaluating current ID coverage</span>
+      </div>
+      <div class="checklist-item flex items-center gap-3 rounded-lg bg-gray-50 px-4 py-3 opacity-0" style="transition: opacity 0.5s ease;">
+        <svg class="h-5 w-5 flex-shrink-0 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <span class="text-sm font-medium text-gray-700">Assessing medical risk factors</span>
+      </div>
+      <div class="checklist-item flex items-center gap-3 rounded-lg bg-gray-50 px-4 py-3 opacity-0" style="transition: opacity 0.5s ease;">
+        <svg class="h-5 w-5 flex-shrink-0 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <span class="text-sm font-medium text-gray-700">Checking instant-contact readiness</span>
+      </div>
+      <div class="checklist-item flex items-center gap-3 rounded-lg bg-gray-50 px-4 py-3 opacity-0" style="transition: opacity 0.5s ease;">
+        <svg class="h-5 w-5 flex-shrink-0 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <span class="text-sm font-medium text-gray-700">Generating personalized safety plan</span>
+      </div>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="mt-8 max-w-sm rounded-xl border border-gray-200 bg-gray-50 p-4">
+      <div class="mb-2 flex text-yellow-400">
+        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+      </div>
+      <p class="text-sm italic text-gray-600">"I always thought my dog was safe with just a collar tag. The safety score showed me 3 critical gaps I didn't even know existed."</p>
+      <p class="mt-2 text-sm font-semibold text-gray-700">— Sarah M., Dog Mom</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  // Animate progress ring and counter
+  const ring = document.getElementById('progress-ring');
+  const text = document.getElementById('progress-text');
+  const circumference = 2 * Math.PI * 54; // 339.292
+  const items = document.querySelectorAll('.checklist-item');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += 1;
+    const offset = circumference - (progress / 100) * circumference;
+    ring.style.strokeDashoffset = offset;
+    text.textContent = progress + '%';
+
+    // Show checklist items at 25%, 50%, 75%, 100%
+    if (progress >= 25 && items[0]) items[0].style.opacity = '1';
+    if (progress >= 50 && items[1]) items[1].style.opacity = '1';
+    if (progress >= 75 && items[2]) items[2].style.opacity = '1';
+    if (progress >= 100 && items[3]) items[3].style.opacity = '1';
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        window.location.href = 'email-gate.html';
+      }, 800);
+    }
+  }, 40); // 4 seconds total (100 steps * 40ms)
+</script>
+</body>
+</html>

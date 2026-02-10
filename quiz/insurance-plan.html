@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Choose your personalized pet insurance plan.">
+  <title>Choose Your Plan — GeniusPet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: {
+              lightest: '#FAFAFA',
+              light: '#F5F0EB',
+              medium: '#E8E0D8',
+              warm: '#D4A574',
+            },
+            neutral: {
+              light: '#BFBFBF',
+              medium: '#8C8C8C',
+              dark: '#595959',
+              black: '#333333',
+            },
+            gold: {
+              primary: '#d49d35',
+              dark: '#8a6632',
+              tint: '#f9f4ed',
+            },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    .plan-card { transition: all 0.2s ease; }
+    .plan-card.selected { border-color: #d49d35; box-shadow: 0 0 0 2px rgba(212,157,53,0.2); }
+    .plan-card:not(.selected) { opacity: 0.7; }
+    .plan-card:not(.selected):hover { opacity: 0.85; }
+  </style>
+</head>
+<body class="bg-beige-light font-sans text-neutral-black min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-md mx-auto px-4 py-4 flex items-center justify-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="bg-white px-4 pt-4 pb-2">
+    <div class="max-w-md mx-auto">
+      <div class="flex items-center justify-between text-[13px] mb-1.5">
+        <span class="text-neutral-medium">Finishing your protection</span>
+        <span class="font-medium text-neutral-dark">Step 3 of 3</span>
+      </div>
+      <div class="h-1 w-full overflow-hidden rounded-full bg-gray-200">
+        <div class="h-full rounded-full bg-gold-primary transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-md mx-auto px-4 py-6">
+
+    <!-- Progress + Gap Reveal -->
+    <div id="progress-card" class="bg-white rounded-2xl shadow-sm border border-beige-medium overflow-hidden mb-5">
+      <!-- What you've done (populated by JS) -->
+      <div id="progress-checks" class="px-4 py-2.5 bg-green-light border-b border-green-primary/15 space-y-1">
+      </div>
+      <!-- What's still exposed -->
+      <div class="px-4 py-3">
+        <p class="text-[15px] font-bold text-neutral-black mb-1">Still exposed: no financial safety net</p>
+        <p class="text-[13px] text-neutral-medium">One emergency surgery can cost $2,000–$5,000. Without insurance, that's entirely out of pocket.</p>
+        <div class="flex items-center gap-1.5 mt-2.5">
+          <div class="flex-1 h-1.5 rounded-full bg-gray-200 overflow-hidden">
+            <div id="score-bar" class="h-full rounded-full bg-gold-primary transition-all duration-700" style="width: 81%;"></div>
+          </div>
+          <span class="text-[13px] font-bold text-gold-primary whitespace-nowrap"><span id="total-after">94</span>/100 with coverage</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="text-center mb-5">
+      <p class="text-[13px] font-bold tracking-wider uppercase text-gold-primary mb-2">Emergency Coverage</p>
+      <h1 class="text-[22px] font-bold text-neutral-black leading-tight mb-2">Plans for <span id="hero-breed" class="text-gold-primary"></span>, age <span id="hero-age" class="text-gold-primary"></span></h1>
+      <p class="text-[15px] text-neutral-medium mt-2">Choose the coverage level that's right for you.</p>
+    </div>
+
+    <!-- What's Covered -->
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-beige-medium mb-4">
+      <p class="text-[15px] font-bold text-neutral-black mb-3">What's covered:</p>
+      <div class="space-y-2.5">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">Emergency vet visits and surgery</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">Illness treatment and hospitalization</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">X-rays, bloodwork, MRIs, and prescriptions</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[15px] text-neutral-dark">Up to 90% reimbursement on covered claims</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan Cards -->
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <!-- Essential Plan -->
+      <button class="plan-card bg-white rounded-xl p-4 border-2 border-beige-medium text-left" data-plan="essential">
+        <p class="text-[13px] font-bold text-neutral-black mb-0.5">Essential</p>
+        <p class="text-[13px] text-neutral-medium mb-2">$500 deductible</p>
+        <p class="text-2xl font-bold text-neutral-black mb-0.5"><span id="price-essential">$XX</span><span class="text-[15px] font-medium text-neutral-medium">/mo</span></p>
+        <p class="text-[13px] text-neutral-medium">80% reimbursement</p>
+      </button>
+
+      <!-- Complete Plan (Recommended) -->
+      <button class="plan-card selected bg-white rounded-xl p-4 border-2 border-gold-primary text-left relative" data-plan="complete">
+        <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-gold-primary text-white text-[13px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide">Recommended</span>
+        <p class="text-[13px] font-bold text-neutral-black mb-0.5">Complete</p>
+        <p class="text-[13px] text-neutral-medium mb-2">$250 deductible</p>
+        <p class="text-2xl font-bold text-neutral-black mb-0.5"><span id="price-complete">$XX</span><span class="text-[15px] font-medium text-neutral-medium">/mo</span></p>
+        <p class="text-[13px] text-neutral-medium">90% reimbursement</p>
+      </button>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="bg-gold-tint rounded-xl p-4 mb-3">
+      <p class="text-[15px] italic text-neutral-dark leading-relaxed mb-1.5">"Our Golden needed ACL surgery — <strong>$3,800 bill</strong>. Insurance covered 90%. We paid $630 instead. I can't imagine not having this."</p>
+
+      <span class="text-[14px] font-medium text-neutral-medium">Mark & Lisa T. · Charlotte, NC</span>
+    </div>
+
+    <!-- Social Proof -->
+    <p class="text-center text-[13px] text-neutral-medium mb-3">6,800+ pet parents have added insurance coverage</p>
+
+    <!-- CTA -->
+    <p class="text-center text-[13px] font-medium text-neutral-dark mb-2">This is the final piece to fully protect <span class="pet-name">your pet</span>.</p>
+    <button id="yes-cta"
+            class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
+      <span id="cta-text">Yes — Get Complete Coverage</span>
+    </button>
+
+    <!-- Price + Value Anchor -->
+    <p id="price-summary" class="text-center text-[15px] text-neutral-dark mt-3 font-medium">
+      <span id="summary-price"></span>/mo &middot; 30-day money-back guarantee
+    </p>
+    <p class="text-center text-[13px] text-neutral-medium mt-1">Emergency surgery can cost $4,000+.</p>
+
+    <!-- Skip -->
+    <button id="skip" class="w-full mt-3 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
+      No thanks, I'll handle vet bills on my own
+    </button>
+
+    <!-- Trust Badge -->
+    <div class="flex items-center justify-center gap-2 mt-6 pt-4 border-t border-beige-medium">
+      <svg class="w-4 h-4 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span class="text-[13px] text-neutral-medium">30-day money-back guarantee &middot; Cancel anytime</span>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 mt-4">
+    <div class="max-w-md mx-auto px-4 text-center">
+      <p class="text-[13px] text-neutral-light">&copy; 2026 GeniusPet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // --- Placeholder pricing (replace with real pricing logic) ---
+      function getQuotePrices(breed, age) {
+        var baseEssential = 24.99;
+        var baseComplete = 39.99;
+        if (age >= 8) {
+          baseEssential += 10;
+          baseComplete += 15;
+        } else if (age >= 5) {
+          baseEssential += 5;
+          baseComplete += 8;
+        }
+        return {
+          essential: baseEssential.toFixed(2),
+          complete: baseComplete.toFixed(2)
+        };
+      }
+
+      // --- Shared score functions ---
+      function computeScore(products) {
+        var lp = 12, hp = 7, ec = 8;
+        if (products.geniusTag)          { lp += 18; hp += 2; ec += 11; }
+        if (products.advancedProtection) { lp += 4;  ec += 9; }
+        if (products.teleVet)            { hp += 10; }
+        if (products.insurance)          { lp += 5;  hp += 6; ec += 3; }
+        lp = Math.min(lp, 40); hp = Math.min(hp, 30); ec = Math.min(ec, 30);
+        return { lostPet: lp, health: hp, emergency: ec, total: lp + hp + ec };
+      }
+      function getStatusLabel(score) {
+        if (score >= 88) return { label: 'Fully Protected', cls: 'bg-green-100 text-green-700' };
+        if (score >= 78) return { label: 'Good', cls: 'bg-blue-100 text-blue-700' };
+        if (score >= 65) return { label: 'Improving', cls: 'bg-amber-100 text-amber-700' };
+        if (score >= 50) return { label: 'At Risk', cls: 'bg-orange-100 text-orange-700' };
+        return { label: 'High Risk', cls: 'bg-red-100 text-red-700' };
+      }
+
+      // 1. Get pet data
+      var petData = { name: 'your pet' };
+      var sessionData = sessionStorage.getItem('petProfile');
+      if (sessionData) {
+        try {
+          var parsed = JSON.parse(sessionData);
+          if (parsed.name) petData.name = parsed.name;
+        } catch (e) {}
+      }
+      var urlParams = new URLSearchParams(window.location.search);
+      var urlName = urlParams.get('name');
+      var urlEmail = urlParams.get('email');
+      if (urlName && petData.name === 'your pet') petData.name = urlName;
+
+      // 2. Get breed + age from URL params or sessionStorage
+      var breed = urlParams.get('breed') || '';
+      var age = parseInt(urlParams.get('age'), 10);
+      var petDetails = sessionStorage.getItem('petInsuranceDetails');
+      if (petDetails) {
+        try {
+          var detailsParsed = JSON.parse(petDetails);
+          if (!breed && detailsParsed.breed) breed = detailsParsed.breed;
+          if (isNaN(age) && detailsParsed.age != null) age = detailsParsed.age;
+        } catch (e) {}
+      }
+
+      // If no breed/age, redirect back to pet-details
+      if (!breed || isNaN(age)) {
+        window.location.href = 'pet-details.html?' + urlParams.toString();
+        return;
+      }
+
+      // 3. Populate hero
+      document.getElementById('hero-breed').textContent = breed;
+      document.getElementById('hero-age').textContent = age + (age === 1 ? ' year' : ' years');
+
+      // 4. Calculate and show prices
+      var prices = getQuotePrices(breed, age);
+      document.getElementById('price-essential').textContent = '$' + prices.essential;
+      document.getElementById('price-complete').textContent = '$' + prices.complete;
+
+      // Store quote data
+      sessionStorage.setItem('insuranceQuote', JSON.stringify({
+        breed: breed, age: age,
+        essentialPrice: prices.essential, completePrice: prices.complete
+      }));
+
+      // 5. Read score state
+      var defaultProducts = { geniusTag: true, advancedProtection: false, teleVet: false, insurance: false };
+      var scoreState = { products: defaultProducts };
+      var stored = sessionStorage.getItem('safetyScore');
+      if (stored) {
+        try { scoreState = JSON.parse(stored); } catch (e) {}
+      }
+      if (!scoreState.products) scoreState.products = defaultProducts;
+
+      var currentScore = computeScore(scoreState.products);
+      var projectedScore = computeScore(Object.assign({}, scoreState.products, { insurance: true }));
+
+      // 6. Build dynamic progress checkmarks + score bar
+      var progressChecks = document.getElementById('progress-checks');
+      var totalAfter = document.getElementById('total-after');
+      var scoreBar = document.getElementById('score-bar');
+
+      function addCheckLine(text) {
+        var div = document.createElement('div');
+        div.className = 'flex items-center gap-2.5';
+        div.innerHTML = '<svg class="w-4 h-4 text-green-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><p class="text-[13px] text-green-700">' + text + '</p>';
+        progressChecks.appendChild(div);
+      }
+
+      if (scoreState.products.geniusTag) {
+        addCheckLine('<span class="font-bold">GeniusTag added</span> — basic lost pet protection');
+      }
+      if (scoreState.products.advancedProtection) {
+        addCheckLine('<span class="font-bold">Advanced Protection added</span> — instant alerts &amp; recovery');
+      }
+      if (scoreState.products.teleVet) {
+        addCheckLine('<span class="font-bold">TeleVet added</span> — 24/7 vet access');
+      }
+      // Show current score
+      var lastLine = document.createElement('p');
+      lastLine.className = 'text-[13px] text-green-700 font-bold mt-0.5 ml-[26px]';
+      lastLine.textContent = 'Pet Safety Score: ' + currentScore.total + '/100';
+      progressChecks.appendChild(lastLine);
+
+      if (totalAfter) totalAfter.textContent = projectedScore.total;
+      if (scoreBar) {
+        scoreBar.style.width = currentScore.total + '%';
+        setTimeout(function() { scoreBar.style.width = projectedScore.total + '%'; }, 600);
+      }
+
+      // 7. URL helper
+      function buildParams() {
+        var params = new URLSearchParams();
+        params.set('name', petData.name);
+        if (urlEmail) params.set('email', urlEmail);
+        return params.toString();
+      }
+
+      // 8. Plan selection
+      var selectedPlan = 'complete';
+      var planCards = document.querySelectorAll('.plan-card');
+      var ctaText = document.getElementById('cta-text');
+      var summaryPrice = document.getElementById('summary-price');
+      var priceEssential = document.getElementById('price-essential');
+      var priceComplete = document.getElementById('price-complete');
+
+      // Set initial summary price
+      summaryPrice.textContent = priceComplete.textContent;
+
+      planCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          selectedPlan = this.getAttribute('data-plan');
+          planCards.forEach(function(c) {
+            c.classList.remove('selected');
+            c.classList.add('border-beige-medium');
+            c.classList.remove('border-gold-primary');
+          });
+          this.classList.add('selected');
+          this.classList.remove('border-beige-medium');
+          this.classList.add('border-gold-primary');
+          updateCtaForPlan();
+        });
+      });
+
+      function updateCtaForPlan() {
+        var price = selectedPlan === 'essential' ? priceEssential.textContent : priceComplete.textContent;
+        var planLabel = selectedPlan === 'essential' ? 'Essential' : 'Complete';
+        ctaText.textContent = 'Yes \u2014 Get ' + planLabel + ' Coverage';
+        summaryPrice.textContent = price;
+      }
+
+      // 9. Feature toggle (removed — all features now visible)
+
+      // 10. YES CTA
+      var yesCta = document.getElementById('yes-cta');
+      if (yesCta) {
+        yesCta.addEventListener('click', function() {
+          this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+          this.classList.add('pointer-events-none');
+
+          scoreState.products.insurance = true;
+          sessionStorage.setItem('safetyScore', JSON.stringify(scoreState));
+          sessionStorage.setItem('insurancePurchased', JSON.stringify({
+            plan: selectedPlan,
+            breed: breed,
+            age: age,
+            price: selectedPlan === 'essential' ? priceEssential.textContent : priceComplete.textContent
+          }));
+
+          setTimeout(function() {
+            window.location.href = 'thank-you.html?' + buildParams();
+          }, 800);
+        });
+      }
+
+      // 11. Skip
+      var skip = document.getElementById('skip');
+      if (skip) {
+        skip.addEventListener('click', function() {
+          window.location.href = 'thank-you.html?' + buildParams();
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>

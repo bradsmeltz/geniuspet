@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Safety Assessment - GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/quizStore.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+<body>
+<div id="app">
+<div class="flex min-h-screen flex-col bg-white">
+  <header class="bg-white border-b-2 border-gray-100 py-4">
+    <div class="flex h-full w-full items-center justify-center">
+      <img src="images/home2-logo.svg" alt="GeniusPet Logo">
+    </div>
+  </header>
+
+  <div class="flex flex-1 flex-col items-center px-4 py-8 md:py-12">
+    <div class="w-full max-w-md">
+      <h2 class="mb-2 text-center text-xl font-bold text-gray-900 md:text-3xl">Your Pet's Safety Score Is Ready</h2>
+      <p class="mb-6 text-center text-gray-500 text-base">Enter your email to see your full results, personalized protection plan, and unlock an exclusive offer.</p>
+
+      <!-- Summary table -->
+      <div class="mb-6 overflow-hidden rounded-xl border border-gray-200">
+        <div class="flex items-center justify-between border-b border-gray-100 px-4 py-3">
+          <span class="text-sm text-gray-500">Pet Type</span>
+          <span id="gate-pet-type" class="text-sm font-semibold text-gray-900">Dog</span>
+        </div>
+        <div class="flex items-center justify-between border-b border-gray-100 px-4 py-3">
+          <span class="text-sm text-gray-500">Current ID</span>
+          <span id="gate-current-id" class="text-sm font-semibold text-gray-900">Microchip only</span>
+        </div>
+        <div class="flex items-center justify-between border-b border-gray-100 px-4 py-3">
+          <span class="text-sm text-gray-500">Risk Level</span>
+          <span class="text-sm font-semibold text-geniuspet-red">Critical</span>
+        </div>
+        <div class="flex items-center justify-between border-b border-gray-100 px-4 py-3" style="filter: blur(4px); user-select: none;">
+          <span class="text-sm text-gray-500">Safety Score</span>
+          <span class="text-sm font-semibold text-gray-900">20/100</span>
+        </div>
+        <div class="flex items-center justify-between px-4 py-3" style="filter: blur(4px); user-select: none;">
+          <span class="text-sm text-gray-500">Protection Plan</span>
+          <span class="text-sm font-semibold text-gray-900">GeniusTag Essential</span>
+        </div>
+      </div>
+
+      <!-- Email form -->
+      <form class="space-y-4" onsubmit="event.preventDefault(); window.location.href='results.html';">
+        <div>
+          <label class="mb-1 block text-sm font-medium text-gray-700">Email address</label>
+          <input type="email" placeholder="Enter your email address" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-geniuspet-red focus:outline-none focus:ring-1 focus:ring-geniuspet-red">
+        </div>
+        <button type="submit" class="w-full cursor-pointer rounded-xl font-bold text-white transition-all duration-300 px-8 py-4 text-lg bg-geniuspet-red hover:bg-red-700 hover:-translate-y-1 hover:shadow-lg">
+          <span class="flex justify-center items-center gap-2">See My Results & Safety Plan →</span>
+        </button>
+        <button type="button" onclick="window.location.href='results.html'" class="w-full cursor-pointer text-center text-sm text-gray-500 underline hover:text-gray-700 bg-transparent border-none">
+          Skip for now, just show my score
+        </button>
+      </form>
+
+      <!-- Trust text -->
+      <div class="mt-4 flex items-center justify-center gap-4 text-xs text-gray-400">
+        <div class="flex items-center gap-1">
+          <svg class="h-3 w-3 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          No spam, ever
+        </div>
+        <div class="flex items-center gap-1">
+          <svg class="h-3 w-3 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Unsubscribe anytime
+        </div>
+        <div class="flex items-center gap-1">
+          <svg class="h-3 w-3 fill-green-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Free results
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+(function() {
+    var answers = JSON.parse(sessionStorage.getItem('quizAnswers') || '{}');
+
+    // Pet type display map
+    var petTypeMap = {
+        'dog': 'Dog',
+        'cat': 'Cat',
+        'both': 'Dog & Cat',
+        'other': 'Other'
+    };
+
+    // ID type display map
+    var idMap = {
+        'microchip-only': 'Microchip only',
+        'engraved-tag': 'Engraved tag',
+        'microchip-plus-tag': 'Microchip + tag',
+        'no-id': 'No ID'
+    };
+
+    if (answers.petType) {
+        var el = document.getElementById('gate-pet-type');
+        if (el) el.textContent = petTypeMap[answers.petType] || 'Dog';
+    }
+    if (answers.identification) {
+        var el2 = document.getElementById('gate-current-id');
+        if (el2) el2.textContent = idMap[answers.identification] || 'Microchip only';
+    }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Safety Assessment - GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/quizStore.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+<body>
+  <div id="app">
+    <div class="flex min-h-screen flex-col bg-white">
+      <header class="bg-white border-b-2 border-gray-100 py-4">
+        <div class="flex h-full w-full items-center justify-center">
+          <img src="images/home2-logo.svg" alt="GeniusPet Logo">
+        </div>
+      </header>
+
+      <div class="flex flex-col items-center px-4 py-8 md:py-12">
+        <!-- Red badge -->
+        <div class="mb-4 inline-flex items-center gap-2 rounded-md bg-red-50 px-4 py-2 text-sm font-bold text-geniuspet-red tracking-wider border border-red-200">
+          <svg class="fill-geniuspet-red-600 w-4 h-4" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path></svg>
+          60-SECOND PET SAFETY ASSESSMENT
+        </div>
+
+        <!-- Heading -->
+        <h1 class="mb-2 max-w-2xl text-center text-lg font-bold leading-tight text-gray-900 md:text-4.5xl">
+          If Your Pet Went Missing Tonight,
+          <span class="text-geniuspet-red">Could a Stranger Bring Them Home?</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="mb-5 max-w-lg text-center text-lg/7 text-gray-600">
+          Take this 60-second assessment to uncover the hidden gaps in your pet's safety net and get a personalized protection plan.
+        </p>
+
+        <!-- Pet image -->
+        <div class="mb-6">
+          <img src="images/attach-pet-tag.png" alt="Pet with tag" class="mx-auto w-48 md:w-64 rounded-full">
+        </div>
+
+        <!-- CTA Button -->
+        <div class="mb-7 w-full max-w-md">
+          <a href="question-1.html">
+            <button class="w-full cursor-pointer rounded-xl font-bold text-white transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 px-8 py-4 text-lg bg-geniuspet-red hover:bg-red-700 hover:-translate-y-1 hover:shadow-lg disabled:hover:translate-y-0 disabled:hover:shadow-none">
+              <span class="flex justify-center items-center gap-2 text-xl">
+                Take the Free Assessment
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </span>
+            </button>
+          </a>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="mb-7 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-600 md:gap-6">
+          <div class="flex items-center gap-1.5">
+            <svg class="fill-green-500 w-4 h-4" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+            Takes 60 seconds
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="fill-green-500 w-4 h-4" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+            100% free
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="fill-green-500 w-4 h-4" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+            Vet-approved
+          </div>
+        </div>
+
+        <!-- Social proof -->
+        <div class="rounded-xl bg-gray-50 border border-gray-200 px-6 py-4">
+          <div class="flex flex-col md:flex-row items-center gap-4">
+            <div class="flex -space-x-2">
+              <div class="h-8 w-8 overflow-hidden rounded-full border-2 border-white"><img src="images/dog1.jpg" alt="Pet parent" class="h-full w-full object-cover"></div>
+              <div class="h-8 w-8 overflow-hidden rounded-full border-2 border-white"><img src="images/cat1.jpg" alt="Pet parent" class="h-full w-full object-cover"></div>
+              <div class="h-8 w-8 overflow-hidden rounded-full border-2 border-white"><img src="images/dog2.jpg" alt="Pet parent" class="h-full w-full object-cover"></div>
+              <div class="h-8 w-8 overflow-hidden rounded-full border-2 border-white"><img src="images/cat2.jpg" alt="Pet parent" class="h-full w-full object-cover"></div>
+            </div>
+            <p class="font-semibold text-sm text-gray-700 text-center md:text-left">
+              <span class="font-bold">76,000+</span> pet parents have taken this assessment
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
