@@ -226,6 +226,19 @@
 
   </main>
 
+  <!-- Sticky CTA Bar -->
+  <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-3 transition-transform duration-300" style="transform: translateY(100%);">
+    <div class="max-w-[600px] mx-auto">
+      <button id="sticky-yes-cta"
+              class="w-full bg-blue-primary hover:bg-blue-dark text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
+        Yes, I Want Instant Alerts →
+      </button>
+      <button id="sticky-skip" class="w-full mt-1.5 text-[14px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-1.5 underline decoration-neutral-light/50 underline-offset-2">
+        No thanks, I'm okay waiting hours to find out <span class="pet-name">my pet</span> is missing
+      </button>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="py-6 mt-4">
     <div class="max-w-[600px] mx-auto px-5 text-center">
@@ -377,6 +390,51 @@
           var s = remaining % 60;
           countdownEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
         }, 1000);
+      }
+
+      // 8. Sticky CTA bar — show on scroll, hide at top & footer
+      var stickyCta = document.getElementById('sticky-cta');
+      var heroSection = document.querySelector('.fade-in');
+      var footerEl = document.querySelector('footer');
+
+      if (stickyCta && heroSection) {
+        var toggleStickyBar = function() {
+          var heroBottom = heroSection.getBoundingClientRect().bottom;
+          var footerTop = footerEl ? footerEl.getBoundingClientRect().top : Infinity;
+          var windowHeight = window.innerHeight;
+
+          if (heroBottom < 0 && footerTop > windowHeight) {
+            stickyCta.style.transform = 'translateY(0)';
+          } else {
+            stickyCta.style.transform = 'translateY(100%)';
+          }
+        };
+
+        window.addEventListener('scroll', toggleStickyBar);
+        toggleStickyBar();
+      }
+
+      // 9. Wire sticky CTA buttons
+      var stickyYes = document.getElementById('sticky-yes-cta');
+      var stickySkip = document.getElementById('sticky-skip');
+
+      if (stickyYes) {
+        stickyYes.addEventListener('click', function() {
+          this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+          this.classList.add('pointer-events-none');
+
+          sessionStorage.setItem('advancedPurchased', JSON.stringify({ plan: 'annual', price: 89 }));
+
+          setTimeout(function() {
+            window.location.href = 'upsell-two.html?' + buildParams();
+          }, 800);
+        });
+      }
+
+      if (stickySkip) {
+        stickySkip.addEventListener('click', function() {
+          window.location.href = 'downsell-one.html?' + buildParams();
+        });
       }
 
     })();

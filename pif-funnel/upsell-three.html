@@ -202,7 +202,7 @@
 
   </main>
 
-  <!-- Sticky CTA Bar (gateway phase only) -->
+  <!-- Sticky CTA Bar (gateway phase) -->
   <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-3 transition-transform duration-300" style="transform: translateY(100%);">
     <div class="max-w-[600px] mx-auto space-y-2">
       <button id="sticky-no-insurance"
@@ -212,6 +212,19 @@
       <button id="sticky-yes-insurance"
               class="w-full bg-white border-2 border-beige-medium hover:border-neutral-light text-neutral-dark font-bold py-3.5 rounded-xl text-[15px] transition-colors">
         Yes, I'm already covered
+      </button>
+    </div>
+  </div>
+
+  <!-- Sticky CTA Bar (plan selection phase) -->
+  <div id="sticky-plan-cta" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-3 transition-transform duration-300" style="transform: translateY(100%);">
+    <div class="max-w-[600px] mx-auto">
+      <button id="sticky-plan-yes"
+              class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
+        <span id="sticky-plan-cta-text">Yes — Get Complete Coverage →</span>
+      </button>
+      <button id="sticky-plan-skip" class="w-full mt-1.5 text-[14px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-1.5 underline decoration-neutral-light/50 underline-offset-2">
+        No thanks, I'll handle vet bills on my own
       </button>
     </div>
   </div>
@@ -303,7 +316,7 @@
       var insurancePlans = document.getElementById('insurance-plans');
 
       function showInsurancePlans() {
-        hideStickyBar();
+        showPlanStickyBar();
         gateway.style.opacity = '0';
         gateway.style.transition = 'opacity 0.2s ease';
         sessionStorage.setItem('insuranceInterest', 'true');
@@ -393,7 +406,10 @@
 
       function updatePlanCta() {
         var planLabel = selectedPlan === 'essential' ? 'Essential' : 'Complete';
-        if (planCtaText) planCtaText.textContent = 'Yes \u2014 Get ' + planLabel + ' Coverage \u2192';
+        var text = 'Yes \u2014 Get ' + planLabel + ' Coverage \u2192';
+        if (planCtaText) planCtaText.textContent = text;
+        var stickyText = document.getElementById('sticky-plan-cta-text');
+        if (stickyText) stickyText.textContent = text;
       }
 
       // 6. Plan CTA — purchase insurance
@@ -428,28 +444,47 @@
         });
       }
 
-      // 8. Sticky CTA bar — show on scroll, hide at bottom & when gateway is answered
+      // 8. Sticky CTA bars — gateway phase + plan selection phase
       var stickyCta = document.getElementById('sticky-cta');
+      var stickyPlanCta = document.getElementById('sticky-plan-cta');
       var heroSection = document.querySelector('.fade-in');
       var footerEl = document.querySelector('footer');
-      var stickyHidden = false;
+      var currentPhase = 'gateway'; // 'gateway', 'plans', or 'done'
 
       var hideStickyBar = function() {
-        stickyHidden = true;
+        currentPhase = 'done';
+        if (stickyCta) stickyCta.style.transform = 'translateY(100%)';
+      };
+
+      var showPlanStickyBar = function() {
+        currentPhase = 'plans';
         if (stickyCta) stickyCta.style.transform = 'translateY(100%)';
       };
 
       if (stickyCta && heroSection) {
         var toggleStickyBar = function() {
-          if (stickyHidden) return;
-          var heroBottom = heroSection.getBoundingClientRect().bottom;
           var footerTop = footerEl ? footerEl.getBoundingClientRect().top : Infinity;
           var windowHeight = window.innerHeight;
+          var atFooter = footerTop <= windowHeight;
 
-          if (heroBottom < 0 && footerTop > windowHeight) {
-            stickyCta.style.transform = 'translateY(0)';
+          if (currentPhase === 'gateway') {
+            var heroBottom = heroSection.getBoundingClientRect().bottom;
+            if (heroBottom < 0 && !atFooter) {
+              stickyCta.style.transform = 'translateY(0)';
+            } else {
+              stickyCta.style.transform = 'translateY(100%)';
+            }
+          } else if (currentPhase === 'plans' && stickyPlanCta) {
+            var planCtaZone = document.getElementById('plan-cta');
+            var planCtaVisible = planCtaZone ? planCtaZone.getBoundingClientRect().bottom > 0 && planCtaZone.getBoundingClientRect().top < windowHeight : true;
+            if (!planCtaVisible && !atFooter) {
+              stickyPlanCta.style.transform = 'translateY(0)';
+            } else {
+              stickyPlanCta.style.transform = 'translateY(100%)';
+            }
           } else {
-            stickyCta.style.transform = 'translateY(100%)';
+            if (stickyCta) stickyCta.style.transform = 'translateY(100%)';
+            if (stickyPlanCta) stickyPlanCta.style.transform = 'translateY(100%)';
           }
         };
 
@@ -457,7 +492,7 @@
         toggleStickyBar();
       }
 
-      // 9. Wire sticky buttons
+      // 9. Wire gateway sticky buttons
       var stickyNoIns = document.getElementById('sticky-no-insurance');
       var stickyYesIns = document.getElementById('sticky-yes-insurance');
 
@@ -467,6 +502,39 @@
 
       if (stickyYesIns) {
         stickyYesIns.addEventListener('click', showAlreadyCovered);
+      }
+
+      // 10. Wire plan sticky buttons
+      var stickyPlanYes = document.getElementById('sticky-plan-yes');
+      var stickyPlanSkip = document.getElementById('sticky-plan-skip');
+      var stickyPlanCtaText = document.getElementById('sticky-plan-cta-text');
+
+      if (stickyPlanYes) {
+        stickyPlanYes.addEventListener('click', function() {
+          this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+          this.classList.add('pointer-events-none');
+
+          var priceEl = selectedPlan === 'essential'
+            ? document.getElementById('price-essential')
+            : document.getElementById('price-complete');
+
+          sessionStorage.setItem('insurancePurchased', JSON.stringify({
+            plan: selectedPlan,
+            breed: petData.breed,
+            age: petData.age,
+            price: priceEl ? priceEl.textContent : ''
+          }));
+
+          setTimeout(function() {
+            window.location.href = 'thank-you.html?' + buildParams();
+          }, 800);
+        });
+      }
+
+      if (stickyPlanSkip) {
+        stickyPlanSkip.addEventListener('click', function() {
+          window.location.href = 'thank-you.html?' + buildParams();
+        });
       }
 
     })();
