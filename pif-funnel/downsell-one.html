@@ -48,86 +48,101 @@
     }
   </script>
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    @keyframes upsellPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(45, 150, 196, 0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(45, 150, 196, 0); }
+    }
+    .upsell-pulse { animation: upsellPulse 2s infinite; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+  </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-black min-h-screen">
 
   <!-- Header -->
   <header class="bg-white shadow-sm">
-    <div class="max-w-md mx-auto px-4 py-4 flex items-center justify-center">
+    <div class="max-w-[600px] mx-auto px-5 py-4 flex items-center justify-center">
       <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-md mx-auto px-4 py-6">
+  <main class="max-w-[600px] mx-auto px-5 py-8">
 
-    <!-- Hero: Softer Approach -->
-    <div class="text-center mb-6">
-      <div class="w-14 h-14 bg-blue-lightest rounded-2xl flex items-center justify-center mx-auto mb-4">
-        <svg class="w-7 h-7 text-blue-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
+    <!-- Hero — address the objection directly -->
+    <div class="text-center mb-6 fade-in">
+      <!-- Pet Photo -->
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg bg-beige-medium">
+        <img id="pet-photo" src="" alt="" class="w-full h-full object-cover hidden">
+        <div id="pet-photo-placeholder" class="w-full h-full flex items-center justify-center">
+          <svg class="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
       </div>
-      <h1 class="text-2xl font-bold text-neutral-black mb-2">Not ready for the full year?</h1>
-      <p class="text-sm text-neutral-medium">Start with a flexible quarterly plan instead. Same protection for <span class="pet-name font-medium text-neutral-dark">your pet</span>.</p>
+      <p class="text-[15px] font-bold text-blue-primary mb-2">Wait — before you go</p>
+      <h1 class="text-2xl font-bold text-neutral-black leading-tight mb-3">Same Advanced Protection.<br>Pay quarterly instead.</h1>
+      <p class="text-[15px] text-neutral-medium">Everything you just saw — instant alerts, Lost Pet Amber Alerts, shelter notifications — with no annual commitment.</p>
     </div>
 
-    <!-- Feature List -->
-    <div class="bg-blue-lightest rounded-xl p-4 mb-6">
-      <p class="text-xs font-bold text-blue-primary uppercase tracking-wider mb-3">What you get</p>
-      <div class="space-y-3">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-blue-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">SMS & call alerts when <span class="pet-name">your pet</span> is found</p>
+    <!-- Price comparison card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-beige-medium p-5 mb-6 fade-in delay-1">
+      <div class="flex items-center justify-between">
+        <div class="text-center flex-1">
+          <p class="text-sm text-neutral-medium mb-1">Annual plan</p>
+          <p class="text-lg font-bold text-neutral-light line-through">$89/year</p>
         </div>
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-blue-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">Lost Pet Network — alert nearby neighbors</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-blue-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">GPS location when tag is scanned</p>
+        <div class="w-px h-10 bg-beige-medium"></div>
+        <div class="text-center flex-1">
+          <p class="text-sm text-neutral-medium mb-1">Quarterly plan</p>
+          <p class="text-lg font-bold text-blue-primary">$4.95/month</p>
         </div>
       </div>
     </div>
 
-    <!-- Pricing Card -->
-    <div class="bg-white border-2 border-blue-light/30 rounded-2xl p-5 text-center mb-4">
-      <p class="text-3xl font-bold text-neutral-black mb-0.5">$4.95<span class="text-lg font-semibold text-neutral-medium">/mo</span></p>
-      <p class="text-neutral-medium text-xs mb-5">Billed quarterly at $14.85</p>
-
+    <!-- CTA Zone -->
+    <div class="fade-in delay-1">
       <button id="yes-cta"
-              class="w-full bg-blue-primary hover:bg-blue-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
-        Start Quarterly Plan
+              class="w-full bg-blue-primary hover:bg-blue-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-xl upsell-pulse">
+        <span id="cta-text">Yes — Get Instant Lost Pet Alerts →</span>
       </button>
-
-      <p class="text-neutral-light text-xs mt-3">Cancel anytime</p>
+      <p class="text-center text-sm text-neutral-dark mt-3">$4.95/month · Billed quarterly · Cancel anytime</p>
+      <p class="text-center text-sm text-neutral-medium mt-1">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-green-primary mr-1 align-middle"></span>
+        Discounted price reserved: <span id="countdown" class="font-medium text-neutral-dark">09:59</span> remaining
+      </p>
     </div>
 
     <!-- No Thanks -->
-    <button id="no-thanks" class="w-full mt-2 text-sm text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2">
-      No thanks
+    <button id="no-thanks" class="w-full mt-4 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
+      <span id="skip-text">No thanks, I'll rely on tag scans alone</span>
     </button>
 
+    <!-- Testimonial -->
+    <div class="bg-blue-lightest rounded-xl p-4 mt-6 fade-in delay-2">
+      <p class="text-sm italic text-neutral-dark leading-relaxed mb-1.5">"Started with the quarterly plan just to try it. Got an alert within a week when my cat Milo wandered off. <strong>Upgraded to annual immediately.</strong>"</p>
+      <span class="text-sm font-medium text-neutral-medium">David R. · Seattle, WA</span>
+    </div>
+
     <!-- Trust Badge -->
-    <div class="flex items-center justify-center gap-2 mt-6 pt-4 border-t border-beige-medium">
+    <div class="flex items-center justify-center gap-2 mt-6 pt-5 border-t border-beige-medium">
       <svg class="w-4 h-4 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
       </svg>
-      <span class="text-xs text-neutral-medium">30-day money-back guarantee · Cancel anytime</span>
+      <span class="text-sm text-neutral-medium">30-day money-back guarantee · Cancel anytime</span>
     </div>
 
   </main>
 
   <!-- Footer -->
   <footer class="py-6 mt-4">
-    <div class="max-w-md mx-auto px-4 text-center">
+    <div class="max-w-[600px] mx-auto px-5 text-center">
       <p class="text-xs text-neutral-light">&copy; 2025 GeniusPet. All rights reserved.</p>
     </div>
   </footer>
@@ -137,13 +152,15 @@
       'use strict';
 
       // 1. Get data from sessionStorage + URL params
-      var petData = { name: 'your pet' };
+      var petData = { name: 'your pet', photo: null, petType: null };
 
       var sessionData = sessionStorage.getItem('petProfile');
       if (sessionData) {
         try {
           var parsed = JSON.parse(sessionData);
           if (parsed.name) petData.name = parsed.name;
+          if (parsed.photo) petData.photo = parsed.photo;
+          if (parsed.petType) petData.petType = parsed.petType;
         } catch (e) {}
       }
 
@@ -160,6 +177,23 @@
         el.textContent = petData.name;
       });
 
+      // Show pet photo — user upload or default based on pet type
+      var photoSrc = petData.photo;
+      if (!photoSrc && petData.petType) {
+        var defaults = { dog: 'assets/images/default-dog.png', cat: 'assets/images/default-cat.png' };
+        photoSrc = defaults[petData.petType];
+      }
+      if (photoSrc) {
+        var photoImg = document.getElementById('pet-photo');
+        var photoPlaceholder = document.getElementById('pet-photo-placeholder');
+        if (photoImg && photoPlaceholder) {
+          photoImg.src = photoSrc;
+          photoImg.alt = petData.name;
+          photoImg.classList.remove('hidden');
+          photoPlaceholder.classList.add('hidden');
+        }
+      }
+
       // 3. Build redirect URL helper
       function buildParams() {
         var params = new URLSearchParams();
@@ -168,7 +202,7 @@
         return params.toString();
       }
 
-      // 4. YES CTA — purchase quarterly, redirect to thank-you
+      // 4. YES CTA — purchase quarterly, redirect to upsell-two
       var yesCta = document.getElementById('yes-cta');
       if (yesCta) {
         yesCta.addEventListener('click', function() {
@@ -189,6 +223,32 @@
         noThanks.addEventListener('click', function() {
           window.location.href = 'upsell-two.html?' + buildParams();
         });
+      }
+
+      // 6. Soft countdown timer
+      var countdownEl = document.getElementById('countdown');
+      if (countdownEl) {
+        var remaining = 599;
+        var storedTimer = sessionStorage.getItem('upsellTimer');
+        if (storedTimer) remaining = Math.max(0, parseInt(storedTimer, 10));
+
+        // Handle already-expired state on page load
+        if (remaining <= 0) {
+          countdownEl.parentElement.innerHTML = '<span class="font-medium text-neutral-dark">Offer extended — but only for a few more minutes</span>';
+        }
+
+        setInterval(function() {
+          if (remaining <= 0) return;
+          remaining--;
+          sessionStorage.setItem('upsellTimer', remaining);
+          if (remaining <= 0) {
+            countdownEl.parentElement.innerHTML = '<span class="font-medium text-neutral-dark">Offer extended — but only for a few more minutes</span>';
+            return;
+          }
+          var m = Math.floor(remaining / 60);
+          var s = remaining % 60;
+          countdownEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }, 1000);
       }
 
     })();

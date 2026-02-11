@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Add accident and illness coverage for your pet.">
+  <meta name="description" content="Does your pet have insurance coverage?">
   <title>Pet Insurance — GeniusPet</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -28,6 +28,10 @@
               dark: '#8a6632',
               tint: '#f9f4ed',
             },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
           },
           fontFamily: {
             sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
@@ -37,84 +41,184 @@
     }
   </script>
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    .reveal-section { transition: opacity 0.3s ease; }
+    .plan-card { transition: all 0.2s ease; cursor: pointer; }
+    .plan-card.selected { border-color: #d49d35; box-shadow: 0 0 0 2px rgba(212,157,53,0.2); }
+    .plan-card:not(.selected) { opacity: 0.7; }
+    .plan-card:not(.selected):hover { opacity: 0.85; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+  </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-black min-h-screen">
 
   <!-- Header -->
   <header class="bg-white shadow-sm">
-    <div class="max-w-md mx-auto px-4 py-4 flex items-center justify-center">
+    <div class="max-w-[600px] mx-auto px-5 py-4 flex items-center justify-center">
       <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-md mx-auto px-4 py-6">
+  <main class="max-w-[600px] mx-auto px-5 py-8">
 
-    <!-- Hero: Gold Gradient Card -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gold-primary to-gold-dark p-6 text-white text-center mb-6">
-      <div class="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full"></div>
-      <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
-      <div class="relative">
-        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <!-- Heart-handshake icon -->
-          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14l2-2 2 2"/>
+    <!-- Hero -->
+    <div class="text-center mb-6 fade-in">
+      <!-- Pet Photo -->
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg bg-beige-medium">
+        <img id="pet-photo" src="" alt="" class="w-full h-full object-cover hidden">
+        <div id="pet-photo-placeholder" class="w-full h-full flex items-center justify-center">
+          <svg class="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
           </svg>
         </div>
-        <p class="text-white/70 text-sm mb-1">The unexpected shouldn't come with a $5,000 surprise.</p>
-        <h1 class="text-2xl font-bold">Accident & Illness Coverage</h1>
       </div>
+      <p class="text-[15px] font-bold text-gold-primary mb-2">You've built <span class="pet-name">your pet</span>'s identity, safety alerts, and vet access. One layer of protection is still missing.</p>
+      <h1 class="text-2xl font-bold text-neutral-black leading-tight mb-3">The worst time to think about insurance is after the bill.</h1>
+      <p class="text-[15px] text-neutral-medium">One emergency visit averages $800–$4,000. <span class="font-bold text-neutral-dark">Without coverage, that bill hits all at once.</span></p>
     </div>
 
-    <!-- Description + Benefits -->
-    <div class="mb-6">
-      <p class="text-sm text-neutral-dark mb-1 font-medium">Covers accidents, illnesses, and emergencies for <span class="pet-name">your pet</span>.</p>
-      <p class="text-xs text-neutral-medium mb-4">Because peace of mind shouldn't be optional.</p>
-      <div class="space-y-3">
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-gold-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">Emergency vet visits</p>
-        </div>
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-gold-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">Surgery & hospitalization</p>
-        </div>
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-gold-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">Diagnostic tests & imaging</p>
-        </div>
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-gold-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <p class="text-sm text-neutral-dark">Prescription medications</p>
+    <!-- Gateway Question -->
+    <div id="gateway" class="bg-white rounded-2xl shadow-sm border-2 border-gold-primary/30 mb-6 overflow-hidden fade-in delay-1">
+      <div class="p-6 text-center">
+        <p class="text-base font-bold text-neutral-black mb-1">Does <span class="pet-name">your pet</span> currently have pet insurance?</p>
+        <p class="text-sm text-neutral-medium mb-5">This helps us show you the right next step.</p>
+        <div class="space-y-2.5">
+          <button id="has-insurance-no" class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-3.5 rounded-xl text-[15px] transition-colors">
+            No — Show me options
+          </button>
+          <button id="has-insurance-yes" class="w-full bg-white border-2 border-beige-medium hover:border-neutral-light text-neutral-dark font-bold py-3.5 rounded-xl text-[15px] transition-colors">
+            Yes, I'm already covered
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- CTA -->
-    <button id="yes-cta"
-            class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
-      Add Insurance — $29.99/mo
-    </button>
+    <!-- Already Covered (hidden by default) -->
+    <div id="already-covered" class="hidden reveal-section opacity-0">
+      <div class="bg-green-light rounded-2xl p-6 text-center mb-6 border border-green-primary/20">
+        <svg class="w-10 h-10 text-green-primary mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <p class="text-base font-bold text-neutral-black mb-1">Great — <span class="pet-name">your pet</span> is already covered!</p>
+        <p class="text-[15px] text-neutral-medium">You're ahead of 77% of pet parents.</p>
+      </div>
+      <button id="continue-covered"
+              class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl transition-colors text-xl mb-3">
+        Continue →
+      </button>
+    </div>
 
-    <!-- Skip -->
-    <button id="skip" class="w-full mt-3 text-sm text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2">
-      Skip
-    </button>
+    <!-- Insurance Plans (hidden by default, revealed when "No" is clicked) -->
+    <div id="insurance-plans" class="hidden reveal-section opacity-0">
+
+      <!-- Personalized headline -->
+      <div class="text-center mb-5">
+        <h2 class="text-xl font-bold text-neutral-black leading-tight mb-1">Plans for <span id="plan-breed" class="text-gold-primary"></span>, age <span id="plan-age" class="text-gold-primary"></span></h2>
+        <p class="text-sm text-neutral-medium">Choose the coverage level that's right for <span class="pet-name">your pet</span>.</p>
+      </div>
+
+      <!-- What's Covered -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-beige-medium mb-5">
+        <p class="text-[15px] font-bold text-neutral-black mb-3">What's covered:</p>
+        <div class="space-y-3">
+          <div class="flex items-center gap-2.5">
+            <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span class="text-[15px] text-neutral-dark">Accidents — broken bones, torn ligaments, poisoning</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span class="text-[15px] text-neutral-dark">Illnesses — infections, cancer, diabetes, allergies</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <svg class="w-5 h-5 text-gold-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span class="text-[15px] text-neutral-dark">100% after deductible — surgery, hospitalization, prescriptions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan Cards -->
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <!-- Essential Plan -->
+        <button class="plan-card bg-white rounded-xl p-4 border-2 border-beige-medium text-left" data-plan="essential">
+          <p class="text-sm font-bold text-neutral-black mb-0.5">Essential</p>
+          <p class="text-sm text-neutral-medium mb-2">$500 deductible</p>
+          <p class="text-2xl font-bold text-neutral-black mb-0.5"><span id="price-essential">$XX</span><span class="text-[15px] font-medium text-neutral-medium">/mo</span></p>
+          <p class="text-sm text-neutral-medium">$5,000 annual limit</p>
+        </button>
+
+        <!-- Complete Plan (Recommended) -->
+        <button class="plan-card selected bg-white rounded-xl p-4 border-2 border-gold-primary text-left relative" data-plan="complete">
+          <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-gold-primary text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide">Recommended</span>
+          <p class="text-sm font-bold text-neutral-black mb-0.5">Complete</p>
+          <p class="text-sm text-neutral-medium mb-2">$250 deductible</p>
+          <p class="text-2xl font-bold text-neutral-black mb-0.5"><span id="price-complete">$XX</span><span class="text-[15px] font-medium text-neutral-medium">/mo</span></p>
+          <p class="text-sm text-neutral-medium">$5,000 annual limit</p>
+        </button>
+      </div>
+
+      <!-- CTA Zone -->
+      <div>
+        <p class="text-center text-[15px] font-bold text-gold-primary mb-3">6,800+ pet parents have added insurance coverage</p>
+        <button id="plan-cta"
+                class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-xl">
+          <span id="plan-cta-text">Yes — Get Complete Coverage →</span>
+        </button>
+        <p class="text-center text-sm text-neutral-medium mt-3">Emergency surgery can cost $4,000+.</p>
+      </div>
+
+      <!-- Skip -->
+      <button id="plan-skip" class="w-full mt-4 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
+        No thanks, I'll handle vet bills on my own
+      </button>
+
+      <!-- Testimonial -->
+      <div class="bg-gold-tint rounded-xl p-4 mt-6">
+        <p class="text-sm italic text-neutral-dark leading-relaxed mb-1.5">"Our Golden needed ACL surgery — <strong>$3,800 bill</strong>. Insurance covered 90%. We paid $630 instead. I can't imagine not having this."</p>
+        <span class="text-sm font-medium text-neutral-medium">Mark & Lisa T. · Charlotte, NC</span>
+      </div>
+
+      <!-- Trust Badge -->
+      <div class="flex items-center justify-center gap-2 mt-6 pt-5 border-t border-beige-medium">
+        <svg class="w-4 h-4 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span class="text-sm text-neutral-medium">30-day money-back guarantee · Cancel anytime</span>
+      </div>
+
+    </div>
 
   </main>
 
+  <!-- Sticky CTA Bar (gateway phase only) -->
+  <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-3 transition-transform duration-300" style="transform: translateY(100%);">
+    <div class="max-w-[600px] mx-auto space-y-2">
+      <button id="sticky-no-insurance"
+              class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-3.5 rounded-xl transition-colors text-[15px]">
+        No — Show me options
+      </button>
+      <button id="sticky-yes-insurance"
+              class="w-full bg-white border-2 border-beige-medium hover:border-neutral-light text-neutral-dark font-bold py-3.5 rounded-xl text-[15px] transition-colors">
+        Yes, I'm already covered
+      </button>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="py-6 mt-4">
-    <div class="max-w-md mx-auto px-4 text-center">
+    <div class="max-w-[600px] mx-auto px-5 text-center">
       <p class="text-xs text-neutral-light">&copy; 2025 GeniusPet. All rights reserved.</p>
     </div>
   </footer>
@@ -123,14 +227,35 @@
     (function() {
       'use strict';
 
+      // --- Pricing logic (age-adjusted) ---
+      function getQuotePrices(breed, age) {
+        var baseEssential = 24.99;
+        var baseComplete = 39.99;
+        if (age >= 8) {
+          baseEssential += 10;
+          baseComplete += 15;
+        } else if (age >= 5) {
+          baseEssential += 5;
+          baseComplete += 8;
+        }
+        return {
+          essential: baseEssential.toFixed(2),
+          complete: baseComplete.toFixed(2)
+        };
+      }
+
       // 1. Get data from sessionStorage + URL params
-      var petData = { name: 'your pet' };
+      var petData = { name: 'your pet', photo: null, petType: null, breed: '', age: '' };
 
       var sessionData = sessionStorage.getItem('petProfile');
       if (sessionData) {
         try {
           var parsed = JSON.parse(sessionData);
           if (parsed.name) petData.name = parsed.name;
+          if (parsed.photo) petData.photo = parsed.photo;
+          if (parsed.petType) petData.petType = parsed.petType;
+          if (parsed.breed) petData.breed = parsed.breed;
+          if (parsed.age) petData.age = parsed.age;
         } catch (e) {}
       }
 
@@ -147,6 +272,23 @@
         el.textContent = petData.name;
       });
 
+      // Show pet photo — user upload or default based on pet type
+      var photoSrc = petData.photo;
+      if (!photoSrc && petData.petType) {
+        var defaults = { dog: 'assets/images/default-dog.png', cat: 'assets/images/default-cat.png' };
+        photoSrc = defaults[petData.petType];
+      }
+      if (photoSrc) {
+        var photoImg = document.getElementById('pet-photo');
+        var photoPlaceholder = document.getElementById('pet-photo-placeholder');
+        if (photoImg && photoPlaceholder) {
+          photoImg.src = photoSrc;
+          photoImg.alt = petData.name;
+          photoImg.classList.remove('hidden');
+          photoPlaceholder.classList.add('hidden');
+        }
+      }
+
       // 3. Build redirect URL helper
       function buildParams() {
         var params = new URLSearchParams();
@@ -155,14 +297,122 @@
         return params.toString();
       }
 
-      // 4. YES CTA — purchase Insurance, redirect to thank-you
-      var yesCta = document.getElementById('yes-cta');
-      if (yesCta) {
-        yesCta.addEventListener('click', function() {
+      // 4. Gateway logic
+      var gateway = document.getElementById('gateway');
+      var alreadyCovered = document.getElementById('already-covered');
+      var insurancePlans = document.getElementById('insurance-plans');
+
+      function showInsurancePlans() {
+        hideStickyBar();
+        gateway.style.opacity = '0';
+        gateway.style.transition = 'opacity 0.2s ease';
+        sessionStorage.setItem('insuranceInterest', 'true');
+        setTimeout(function() {
+          gateway.classList.add('hidden');
+          insurancePlans.classList.remove('hidden');
+          insurancePlans.offsetHeight; // force reflow
+          insurancePlans.style.opacity = '1';
+
+          // Populate breed/age in plan headline
+          var breed = petData.breed || '';
+          var ageNum = parseInt(petData.age, 10);
+          var breedEl = document.getElementById('plan-breed');
+          var ageEl = document.getElementById('plan-age');
+
+          if (breedEl) breedEl.textContent = breed || 'Your pet';
+          if (ageEl) ageEl.textContent = !isNaN(ageNum) ? ageNum + (ageNum === 1 ? ' year' : ' years') : 'unknown';
+
+          // Calculate and display prices
+          if (breed && !isNaN(ageNum)) {
+            var prices = getQuotePrices(breed, ageNum);
+            var priceEssentialEl = document.getElementById('price-essential');
+            var priceCompleteEl = document.getElementById('price-complete');
+            if (priceEssentialEl) priceEssentialEl.textContent = '$' + prices.essential;
+            if (priceCompleteEl) priceCompleteEl.textContent = '$' + prices.complete;
+          } else {
+            // Fallback: show base prices
+            var basePrices = getQuotePrices('', 2);
+            var priceEssentialEl = document.getElementById('price-essential');
+            var priceCompleteEl = document.getElementById('price-complete');
+            if (priceEssentialEl) priceEssentialEl.textContent = '$' + basePrices.essential;
+            if (priceCompleteEl) priceCompleteEl.textContent = '$' + basePrices.complete;
+          }
+
+          // Scroll to plans
+          insurancePlans.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
+      }
+
+      function showAlreadyCovered() {
+        hideStickyBar();
+        gateway.style.opacity = '0';
+        gateway.style.transition = 'opacity 0.2s ease';
+        setTimeout(function() {
+          gateway.classList.add('hidden');
+          alreadyCovered.classList.remove('hidden');
+          alreadyCovered.offsetHeight;
+          alreadyCovered.style.opacity = '1';
+        }, 200);
+      }
+
+      // "No" — reveal insurance plan cards inline
+      document.getElementById('has-insurance-no').addEventListener('click', showInsurancePlans);
+
+      // "Yes" — show already covered section
+      document.getElementById('has-insurance-yes').addEventListener('click', showAlreadyCovered);
+
+      // Continue button for already-covered
+      document.getElementById('continue-covered').addEventListener('click', function() {
+        this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+        this.classList.add('pointer-events-none');
+        sessionStorage.setItem('hasExistingInsurance', 'true');
+        setTimeout(function() {
+          window.location.href = 'thank-you.html?' + buildParams();
+        }, 600);
+      });
+
+      // 5. Plan selection logic
+      var selectedPlan = 'complete';
+      var planCards = document.querySelectorAll('.plan-card');
+      var planCtaText = document.getElementById('plan-cta-text');
+
+      planCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          selectedPlan = this.getAttribute('data-plan');
+          planCards.forEach(function(c) {
+            c.classList.remove('selected');
+            c.classList.add('border-beige-medium');
+            c.classList.remove('border-gold-primary');
+          });
+          this.classList.add('selected');
+          this.classList.remove('border-beige-medium');
+          this.classList.add('border-gold-primary');
+          updatePlanCta();
+        });
+      });
+
+      function updatePlanCta() {
+        var planLabel = selectedPlan === 'essential' ? 'Essential' : 'Complete';
+        if (planCtaText) planCtaText.textContent = 'Yes \u2014 Get ' + planLabel + ' Coverage \u2192';
+      }
+
+      // 6. Plan CTA — purchase insurance
+      var planCta = document.getElementById('plan-cta');
+      if (planCta) {
+        planCta.addEventListener('click', function() {
           this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
           this.classList.add('pointer-events-none');
 
-          sessionStorage.setItem('insurancePurchased', 'true');
+          var priceEl = selectedPlan === 'essential'
+            ? document.getElementById('price-essential')
+            : document.getElementById('price-complete');
+
+          sessionStorage.setItem('insurancePurchased', JSON.stringify({
+            plan: selectedPlan,
+            breed: petData.breed,
+            age: petData.age,
+            price: priceEl ? priceEl.textContent : ''
+          }));
 
           setTimeout(function() {
             window.location.href = 'thank-you.html?' + buildParams();
@@ -170,12 +420,53 @@
         });
       }
 
-      // 5. SKIP — redirect to thank-you
-      var skip = document.getElementById('skip');
-      if (skip) {
-        skip.addEventListener('click', function() {
+      // 7. Plan skip — go to thank-you
+      var planSkip = document.getElementById('plan-skip');
+      if (planSkip) {
+        planSkip.addEventListener('click', function() {
           window.location.href = 'thank-you.html?' + buildParams();
         });
+      }
+
+      // 8. Sticky CTA bar — show on scroll, hide at bottom & when gateway is answered
+      var stickyCta = document.getElementById('sticky-cta');
+      var heroSection = document.querySelector('.fade-in');
+      var footerEl = document.querySelector('footer');
+      var stickyHidden = false;
+
+      var hideStickyBar = function() {
+        stickyHidden = true;
+        if (stickyCta) stickyCta.style.transform = 'translateY(100%)';
+      };
+
+      if (stickyCta && heroSection) {
+        var toggleStickyBar = function() {
+          if (stickyHidden) return;
+          var heroBottom = heroSection.getBoundingClientRect().bottom;
+          var footerTop = footerEl ? footerEl.getBoundingClientRect().top : Infinity;
+          var windowHeight = window.innerHeight;
+
+          if (heroBottom < 0 && footerTop > windowHeight) {
+            stickyCta.style.transform = 'translateY(0)';
+          } else {
+            stickyCta.style.transform = 'translateY(100%)';
+          }
+        };
+
+        window.addEventListener('scroll', toggleStickyBar);
+        toggleStickyBar();
+      }
+
+      // 9. Wire sticky buttons
+      var stickyNoIns = document.getElementById('sticky-no-insurance');
+      var stickyYesIns = document.getElementById('sticky-yes-insurance');
+
+      if (stickyNoIns) {
+        stickyNoIns.addEventListener('click', showInsurancePlans);
+      }
+
+      if (stickyYesIns) {
+        stickyYesIns.addEventListener('click', showAlreadyCovered);
       }
 
     })();

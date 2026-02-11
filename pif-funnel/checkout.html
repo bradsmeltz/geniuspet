@@ -382,11 +382,6 @@
         <!-- Checkout Form -->
         <div class="flex-1 space-y-4">
           <form id="checkout-form">
-            <!-- Demo Notice -->
-            <div class="bg-white/60 backdrop-blur rounded-lg p-2.5 text-center text-xs text-neutral-medium mb-4">
-              Demo checkout — no actual payment processing
-            </div>
-
             <!-- Preemptive Reassurance - Stops anxiety before it forms -->
             <p class="text-center text-xs text-neutral-medium mb-4">
               Secure checkout · One-time setup
@@ -598,8 +593,18 @@
                   </div>
                 </div>
 
+                <!-- 30-Day Money-Back Guarantee -->
+                <div class="mt-4 pt-4 border-t border-beige-light">
+                  <div class="flex items-center justify-center gap-2 bg-green-light/50 rounded-lg py-2.5 px-3">
+                    <svg class="w-5 h-5 text-green-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-sm font-semibold text-green-primary">30-Day Money-Back Guarantee</span>
+                  </div>
+                </div>
+
                 <!-- Security Note -->
-                <div class="flex items-center justify-center gap-1.5 mt-4 pt-4 border-t border-beige-light">
+                <div class="flex items-center justify-center gap-1.5 mt-3">
                   <svg class="w-3.5 h-3.5 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                   </svg>
@@ -644,7 +649,7 @@
   <!-- Footer -->
   <footer class="bg-neutral-black text-white py-6 mt-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-sm text-neutral-light">&copy; 2024 GeniusPet. All rights reserved.</p>
+      <p class="text-sm text-neutral-light">&copy; 2025 GeniusPet. All rights reserved.</p>
     </div>
   </footer>
 
@@ -988,15 +993,37 @@
 
             // Update CTA text for next step
             if (ctaText) {
-              ctaText.textContent = `Continue to Payment`;
+              ctaText.textContent = `Continue — Protect ${petData.name}`;
             }
             formStep = 1;
 
             // Scroll to form fields
             contactShippingFields.scrollIntoView({ behavior: 'smooth', block: 'start' });
           } else if (formStep === 1) {
-            // Second click: show payment fields
+            // Second click: validate contact/shipping, then show payment fields
             e.preventDefault();
+
+            // Validate email
+            var emailField = document.getElementById('email');
+            var emailVal = emailField ? emailField.value.trim() : '';
+            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+              if (emailField) { emailField.focus(); emailField.style.borderColor = '#D65A52'; }
+              return;
+            }
+            if (emailField) emailField.style.borderColor = '';
+
+            // Validate shipping fields
+            var shippingIds = ['full-name', 'address', 'city', 'state', 'zip'];
+            for (var i = 0; i < shippingIds.length; i++) {
+              var field = document.getElementById(shippingIds[i]);
+              if (field && !field.value.trim()) {
+                field.focus();
+                field.style.borderColor = '#D65A52';
+                return;
+              }
+              if (field) field.style.borderColor = '';
+            }
+
             animateFieldsIn(paymentFields);
 
             // Update button to submit mode

@@ -28,6 +28,10 @@
               dark: '#216257',
               tint: '#eaf3f2',
             },
+            green: {
+              primary: '#4CAF50',
+              light: '#E8F5E9',
+            },
           },
           fontFamily: {
             sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
@@ -37,78 +41,119 @@
     }
   </script>
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+    .delay-4 { animation-delay: 0.6s; }
+  </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-black min-h-screen">
 
   <!-- Header -->
   <header class="bg-white shadow-sm">
-    <div class="max-w-md mx-auto px-4 py-4 flex items-center justify-center">
+    <div class="max-w-[600px] mx-auto px-5 py-4 flex items-center justify-center">
       <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-md mx-auto px-4 py-6">
+  <main class="max-w-[600px] mx-auto px-5 py-8">
 
-    <!-- Hero: Teal Gradient Card -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-primary to-teal-dark p-6 text-white text-center mb-6">
-      <div class="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full"></div>
-      <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
-      <div class="relative">
-        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <!-- Stethoscope icon -->
-          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 8a2 2 0 100-4 2 2 0 000 4zM19 8v3a5 5 0 01-5 5h-1a5 5 0 01-5-5V5.5"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 5.5a2 2 0 114 0M5.5 5.5V11a5 5 0 005 5h1"/>
+    <!-- Hero -->
+    <div class="text-center mb-6 fade-in">
+      <!-- Pet Photo -->
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg bg-beige-medium">
+        <img id="pet-photo" src="" alt="" class="w-full h-full object-cover hidden">
+        <div id="pet-photo-placeholder" class="w-full h-full flex items-center justify-center">
+          <svg class="w-10 h-10 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
           </svg>
         </div>
-        <p class="text-white/70 text-sm mb-1">While you're setting up <span class="pet-name">your pet</span>'s care plan...</p>
-        <h1 class="text-2xl font-bold">24/7 Vet Access</h1>
       </div>
+      <p class="text-[15px] font-bold text-teal-primary mb-2">You built <span class="pet-name">your pet</span>'s profile to protect them when they're lost. But what about when they're sick?</p>
+      <h1 class="text-2xl font-bold text-neutral-black leading-tight mb-3">It's 11pm. <span class="pet-name">Your pet</span> won't stop vomiting. What do you do?</h1>
+      <p class="text-[15px] text-neutral-medium"><strong class="text-neutral-black">TeleVet</strong> gives you 24/7 access to licensed veterinarians — by chat, call, or video. No waiting rooms. No after-hours fees.</p>
     </div>
 
-    <!-- Description + Benefits -->
-    <div class="mb-6">
-      <p class="text-sm text-neutral-dark mb-4">Talk to a licensed vet anytime, from anywhere. No appointments, no waiting rooms.</p>
+    <!-- What You Get -->
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-beige-medium mb-6 fade-in delay-1">
+      <p class="text-[15px] font-bold text-neutral-black mb-3">Talk to a licensed vet in minutes:</p>
       <div class="space-y-3">
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-teal-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-teal-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <p class="text-sm text-neutral-dark">Late-night "is this normal?" moments</p>
+          <span class="text-[15px] text-neutral-dark">A calm expert tells you exactly what to do</span>
         </div>
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-teal-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-teal-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <p class="text-sm text-neutral-dark">Behavior questions before they escalate</p>
+          <span class="text-[15px] text-neutral-dark">Know if it's an emergency — before you spend $300</span>
         </div>
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-teal-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-teal-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <p class="text-sm text-neutral-dark">Quick second opinions before an ER visit</p>
+          <span class="text-[15px] text-neutral-dark">Catch small worries before they become real problems</span>
         </div>
       </div>
     </div>
 
-    <!-- CTA -->
-    <button id="yes-cta"
-            class="w-full bg-teal-primary hover:bg-teal-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
-      Add TeleVet — $19.99/mo
-    </button>
+    <!-- CTA Zone -->
+    <div class="fade-in delay-2">
+      <p class="text-center text-[15px] font-bold text-teal-primary mb-3">8,400+ GeniusPet parents added TeleVet to their pet's profile</p>
+      <button id="yes-cta"
+              class="w-full bg-teal-primary hover:bg-teal-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-xl">
+        <span id="cta-text">Yes — Get 24/7 Vet Access →</span>
+      </button>
+      <p class="text-center text-sm text-neutral-dark mt-3">$7.99/month · Billed every 6 months · Cancel anytime</p>
+      <p class="text-center text-sm text-neutral-medium mt-1">Add to <span class="pet-name">your pet</span>'s profile now — this offer won't appear again at this price.</p>
+    </div>
 
     <!-- Skip -->
-    <button id="skip" class="w-full mt-3 text-sm text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2">
-      Skip
+    <button id="skip" class="w-full mt-4 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
+      <span id="skip-text">No thanks, I'll handle vet visits on my own</span>
     </button>
+
+    <!-- Testimonial -->
+    <div class="bg-teal-tint rounded-xl p-4 mt-6 fade-in delay-3">
+      <p class="text-sm italic text-neutral-dark leading-relaxed mb-1.5">"Called at 1am when my dog ate an entire bag of chocolate chips. The vet walked me through exactly what to do. <strong>Saved me a $450 emergency visit.</strong>"</p>
+      <span class="text-sm font-medium text-neutral-medium">Amanda K. · Nashville, TN</span>
+    </div>
+
+    <!-- Trust Badge -->
+    <div class="flex items-center justify-center gap-2 mt-6 pt-5 border-t border-beige-medium">
+      <svg class="w-4 h-4 text-green-primary" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span class="text-sm text-neutral-medium">Licensed veterinarians · Cancel anytime</span>
+    </div>
 
   </main>
 
+  <!-- Sticky CTA Bar -->
+  <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-3 transition-transform duration-300" style="transform: translateY(100%);">
+    <div class="max-w-[600px] mx-auto">
+      <button id="sticky-yes-cta"
+              class="w-full bg-teal-primary hover:bg-teal-dark text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
+        Yes — Get 24/7 Vet Access →
+      </button>
+      <button id="sticky-skip" class="w-full mt-1.5 text-[14px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-1.5 underline decoration-neutral-light/50 underline-offset-2">
+        No thanks, I'll handle vet visits on my own
+      </button>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="py-6 mt-4">
-    <div class="max-w-md mx-auto px-4 text-center">
+    <div class="max-w-[600px] mx-auto px-5 text-center">
       <p class="text-xs text-neutral-light">&copy; 2025 GeniusPet. All rights reserved.</p>
     </div>
   </footer>
@@ -118,13 +163,15 @@
       'use strict';
 
       // 1. Get data from sessionStorage + URL params
-      var petData = { name: 'your pet' };
+      var petData = { name: 'your pet', photo: null, petType: null };
 
       var sessionData = sessionStorage.getItem('petProfile');
       if (sessionData) {
         try {
           var parsed = JSON.parse(sessionData);
           if (parsed.name) petData.name = parsed.name;
+          if (parsed.photo) petData.photo = parsed.photo;
+          if (parsed.petType) petData.petType = parsed.petType;
         } catch (e) {}
       }
 
@@ -140,6 +187,23 @@
       document.querySelectorAll('.pet-name').forEach(function(el) {
         el.textContent = petData.name;
       });
+
+      // Show pet photo — user upload or default based on pet type
+      var photoSrc = petData.photo;
+      if (!photoSrc && petData.petType) {
+        var defaults = { dog: 'assets/images/default-dog.png', cat: 'assets/images/default-cat.png' };
+        photoSrc = defaults[petData.petType];
+      }
+      if (photoSrc) {
+        var photoImg = document.getElementById('pet-photo');
+        var photoPlaceholder = document.getElementById('pet-photo-placeholder');
+        if (photoImg && photoPlaceholder) {
+          photoImg.src = photoSrc;
+          photoImg.alt = petData.name;
+          photoImg.classList.remove('hidden');
+          photoPlaceholder.classList.add('hidden');
+        }
+      }
 
       // 3. Build redirect URL helper
       function buildParams() {
@@ -168,6 +232,51 @@
       var skip = document.getElementById('skip');
       if (skip) {
         skip.addEventListener('click', function() {
+          window.location.href = 'upsell-three.html?' + buildParams();
+        });
+      }
+
+      // 6. Sticky CTA bar — show on scroll, hide at bottom
+      var stickyCta = document.getElementById('sticky-cta');
+      var heroSection = document.querySelector('.fade-in');
+      var footerEl = document.querySelector('footer');
+
+      if (stickyCta && heroSection) {
+        var toggleStickyBar = function() {
+          var heroBottom = heroSection.getBoundingClientRect().bottom;
+          var footerTop = footerEl ? footerEl.getBoundingClientRect().top : Infinity;
+          var windowHeight = window.innerHeight;
+
+          if (heroBottom < 0 && footerTop > windowHeight) {
+            stickyCta.style.transform = 'translateY(0)';
+          } else {
+            stickyCta.style.transform = 'translateY(100%)';
+          }
+        };
+
+        window.addEventListener('scroll', toggleStickyBar);
+        toggleStickyBar();
+      }
+
+      // 7. Wire sticky CTA buttons
+      var stickyYes = document.getElementById('sticky-yes-cta');
+      var stickySkip = document.getElementById('sticky-skip');
+
+      if (stickyYes) {
+        stickyYes.addEventListener('click', function() {
+          this.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+          this.classList.add('pointer-events-none');
+
+          sessionStorage.setItem('teleVetPurchased', 'true');
+
+          setTimeout(function() {
+            window.location.href = 'upsell-three.html?' + buildParams();
+          }, 800);
+        });
+      }
+
+      if (stickySkip) {
+        stickySkip.addEventListener('click', function() {
           window.location.href = 'upsell-three.html?' + buildParams();
         });
       }

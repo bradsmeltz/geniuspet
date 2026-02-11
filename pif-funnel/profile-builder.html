@@ -284,6 +284,24 @@
       border: none;
       box-shadow: 0 2px 6px rgba(45, 150, 196, 0.4);
     }
+    /* Sticky CTA bar */
+    .sticky-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: white;
+      border-top: 1px solid #E8E0D8;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+      padding: 12px 16px;
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .sticky-cta-bar.visible {
+      transform: translateY(0);
+    }
     /* Prevent iOS zoom on form inputs */
     input, textarea, select {
       font-size: 16px !important;
@@ -392,6 +410,21 @@
           </div>
           <!-- Photo encouragement text -->
           <p class="text-xs text-neutral-medium mb-4" id="photo-hint">📸 Helps people recognize your pet instantly</p>
+
+          <!-- Pet Type Selector - Dog or Cat -->
+          <div class="mb-4" id="pet-type-container">
+            <label class="text-xs uppercase tracking-wider text-blue-primary font-semibold mb-2 block" id="pet-type-label">I have a... *</label>
+            <div class="flex gap-3 justify-center">
+              <button type="button" id="type-dog" class="flex-1 max-w-[140px] flex flex-col items-center gap-1.5 py-3 px-4 rounded-xl border-2 border-beige-medium/50 bg-beige-lightest hover:border-blue-primary/50 hover:bg-blue-lightest transition-all" data-type="dog">
+                <span class="text-2xl">🐕</span>
+                <span class="text-sm font-semibold text-neutral-dark">Dog</span>
+              </button>
+              <button type="button" id="type-cat" class="flex-1 max-w-[140px] flex flex-col items-center gap-1.5 py-3 px-4 rounded-xl border-2 border-beige-medium/50 bg-beige-lightest hover:border-blue-primary/50 hover:bg-blue-lightest transition-all" data-type="cat">
+                <span class="text-2xl">🐈</span>
+                <span class="text-sm font-semibold text-neutral-dark">Cat</span>
+              </button>
+            </div>
+          </div>
 
           <!-- Pet Name - Required -->
           <div class="mb-4" id="name-container">
@@ -557,34 +590,30 @@
             </span>
           </div>
 
-          <!-- Sample Data Preview (blurred/greyed to show value) -->
+          <!-- Locked Fields Preview -->
           <div class="space-y-3 relative">
-            <!-- Allergy -->
             <div class="flex items-start gap-3 py-2 border-b border-beige-light">
               <span class="text-base">🥜</span>
-              <div class="flex-1 blur-[2px] opacity-60">
-                <p class="text-xs font-semibold text-neutral-dark">Allergy: Peanuts</p>
+              <div class="flex-1 opacity-40">
+                <p class="text-xs font-semibold text-neutral-dark">Allergies & dietary restrictions</p>
               </div>
             </div>
-            <!-- Medical Condition -->
-            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
-              <span class="text-base">💉</span>
-              <div class="flex-1 blur-[2px] opacity-60">
-                <p class="text-xs font-semibold text-neutral-dark">Condition: Diabetes</p>
-              </div>
-            </div>
-            <!-- Medication -->
             <div class="flex items-start gap-3 py-2 border-b border-beige-light">
               <span class="text-base">💊</span>
-              <div class="flex-1 blur-[2px] opacity-60">
-                <p class="text-xs font-semibold text-neutral-dark">Meds: 5mg Rimadyl 2x/day</p>
+              <div class="flex-1 opacity-40">
+                <p class="text-xs font-semibold text-neutral-dark">Medications & dosages</p>
               </div>
             </div>
-            <!-- Vet Contact -->
+            <div class="flex items-start gap-3 py-2 border-b border-beige-light">
+              <span class="text-base">💉</span>
+              <div class="flex-1 opacity-40">
+                <p class="text-xs font-semibold text-neutral-dark">Medical conditions</p>
+              </div>
+            </div>
             <div class="flex items-start gap-3 py-2">
               <span class="text-base">🩺</span>
-              <div class="flex-1 blur-[2px] opacity-60">
-                <p class="text-xs font-semibold text-neutral-dark">Vet: Dr. Harris, Oakland Pet Care</p>
+              <div class="flex-1 opacity-40">
+                <p class="text-xs font-semibold text-neutral-dark">Vet contact information</p>
               </div>
             </div>
           </div>
@@ -596,7 +625,7 @@
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
               </svg>
-              Unlock this section to protect them in emergencies
+              Unlock this section to add your pet's allergies, medications, and vet info
             </p>
           </div>
         </div>
@@ -649,17 +678,17 @@
         <div class="text-center mb-3 hidden" id="urgency-badge">
           <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-medium bg-beige-medium/50 px-3 py-1.5 rounded-full">
             <span class="w-1.5 h-1.5 bg-neutral-medium rounded-full"></span>
-            Only 17 free GeniusTags left today
+            Only 11 free GeniusTags left today
           </span>
         </div>
 
-        <button type="button" id="activate-cta" class="w-full bg-red-primary text-white font-bold py-4 px-6 rounded-full hover:bg-red-medium transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg" disabled>
-          <span id="cta-text">Protect Your Pet & Get My Tag</span>
+        <button type="button" id="activate-cta" class="w-full bg-red-primary text-white font-bold py-4 px-6 rounded-xl hover:bg-red-medium transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg" disabled>
+          <span id="cta-text">Get My Pet's Tag & Protection</span>
         </button>
 
         <!-- Pre-CTA nudge - shown when CTA is disabled -->
         <p class="text-xs text-neutral-medium mt-3 text-center" id="cta-nudge">
-          👆 Enter your pet's name to continue
+          👆 Select dog or cat and fill in the details above
         </p>
 
         <!-- What happens next microcopy - hidden until CTA enabled -->
@@ -689,13 +718,22 @@
         <a href="#" class="hover:text-neutral-dark">Order new tag</a>
         <a href="#" class="hover:text-neutral-dark">Support</a>
       </div>
-      <p class="text-xs text-neutral-light">&copy; 2024 GeniusPet. All rights reserved.</p>
+      <p class="text-xs text-neutral-light">&copy; 2025 GeniusPet. All rights reserved.</p>
       <div class="flex items-center justify-center gap-4 text-xs text-neutral-light mt-2">
         <a href="#" class="hover:text-neutral-medium">Terms & conditions</a>
         <a href="#" class="hover:text-neutral-medium">Privacy policy</a>
       </div>
     </div>
   </footer>
+
+  <!-- Sticky CTA Bar -->
+  <div class="sticky-cta-bar" id="sticky-cta-bar">
+    <div class="max-w-md mx-auto">
+      <button type="button" id="sticky-activate-cta" class="w-full bg-red-primary text-white font-bold py-4 px-6 rounded-xl hover:bg-red-medium transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg" disabled>
+        <span id="sticky-cta-text">Get My Pet's Tag & Protection</span>
+      </button>
+    </div>
+  </div>
 
   <!-- Photo Crop Modal (hidden by default) -->
   <div id="crop-modal" class="crop-modal-overlay hidden">
@@ -779,6 +817,19 @@
       let accordionOpen = false;
       let sectionsRevealed = false;
 
+      // Pet type elements
+      const typeDogBtn = document.getElementById('type-dog');
+      const typeCatBtn = document.getElementById('type-cat');
+      const petTypeLabel = document.getElementById('pet-type-label');
+      let selectedPetType = null;
+      let userUploadedPhoto = false; // track if user manually uploaded a photo
+
+      // Default photo paths
+      const defaultPhotos = {
+        dog: 'assets/images/default-dog.png',
+        cat: 'assets/images/default-cat.png'
+      };
+
       // Pulse guidance elements
       const photoPulse = document.getElementById('photo-pulse-ring');
       const namePulse = document.getElementById('name-pulse');
@@ -833,6 +884,62 @@
         });
       }
 
+      // =============================================
+      // PET TYPE SELECTOR - Dog or Cat
+      // =============================================
+      function selectPetType(type) {
+        selectedPetType = type;
+        const activeClasses = ['border-blue-primary', 'bg-blue-lightest', 'shadow-md'];
+        const inactiveClasses = ['border-beige-medium/50', 'bg-beige-lightest'];
+
+        // Update button styles
+        [typeDogBtn, typeCatBtn].forEach(btn => {
+          btn.classList.remove(...activeClasses);
+          btn.classList.add(...inactiveClasses);
+        });
+
+        const activeBtn = type === 'dog' ? typeDogBtn : typeCatBtn;
+        activeBtn.classList.remove(...inactiveClasses);
+        activeBtn.classList.add(...activeClasses);
+
+        // Update label
+        petTypeLabel.textContent = '✓ ' + (type === 'dog' ? 'Dog' : 'Cat');
+        petTypeLabel.classList.remove('text-blue-primary');
+        petTypeLabel.classList.add('text-green-primary');
+
+        // Set default photo if user hasn't uploaded one
+        if (!userUploadedPhoto) {
+          photoPreview.src = defaultPhotos[type];
+          photoPreview.classList.remove('hidden');
+          photoPlaceholder.classList.add('hidden');
+
+          // Mark photo as complete
+          photoComplete = true;
+          const plusBadge = document.getElementById('photo-plus-badge');
+          if (plusBadge) plusBadge.classList.add('hidden');
+
+          // Update hint
+          const photoHint = document.getElementById('photo-hint');
+          if (photoHint) photoHint.innerHTML = '📸 <span class="text-neutral-medium">Using default — tap photo to add your own</span>';
+
+          // Update photo container styling
+          const photoContainer = document.getElementById('photo-preview-container');
+          photoContainer.classList.remove('border-blue-primary/40');
+          photoContainer.classList.add('border-blue-primary');
+
+          // Show edit button
+          photoEditBtn.classList.remove('hidden');
+          updatePulseGuidance();
+        }
+
+        // Reveal below-fold sections
+        revealBelowFoldSections();
+        checkRequiredFields();
+      }
+
+      typeDogBtn.addEventListener('click', function() { selectPetType('dog'); });
+      typeCatBtn.addEventListener('click', function() { selectPetType('cat'); });
+
       // Handle accordion toggle click
       optionalDetailsToggle.addEventListener('click', function() {
         accordionOpen = !accordionOpen;
@@ -869,7 +976,7 @@
         const breed = breedInput.value.trim();
         const age = ageInput.value.trim();
 
-        const allFilled = name && breed && age;
+        const allFilled = name && breed && age && selectedPetType;
         activateBtn.disabled = !allFilled;
 
         // Toggle CTA nudge vs microcopy based on completion state
@@ -913,7 +1020,7 @@
 
           // Update CTA text with pet name
           if (ctaText) {
-            ctaText.textContent = `Protect ${name} & Get My Tag`;
+            ctaText.textContent = `Get ${name}'s Tag & Protection`;
           }
 
           // Apply enhanced complete styling
@@ -953,7 +1060,7 @@
 
           // Reset CTA text
           if (ctaText) {
-            ctaText.textContent = 'Protect Your Pet & Get My Tag';
+            ctaText.textContent = 'Get My Pet\'s Tag & Protection';
           }
 
           // Hide pet voice section
@@ -1372,6 +1479,9 @@
       });
 
       function applyPhotoToPreview(imageDataUrl) {
+        // Mark that user uploaded their own photo
+        userUploadedPhoto = true;
+
         // Reveal below-fold sections on photo interaction
         revealBelowFoldSections();
 
@@ -1636,6 +1746,115 @@
         });
       });
 
+      // =============================================
+      // STICKY CTA BAR - Show on scroll, hide at bottom
+      // =============================================
+      const stickyCta = document.getElementById('sticky-cta-bar');
+      const stickyCtaBtn = document.getElementById('sticky-activate-cta');
+      const stickyCtaText = document.getElementById('sticky-cta-text');
+
+      function updateStickyCta() {
+        // Sync disabled state and text with main CTA
+        stickyCtaBtn.disabled = activateBtn.disabled;
+        stickyCtaText.textContent = ctaText.textContent;
+      }
+
+      function handleStickyScroll() {
+        const mainCtaRect = activateBtn.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
+        // Show sticky when the main CTA scrolls out of view above or below
+        const mainCtaVisible = mainCtaRect.top < viewportHeight && mainCtaRect.bottom > 0;
+
+        // Check if user is at the bottom of the page
+        const atBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 50);
+
+        if (!mainCtaVisible && !atBottom) {
+          stickyCta.classList.add('visible');
+        } else {
+          stickyCta.classList.remove('visible');
+        }
+      }
+
+      window.addEventListener('scroll', handleStickyScroll, { passive: true });
+      window.addEventListener('resize', handleStickyScroll, { passive: true });
+
+      // Override checkRequiredFields to also sync sticky CTA
+      const originalCheckRequired = checkRequiredFields;
+      // Wrap — we'll call updateStickyCta after each check
+      const _origInput = petNameInput.oninput;
+
+      // Use a MutationObserver on the main CTA button to sync state
+      const ctaObserver = new MutationObserver(updateStickyCta);
+      ctaObserver.observe(activateBtn, { attributes: true, attributeFilter: ['disabled'] });
+      ctaObserver.observe(ctaText, { childList: true, characterData: true, subtree: true });
+
+      // Sticky CTA click — delegate to main CTA
+      stickyCtaBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        activateBtn.click();
+      });
+
+      // =============================================
+      // PROGRESSIVE SAVE - Save to sessionStorage on blur
+      // =============================================
+      function progressiveSave() {
+        try {
+          let photoData = null;
+          if (photoPreview && photoPreview.src && photoPreview.src.startsWith('data:')) {
+            photoData = photoPreview.src;
+          }
+          const draft = {
+            name: petNameInput.value.trim(),
+            petType: selectedPetType,
+            voice: document.getElementById('pet-voice')?.value?.trim() || '',
+            breed: breedInput.value.trim(),
+            age: ageInput.value.trim(),
+            kidFriendly: document.getElementById('kid-friendly')?.checked || false,
+            otherPets: document.getElementById('other-pets')?.checked || false,
+            spayed: document.getElementById('spayed')?.checked || false,
+            rabies: document.getElementById('rabies')?.checked || false,
+            photo: photoData,
+            userUploadedPhoto: userUploadedPhoto,
+          };
+          sessionStorage.setItem('petProfileDraft', JSON.stringify(draft));
+        } catch (e) {}
+      }
+
+      // Save on blur for all fields
+      [petNameInput, breedInput, ageInput, document.getElementById('pet-voice')].forEach(function(el) {
+        if (el) el.addEventListener('blur', progressiveSave);
+      });
+      // Save on toggle change
+      ['kid-friendly', 'other-pets', 'spayed', 'rabies'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('change', progressiveSave);
+      });
+
+      // Restore draft on load
+      (function restoreDraft() {
+        try {
+          var draft = sessionStorage.getItem('petProfileDraft');
+          if (!draft) return;
+          var d = JSON.parse(draft);
+          if (d.petType) selectPetType(d.petType);
+          if (d.name) { petNameInput.value = d.name; petNameInput.dispatchEvent(new Event('input')); }
+          if (d.breed) { breedInput.value = d.breed; breedInput.dispatchEvent(new Event('input')); }
+          if (d.age) { ageInput.value = d.age; ageInput.dispatchEvent(new Event('input')); }
+          if (d.voice) {
+            var voiceEl = document.getElementById('pet-voice');
+            if (voiceEl) { voiceEl.value = d.voice; voiceEl.dispatchEvent(new Event('input')); }
+          }
+          if (d.kidFriendly) { var el = document.getElementById('kid-friendly'); if (el) { el.checked = true; el.dispatchEvent(new Event('change')); } }
+          if (d.otherPets) { var el = document.getElementById('other-pets'); if (el) { el.checked = true; el.dispatchEvent(new Event('change')); } }
+          if (d.spayed) { var el = document.getElementById('spayed'); if (el) { el.checked = true; el.dispatchEvent(new Event('change')); } }
+          if (d.rabies) { var el = document.getElementById('rabies'); if (el) { el.checked = true; el.dispatchEvent(new Event('change')); } }
+          if (d.photo && d.userUploadedPhoto) {
+            applyPhotoToPreview(d.photo);
+          }
+        } catch (e) {}
+      })();
+
       // Handle CTA click
       activateBtn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -1656,6 +1875,7 @@
           // Collect form data
           const formData = {
             name: name,
+            petType: selectedPetType,
             voice: document.getElementById('pet-voice')?.value?.trim() || '',
             breed: document.getElementById('breed')?.value?.trim() || '',
             age: document.getElementById('age')?.value?.trim() || '',
@@ -1664,6 +1884,7 @@
             spayed: document.getElementById('spayed')?.checked || false,
             rabies: document.getElementById('rabies')?.checked || false,
             photo: photoData,
+            userUploadedPhoto: userUploadedPhoto,
           };
 
           // Store in sessionStorage and redirect to checkout
