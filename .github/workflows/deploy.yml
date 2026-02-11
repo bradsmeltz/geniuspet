@@ -37,6 +37,7 @@ jobs:
           mkdir -p _site/pif-funnel
           mkdir -p _site/pif-funnel-2
           mkdir -p _site/pif-funnel-3
+          mkdir -p _site/quiz
           cp -r ./lp-002/* _site/002/
           cp -r ./lp-004/* _site/004/
           cp -r ./005/* _site/005/
@@ -45,6 +46,7 @@ jobs:
           cp -r ./pif-funnel/* _site/pif-funnel/
           cp -r ./pif-funnel-2/* _site/pif-funnel-2/
           cp -r ./pif-funnel-3/* _site/pif-funnel-3/
+          cp -r ./quiz/* _site/quiz/
           cp ./pif-landing.html _site/
 
       - name: Upload artifact

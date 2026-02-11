@@ -95,6 +95,12 @@
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
+
+    /* Prevent iOS zoom on form inputs - requires 16px minimum font size */
+    input, textarea, select {
+      font-size: 16px !important;
+      touch-action: manipulation;
+    }
   </style>
 </head>
 <body class="bg-beige-light font-sans text-neutral-black min-h-screen">

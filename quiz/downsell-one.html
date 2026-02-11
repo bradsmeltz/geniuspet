@@ -93,16 +93,16 @@
         <svg class="w-5 h-5 text-green-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
-        <p class="text-[15px] text-green-700"><span class="font-bold">GeniusTag added</span> — Score: <span id="total-before" class="font-bold">58</span>/100 <span id="status-badge" class="text-[13px] font-bold px-2.5 py-0.5 rounded-full ml-1">At Risk</span></p>
+        <p class="text-[15px] text-green-700"><span class="font-bold">GeniusTag added</span> — Score: <span id="total-before" class="font-bold">65</span>/100 <span id="status-badge" class="text-[13px] font-bold px-2.5 py-0.5 rounded-full ml-1">Improving</span></p>
       </div>
       <!-- Gap + Score bar -->
       <div class="px-5 py-4">
         <p class="text-[15px] font-bold text-neutral-black mb-2">No instant alerts if someone finds <span class="pet-name">your pet</span></p>
         <div class="flex items-center gap-2 mt-2">
           <div class="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
-            <div id="score-bar" class="h-full rounded-full bg-blue-primary transition-all duration-700" style="width: 58%;"></div>
+            <div id="score-bar" class="h-full rounded-full bg-blue-primary transition-all duration-700" style="width: 65%;"></div>
           </div>
-          <span class="text-[13px] font-bold text-blue-primary whitespace-nowrap"><span id="total-after">71</span>/100 · <span id="projected-status">Improving</span></span>
+          <span class="text-[13px] font-bold text-blue-primary whitespace-nowrap"><span id="total-after">73</span>/100 · <span id="projected-status">Improving</span></span>
         </div>
       </div>
     </div>
@@ -146,16 +146,16 @@
 
     <!-- Testimonial -->
     <div class="bg-blue-lightest rounded-xl p-5 mb-6 fade-in delay-3">
-      <p class="text-[13px] font-medium text-blue-primary mb-2">14,200+ pet parents use Advanced Protection</p>
       <p class="text-sm italic text-neutral-dark leading-relaxed mb-2">"Started with the quarterly plan just to try it. Got an alert within a week when my cat Milo wandered off. <strong>Upgraded to annual immediately.</strong>"</p>
       <span class="text-[13px] font-medium text-neutral-medium">David R. · Seattle, WA</span>
     </div>
 
     <!-- CTA Zone -->
     <div class="fade-in delay-4">
+      <p class="text-center text-[15px] font-bold text-blue-primary mb-4">14,200+ pet parents use Advanced Protection</p>
       <button id="yes-cta"
               class="w-full bg-blue-primary hover:bg-blue-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-xl">
-        <span id="cta-text">Yes — Boost to 71/100 →</span>
+        <span id="cta-text">Yes — Boost to 73/100 →</span>
       </button>
       <p class="text-center text-[15px] text-neutral-dark mt-3 font-medium">$4.95/mo · Billed quarterly · Cancel anytime</p>
       <p class="text-center text-[13px] text-neutral-medium mt-1.5">
@@ -166,7 +166,7 @@
 
     <!-- Skip -->
     <button id="no-thanks" class="w-full mt-5 text-[15px] text-neutral-medium hover:text-neutral-dark transition-colors text-center py-2 underline decoration-neutral-light/50 underline-offset-2">
-      <span id="skip-text">Skip — stay at 58/100</span>
+      <span id="skip-text">Skip — stay at 65/100</span>
     </button>
 
     <!-- Trust Badge -->
@@ -193,7 +193,7 @@
       // --- Shared score functions ---
       function computeScore(products) {
         var lp = 12, hp = 7, ec = 8;
-        if (products.geniusTag)          { lp += 18; hp += 2; ec += 11; }
+        if (products.geniusTag)          { lp += 18; hp += 2; ec += 18; }
         if (products.advancedProtection) { lp += 4;  ec += 9; }
         if (products.teleVet)            { hp += 10; }
         if (products.insurance)          { lp += 5;  hp += 6; ec += 3; }

@@ -190,7 +190,7 @@ function initScoreTransformationAnimation() {
                 // Animate the "after" score number counting up
                 const afterScore = entry.target.querySelector('.score-after-num');
                 if (afterScore) {
-                    animateNumber(afterScore, 0, 58, 1500, 1200);
+                    animateNumber(afterScore, 0, 65, 1500, 1200);
                 }
 
                 // Animate the "before" score number
@@ -292,23 +292,107 @@ function initPersonalization() {
     var answers;
     try { answers = JSON.parse(raw); } catch (e) { return; }
 
-    // --- Personalized summary line ---
+    // --- Personalized hero headline + subheadline ---
+    var heroH = document.getElementById('hero-headline');
+    var heroSub = document.getElementById('hero-subheadline');
+    if (heroH && heroSub && answers.identification) {
+        var headlines = {
+            'no-id': {
+                h: 'If your pet got out tonight, the person who finds them has no way to help.',
+                sub: 'No name, no number, no medical info. Right now, a stranger would have to guess — or hope a shelter is open.'
+            },
+            'microchip-only': {
+                h: 'If your pet got out tonight, the person who finds them can\'t read that microchip.',
+                sub: 'Microchips need a special scanner at a vet or shelter. The neighbor, jogger, or kid who actually finds your pet? They see nothing.'
+            },
+            'engraved-tag': {
+                h: 'If your pet got out tonight, that tag gives a stranger your number — and nothing else.',
+                sub: 'No medical info, no backup contact, and no alert that your pet was even found. And if the engraving wears down, they have nothing at all.'
+            },
+            'microchip-plus-tag': {
+                h: 'You\'ve taken the right steps — but tonight, a finder would still be stuck.',
+                sub: 'The microchip needs a scanner only vets have access to. The ID tag shows a number but not your pet\'s medical needs, allergies, or backup contacts.'
+            }
+        };
+        var match = headlines[answers.identification];
+        if (match) {
+            heroH.textContent = match.h;
+            heroSub.textContent = match.sub;
+        }
+    }
+
+    // --- Personalized gap cards ---
+    if (answers.identification) {
+        var gapData = {
+            'no-id': {
+                g1t: 'No way for a finder to contact you',
+                g1d: 'A stranger picks up your pet. They want to help. They have no number to call.',
+                g2t: 'Medical needs invisible',
+                g2d: 'Allergies, medications, conditions \u2014 a stranger wouldn\'t know any of it.',
+                g3t: 'Recovery depends on luck',
+                g3d: 'No direct path home. Your pet enters the system \u2014 shelter, lost-and-found, maybe never found.'
+            },
+            'microchip-only': {
+                g1t: 'A finder can\'t reach you with just a microchip',
+                g1d: 'The microchip is invisible without a scanner. The person holding your pet right now has no way to call you.',
+                g2t: 'Medical needs invisible',
+                g2d: 'A microchip stores an ID number \u2014 not your pet\'s allergies, medications, or vet info.',
+                g3t: 'Recovery depends on reaching a shelter',
+                g3d: 'Your pet has to be brought to a vet or shelter with a scanner. Until then, they\'re stuck with a stranger who can\'t help.'
+            },
+            'engraved-tag': {
+                g1t: 'Your tag shows a number \u2014 but that\'s all',
+                g1d: 'If the finder can\'t reach you on that one number, there\'s no backup. No email, no second contact, no alert.',
+                g2t: 'Medical needs invisible',
+                g2d: 'An engraved tag can\'t fit allergies, medications, or your vet\'s number. A finder wouldn\'t know any of it.',
+                g3t: 'No alert when your pet is found',
+                g3d: 'A tag can\'t ping you. You won\'t know your pet was found until the finder reaches you \u2014 if they reach you.'
+            },
+            'microchip-plus-tag': {
+                g1t: 'Contact info limited to one phone number',
+                g1d: 'If that number doesn\'t pick up, the finder has no backup. No email, no second contact, no alert that your pet was found.',
+                g2t: 'Medical needs invisible',
+                g2d: 'Neither a microchip nor an engraved tag shares allergies, medications, or vet info with a finder.',
+                g3t: 'No alert when your pet is found',
+                g3d: 'Neither a microchip nor a tag sends you a notification. You won\'t know your pet was found until someone calls \u2014 if they call.'
+            }
+        };
+        var gaps = gapData[answers.identification];
+        if (gaps) {
+            var g1t = document.getElementById('gap1-title');
+            var g1d = document.getElementById('gap1-desc');
+            var g2t = document.getElementById('gap2-title');
+            var g2d = document.getElementById('gap2-desc');
+            var g3t = document.getElementById('gap3-title');
+            var g3d = document.getElementById('gap3-desc');
+            if (g1t) g1t.textContent = gaps.g1t;
+            if (g1d) g1d.textContent = gaps.g1d;
+            if (g2t) g2t.textContent = gaps.g2t;
+            if (g2d) g2d.textContent = gaps.g2d;
+            if (g3t) g3t.textContent = gaps.g3t;
+            if (g3d) g3d.textContent = gaps.g3d;
+        }
+    }
+
+    // --- Personalized summary chips ---
     var summaryEl = document.getElementById('personalized-summary');
     var detailsEl = document.getElementById('summary-details');
     if (summaryEl && detailsEl) {
-        var parts = [];
+        var chips = [];
 
-        var petTypeMap = { 'dog': 'Dog', 'cat': 'Cat', 'both': 'Dog & Cat', 'other': 'Other pet' };
-        if (answers.petType) parts.push(petTypeMap[answers.petType] || answers.petType);
+        var petTypeMap = { 'dog': '🐕 Dog', 'cat': '🐈 Cat', 'both': '🐾 Dog & Cat', 'other': '🐾 Other pet' };
+        if (answers.petType) chips.push(petTypeMap[answers.petType] || answers.petType);
 
-        var idMap = { 'microchip-only': 'Microchip only', 'engraved-tag': 'Engraved tag', 'microchip-plus-tag': 'Microchip + tag', 'no-id': 'No ID' };
-        if (answers.identification) parts.push(idMap[answers.identification] || answers.identification);
+        var idMap = { 'microchip-only': 'Microchip only', 'engraved-tag': 'Engraved tag', 'microchip-plus-tag': 'Microchip + tag', 'no-id': '⚠️ No ID' };
+        if (answers.identification) chips.push(idMap[answers.identification] || answers.identification);
 
-        var medMap = { 'multiple': 'Multiple conditions', 'one-or-two': '1-2 conditions', 'not-sure': 'Unsure about conditions', 'none': 'No conditions' };
-        if (answers.medicalConditions) parts.push(medMap[answers.medicalConditions] || answers.medicalConditions);
+        var medMap = { 'multiple': '🏥 Multiple conditions', 'one-or-two': '💊 1–2 conditions', 'not-sure': '❓ Conditions unsure', 'none': '✅ No conditions' };
+        if (answers.medicalConditions) chips.push(medMap[answers.medicalConditions] || answers.medicalConditions);
 
-        if (parts.length > 0) {
-            detailsEl.textContent = parts.join(' · ');
+        if (chips.length > 0) {
+            detailsEl.innerHTML = chips.map(function(chip) {
+                return '<span class="inline-block text-[13px] font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">' + chip + '</span>';
+            }).join('');
             summaryEl.style.display = 'block';
         }
     }
@@ -336,7 +420,7 @@ function initPersonalization() {
             altSection.style.display = 'none';
         } else if (answers.identification === 'microchip-only') {
             altContent.innerHTML =
-                '<p class="m-0">Microchips are a great first step — but they only work at a vet or shelter with a special scanner. If a neighbor, jogger, or delivery driver finds your pet, that chip is invisible to them.</p>' +
+                '<p class="m-0">Microchips are a great first step — but they only work at a vet or shelter with a special scanner. If a neighbor, jogger, or delivery driver finds your pet, that microchip is invisible to them.</p>' +
                 '<p class="m-0">On a Saturday night, no vet is open. No shelter has a scanner available. Your pet is stuck with a stranger who has no way to help.</p>' +
                 '<p class="m-0"><strong class="text-gray-900">GeniusTag works with any phone, anywhere, instantly</strong> — no scanner, no app, no waiting.</p>';
         } else if (answers.identification === 'engraved-tag') {
@@ -347,7 +431,7 @@ function initPersonalization() {
         } else if (answers.identification === 'microchip-plus-tag') {
             altContent.innerHTML =
                 '<p class="m-0">Having both a microchip and tag is smart — you\'re ahead of most pet parents. But there are still gaps a finder can\'t solve with what you have.</p>' +
-                '<p class="m-0">The chip needs a scanner. The tag shows limited info. Neither sends you an alert or shares medical needs with the person holding your pet right now.</p>' +
+                '<p class="m-0">The microchip needs a scanner. The tag shows limited info. Neither sends you an alert or shares medical needs with the person holding your pet right now.</p>' +
                 '<p class="m-0"><strong class="text-gray-900">GeniusTag fills every gap</strong> — instant alerts, full medical profile, GPS location, and no special equipment needed.</p>';
         }
     }

@@ -8,7 +8,7 @@
   background-color: #fef7f7 !important;
   box-shadow: 0 0 0 2px #B91C1C;
   transform: translateY(-2px);
-  animation: quizSelectPulse 0.4s ease-out;
+  animation: quizSelectPulse 0.25s ease-out;
 }
 
 @keyframes quizSelectPulse {
@@ -21,7 +21,7 @@
 .quiz-selected .quiz-radio {
   border-color: #B91C1C !important;
   background-color: #B91C1C !important;
-  transition: all 0.2s ease;
+  transition: all 0.12s ease;
 }
 
 .quiz-selected .quiz-radio::after {
@@ -31,7 +31,7 @@
   height: 10px;
   border-radius: 50%;
   background: white;
-  animation: radioFillIn 0.25s ease forwards;
+  animation: radioFillIn 0.15s ease forwards;
 }
 
 @keyframes radioFillIn {
@@ -47,5 +47,5 @@
 .quiz-options-locked a:not(.quiz-selected) {
   opacity: 0.45;
   transform: translateY(0) !important;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }

@@ -156,11 +156,8 @@
       <span class="text-[14px] font-medium text-neutral-medium">Mark & Lisa T. · Charlotte, NC</span>
     </div>
 
-    <!-- Social Proof -->
-    <p class="text-center text-[13px] text-neutral-medium mb-3">6,800+ pet parents have added insurance coverage</p>
-
     <!-- CTA -->
-    <p class="text-center text-[13px] font-medium text-neutral-dark mb-2">This is the final piece to fully protect <span class="pet-name">your pet</span>.</p>
+    <p class="text-center text-[15px] font-bold text-gold-primary mb-4">6,800+ pet parents have added insurance coverage</p>
     <button id="yes-cta"
             class="w-full bg-gold-primary hover:bg-gold-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors text-lg">
       <span id="cta-text">Yes — Get Complete Coverage</span>
@@ -218,7 +215,7 @@
       // --- Shared score functions ---
       function computeScore(products) {
         var lp = 12, hp = 7, ec = 8;
-        if (products.geniusTag)          { lp += 18; hp += 2; ec += 11; }
+        if (products.geniusTag)          { lp += 18; hp += 2; ec += 18; }
         if (products.advancedProtection) { lp += 4;  ec += 9; }
         if (products.teleVet)            { hp += 10; }
         if (products.insurance)          { lp += 5;  hp += 6; ec += 3; }
