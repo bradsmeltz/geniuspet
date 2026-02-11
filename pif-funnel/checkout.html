@@ -966,12 +966,12 @@
         updateUI();
       }
 
-      // Progressive disclosure form fields logic (3 steps)
+      // Progressive disclosure form fields logic (2 steps)
       const contactShippingFields = document.getElementById('contact-shipping-fields');
       const paymentFields = document.getElementById('payment-fields');
       const submitBtn = document.getElementById('submit-btn');
       // ctaText already declared above at line 795
-      let formStep = 0; // 0 = initial, 1 = contact/shipping shown, 2 = payment shown
+      let formStep = 0; // 0 = initial, 2 = all fields shown
 
       function animateFieldsIn(element) {
         element.classList.remove('hidden');
@@ -987,43 +987,9 @@
       if (submitBtn && contactShippingFields && paymentFields) {
         submitBtn.addEventListener('click', function(e) {
           if (formStep === 0) {
-            // First click: show contact + shipping fields
+            // First click: show ALL form fields at once (contact, shipping, payment)
             e.preventDefault();
             animateFieldsIn(contactShippingFields);
-
-            // Update CTA text for next step
-            if (ctaText) {
-              ctaText.textContent = `Continue — Protect ${petData.name}`;
-            }
-            formStep = 1;
-
-            // Scroll to form fields
-            contactShippingFields.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else if (formStep === 1) {
-            // Second click: validate contact/shipping, then show payment fields
-            e.preventDefault();
-
-            // Validate email
-            var emailField = document.getElementById('email');
-            var emailVal = emailField ? emailField.value.trim() : '';
-            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
-              if (emailField) { emailField.focus(); emailField.style.borderColor = '#D65A52'; }
-              return;
-            }
-            if (emailField) emailField.style.borderColor = '';
-
-            // Validate shipping fields
-            var shippingIds = ['full-name', 'address', 'city', 'state', 'zip'];
-            for (var i = 0; i < shippingIds.length; i++) {
-              var field = document.getElementById(shippingIds[i]);
-              if (field && !field.value.trim()) {
-                field.focus();
-                field.style.borderColor = '#D65A52';
-                return;
-              }
-              if (field) field.style.borderColor = '';
-            }
-
             animateFieldsIn(paymentFields);
 
             // Update button to submit mode
@@ -1033,10 +999,10 @@
             }
             formStep = 2;
 
-            // Scroll to payment fields
-            paymentFields.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Scroll to form fields
+            contactShippingFields.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-          // Third click: form submits normally (type="submit")
+          // Second click: form submits normally (type="submit")
         });
       }
 
@@ -1064,6 +1030,27 @@
       if (checkoutForm) {
         checkoutForm.addEventListener('submit', function(e) {
           e.preventDefault();
+
+          // Validate email
+          var emailField = document.getElementById('email');
+          var emailVal = emailField ? emailField.value.trim() : '';
+          if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+            if (emailField) { emailField.focus(); emailField.style.borderColor = '#D65A52'; }
+            return;
+          }
+          if (emailField) emailField.style.borderColor = '';
+
+          // Validate shipping fields
+          var shippingIds = ['full-name', 'address', 'city', 'state', 'zip'];
+          for (var i = 0; i < shippingIds.length; i++) {
+            var field = document.getElementById(shippingIds[i]);
+            if (field && !field.value.trim()) {
+              field.focus();
+              field.style.borderColor = '#D65A52';
+              return;
+            }
+            if (field) field.style.borderColor = '';
+          }
 
           // Get email for thank you page
           const emailInput = document.getElementById('email');
