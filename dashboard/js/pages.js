@@ -382,8 +382,62 @@ const Pages = {
         ${Components.toggleSwitch('push-alerts', 'Push Notifications', 'Mobile app notifications', true)}
       </div>
 
+      <!-- Sync Across Devices -->
+      <div class="bg-white border border-gray-100 rounded-2xl p-4 mb-4 slide-up" style="animation-delay: 0.3s">
+        <h3 class="font-semibold text-dark mb-2 flex items-center gap-2">
+          <i data-lucide="refresh-cw" class="w-5 h-5 text-primary"></i>
+          Sync Across Devices
+        </h3>
+        <p class="text-sm text-gray mb-4">Transfer your session to another device so you can pick up where you left off.</p>
+
+        <div class="space-y-3">
+          <!-- Send to another device -->
+          <button
+            onclick="shareSyncLink()"
+            class="w-full flex items-center gap-3 bg-cream-light hover:bg-cream text-dark font-medium p-3 rounded-xl transition-colors text-left"
+          >
+            <div class="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <i data-lucide="share-2" class="w-4 h-4 text-primary"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium">Share Sync Link</p>
+              <p class="text-xs text-gray">Send a link to open on your other device</p>
+            </div>
+          </button>
+
+          <button
+            onclick="copySyncCode()"
+            class="w-full flex items-center gap-3 bg-cream-light hover:bg-cream text-dark font-medium p-3 rounded-xl transition-colors text-left"
+          >
+            <div class="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <i data-lucide="copy" class="w-4 h-4 text-primary"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium">Copy Sync Code</p>
+              <p class="text-xs text-gray">Copy a code to paste on another device</p>
+            </div>
+          </button>
+
+          <!-- Receive from another device -->
+          <div class="border-t border-gray-100 pt-3">
+            <button
+              onclick="pasteSyncCode()"
+              class="w-full flex items-center gap-3 bg-cream-light hover:bg-cream text-dark font-medium p-3 rounded-xl transition-colors text-left"
+            >
+              <div class="w-9 h-9 bg-tag-blue/10 rounded-full flex items-center justify-center flex-shrink-0">
+                <i data-lucide="clipboard-paste" class="w-4 h-4 text-tag-blue"></i>
+              </div>
+              <div>
+                <p class="text-sm font-medium">Import from Another Device</p>
+                <p class="text-xs text-gray">Paste a sync code received from another device</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Demo Controls Link -->
-      <div class="mt-8 text-center slide-up" style="animation-delay: 0.3s">
+      <div class="mt-8 text-center slide-up" style="animation-delay: 0.4s">
         <a
           href="#/demo"
           class="text-sm text-gray hover:text-primary transition-colors"
@@ -393,7 +447,7 @@ const Pages = {
       </div>
 
       <!-- Sign Out -->
-      <div class="mt-4 slide-up" style="animation-delay: 0.4s">
+      <div class="mt-4 slide-up" style="animation-delay: 0.5s">
         <button
           onclick="handleSignOut()"
           class="w-full bg-gray-100 hover:bg-gray-200 text-dark font-medium py-3 rounded-xl transition-colors"

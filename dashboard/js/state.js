@@ -297,6 +297,58 @@ const AppState = {
     this.save();
   },
 
+  // Export state as a shareable sync code (base64-encoded JSON)
+  exportSyncCode() {
+    const stateToSync = {
+      user: this.user,
+      pets: this.pets,
+      activePetId: this.activePetId,
+      tourCompleted: this.tourCompleted,
+      _syncVersion: 1,
+      _syncTimestamp: Date.now()
+    };
+    return btoa(unescape(encodeURIComponent(JSON.stringify(stateToSync))));
+  },
+
+  // Import state from a sync code
+  importSyncCode(code) {
+    try {
+      const json = decodeURIComponent(escape(atob(code)));
+      const parsed = JSON.parse(json);
+      if (!parsed._syncVersion || !parsed.user || !parsed.pets) {
+        return { success: false, error: 'Invalid sync code' };
+      }
+      this.user = parsed.user;
+      this.pets = parsed.pets;
+      this.activePetId = parsed.activePetId || this.pets[0]?.id;
+      this.tourCompleted = parsed.tourCompleted || false;
+      this.save();
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: 'Could not read sync code. Make sure you copied the full code.' };
+    }
+  },
+
+  // Generate a shareable URL with sync data embedded
+  generateSyncUrl() {
+    const code = this.exportSyncCode();
+    const baseUrl = window.location.origin + window.location.pathname;
+    return baseUrl + '?sync=' + encodeURIComponent(code) + '#/';
+  },
+
+  // Check if URL contains sync data and apply it
+  checkForSyncData() {
+    const params = new URLSearchParams(window.location.search);
+    const syncCode = params.get('sync');
+    if (syncCode) {
+      // Clean the URL so the sync code isn't persisted in browser history
+      const cleanUrl = window.location.origin + window.location.pathname + (window.location.hash || '#/');
+      window.history.replaceState({}, '', cleanUrl);
+      return syncCode;
+    }
+    return null;
+  },
+
   // Check if feature is available for current user plan
   isFeatureAvailable(featureName) {
     const tiers = MockData.featureTiers;

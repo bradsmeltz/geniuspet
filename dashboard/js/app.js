@@ -8,6 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize state
   AppState.init();
 
+  // Check for incoming sync data from another device
+  const syncCode = AppState.checkForSyncData();
+  if (syncCode) {
+    const result = AppState.importSyncCode(syncCode);
+    if (result.success) {
+      // Defer the toast until after the router renders
+      setTimeout(() => {
+        Components.showToast('Session synced from another device!');
+      }, 600);
+    } else {
+      setTimeout(() => {
+        Components.showToast(result.error || 'Sync failed');
+      }, 600);
+    }
+  }
+
   // Initialize router
   Router.init();
 
@@ -427,6 +443,151 @@ function toggleControlSection(sectionId) {
       chevron?.classList.add('rotate-180');
     }
   }
+}
+
+// --- Sync Across Devices ---
+
+// Copy sync code to clipboard
+function copySyncCode() {
+  const code = AppState.exportSyncCode();
+  navigator.clipboard.writeText(code).then(() => {
+    Components.showToast('Sync code copied to clipboard!');
+  }).catch(() => {
+    // Fallback for browsers that block clipboard API
+    showSyncCodeModal(code);
+  });
+}
+
+// Show sync code in a modal (fallback if clipboard API unavailable)
+function showSyncCodeModal(code) {
+  const modal = document.createElement('div');
+  modal.id = 'sync-code-modal';
+  modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4';
+  modal.innerHTML = `
+    <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm" onclick="closeSyncCodeModal()"></div>
+    <div class="relative bg-white rounded-3xl w-full max-w-[360px] p-6 shadow-2xl scale-in">
+      <button onclick="closeSyncCodeModal()" class="absolute top-4 right-4 text-gray hover:text-dark">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+      <h3 class="font-bold text-dark text-lg mb-2">Your Sync Code</h3>
+      <p class="text-sm text-gray mb-3">Copy this code and paste it on your other device.</p>
+      <textarea
+        id="sync-code-text"
+        class="w-full bg-cream-light rounded-xl p-3 text-xs font-mono text-dark border border-gray-200 resize-none"
+        rows="4"
+        readonly
+        onclick="this.select()"
+      >${code}</textarea>
+      <button
+        onclick="document.getElementById('sync-code-text').select();document.execCommand('copy');Components.showToast('Copied!');closeSyncCodeModal()"
+        class="w-full mt-3 bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-colors"
+      >
+        Copy Code
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function closeSyncCodeModal() {
+  const modal = document.getElementById('sync-code-modal');
+  if (modal) modal.remove();
+}
+
+// Share sync link (uses Web Share API on mobile, falls back to clipboard copy)
+function shareSyncLink() {
+  const url = AppState.generateSyncUrl();
+  if (navigator.share) {
+    navigator.share({
+      title: 'GeniusPet - Sync My Session',
+      text: 'Open this link to sync my GeniusPet session:',
+      url: url
+    }).catch(() => {
+      // User cancelled or share failed — copy to clipboard instead
+      copyTextToClipboard(url, 'Sync link copied to clipboard!');
+    });
+  } else {
+    copyTextToClipboard(url, 'Sync link copied to clipboard!');
+  }
+}
+
+// Paste a sync code from another device
+function pasteSyncCode() {
+  const modal = document.createElement('div');
+  modal.id = 'paste-sync-modal';
+  modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4';
+  modal.innerHTML = `
+    <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm" onclick="closePasteSyncModal()"></div>
+    <div class="relative bg-white rounded-3xl w-full max-w-[360px] p-6 shadow-2xl scale-in">
+      <button onclick="closePasteSyncModal()" class="absolute top-4 right-4 text-gray hover:text-dark">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+      <div class="text-center mb-4">
+        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="clipboard-paste" class="w-6 h-6 text-primary"></i>
+        </div>
+        <h3 class="font-bold text-dark text-lg">Import Session</h3>
+        <p class="text-sm text-gray mt-1">Paste the sync code from your other device.</p>
+      </div>
+      <textarea
+        id="paste-sync-input"
+        class="w-full bg-cream-light rounded-xl p-3 text-xs font-mono text-dark border border-gray-200 resize-none"
+        rows="4"
+        placeholder="Paste your sync code here..."
+      ></textarea>
+      <button
+        onclick="applyPastedSyncCode()"
+        class="w-full mt-3 bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-colors"
+      >
+        Sync Now
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+  // Focus the textarea
+  setTimeout(() => document.getElementById('paste-sync-input')?.focus(), 100);
+}
+
+function closePasteSyncModal() {
+  const modal = document.getElementById('paste-sync-modal');
+  if (modal) modal.remove();
+}
+
+function applyPastedSyncCode() {
+  const input = document.getElementById('paste-sync-input');
+  const code = input?.value?.trim();
+  if (!code) {
+    Components.showToast('Please paste a sync code first');
+    return;
+  }
+  const result = AppState.importSyncCode(code);
+  if (result.success) {
+    closePasteSyncModal();
+    Components.showToast('Session synced successfully!');
+    renderCurrentPage();
+  } else {
+    Components.showToast(result.error || 'Invalid sync code');
+  }
+}
+
+// Utility: copy text to clipboard with toast feedback
+function copyTextToClipboard(text, successMsg) {
+  navigator.clipboard.writeText(text).then(() => {
+    Components.showToast(successMsg);
+  }).catch(() => {
+    // Final fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    Components.showToast(successMsg);
+  });
 }
 
 // Keyboard shortcuts for demo
