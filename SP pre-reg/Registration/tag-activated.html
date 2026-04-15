@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart ID Activated — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium px-5 py-4">
+      <div class="flex items-center justify-center">
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+      </div>
+    </header>
+
+    <main class="px-5 py-6 pb-36">
+
+      <!-- Confirmation badge -->
+      <div class="text-center mb-6 fade-in">
+        <div class="mb-4">
+          <span class="inline-flex items-center gap-1.5 bg-green-light text-green-primary px-3 py-1.5 rounded-full text-base font-semibold">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            Your Smart ID is Activated
+          </span>
+        </div>
+        <h1 class="text-[22px] font-bold text-neutral-black leading-tight mb-2">
+          Here's what happens when someone scans <span class="pet-name">your pet</span>'s tag.
+        </h1>
+      </div>
+
+      <!-- Capability cards -->
+      <div class="space-y-3 mb-6">
+
+        <!-- Card 1: Notification -->
+        <div class="bg-white rounded-xl border border-beige-medium p-4 fade-in delay-1">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-lightest rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-blue-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">You get notified via email</p>
+              <p class="text-base text-neutral-dark">An email is sent to you the moment someone scans <span class="pet-name">your pet</span>'s Smart tag.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Care Profile -->
+        <div class="bg-white rounded-xl border border-beige-medium p-4 fade-in delay-2">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-lightest rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-blue-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25h-15A2.25 2.25 0 002.25 6.75v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm-3.375 6.75h4.5c.621 0 1.125-.504 1.125-1.125a3.375 3.375 0 00-6.75 0c0 .621.504 1.125 1.125 1.125z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">They see <span class="pet-name">your pet</span>'s Care Profile</p>
+              <p class="text-base text-neutral-dark">The finder sees <span class="pet-name">your pet</span>'s name, photo, and how to reach you.</p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Transition line -->
+      <div class="bg-green-light rounded-xl p-4 text-center fade-in delay-3">
+        <p class="text-base font-semibold text-green-primary">This is your first <strong>Safety Layer</strong>. Next, let's see how protected <span class="pet-name">your pet</span> is.</p>
+      </div>
+
+    </main>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta-bar visible">
+      <div class="cta-content">
+        <button type="button" id="submitBtn" class="btn-sticky cta-pulse-red">
+          See <span class="pet-name">Your Pet</span>'s Safety Score
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initPage();
+
+      document.getElementById('submitBtn').addEventListener('click', function() {
+        navigateTo('score-reveal.html');
+      });
+    });
+  </script>
+</body>
+</html>

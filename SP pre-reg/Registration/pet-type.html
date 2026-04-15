@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Type — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <style>
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .progress-dot.active {
+      box-shadow: 0 0 0 4px rgba(215, 66, 66, 0.2);
+    }
+    .progress-connector {
+      width: 20px;
+      height: 2px;
+      border-radius: 1px;
+      transition: background 0.3s ease;
+    }
+
+    /* Pet type cards */
+    .pet-type-card {
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .pet-type-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    .pet-type-card:active {
+      transform: scale(0.97);
+    }
+    .pet-type-card.selected {
+      border-color: #D19D61;
+      background-color: #F6F1EA;
+    }
+    .pet-type-card:not(.selected) {
+      border-color: #E3E3E3;
+      background-color: white;
+    }
+
+    /* Checkmark badge */
+    .check-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 24px;
+      height: 24px;
+      background: #D19D61;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    .pet-type-card.selected .check-badge {
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium">
+      <div class="px-5 py-4 flex items-center justify-between">
+        <button type="button" id="backBtn" class="text-neutral-medium hover:text-neutral-dark transition-colors">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+          </svg>
+        </button>
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusTag" class="h-8">
+        <div class="w-6"></div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-5 py-6">
+
+      <!-- Progress dots: 6 dots — dots 1-2 completed, dot 3 active, dots 4-6 upcoming -->
+      <div class="flex items-center justify-center gap-0 mb-8 fade-in">
+        <div class="progress-dot bg-red-primary"></div>
+        <div class="progress-connector bg-red-primary"></div>
+        <div class="progress-dot bg-red-primary"></div>
+        <div class="progress-connector bg-red-primary"></div>
+        <div class="progress-dot bg-red-primary active"></div>
+        <div class="progress-connector bg-beige-medium"></div>
+        <div class="progress-dot bg-beige-medium"></div>
+        <div class="progress-connector bg-beige-medium"></div>
+        <div class="progress-dot bg-beige-medium"></div>
+        <div class="progress-connector bg-beige-medium"></div>
+        <div class="progress-dot bg-beige-medium"></div>
+      </div>
+
+      <!-- Headline -->
+      <div class="text-center mb-6 fade-in">
+        <h1 class="text-[24px] font-bold leading-tight">Is <span class="pet-name">your pet</span> a dog or a cat?</h1>
+      </div>
+
+      <!-- Dog / Cat selection cards -->
+      <div class="flex gap-4 mb-6 fade-in delay-1">
+        <!-- Dog card -->
+        <button
+          type="button"
+          id="cardDog"
+          class="pet-type-card flex-1 flex flex-col items-center justify-center gap-3 py-10 rounded-2xl border-2 transition-all duration-200"
+          data-type="dog"
+          style="box-shadow: 0 2px 8px rgba(0,0,0,0.06);"
+        >
+            <!-- Checkmark badge -->
+            <div class="check-badge">
+              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <svg class="w-16 h-16" viewBox="63 123 35 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M66.5 130.125C66.5 128.932 66.9741 127.787 67.818 126.943C68.6619 126.099 69.8065 125.625 71 125.625H89C90.1935 125.625 91.3381 126.099 92.182 126.943C93.0259 127.787 93.5 128.932 93.5 130.125V145.875C93.5 147.068 93.0259 148.213 92.182 149.057C91.3381 149.901 90.1935 150.375 89 150.375H71C69.8065 150.375 68.6619 149.901 67.818 149.057C66.9741 148.213 66.5 147.068 66.5 145.875V130.125Z" fill="#D19D61"/>
+              <path d="M89.0709 144.575C89.0709 139.54 84.2188 137.965 80.0709 137.965C75.4302 137.965 71 139.721 71 144.575C71 149.018 75.8521 152.836 80.0709 152.836C85.1334 152.836 89.0709 147.598 89.0709 144.575Z" fill="#ECE0D5"/>
+              <path d="M76.616 147.738L80 145.207L83.384 147.738V150.375C83.384 152.239 81.8641 153.75 80 153.75C79.104 153.75 78.2444 153.395 77.61 152.762C76.9756 152.129 76.6181 151.271 76.616 150.375V147.738Z" fill="#DF6868"/>
+              <path d="M75.1917 126.826L66.9792 138.407C66.1861 139.526 64.4255 138.964 64.4255 137.594V129.668C64.4255 128.326 64.9589 127.038 65.9083 126.089C66.8577 125.139 68.1453 124.606 69.488 124.606H74.0442C74.3022 124.606 74.5553 124.677 74.7757 124.811C74.9961 124.945 75.1753 125.137 75.2938 125.366C75.4123 125.596 75.4654 125.853 75.4474 126.11C75.4294 126.368 75.341 126.615 75.1917 126.826ZM84.7734 126.826L92.9859 138.407C93.7779 139.526 95.5396 138.964 95.5396 137.594V129.668C95.5396 128.326 95.0063 127.038 94.0569 126.089C93.1074 125.139 91.8198 124.606 90.4771 124.606H85.9209C85.6629 124.606 85.4098 124.677 85.1895 124.811C84.9691 124.945 84.7898 125.137 84.6713 125.366C84.5529 125.596 84.4997 125.853 84.5177 126.11C84.5357 126.368 84.6241 126.615 84.7734 126.826Z" fill="#6B5027"/>
+              <path d="M75.5 134.625C75.5 134.327 75.6185 134.04 75.8295 133.83C76.0405 133.619 76.3266 133.5 76.625 133.5C76.9234 133.5 77.2095 133.619 77.4205 133.83C77.6315 134.04 77.75 134.327 77.75 134.625V135.75C77.75 136.048 77.6315 136.335 77.4205 136.545C77.2095 136.756 76.9234 136.875 76.625 136.875C76.3266 136.875 76.0405 136.756 75.8295 136.545C75.6185 136.335 75.5 136.048 75.5 135.75V134.625ZM82.25 134.625C82.25 134.327 82.3685 134.04 82.5795 133.83C82.7905 133.619 83.0766 133.5 83.375 133.5C83.6734 133.5 83.9595 133.619 84.1705 133.83C84.3815 134.04 84.5 134.327 84.5 134.625V135.75C84.5 136.048 84.3815 136.335 84.1705 136.545C83.9595 136.756 83.6734 136.875 83.375 136.875C83.0766 136.875 82.7905 136.756 82.5795 136.545C82.3685 136.335 82.25 136.048 82.25 135.75V134.625ZM81.2881 139.125H78.6815C78.0245 139.125 77.4136 140.043 77.9637 140.782C78.3372 141.284 79.2755 142.287 80.0349 142.287C80.7943 142.287 81.6852 141.284 82.0351 140.782C82.6415 139.833 81.827 139.139 81.2881 139.125ZM80.5625 143.081C80.5625 142.931 80.5032 142.788 80.3977 142.683C80.2923 142.577 80.1492 142.518 80 142.518H79.9876C79.8384 142.518 79.6954 142.577 79.5899 142.683C79.4844 142.788 79.4251 142.931 79.4251 143.081C79.4251 143.173 79.427 143.264 79.4308 143.355C79.3003 145.852 77.399 146.982 76.0974 146.982C75.9482 146.982 75.8051 147.041 75.6996 147.147C75.5941 147.252 75.5349 147.395 75.5349 147.544C75.5349 147.694 75.5941 147.837 75.6996 147.942C75.8051 148.048 75.9482 148.107 76.0974 148.107C77.4598 148.107 79.1349 147.268 79.9933 145.585C80.8528 147.268 82.5279 148.107 83.8891 148.107C84.0383 148.107 84.1814 148.048 84.2869 147.942C84.3924 147.837 84.4516 147.694 84.4516 147.544C84.4516 147.395 84.3924 147.252 84.2869 147.147C84.1814 147.041 84.0383 146.982 83.8891 146.982C82.5886 146.982 80.6874 145.852 80.5569 143.355C80.5606 143.265 80.5625 143.174 80.5625 143.081Z" fill="#2B2B2B"/>
+            </svg>
+            <span class="text-base font-bold">Dog</span>
+        </button>
+        <!-- Cat card -->
+        <button
+          type="button"
+          id="cardCat"
+          class="pet-type-card flex-1 flex flex-col items-center justify-center gap-3 py-10 rounded-2xl border-2 transition-all duration-200"
+          data-type="cat"
+          style="box-shadow: 0 2px 8px rgba(0,0,0,0.06);"
+        >
+            <!-- Checkmark badge -->
+            <div class="check-badge">
+              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <svg class="w-16 h-16" viewBox="230 120 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M262.251 139.741C261.7 132.437 256.561 127.397 248 127.397C239.439 127.397 234.289 132.749 233.783 140.056C233.488 144.314 235.071 148.108 238.258 150.271C240.356 151.697 243.286 152.487 248.037 152.487C252.868 152.487 255.639 151.444 257.737 150.032C261.233 147.684 262.569 143.937 262.251 139.741Z" fill="#DEBC7D"/>
+              <path d="M245.109 131.981C243.022 126.581 238.466 122.908 236.713 122.36C236.053 122.151 235.223 122.132 234.849 122.739C233.904 124.272 232.694 129.194 235.369 136.177L245.109 131.981Z" fill="#DEBC7D"/>
+              <path d="M240.159 129.622C240.592 129.259 240.803 128.904 240.328 128.17C239.591 127.031 238.266 125.701 237.751 125.293C236.908 124.624 236.255 124.399 236.005 125.476C235.541 127.467 235.577 130.17 236.075 131.661C236.249 132.187 236.789 132.465 237.206 132.102L240.159 129.622Z" fill="#F6D0D0"/>
+              <path d="M245.221 132.662C245.539 132.932 246.183 132.893 246.557 132.46C247.01 131.934 247.482 130.162 247.187 127.422C245.874 127.47 244.631 127.659 243.472 127.976C244.408 129.512 244.633 132.161 245.221 132.662ZM250.779 132.662C250.461 132.932 249.817 132.893 249.443 132.46C248.99 131.934 248.517 130.162 248.813 127.422C250.126 127.47 251.369 127.659 252.528 127.976C251.592 129.512 251.367 132.161 250.779 132.662Z" fill="#D19D61"/>
+              <path d="M252.472 128.218C254.744 124.728 257.922 122.382 259.242 121.963C259.894 121.755 260.653 121.789 261.025 122.399C261.958 123.932 262.749 128.654 260.907 135.266L254.176 132.02L252.472 128.218Z" fill="#DEBC7D"/>
+              <path d="M257.436 130.752C258.119 131.436 258.676 131.894 259.078 132.33C259.346 132.62 259.835 132.488 259.914 132.099C260.603 128.781 260.383 125.951 259.914 125.209C259.689 124.854 259.27 124.762 258.887 124.891C258.201 125.119 256.452 126.424 255.217 128.328C255.073 128.55 255.127 128.848 255.346 128.997C255.791 129.298 256.567 129.88 257.436 130.752Z" fill="#F6D0D0"/>
+              <path d="M231.884 139.977C231.98 140.093 233.125 140.076 235.923 141.403M230.816 143.304C230.816 143.304 232.621 142.674 235.726 143.226M232.478 145.957C232.478 145.957 233.248 145.569 236.041 145.324M263.995 138.987C263.995 138.987 263.036 139.08 260.074 140.77M264.431 142.075C264.431 142.075 262.999 141.974 259.917 142.629M263.877 145.045C263.877 145.045 262.518 144.564 259.72 144.413" stroke="#DEBC7D" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M243.19 138.78C243.19 140.071 242.259 141.114 241.114 141.114C239.969 141.114 239.038 140.068 239.038 138.78C239.038 137.486 239.969 136.443 241.114 136.443C242.259 136.44 243.19 137.486 243.19 138.78ZM252.848 138.78C252.848 140.071 253.776 141.114 254.923 141.114C256.068 141.114 256.999 140.068 256.999 138.78C256.999 137.486 256.068 136.443 254.923 136.443C253.779 136.44 252.848 137.486 252.848 138.78Z" fill="#2B2B2B"/>
+              <path d="M249.818 145.622C249.877 145.751 249.771 145.959 249.74 146.078C249.7 146.227 249.664 146.373 249.619 146.516C249.405 147.225 249.039 147.889 248.255 148.043C247.529 148.187 246.831 147.692 246.559 147.037C246.457 146.798 246.379 146.55 246.294 146.305C246.249 146.17 246.204 146.035 246.162 145.903C246.131 145.808 246.05 145.656 246.061 145.557C246.46 145.532 246.924 145.352 247.267 145.149C247.38 145.082 247.506 145.045 247.611 144.964C247.703 144.891 247.762 144.787 247.881 144.75C247.999 144.877 248.198 144.947 248.345 145.045C248.522 145.163 248.702 145.268 248.893 145.358C249.07 145.442 249.281 145.442 249.464 145.49C249.56 145.515 249.72 145.501 249.79 145.583C249.804 145.594 249.813 145.605 249.818 145.622Z" fill="#DF6868"/>
+              <path d="M246.032 145.967C245.911 145.967 245.781 145.961 245.649 145.95C244.057 145.809 243.357 144.575 243.208 143.939C243.179 143.815 243.201 143.685 243.269 143.576C243.336 143.468 243.444 143.391 243.568 143.363C243.629 143.348 243.693 143.346 243.755 143.356C243.817 143.366 243.877 143.388 243.931 143.421C243.984 143.454 244.031 143.498 244.067 143.549C244.104 143.6 244.13 143.658 244.145 143.72C244.159 143.779 244.457 144.879 245.734 144.994C247.07 145.115 247.587 144.414 247.61 144.384C247.764 144.17 248.06 144.116 248.276 144.265C248.493 144.414 248.549 144.707 248.403 144.926C248.372 144.971 247.68 145.967 246.032 145.967Z" fill="#2B2B2B"/>
+              <path d="M249.978 145.967C248.33 145.967 247.638 144.971 247.607 144.926C247.458 144.707 247.517 144.406 247.736 144.257C247.958 144.108 248.256 144.167 248.406 144.386C248.422 144.408 248.948 145.109 250.276 144.991C251.578 144.875 251.862 143.731 251.865 143.719C251.927 143.461 252.186 143.3 252.441 143.359C252.7 143.421 252.861 143.677 252.801 143.936C252.652 144.569 251.949 145.806 250.36 145.947C250.225 145.961 250.099 145.967 249.978 145.967ZM246.518 142.347C246.541 142.642 246.741 142.952 247.05 143.14C247.297 143.295 247.649 143.371 247.995 143.371C248.338 143.371 248.69 143.295 248.937 143.14C249.246 142.949 249.446 142.642 249.469 142.347C249.491 142.066 249.426 141.779 249.12 141.582C248.951 141.472 248.74 141.399 248.524 141.36C248.442 141.346 248.228 141.309 248.003 141.309C247.781 141.309 247.548 141.343 247.463 141.36C247.247 141.399 247.036 141.472 246.867 141.582C246.563 141.782 246.496 142.066 246.518 142.347Z" fill="#2B2B2B"/>
+              <path d="M247.984 143.79C247.551 143.79 247.129 143.683 246.828 143.498C246.414 143.242 246.133 142.814 246.099 142.381C246.051 141.751 246.369 141.411 246.639 141.233C246.847 141.101 247.106 141.003 247.387 140.952C247.5 140.93 247.756 140.896 248.001 140.896C248.265 140.896 248.507 140.935 248.597 140.952C248.878 141.003 249.137 141.101 249.342 141.233C249.615 141.411 249.933 141.754 249.882 142.384C249.848 142.814 249.57 143.242 249.154 143.5C248.853 143.686 248.431 143.793 247.998 143.793H247.984V143.79ZM248.003 141.728C247.812 141.728 247.607 141.759 247.542 141.771C247.368 141.804 247.207 141.861 247.095 141.934C246.985 142.004 246.921 142.094 246.937 142.313C246.951 142.482 247.081 142.665 247.272 142.783C247.444 142.89 247.711 142.952 247.989 142.952V143.371L247.995 142.952C248.285 142.952 248.552 142.887 248.721 142.783C248.909 142.668 249.044 142.479 249.055 142.313C249.075 142.094 249.007 142.004 248.898 141.934C248.785 141.861 248.625 141.804 248.453 141.771C248.406 141.765 248.206 141.728 248.003 141.728Z" fill="#2B2B2B"/>
+              <path d="M247.607 144.656C247.607 144.873 247.781 145.047 247.998 145.047C248.214 145.047 248.389 144.873 248.389 144.656V142.364C248.389 142.148 248.214 141.973 247.998 141.973C247.781 141.973 247.607 142.148 247.607 142.364V144.656Z" fill="#2B2B2B"/>
+            </svg>
+            <span class="text-base font-bold">Cat</span>
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    (function () {
+
+      var cardDog   = document.getElementById('cardDog');
+      var cardCat   = document.getElementById('cardCat');
+      var backBtn   = document.getElementById('backBtn');
+
+      var selectedType = null;
+
+      /* Pre-fill from session — only show selection if previously chosen */
+      var data = getPetData();
+      if (data.petType) {
+        selectedType = data.petType;
+        updateCards();
+      }
+
+      function updateCards() {
+        cardDog.classList.remove('selected');
+        cardCat.classList.remove('selected');
+        if (selectedType === 'dog') {
+          cardDog.classList.add('selected');
+        } else if (selectedType === 'cat') {
+          cardCat.classList.add('selected');
+        }
+      }
+
+      function selectAndAdvance(type) {
+        selectedType = type;
+        updateCards();
+        savePetData({ petType: selectedType });
+        setTimeout(function () {
+          navigateTo('pet-breed.html');
+        }, 350);
+      }
+
+      cardDog.addEventListener('click', function () {
+        selectAndAdvance('dog');
+      });
+
+      cardCat.addEventListener('click', function () {
+        selectAndAdvance('cat');
+      });
+
+      backBtn.addEventListener('click', function () {
+        navigateTo('pet-name.html');
+      });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safety Net Score — GeniusTag</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+            amber: { primary: '#D97706', light: '#FEF3C7', border: '#F59E0B' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <style>
+    /* ---- Staged reveal ---- */
+    .reveal-section {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- Pet name lowercase variant ---- */
+    .pet-name-lower { text-transform: none; }
+
+    /* ---- CTA pulse ---- */
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 4px 14px rgba(215, 66, 66, 0.3); }
+      50%      { box-shadow: 0 4px 24px rgba(215, 66, 66, 0.55); }
+    }
+    .cta-pulse { animation: ctaPulse 2s ease-in-out infinite; }
+
+    /* ---- CTA section ---- */
+    .cta-reveal { opacity: 0; transition: opacity 0.5s ease-out; }
+    .cta-reveal.visible { opacity: 1; }
+
+    /* ---- Processing interstitial ---- */
+    .processing-overlay { transition: opacity 0.5s ease-out; }
+    .processing-overlay.fade-out { opacity: 0; pointer-events: none; }
+    .process-item {
+      opacity: 0; transform: translateY(6px);
+      animation: processItemIn 0.4s ease-out forwards;
+    }
+    .process-item:nth-child(1) { animation-delay: 0.4s; }
+    .process-item:nth-child(2) { animation-delay: 0.9s; }
+    .process-item:nth-child(3) { animation-delay: 1.4s; }
+    .process-item:nth-child(4) { animation-delay: 1.9s; }
+    @keyframes processItemIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .process-spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2.5px solid #F2EAE4; border-top-color: #3995C6;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ---- Score content area ---- */
+    .score-content { opacity: 0; transition: opacity 0.5s ease-out; }
+    .score-content.visible { opacity: 1; }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium px-5 py-4">
+      <div class="flex items-center justify-center">
+        <img src="images/geniuspet-logo.svg" alt="GeniusPet" class="h-8">
+      </div>
+    </header>
+
+    <!-- ================================================================
+         PHASE 0: Processing Interstitial (2.8s auto)
+         ================================================================ -->
+    <div id="processing-overlay" class="processing-overlay px-5 py-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+        <div class="w-16 h-16 mx-auto mb-5 bg-blue-lightest rounded-full flex items-center justify-center">
+          <svg class="w-8 h-8 text-blue-primary" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-4.5-2c.83 0 1.5-.67 1.5-1.5S8.33 5 7.5 5 6 5.67 6 6.5 6.67 8 7.5 8zm9 0c.83 0 1.5-.67 1.5-1.5S17.33 5 16.5 5 15 5.67 15 6.5 15.67 8 16.5 8zM5 11.5c.83 0 1.5-.67 1.5-1.5S5.83 8.5 5 8.5 3.5 9.17 3.5 10 4.17 11.5 5 11.5zm14 0c.83 0 1.5-.67 1.5-1.5S19.83 8.5 19 8.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-7 5.5c-2.33 0-4.32 1.45-5.12 3.5h10.24c-.8-2.05-2.79-3.5-5.12-3.5z"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-neutral-black mb-5">Building <span class="pet-name">your pet</span>'s Care ID...</h2>
+        <div class="text-left space-y-3 mb-2 px-2">
+          <div class="process-item flex items-center gap-3">
+            <div class="w-5 h-5 bg-green-primary rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-base text-neutral-dark">ESA status verified</span>
+          </div>
+          <div class="process-item flex items-center gap-3">
+            <div class="w-5 h-5 bg-green-primary rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-base text-neutral-dark">Pet profile created</span>
+          </div>
+          <div class="process-item flex items-center gap-3">
+            <div class="w-5 h-5 bg-green-primary rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-base text-neutral-dark">Contact alerts activated</span>
+          </div>
+          <div class="process-item flex items-center gap-3">
+            <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
+              <span class="process-spinner"></span>
+            </div>
+            <span class="text-base text-blue-primary font-medium">Analyzing protection level...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         SCORE REVEAL: Confirmation + Layers Card
+         ================================================================ -->
+    <main id="score-content" class="score-content px-5 py-6 pb-32" style="display:none;">
+
+      <!-- Safety Net Hero — score ring + title -->
+      <div id="safety-net-hero" class="reveal-section flex items-center gap-4 mb-4">
+        <!-- Score ring (SVG) -->
+        <div class="relative flex-shrink-0">
+          <svg class="w-[76px] h-[76px] -rotate-90" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="34" stroke="#E5E7EB" stroke-width="5" fill="none" />
+            <circle id="score-ring" cx="38" cy="38" r="34"
+              stroke="#D74242"
+              stroke-width="5" fill="none"
+              stroke-linecap="round"
+              stroke-dasharray="213.628"
+              stroke-dashoffset="213.628"
+              class="score-ring-progress"
+            />
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span id="score-ring-num" class="text-xl font-bold text-neutral-black leading-none">0</span>
+            <span class="text-base text-neutral-medium font-semibold">/ 100</span>
+          </div>
+        </div>
+        <!-- Title + subtitle -->
+        <div>
+          <h1 class="text-[20px] font-bold text-neutral-black leading-tight"><span class="pet-name">Your pet</span>'s Safety Net</h1>
+          <p class="text-base text-neutral-medium mt-0.5">How strong <span class="pet-name-lower">your pet</span>'s safety net is</p>
+        </div>
+      </div>
+
+      <!-- Explanation box -->
+      <div id="explanation-box" class="reveal-section rounded-2xl px-4 py-4 mb-5" style="background: rgba(242, 234, 228, 0.6);">
+        <p class="text-base text-neutral-dark leading-relaxed">Protection is built in <strong class="text-neutral-black">Safety Layers</strong>. Each one covers a different risk — getting lost, health scares, emergencies. Right now, only one is active.</p>
+      </div>
+
+      <!-- Safety Layers checklist -->
+      <div id="layers-card" class="reveal-section bg-white rounded-2xl p-5 mb-5" style="box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        <h2 class="text-[17px] font-bold text-neutral-black mb-2">Your Safety Layers</h2>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="flex gap-1">
+            <div class="w-8 h-1.5 rounded-full bg-green-primary"></div>
+            <div class="w-8 h-1.5 rounded-full bg-neutral-light"></div>
+            <div class="w-8 h-1.5 rounded-full bg-neutral-light"></div>
+            <div class="w-8 h-1.5 rounded-full bg-neutral-light"></div>
+          </div>
+          <span class="text-base font-semibold text-red-primary">1 of 4 active</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Layer 1: Smart ID (active) -->
+          <div class="flex items-center gap-3">
+            <div class="w-6 h-6 bg-green-primary rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-base font-semibold text-neutral-black">Smart ID Tag</span>
+          </div>
+
+          <!-- Layer 2: Find My Pet (inactive) -->
+          <div class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full border-2 border-neutral-light flex-shrink-0"></div>
+            <span class="text-base text-neutral-medium">Find My Pet</span>
+          </div>
+
+          <!-- Layer 3: 24/7 Vet Access (inactive) -->
+          <div class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full border-2 border-neutral-light flex-shrink-0"></div>
+            <span class="text-base text-neutral-medium">24/7 Vet Access</span>
+          </div>
+
+          <!-- Layer 4: Emergency Coverage (inactive) -->
+          <div class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full border-2 border-neutral-light flex-shrink-0"></div>
+            <span class="text-base text-neutral-medium">Emergency Coverage</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activation nudge -->
+      <div id="activation-nudge" class="reveal-section text-center mb-5">
+        <div class="flex items-center justify-center gap-2 mb-1.5">
+          <svg class="w-4 h-4 text-red-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <p class="text-base font-semibold text-neutral-black">It takes about a minute to activate all layers.</p>
+        </div>
+        <p class="text-base text-neutral-dark">Most ESA families activate all layers to keep their pets safe and protected at all times.</p>
+      </div>
+
+      <!-- Score tracker bar -->
+      <div id="score-tracker-container" class="reveal-section mb-5"></div>
+
+    </main>
+
+    <!-- Sticky CTA -->
+    <div id="cta-section" class="sticky-cta-bar">
+      <div class="cta-content">
+        <button id="score-cta-btn" class="btn-sticky cta-pulse-red">Add Next Safety Layer</button>
+        <p class="sticky-subtext" style="color: #747474;">Takes about a minute to activate all layers.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    /**
+     * Score Reveal — Safety Net Psychology
+     *
+     * Processing (2.8s auto) → Score Reveal
+     *
+     * Animation timeline (after processing fades):
+     *   0.0s  — Confirmation banner fades in
+     *   0.3s  — Safety Net hero (ring + title) — ring animates
+     *   0.8s  — Explanation box fades in
+     *   1.2s  — Score breakdown heading + rows stagger in (0.15s each)
+     *   2.2s  — Score tracker bar fades in + bar fills
+     *   2.6s  — CTA fades in
+     */
+
+    /* ---- Reveal animation timeline ---- */
+    function startRevealAnimation() {
+      var heroSection = document.getElementById('safety-net-hero');
+      var explanationBox = document.getElementById('explanation-box');
+      var layersCard = document.getElementById('layers-card');
+      var trackerContainer = document.getElementById('score-tracker-container');
+      var ctaSection = document.getElementById('cta-section');
+
+      var state = getScoreState();
+      var score = computeScore(state.products);
+
+      // 0.0s: Safety Net hero — ring + title
+      setTimeout(function() {
+        heroSection.classList.add('visible');
+
+        // Animate score ring fill
+        var ring = document.getElementById('score-ring');
+        var circumference = 2 * Math.PI * 34; // ~213.628
+        var offset = circumference - (score / 100) * circumference;
+        var ringColor = getScoreBarColor(score);
+        ring.setAttribute('stroke', ringColor);
+        requestAnimationFrame(function() {
+          ring.style.strokeDashoffset = offset;
+        });
+
+        // Animate score number count-up
+        var numEl = document.getElementById('score-ring-num');
+        var startTime = performance.now();
+        var duration = 1200;
+        function countUp(now) {
+          var progress = Math.min((now - startTime) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          numEl.textContent = Math.round(score * eased);
+          if (progress < 1) requestAnimationFrame(countUp);
+        }
+        requestAnimationFrame(countUp);
+      }, 300);
+
+      // 0.8s: Explanation box
+      setTimeout(function() {
+        explanationBox.classList.add('visible');
+      }, 800);
+
+      // 1.2s: Protection layers card
+      setTimeout(function() {
+        layersCard.classList.add('visible');
+      }, 1200);
+
+      // 1.6s: Activation nudge
+      setTimeout(function() {
+        document.getElementById('activation-nudge').classList.add('visible');
+      }, 1600);
+
+      // 2.0s: Score tracker bar
+      setTimeout(function() {
+        trackerContainer.classList.add('visible');
+        renderScoreTracker('score-tracker-container', {
+          currentScore: score,
+          petData: getPetData(),
+          animateDelay: 200
+        });
+      }, 2000);
+
+      // 2.4s: CTA
+      setTimeout(function() {
+        ctaSection.classList.add('visible');
+      }, 2400);
+    }
+
+    /* ---- Processing → Score Reveal transition ---- */
+    function startProcessingTransition() {
+      var processingOverlay = document.getElementById('processing-overlay');
+      var scoreContent = document.getElementById('score-content');
+
+      setTimeout(function() {
+        processingOverlay.classList.add('fade-out');
+        setTimeout(function() {
+          processingOverlay.style.display = 'none';
+          scoreContent.style.display = 'block';
+          personalizePage();
+
+          // Small delay lets browser register opacity:0 before transitioning to 1
+          setTimeout(function() {
+            scoreContent.classList.add('visible');
+            startRevealAnimation();
+          }, 50);
+        }, 500);
+      }, 2800);
+    }
+
+    /* ---- Init ---- */
+    document.addEventListener('DOMContentLoaded', function() {
+      initPage();
+
+      // Start processing → Score Reveal transition
+      startProcessingTransition();
+
+      // CTA → navigate to upsell
+      document.getElementById('score-cta-btn').addEventListener('click', function() {
+        navigateTo('upsell-advanced.html');
+      });
+
+    });
+  </script>
+
+</body>
+</html>

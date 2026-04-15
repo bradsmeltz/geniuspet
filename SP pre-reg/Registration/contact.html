@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Info — GeniusTag</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* Progress dot glow */
+    @keyframes dotGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(215, 66, 66, 0.4); }
+      50% { box-shadow: 0 0 0 5px rgba(215, 66, 66, 0); }
+    }
+    .dot-active {
+      animation: dotGlow 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium px-5 py-4">
+      <div class="flex items-center justify-center relative">
+        <button type="button" id="backBtn" class="absolute left-0 p-1 text-neutral-medium hover:text-neutral-black transition-colors">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusTag" class="h-8">
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-5 py-6">
+
+      <!-- Progress dots: 1-5 completed, 6 active (glow) -->
+      <div class="flex items-center justify-center gap-2 mb-6 fade-in">
+        <div class="w-2 h-2 rounded-full bg-red-primary"></div>
+        <div class="w-2 h-2 rounded-full bg-red-primary"></div>
+        <div class="w-2 h-2 rounded-full bg-red-primary"></div>
+        <div class="w-2 h-2 rounded-full bg-red-primary"></div>
+        <div class="w-2 h-2 rounded-full bg-red-primary"></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-red-primary dot-active"></div>
+      </div>
+
+      <!-- Headline -->
+      <div class="text-center mb-8 fade-in">
+        <h1 class="text-[22px] font-bold leading-tight mb-2">If someone finds <span class="pet-name">your pet</span>, how should they reach you?</h1>
+        <p class="text-base text-neutral-dark leading-relaxed">Your info stays private — we'll notify you directly if <span class="pet-name">your pet</span> is ever found.</p>
+      </div>
+
+      <!-- Form -->
+      <form id="contactForm" class="space-y-4 fade-in delay-1" novalidate>
+
+        <!-- Name -->
+        <div>
+          <label for="ownerNameInput" class="block text-base font-semibold text-neutral-dark mb-1.5">Your name</label>
+          <div class="relative">
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-medium" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="ownerNameInput"
+              name="ownerName"
+              required
+              placeholder="First and last name"
+              autocomplete="name"
+              class="reg-input"
+              style="background-color: #fff; padding: 16px 16px 16px 44px; font-size: 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"
+            >
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="emailInput" class="block text-base font-semibold text-neutral-dark mb-1.5">Email address</label>
+          <div class="relative">
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-medium" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+              </svg>
+            </div>
+            <input
+              type="email"
+              id="emailInput"
+              name="email"
+              required
+              placeholder="Email address"
+              autocomplete="email"
+              class="reg-input"
+              style="background-color: #fff; padding: 16px 16px 16px 44px; font-size: 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"
+            >
+          </div>
+          <p id="emailError" class="text-red-primary text-base mt-1 hidden">Please enter a valid email address.</p>
+        </div>
+
+        <!-- Phone (optional) -->
+        <div>
+          <label for="phoneInput" class="block text-base font-semibold text-neutral-dark mb-1.5">Phone number <span class="font-normal text-neutral-medium">(optional)</span></label>
+          <div class="relative">
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-medium" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+              </svg>
+            </div>
+            <input
+              type="tel"
+              id="phoneInput"
+              name="phone"
+              placeholder="(555) 123-4567"
+              inputmode="tel"
+              autocomplete="tel"
+              class="reg-input"
+              style="background-color: #fff; padding: 16px 16px 16px 44px; font-size: 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"
+            >
+          </div>
+          <p class="text-base text-neutral-medium mt-1.5">For instant SMS alerts when <span class="pet-name">your pet</span>'s Care ID is scanned.</p>
+          <p id="phoneError" class="text-red-primary text-base mt-1 hidden">Please enter a valid phone number (10 digits).</p>
+        </div>
+
+        <!-- Privacy badge -->
+        <div class="flex items-center justify-center gap-2 pt-2 fade-in delay-2">
+          <svg class="w-4 h-4 text-neutral-medium flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+          </svg>
+          <span class="text-base text-neutral-medium">We'll never share your information. Ever.</span>
+        </div>
+
+      </form>
+
+      <!-- Submit button -->
+      <div class="mt-6">
+        <button type="submit" form="contactForm" id="submitBtn" disabled class="btn-sticky cta-pulse-red w-full">
+          See <span class="pet-name">Your Pet</span>'s Safety Score
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    (function () {
+
+      /* ---- DOM refs ---- */
+      var ownerNameInput = document.getElementById('ownerNameInput');
+      var emailInput = document.getElementById('emailInput');
+      var phoneInput = document.getElementById('phoneInput');
+      var submitBtn  = document.getElementById('submitBtn');
+      var emailError = document.getElementById('emailError');
+      var phoneError = document.getElementById('phoneError');
+      var form       = document.getElementById('contactForm');
+      var backBtn    = document.getElementById('backBtn');
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      /* ---- Back button ---- */
+      backBtn.addEventListener('click', function () {
+        navigateTo('pet-age.html');
+      });
+
+      /* ---- Helpers ---- */
+      function digitsOnly(str) {
+        return (str || '').replace(/\D/g, '');
+      }
+
+      function isEmailValid() {
+        return emailRegex.test(emailInput.value.trim());
+      }
+
+      function isPhoneValid() {
+        return digitsOnly(phoneInput.value).length >= 10;
+      }
+
+      function isNameValid() {
+        return ownerNameInput.value.trim().length >= 2;
+      }
+
+      /* ---- Validation (name + email required, phone optional) ---- */
+      function validate() {
+        var valid = isNameValid() && isEmailValid();
+        submitBtn.disabled = !valid;
+      }
+
+      /* ---- Phone auto-format: (XXX) XXX-XXXX ---- */
+      phoneInput.addEventListener('input', function () {
+        var raw = digitsOnly(this.value).slice(0, 10);
+        var formatted = '';
+        if (raw.length > 0) formatted = '(' + raw.substring(0, 3);
+        if (raw.length >= 3) formatted += ') ';
+        if (raw.length > 3) formatted += raw.substring(3, 6);
+        if (raw.length >= 6) formatted += '-';
+        if (raw.length > 6) formatted += raw.substring(6, 10);
+        this.value = formatted;
+        validate();
+      });
+
+      ownerNameInput.addEventListener('input', validate);
+      emailInput.addEventListener('input', validate);
+
+      /* ---- Inline errors on blur ---- */
+      emailInput.addEventListener('blur', function () {
+        var hasValue = this.value.trim().length > 0;
+        var valid = isEmailValid();
+        emailError.classList.toggle('hidden', !hasValue || valid);
+        // Green border on valid, red on invalid
+        this.classList.toggle('success', hasValue && valid);
+        this.classList.toggle('error', hasValue && !valid);
+      });
+
+      emailInput.addEventListener('focus', function () {
+        this.classList.remove('success', 'error');
+        emailError.classList.add('hidden');
+      });
+
+      phoneInput.addEventListener('blur', function () {
+        var hasValue = this.value.trim().length > 0;
+        var valid = !hasValue || isPhoneValid(); // Optional: empty is valid
+        phoneError.classList.toggle('hidden', valid);
+        this.classList.toggle('success', hasValue && isPhoneValid());
+        this.classList.toggle('error', hasValue && !isPhoneValid());
+      });
+
+      phoneInput.addEventListener('focus', function () {
+        this.classList.remove('success', 'error');
+        phoneError.classList.add('hidden');
+      });
+
+      /* ---- Pre-fill from saved data ---- */
+      var data = getPetData();
+      if (data.ownerName) {
+        ownerNameInput.value = data.ownerName;
+      }
+      if (data.email) {
+        emailInput.value = data.email;
+      }
+      if (data.phone) {
+        phoneInput.value = data.phone;
+      }
+      validate();
+
+      /* ---- Submit ---- */
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (submitBtn.disabled) return;
+
+        // Brief loading state
+        submitBtn.disabled = true;
+        var originalHTML = submitBtn.innerHTML;
+        submitBtn.textContent = 'Loading...';
+
+        savePetData({
+          ownerName: ownerNameInput.value.trim(),
+          email: emailInput.value.trim(),
+          phone: phoneInput.value.trim()
+        });
+
+        // Tiny delay for perceived saving, then navigate to tag activation
+        setTimeout(function () {
+          navigateTo('tag-activated.html');
+        }, 300);
+      });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your ESA letter is official. Build your pet's Care Profile so your ESA status and protection tools are always accessible.">
+  <title>Your ESA GeniusTag — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium">
+    <div class="max-w-[428px] mx-auto px-5 py-4 flex items-center justify-center">
+      <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusTag" class="h-8">
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="max-w-[428px] mx-auto px-5 pt-8 pb-28">
+
+    <!-- Hero section -->
+    <div class="text-center mb-8 fade-in delay-1">
+      <!-- Confirmation badge -->
+      <div class="mb-3">
+        <span class="inline-flex items-center gap-1.5 bg-green-light text-green-primary px-3 py-1.5 rounded-full text-base font-semibold">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          Included Free in Your Shipment
+        </span>
+      </div>
+      <h1 class="text-[28px] leading-tight font-bold text-neutral-black mb-3">
+        Prove Your Pet's ESA Status Anywhere — with your <span class="font-normal italic text-blue-primary">Free Smart Pet ID.</span>
+      </h1>
+      <p class="text-base text-neutral-dark leading-relaxed mb-2">
+        Your ESA letter proves your pet's status on paper. This Smart Pet ID tag proves it everywhere else.
+      </p>
+      <p class="text-base font-semibold text-green-primary">
+        A $39.95 value - included free inside the shipping box already on its way.
+      </p>
+    </div>
+
+    <!-- GeniusTag product image -->
+    <div class="flex justify-center mb-8 fade-in delay-2">
+      <div class="relative">
+        <img
+          src="images/id-tags.png"
+          alt="GeniusTag ESA ID Tags"
+          class="w-52 h-auto drop-shadow-lg"
+        >
+        <!-- Checkmark badge -->
+        <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-green-primary rounded-full flex items-center justify-center shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activation prompt -->
+    <div class="text-center fade-in delay-3">
+      <div class="bg-white rounded-xl border border-beige-medium p-5">
+        <p class="text-base font-bold text-neutral-black mb-1">Activation required</p>
+        <p class="text-base text-neutral-dark">It only takes 60 seconds to set up your pet's Care Profile so the Smart ID works the moment it arrives.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sticky CTA -->
+  <div class="sticky-cta-bar visible">
+    <div class="cta-content">
+      <button type="button" id="submitBtn" class="btn-sticky cta-pulse-red">
+        Activate Your Pet's Smart ID
+      </button>
+      <div class="flex items-center justify-center gap-2">
+        <div class="flex items-center gap-0.5">
+          <svg class="w-4 h-4 text-gold-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-gold-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <span class="text-base text-neutral-dark">Trusted by <strong>10,000+</strong> ESA families</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize page (persist URL params, inject pet name)
+      initPage();
+
+      // Initialize registration flow for Support Pets partner traffic
+      initRegistrationFlow('support-pets');
+
+      // CTA submit handler
+      var submitBtn = document.getElementById('submitBtn');
+      submitBtn.addEventListener('click', function () {
+        navigateTo('pet-name.html');
+      });
+    });
+  </script>
+
+</body>
+</html>

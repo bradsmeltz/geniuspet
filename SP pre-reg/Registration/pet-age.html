@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Age — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <style>
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .progress-dot.active {
+      box-shadow: 0 0 0 4px rgba(215, 66, 66, 0.2);
+    }
+    .progress-connector {
+      width: 20px;
+      height: 2px;
+      border-radius: 1px;
+      transition: background 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium">
+      <div class="px-5 py-4 flex items-center justify-between">
+        <button id="backBtn" class="text-neutral-medium hover:text-neutral-dark transition-colors">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+          </svg>
+        </button>
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusTag" class="h-8">
+        <div class="w-6"></div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-5 py-6">
+
+      <!-- Progress dots: 6 dots — dots 1-4 completed, dot 5 active, dot 6 upcoming -->
+      <div class="flex items-center justify-center gap-0 mb-6 fade-in">
+        <div class="progress-dot bg-red-primary"></div>
+        <div class="progress-connector bg-red-primary"></div>
+        <div class="progress-dot bg-red-primary"></div>
+        <div class="progress-connector bg-red-primary"></div>
+        <div class="progress-dot bg-red-primary"></div>
+        <div class="progress-connector bg-red-primary"></div>
+        <div class="progress-dot bg-red-primary"></div>
+        <div class="progress-connector bg-red-primary"></div>
+        <div class="progress-dot bg-red-primary active"></div>
+        <div class="progress-connector bg-beige-medium"></div>
+        <div class="progress-dot bg-beige-medium"></div>
+      </div>
+
+      <!-- Headline -->
+      <div class="text-center mb-6 fade-in">
+        <h1 class="text-[24px] font-bold leading-tight">How old is <span class="pet-name">your pet</span>?</h1>
+      </div>
+
+      <!-- Age Input -->
+      <div class="mb-6 fade-in delay-1">
+        <p class="text-base text-neutral-medium mb-3">Don't know exactly? Your best guess is perfect.</p>
+        <input
+          type="number"
+          id="ageInput"
+          placeholder="Age in years"
+          min="0"
+          max="30"
+          inputmode="numeric"
+          class="reg-input"
+          style="background-color: #fff; padding: 16px; font-size: 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"
+        >
+      </div>
+
+      <!-- Continue button -->
+      <div class="mt-6">
+        <button type="button" id="submitBtn" disabled class="btn-sticky w-full">Continue</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    (function () {
+
+      /* ================================================================
+         DOM Refs
+         ================================================================ */
+
+      var ageInput  = document.getElementById('ageInput');
+      var submitBtn = document.getElementById('submitBtn');
+      var backBtn   = document.getElementById('backBtn');
+
+      /* ================================================================
+         Back button
+         ================================================================ */
+
+      backBtn.addEventListener('click', function () {
+        navigateTo('pet-breed.html');
+      });
+
+      /* ================================================================
+         Validation — require age
+         ================================================================ */
+
+      function validate() {
+        var ageOk = ageInput.value !== '' && Number(ageInput.value) >= 0;
+        submitBtn.disabled = !ageOk;
+      }
+
+      ageInput.addEventListener('input', validate);
+
+      /* ================================================================
+         Pre-fill from sessionStorage
+         ================================================================ */
+
+      var data = getPetData();
+      if (data.age !== undefined && data.age !== null && data.age !== '') {
+        ageInput.value = data.age;
+      }
+      validate();
+
+      /* ================================================================
+         Submit
+         ================================================================ */
+
+      submitBtn.addEventListener('click', function () {
+        if (submitBtn.disabled) return;
+
+        savePetData({
+          age: Number(ageInput.value)
+        });
+
+        navigateTo('contact.html');
+      });
+
+    })();
+  </script>
+</body>
+</html>

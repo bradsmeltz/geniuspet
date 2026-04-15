@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your pet's safety layers have been added. Finalize your Care ID in the dashboard.">
+  <title>You're All Set — GeniusPet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <style>
+    /* Score ring animation */
+    .score-ring-track {
+      fill: none;
+      stroke: #F2EAE4;
+      stroke-width: 8;
+    }
+    .score-ring-fill {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 339.292;
+      stroke-dashoffset: 339.292;
+      transition: stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.8s ease;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+
+    /* Status badge bounce */
+    .status-badge {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    .status-badge.visible {
+      animation: bounceIn 0.5s ease-out forwards;
+    }
+    @keyframes bounceIn {
+      0%   { opacity: 0; transform: scale(0.3); }
+      50%  { opacity: 1; transform: scale(1.08); }
+      70%  { transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Reveal animation for sections */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Checklist item entrance */
+    .check-item {
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+    .check-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* CTA pulse */
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 4px 14px rgba(215, 66, 66, 0.3); }
+      50%      { box-shadow: 0 4px 24px rgba(215, 66, 66, 0.55); }
+    }
+    .cta-pulse {
+      animation: ctaPulse 2s ease-in-out infinite;
+    }
+
+    /* Next step item stagger */
+    .next-step {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+    .next-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium px-5 py-4">
+      <div class="flex items-center justify-center">
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusTag" class="h-8">
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="px-5 py-8 pb-32">
+
+      <!-- Section 1: Score Ring -->
+      <div class="flex flex-col items-center mb-6">
+        <div class="relative w-44 h-44 mb-3">
+          <svg class="w-full h-full" viewBox="0 0 120 120">
+            <circle class="score-ring-track" cx="60" cy="60" r="54"/>
+            <circle
+              id="ring-fill"
+              class="score-ring-fill"
+              cx="60" cy="60" r="54"
+              stroke="#D74242"
+              stroke-dasharray="339.292"
+              stroke-dashoffset="339.292"
+            />
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span id="score-number" class="text-5xl font-bold text-neutral-black leading-none">0</span>
+            <span class="text-base text-neutral-medium mt-1 font-medium">out of 100</span>
+          </div>
+        </div>
+
+        <!-- Status badge -->
+        <div id="status-badge" class="status-badge mt-1">
+          <span id="status-label" class="inline-block text-base font-bold px-4 py-1.5 rounded-full"></span>
+        </div>
+      </div>
+
+      <!-- Section 2: Headline -->
+      <div class="text-center mb-8 reveal" id="headline-section">
+        <h1 class="text-[26px] leading-tight font-bold text-neutral-black mb-2">
+          <span class="pet-name"></span>'s safety layers have been added!
+        </h1>
+        <p class="text-base text-neutral-dark leading-relaxed">
+          Your next step is to finalize <span class="pet-name"></span>'s Care ID in the dashboard.
+        </p>
+      </div>
+
+      <!-- Section 3: Product Summary -->
+      <div id="product-summary" class="bg-white rounded-2xl p-5 shadow-sm border border-beige-medium mb-6 reveal">
+        <h2 class="text-base font-bold text-neutral-black mb-3">Protection Layers</h2>
+        <div id="product-list" class="space-y-3">
+          <!-- Built dynamically by JS -->
+        </div>
+      </div>
+
+
+    </main>
+
+    <!-- Sticky CTA -->
+    <div id="cta-section" class="sticky-cta-bar">
+      <div class="cta-content">
+        <a id="dashboard-link" href="../dashboard/index.html" class="btn-sticky cta-pulse-red" style="display: block; text-align: center; text-decoration: none;">
+          Finalize <span class="pet-name"></span>'s Care ID
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    (function () {
+      var CIRCUMFERENCE = 2 * Math.PI * 54; // ~339.292
+
+      /* ================================================================
+         Helpers
+         ================================================================ */
+
+      function getRingColor(score) {
+        if (score >= 88) return '#297A6D'; // green-primary
+        if (score >= 78) return '#2e8a7b'; // teal-primary
+        if (score >= 65) return '#3995C6'; // blue-primary
+        if (score >= 50) return '#d49d35'; // gold-primary
+        return '#D74242';                  // red-primary
+      }
+
+      function getStatusBadgeClasses(score) {
+        if (score >= 88) return 'bg-green-light text-green-primary';
+        if (score >= 78) return 'bg-teal-tint text-teal-dark';
+        if (score >= 65) return 'bg-blue-lightest text-blue-dark';
+        if (score >= 50) return 'bg-gold-tint text-gold-dark';
+        return 'bg-red-100 text-red-700';
+      }
+
+      function animateCounter(el, from, to, duration) {
+        var startTime = null;
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(from + (to - from) * eased);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      function show(el, delay) {
+        setTimeout(function () { el.classList.add('visible'); }, delay);
+      }
+
+      /* ================================================================
+         Read session data
+         ================================================================ */
+
+      var scoreState = getScoreState();
+      var products = scoreState.products;
+      var totalScore = computeScore(products);
+      var status = getStatusLabel(totalScore);
+      var petData = getPetData();
+      var petName = petData.name || 'Your Pet';
+
+      /* ================================================================
+         DOMContentLoaded — Build + Animate
+         ================================================================ */
+
+      document.addEventListener('DOMContentLoaded', function () {
+        initPage();
+
+        // --- Confetti (fires immediately on load) ---
+        launchConfetti();
+
+        // --- Score ring animation (500ms delay) ---
+        var ringFill = document.getElementById('ring-fill');
+        var scoreNumber = document.getElementById('score-number');
+        var statusBadge = document.getElementById('status-badge');
+        var statusLabel = document.getElementById('status-label');
+
+        ringFill.style.strokeDasharray = CIRCUMFERENCE;
+        ringFill.style.strokeDashoffset = CIRCUMFERENCE;
+
+        setTimeout(function () {
+          var targetOffset = CIRCUMFERENCE * (1 - totalScore / 100);
+          ringFill.style.stroke = getRingColor(totalScore);
+          ringFill.style.strokeDashoffset = targetOffset;
+          animateCounter(scoreNumber, 0, totalScore, 1500);
+        }, 500);
+
+        // Status badge at 2s
+        setTimeout(function () {
+          statusLabel.textContent = status.label;
+          statusLabel.className = 'inline-block text-base font-bold px-4 py-1.5 rounded-full ' + getStatusBadgeClasses(totalScore);
+          statusBadge.classList.add('visible');
+        }, 2000);
+
+        // --- Headline section (2.5s) ---
+        show(document.getElementById('headline-section'), 2500);
+
+        // --- Product Summary (3s) ---
+        var productSection = document.getElementById('product-summary');
+        setTimeout(function () {
+          productSection.classList.add('visible');
+          buildProductSummary();
+
+          // Stagger check items
+          var items = document.querySelectorAll('.check-item');
+          items.forEach(function (item, i) {
+            setTimeout(function () { item.classList.add('visible'); }, i * 150);
+          });
+        }, 3000);
+
+        // --- What's Next (3.8s) ---
+        var whatsNext = document.getElementById('whats-next');
+        setTimeout(function () {
+          whatsNext.classList.add('visible');
+          buildWhatsNext();
+
+          var steps = document.querySelectorAll('.next-step');
+          steps.forEach(function (step, i) {
+            setTimeout(function () { step.classList.add('visible'); }, i * 200);
+          });
+        }, 3800);
+
+        // --- CTA (4.5s) ---
+        show(document.getElementById('cta-section'), 4500);
+
+        // --- Dashboard link with params ---
+        var dashLink = document.getElementById('dashboard-link');
+        if (dashLink && petData.name) {
+          var params = '?name=' + encodeURIComponent(petData.name);
+          if (petData.email) params += '&email=' + encodeURIComponent(petData.email);
+          dashLink.href = '../dashboard/index.html' + params;
+        }
+
+        // --- Dashboard handoff ---
+        handoffToDashboard();
+      });
+
+      /* ================================================================
+         Build Product Summary
+         ================================================================ */
+
+      function buildProductSummary() {
+        var list = document.getElementById('product-list');
+        var items = [
+          { key: 'geniusTag',          label: 'GeniusTag activated',        owned: true },
+          { key: 'advancedProtection', label: 'Advanced Protection added',  owned: products.advancedProtection },
+          { key: 'teleVet',            label: '24/7 TeleVet access',        owned: products.teleVet },
+          { key: 'insurance',          label: 'Pet insurance enrolled',     owned: products.insurance }
+        ];
+
+        items.forEach(function (item) {
+          var row = document.createElement('div');
+          row.className = 'check-item flex items-center gap-3';
+
+          if (item.owned) {
+            row.innerHTML =
+              '<div class="flex-shrink-0 w-6 h-6 bg-green-primary rounded-full flex items-center justify-center">' +
+                '<svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">' +
+                  '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>' +
+                '</svg>' +
+              '</div>' +
+              '<span class="text-base font-semibold text-neutral-black">' + item.label + '</span>';
+          } else {
+            row.innerHTML =
+              '<div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">' +
+                '<span class="text-neutral-light text-lg leading-none">&mdash;</span>' +
+              '</div>' +
+              '<span class="text-base text-neutral-light line-through">' + item.label + '</span>';
+          }
+
+          list.appendChild(row);
+        });
+      }
+
+      /* ================================================================
+         Build What's Next Checklist
+         ================================================================ */
+
+      function buildWhatsNext() {
+        // Section removed
+      }
+
+      /* ================================================================
+         Dashboard Handoff
+         ================================================================ */
+
+      function handoffToDashboard() {
+        var handoff = {
+          pet: getPetData(),
+          products: products,
+          score: computeScore(products),
+          completedAt: new Date().toISOString()
+        };
+        localStorage.setItem('geniuspet_registration_data', JSON.stringify(handoff));
+        localStorage.setItem('geniuspet_tour_completed', 'true');
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

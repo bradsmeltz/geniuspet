@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Affordable pet insurance that actually fits your budget — starting at just $24.99/mo.">
+  <title>Pet Insurance — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <style>
+    /* Insurance plan card */
+    .insurance-plan-card {
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    }
+    .insurance-plan-card.selected {
+      border-color: #d49d35;
+      box-shadow: 0 0 0 1px #d49d35;
+      background-color: #f9f4ed;
+    }
+    .insurance-plan-card .plan-radio {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #D1D5DB;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .insurance-plan-card.selected .plan-radio {
+      border-color: #d49d35;
+      background: #d49d35;
+      box-shadow: inset 0 0 0 3px white;
+    }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium px-5 py-4">
+      <div class="flex items-center justify-center relative">
+        <button id="back-btn" class="absolute left-0 p-1 text-neutral-medium hover:text-neutral-dark transition-colors" aria-label="Go back">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="px-5 py-6 pb-36">
+
+      <!-- Score tracker -->
+      <div id="score-tracker-container" class="mb-5 fade-in"></div>
+
+      <!-- Headline + pitch -->
+      <div class="mb-6 fade-in delay-1">
+        <h1 class="text-[22px] font-bold text-neutral-black leading-tight mb-2">
+          Pet insurance shouldn't cost a fortune.
+        </h1>
+        <p class="text-base text-neutral-dark leading-relaxed">
+          Most pet insurance companies charge $100+ per month. That's insane. We built a plan that actually makes sense — real coverage at a price every pet parent can afford. Because <span class="pet-name">your pet</span> deserves protection regardless of your budget.
+        </p>
+      </div>
+
+      <!-- Why it matters -->
+      <div class="bg-white rounded-xl p-5 border border-beige-medium mb-5 fade-in delay-2">
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-gold-tint rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-gold-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">1 in 3 pets need emergency care each year</p>
+              <p class="text-base text-neutral-dark">And most pet parents aren't prepared for the bill.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-gold-tint rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-gold-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">Average emergency vet bill: $3,000+</p>
+              <p class="text-base text-neutral-dark">One accident can wipe out your savings overnight.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-gold-tint rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-gold-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">Built for real pet parents, not corporations</p>
+              <p class="text-base text-neutral-dark">Same essential coverage at a fraction of what the big companies charge.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Both plans include -->
+      <div class="bg-beige-lightest rounded-2xl p-4 mb-5 fade-in delay-3">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5" style="color: #d49d35;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          <span class="text-base font-bold text-neutral-black">Both plans include</span>
+        </div>
+        <div class="space-y-2 pl-7">
+          <p class="text-base text-neutral-dark">100% reimbursement after per-incident deductible</p>
+          <p class="text-base text-neutral-dark">$5,000 annual limit</p>
+          <p class="text-base text-neutral-dark">Accidents, illness & injuries</p>
+        </div>
+      </div>
+
+      <!-- Plan cards -->
+      <div class="space-y-3 mb-5 fade-in delay-3" id="plan-cards">
+
+        <!-- Low Deductible (RECOMMENDED) -->
+        <div class="insurance-plan-card selected bg-white rounded-2xl p-4 border-2 border-gold-primary relative" data-plan="low-deductible" data-price="38.99" onclick="selectInsurancePlan(this)">
+          <span class="absolute -top-2.5 left-4 bg-gold-primary text-white text-base font-bold px-3 py-0.5 rounded-full tracking-wider uppercase whitespace-nowrap">Recommended</span>
+          <div class="flex items-center gap-3 mt-1">
+            <div class="plan-radio"></div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-base font-bold text-neutral-black block">Low Deductible</span>
+                  <span class="text-base text-neutral-medium">$250 deductible</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-lg font-bold text-neutral-black">$38.99</span><span class="text-base text-neutral-medium">/mo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- High Deductible -->
+        <div class="insurance-plan-card bg-white rounded-2xl p-4 border-2 border-beige-medium" data-plan="high-deductible" data-price="24.99" onclick="selectInsurancePlan(this)">
+          <div class="flex items-center gap-3">
+            <div class="plan-radio"></div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-base font-bold text-neutral-black block">High Deductible</span>
+                  <span class="text-base text-neutral-medium">$500 deductible</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-lg font-bold text-neutral-black">$24.99</span><span class="text-base text-neutral-medium">/mo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Sticky CTA (visible immediately) -->
+    <div id="insurance-sticky-bar" class="sticky-cta-bar visible">
+      <div class="cta-content">
+        <button id="btn-add-insurance" onclick="handleAddInsurance()" class="btn-sticky btn-gold cta-pulse-gold">Protect <span class="pet-name">your pet</span> from Unexpected Vet Bills</button>
+        <p class="text-sm text-neutral-medium mt-1">All plans billed annually</p>
+        <button onclick="navigateTo('thank-you.html')" class="btn-skip" style="text-decoration: underline;"><span class="pet-name">Your pet</span> doesn't need emergency coverage</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var selectedPlanName = 'low-deductible';
+    var selectedPrice = '38.99';
+
+    /* ---- Insurance plan selection ---- */
+    function selectInsurancePlan(card) {
+      document.querySelectorAll('.insurance-plan-card').forEach(function(c) {
+        c.classList.remove('selected');
+      });
+      card.classList.add('selected');
+      selectedPlanName = card.getAttribute('data-plan');
+      selectedPrice = card.getAttribute('data-price');
+    }
+
+    /* ---- Add Insurance handler ---- */
+    function handleAddInsurance() {
+      var btn = document.getElementById('btn-add-insurance');
+      if (btn) {
+        btn.disabled = true;
+        btn.classList.remove('cta-pulse-gold');
+        btn.style.opacity = '0.7';
+      }
+
+      sessionStorage.setItem('insurancePurchased', JSON.stringify({
+        plan: selectedPlanName,
+        monthlyPrice: parseFloat(selectedPrice)
+      }));
+
+      // Store current score for animation on next page
+      var scoreState = getScoreState();
+      var preScore = computeScore(Object.assign({}, scoreState.products, { insurance: false }));
+      sessionStorage.setItem('previousScore', preScore.toString());
+
+      updateScoreState('insurance', true);
+
+      setTimeout(function() {
+        navigateTo('thank-you.html');
+      }, 400);
+    }
+
+    /* ---- DOMContentLoaded ---- */
+    document.addEventListener('DOMContentLoaded', function() {
+      initPage();
+
+      // Score tracker with projected score shown immediately
+      var scoreState = getScoreState();
+      var products = scoreState.products;
+      var score = computeScore(products);
+      var projectedProducts = Object.assign({}, products, { insurance: true });
+      var projectedScore = computeScore(projectedProducts);
+
+      // Check for score transition animation
+      var previousScore = parseInt(sessionStorage.getItem('previousScore')) || null;
+      sessionStorage.removeItem('previousScore');
+
+      renderScoreTracker('score-tracker-container', {
+        currentScore: score,
+        projectedScore: projectedScore,
+        previousScore: previousScore,
+        petData: getPetData(),
+        animateDelay: 500,
+        layerInfo: { number: 4, total: 4, name: 'Emergency Coverage' }
+      });
+
+      // Back button
+      document.getElementById('back-btn').addEventListener('click', function() { history.back(); });
+    });
+
+  </script>
+
+</body>
+</html>

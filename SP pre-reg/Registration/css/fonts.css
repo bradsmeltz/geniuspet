@@ -1,0 +1,84 @@
+/**
+ * GeniusPet Registration Flow — Gilroy Font Face Declarations
+ *
+ * Font files are loaded from the local Brand Font directory.
+ * Weights: 300 (Light), 400 (Regular), 500 (Medium), 600 (Semibold), 700 (Bold)
+ * Formats: woff2 (primary), woff (fallback)
+ */
+
+/* Gilroy Light — 300 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-Light.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gilroy Regular — 400 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-Regular.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gilroy Medium — 500 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-Medium.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gilroy Semibold — 600 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-Semibold.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gilroy Bold — 700 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-Bold.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gilroy Medium Italic — 500 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-MediumItalic.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Gilroy Semibold Italic — 600 */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../Brand Font/Gilroy-SemiboldItalic.woff2') format('woff2'),
+       url('../../Brand Font/Gilroy-SemiboldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Base font application */
+body {
+  font-family: 'Gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

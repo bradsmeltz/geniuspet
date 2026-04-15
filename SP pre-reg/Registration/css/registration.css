@@ -1,0 +1,850 @@
+/**
+ * GeniusPet Registration Flow — Shared Styles
+ *
+ * Mobile-first, max-width 428px centered layout.
+ *
+ * Sections:
+ *   1. Base / Layout
+ *   2. Score Ring SVG Animation
+ *   3. Score Count-up Animation
+ *   4. Confetti Animation
+ *   5. Step Enter / Exit Transitions
+ *   6. Fade-in Animations (staggered)
+ *   7. Photo Upload Circle
+ *   8. CTA Pulse Animation
+ *   9. Score Preview Bar
+ *  10. Badge Bounce-in
+ *  11. Input Focus Ring
+ *  12. Spinner
+ *  13. Toggle Switch
+ *  14. Progress Bar
+ *  15. Sticky CTA Bar
+ *  16. Autocomplete Dropdown Scrollbar
+ *  17. Countdown Timer
+ *  18. Celebration Overlay
+ */
+
+
+/* ==========================================================================
+   1. Base / Layout
+   ========================================================================== */
+
+.reg-container {
+  max-width: 428px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+
+/* ==========================================================================
+   2. Score Ring SVG Animation
+   ========================================================================== */
+
+.score-ring {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.score-ring svg {
+  transform: rotate(-90deg);
+  width: 120px;
+  height: 120px;
+}
+
+.score-ring .ring-bg {
+  fill: none;
+  stroke: #E5E7EB;
+  stroke-width: 8;
+}
+
+.score-ring .ring-progress {
+  fill: none;
+  stroke: #3995C6;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 339.292;
+  stroke-dashoffset: 339.292;
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Color variants based on score status */
+.score-ring.high-risk .ring-progress  { stroke: #DC2626; }
+.score-ring.at-risk .ring-progress    { stroke: #F97316; }
+.score-ring.improving .ring-progress  { stroke: #EAB308; }
+.score-ring.good .ring-progress       { stroke: #3995C6; }
+.score-ring.protected .ring-progress  { stroke: #10B981; }
+
+.score-ring .ring-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  font-weight: 700;
+  color: #2B2B2B;
+  line-height: 1;
+}
+
+
+/* ==========================================================================
+   3. Score Count-up Animation
+   ========================================================================== */
+
+.score-countup {
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 2ch;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   4. Confetti Animation
+   ========================================================================== */
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(25vh) rotate(180deg) scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(50vh) rotate(360deg) scale(0.9);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translateY(75vh) rotate(540deg) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg) scale(0.6);
+  }
+}
+
+.confetti-piece {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: confettiFall var(--confetti-duration, 3s) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: var(--confetti-delay, 0s);
+}
+
+.confetti-piece.circle {
+  border-radius: 50%;
+}
+
+.confetti-piece.rect {
+  border-radius: 2px;
+  width: 8px;
+  height: 14px;
+}
+
+
+/* ==========================================================================
+   5. Step Enter / Exit Transitions
+   ========================================================================== */
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-40px); }
+}
+
+.step-enter { animation: slideRight 0.35s ease-out forwards; }
+.step-exit  { animation: slideLeft 0.25s ease-in forwards; }
+
+
+/* ==========================================================================
+   6. Fade-in Animations (staggered)
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.30s; }
+.delay-3 { animation-delay: 0.45s; }
+.delay-4 { animation-delay: 0.60s; }
+.delay-5 { animation-delay: 0.75s; }
+.delay-6 { animation-delay: 0.90s; }
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   6b. Layer Card Animations
+   ========================================================================== */
+
+.layer-card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.layer-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   6c. Badge Status
+   ========================================================================== */
+
+.badge-active  { background: #EAF3F2; color: #297A6D; }
+.badge-locked  { background: #F3F4F6; color: #747474; }
+
+
+/* ==========================================================================
+   6d. Welcome / Gift Page Animations
+   ========================================================================== */
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(57, 149, 198, 0.15); }
+  50%      { box-shadow: 0 4px 30px rgba(57, 149, 198, 0.35); }
+}
+
+.pulse-glow { animation: pulseGlow 2.5s ease-in-out infinite; }
+
+@keyframes tickerSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ticker-animate {
+  opacity: 0;
+  animation: tickerSlide 0.5s ease-out forwards;
+}
+
+
+/* ==========================================================================
+   6e. Spinner Overlay
+   ========================================================================== */
+
+.spinner-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.spinner-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ==========================================================================
+   6f. Teal CTA Pulse (TeleVet)
+   ========================================================================== */
+
+@keyframes ctaPulseTeal {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 138, 123, 0.3); }
+  50%      { box-shadow: 0 0 0 12px rgba(46, 138, 123, 0); }
+}
+
+.cta-pulse-teal { animation: ctaPulseTeal 2s infinite; }
+
+
+/* ==========================================================================
+   6g. Gold CTA Pulse (Insurance)
+   ========================================================================== */
+
+@keyframes ctaPulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 157, 53, 0.3); }
+  50%      { box-shadow: 0 0 0 12px rgba(212, 157, 53, 0); }
+}
+
+.cta-pulse-gold { animation: ctaPulseGold 2s infinite; }
+
+
+/* ==========================================================================
+   6h. Plan Card Selection (Insurance)
+   ========================================================================== */
+
+.plan-card {
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.plan-card.selected {
+  border-color: #d49d35;
+  box-shadow: 0 0 0 1px #d49d35;
+}
+
+.plan-card .select-radio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #D1D5DB;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.plan-card.selected .select-radio {
+  border-color: #d49d35;
+  background: #d49d35;
+  box-shadow: inset 0 0 0 3px white;
+}
+
+
+/* ==========================================================================
+   6i. Coverage Icon Grid (Insurance)
+   ========================================================================== */
+
+.coverage-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================================================
+   6j. Impact Bar Animations
+   ========================================================================== */
+
+.impact-bar-current {
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.impact-bar-projected {
+  width: 0%;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+
+/* ==========================================================================
+   6k. Unified Score Tracker
+   ========================================================================== */
+
+.score-tracker-bar {
+  width: 0%;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-tracker-ghost {
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+/* Score ring (SVG) — animated stroke fill */
+.score-ring-progress {
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Breakdown row stagger animation */
+.breakdown-row {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+.breakdown-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   7. Photo Upload Circle
+   ========================================================================== */
+
+.photo-upload {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px dashed #AAAAAA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: #FDFCFB;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-upload:hover {
+  border-color: #3995C6;
+  background: #EFF6FA;
+}
+
+.photo-upload .upload-icon {
+  color: #747474;
+  transition: color 0.25s ease;
+}
+
+.photo-upload:hover .upload-icon {
+  color: #3995C6;
+}
+
+.photo-upload.has-photo {
+  border-style: solid;
+  border-color: #10B981;
+  border-width: 3px;
+}
+
+.photo-upload.has-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.photo-upload .upload-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.photo-upload.has-photo:hover .upload-overlay {
+  opacity: 1;
+}
+
+
+/* ==========================================================================
+   8. CTA Pulse Animation
+   ========================================================================== */
+
+@keyframes upsellPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(57, 149, 198, 0.3); }
+  50%      { box-shadow: 0 0 0 12px rgba(57, 149, 198, 0); }
+}
+
+.upsell-pulse { animation: upsellPulse 2s infinite; }
+
+@keyframes ctaPulseRed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(215, 66, 66, 0.35); }
+  50%      { box-shadow: 0 0 0 12px rgba(215, 66, 66, 0); }
+}
+
+.cta-pulse-red { animation: ctaPulseRed 2s infinite; }
+
+
+/* ==========================================================================
+   9. Score Preview Bar
+   ========================================================================== */
+
+.score-preview-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #E5E7EB;
+  overflow: hidden;
+  position: relative;
+}
+
+.score-preview-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #DC2626 0%, #F97316 30%, #EAB308 50%, #3995C6 70%, #10B981 100%);
+  background-size: 200% 100%;
+  width: 0%;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-preview-projected {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.2);
+  border-right: 2px dashed #10B981;
+  width: 0%;
+  transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+
+/* ==========================================================================
+   10. Badge Bounce-in
+   ========================================================================== */
+
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.08); }
+  70%  { transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.badge-bounce {
+  opacity: 0;
+  animation: bounceIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+
+/* ==========================================================================
+   11. Input Focus Ring
+   ========================================================================== */
+
+.reg-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 16px;
+  color: #2B2B2B;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reg-input::placeholder { color: #AAAAAA; }
+
+.reg-input:focus {
+  border-color: #3995C6;
+  box-shadow: 0 0 0 3px rgba(57, 149, 198, 0.15);
+}
+
+.reg-input.error {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.reg-input.success { border-color: #10B981; }
+
+
+/* ==========================================================================
+   12. Spinner
+   ========================================================================== */
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #E5E7EB;
+  border-top-color: #3995C6;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner-sm { width: 16px; height: 16px; border-width: 2px; }
+.spinner-lg { width: 40px; height: 40px; border-width: 4px; }
+
+
+/* ==========================================================================
+   13. Toggle Switch
+   ========================================================================== */
+
+.toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: #D1D5DB;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease;
+}
+
+.toggle-switch input:checked + .toggle-track { background: #10B981; }
+.toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+
+.toggle-switch.locked .toggle-track {
+  background: #E5E7EB;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.toggle-switch.locked input { pointer-events: none; }
+
+
+/* ==========================================================================
+   14. Progress Bar
+   ========================================================================== */
+
+.progress-bar {
+  height: 6px;
+  width: 100%;
+  background: #E5E7EB;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: #3995C6;
+  transition: width 0.5s ease;
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.progress-step-segment {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: #E5E7EB;
+  transition: background 0.4s ease;
+}
+
+.progress-step-segment.active  { background: #3995C6; }
+.progress-step-segment.completed { background: #10B981; }
+
+
+/* ==========================================================================
+   15. Sticky CTA Bar
+   ========================================================================== */
+
+.sticky-cta-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border-top: 1px solid #E5E7EB;
+  padding: 12px 20px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sticky-cta-bar.visible { transform: translateY(0); }
+
+.sticky-cta-bar .cta-content {
+  max-width: 428px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Base btn-sticky styles (works inside or outside sticky bar) */
+.btn-sticky {
+  width: 100%;
+  background: #D74242;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-sticky:hover { background: #C43C3C; }
+
+/* Disabled state */
+.btn-sticky:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Color variants */
+.btn-sticky.btn-teal { background: #2e8a7b; }
+.btn-sticky.btn-teal:hover { background: #216257; }
+
+.btn-sticky.btn-gold { background: #d49d35; }
+.btn-sticky.btn-gold:hover { background: #8a6632; }
+
+.sticky-cta-bar .btn-skip {
+  font-size: 16px;
+  color: #AAAAAA;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-family: inherit;
+}
+
+.sticky-cta-bar .btn-skip:hover { color: #747474; }
+
+/* Sub-text (pricing / guarantee) */
+.sticky-cta-bar .sticky-subtext {
+  font-size: 16px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* Pulse animations for sticky buttons (works inside or outside sticky bar) */
+.btn-sticky.cta-pulse-red { animation: ctaPulseRed 2s ease-in-out infinite; }
+.btn-sticky.cta-pulse-teal { animation: ctaPulseTeal 2s ease-in-out infinite; }
+.btn-sticky.cta-pulse-gold { animation: ctaPulseGold 2s ease-in-out infinite; }
+
+
+/* ==========================================================================
+   16. Autocomplete Dropdown Scrollbar
+   ========================================================================== */
+
+.autocomplete-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+}
+
+.autocomplete-dropdown::-webkit-scrollbar { width: 6px; }
+.autocomplete-dropdown::-webkit-scrollbar-track { background: transparent; }
+.autocomplete-dropdown::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+.autocomplete-dropdown::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+.autocomplete-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #D1D5DB transparent;
+}
+
+.autocomplete-item {
+  padding: 10px 16px;
+  font-size: 16px;
+  color: #2B2B2B;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.highlighted { background: #EFF6FA; }
+
+.autocomplete-item:first-child { border-radius: 12px 12px 0 0; }
+.autocomplete-item:last-child  { border-radius: 0 0 12px 12px; }
+
+
+/* ==========================================================================
+   17. Countdown Timer
+   ========================================================================== */
+
+@keyframes countdownPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.7; }
+}
+
+.countdown-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.countdown-timer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  animation: countdownPulse 2s ease-in-out infinite;
+}
+
+
+/* ==========================================================================
+   18. Celebration Overlay
+   ========================================================================== */
+
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.celebration-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@keyframes checkDraw {
+  from { stroke-dashoffset: 50; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.celebration-check {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+}
+
+.celebration-overlay.visible .celebration-check {
+  animation: checkDraw 0.6s ease-out 0.3s forwards;
+}

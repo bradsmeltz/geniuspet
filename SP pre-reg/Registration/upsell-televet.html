@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>24/7 Vet Access — GeniusPet</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/registration.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { lightest: '#FDFCFB', light: '#FBF8F4', medium: '#F2EAE4', warm: '#D19D61' },
+            neutral: { light: '#AAAAAA', medium: '#747474', dark: '#464646', black: '#2B2B2B' },
+            red: { primary: '#D74242', medium: '#C43C3C', dark: '#992F2F' },
+            blue: { lightest: '#EFF6FA', light: '#7AB8D9', primary: '#3995C6', medium: '#3488B4', dark: '#286A8D' },
+            teal: { primary: '#2e8a7b', dark: '#216257', tint: '#eaf3f2' },
+            gold: { primary: '#d49d35', dark: '#8a6632', tint: '#f9f4ed' },
+            green: { primary: '#297A6D', light: '#EAF3F2' },
+          },
+          fontFamily: { gilroy: ['Gilroy', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <style>
+    .reveal-section {
+      opacity: 0; transform: translateY(15px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal-section.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-beige-light font-gilroy text-neutral-black min-h-screen">
+  <div class="max-w-[428px] mx-auto bg-beige-light min-h-screen relative">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm border-b border-beige-medium px-5 py-4">
+      <div class="flex items-center justify-center relative">
+        <button id="back-btn" class="absolute left-0 p-1 text-neutral-medium hover:text-neutral-dark transition-colors" aria-label="Go back">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <img src="https://geniuspet.com/geniuspet/home2/home2-logo.svg" alt="GeniusPet" class="h-8">
+      </div>
+    </header>
+
+    <main class="px-5 py-6 pb-36">
+
+      <!-- Score tracker -->
+      <div id="score-tracker-container" class="mb-5 fade-in"></div>
+
+      <!-- Headline -->
+      <div class="mb-6 fade-in delay-1">
+        <h1 class="text-[22px] font-bold text-neutral-black leading-tight mb-2">
+          A vet on call, anytime <span class="pet-name">your pet</span> needs one.
+        </h1>
+        <p class="text-base text-neutral-dark leading-relaxed">
+          No appointments, no waiting rooms, no $800 emergency bills. Video call a licensed vet in minutes — day or night.
+        </p>
+      </div>
+
+      <!-- Benefits -->
+      <div class="bg-white rounded-xl p-5 border border-beige-medium mb-5 fade-in delay-2">
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-teal-tint rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-teal-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">24/7 video calls with licensed vets</p>
+              <p class="text-base text-neutral-dark">Weekends, holidays, 2am — always available.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-teal-tint rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-teal-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">Connect in minutes, no appointment</p>
+              <p class="text-base text-neutral-dark">Skip the waiting room entirely.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-teal-tint rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-teal-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-semibold text-neutral-black">Unlimited for your whole household</p>
+              <p class="text-base text-neutral-dark">All your pets, one simple plan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Value comparison card -->
+      <div class="bg-teal-tint rounded-2xl p-4 mt-1 fade-in delay-3">
+        <div class="flex items-center justify-between mb-3 pb-3 border-b border-teal-primary/15">
+          <span class="text-base text-neutral-medium">One emergency vet visit</span>
+          <span class="text-base text-neutral-medium line-through">$150+</span>
+        </div>
+        <div class="text-center">
+          <p class="text-base font-semibold text-neutral-black">24/7 unlimited access</p>
+          <p class="text-lg font-bold text-teal-primary mt-0.5">only $0.25/day</p>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <p class="text-center text-base text-neutral-medium mt-4">Renews bi-annually · 30-day guarantee · Cancel anytime</p>
+
+    </main>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta-bar visible">
+      <div class="cta-content">
+        <button id="btn-primary" class="btn-sticky btn-teal cta-pulse-teal">Get 24/7 Vet Access</button>
+        <button id="btn-skip" class="btn-skip" style="text-decoration: underline;">Not right now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="spinner-overlay">
+    <div class="spinner spinner-lg" style="border-top-color: #2e8a7b;"></div>
+    <p class="text-base font-medium text-neutral-dark mt-3">Adding TeleVet to your plan...</p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/scoring.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    /**
+     * TeleVet Upsell — 24/7 Vet Access (Layer 3)
+     *
+     * Simplified single-offer page. $6.99/mo.
+     * Accept: saves purchase, updates score, navigates to insurance-gateway.html.
+     * Skip: navigates to insurance-gateway.html without purchasing.
+     */
+
+    /* ---- Accept handler ---- */
+    function handleAccept() {
+      var btn = document.getElementById('btn-primary');
+      btn.disabled = true;
+      btn.classList.remove('cta-pulse-teal');
+
+      // Store current score for animation on next page
+      var state = getScoreState();
+      var preScore = computeScore(Object.assign({}, state.products, { teleVet: false }));
+      sessionStorage.setItem('previousScore', preScore.toString());
+
+      // Update score state
+      updateScoreState('teleVet', true);
+
+      // Show loading overlay
+      document.getElementById('loading-overlay').classList.add('visible');
+
+      // Navigate after brief delay
+      setTimeout(function() {
+        navigateTo('insurance-gateway.html');
+      }, 800);
+    }
+
+    /* ---- Skip handler ---- */
+    function handleSkip() {
+      navigateTo('insurance-gateway.html');
+    }
+
+    /* ---- Init ---- */
+    document.addEventListener('DOMContentLoaded', function() {
+      initPage();
+
+      // Compute scores — always show WITHOUT teleVet as current
+      var state = getScoreState();
+      var currentProducts = Object.assign({}, state.products, { teleVet: false });
+      var currentScore = computeScore(currentProducts);
+      var projectedProducts = Object.assign({}, state.products, { teleVet: true });
+      var projectedScore = computeScore(projectedProducts);
+
+      // Check for score transition animation
+      var previousScore = parseInt(sessionStorage.getItem('previousScore')) || null;
+      sessionStorage.removeItem('previousScore');
+
+      // Render score tracker
+      renderScoreTracker('score-tracker-container', {
+        currentScore: currentScore,
+        projectedScore: projectedScore,
+        previousScore: previousScore,
+        petData: getPetData(),
+        animateDelay: 500,
+        layerInfo: { number: 3, total: 4, name: '24/7 Vet Access' }
+      });
+
+      // Reveal sections via IntersectionObserver
+      var revealSections = document.querySelectorAll('.reveal-section');
+      if (revealSections.length) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+
+        revealSections.forEach(function(el) { observer.observe(el); });
+      }
+
+      // Button handlers
+      document.getElementById('btn-primary').addEventListener('click', handleAccept);
+      document.getElementById('btn-skip').addEventListener('click', handleSkip);
+      document.getElementById('back-btn').addEventListener('click', function() { history.back(); });
+    });
+  </script>
+</body>
+</html>
